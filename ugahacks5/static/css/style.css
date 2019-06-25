@@ -1,0 +1,455 @@
+@import url("https://fonts.googleapis.com/css?family=K2D");
+
+/* Elements */
+
+* {
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    background-attachment: fixed;
+}
+
+body {
+    background-color: #272727;
+    font-family: "K2D", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    color: white;
+}
+
+body > div:nth-of-type(n + 2) {
+    min-height: calc(50vh - 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p {
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+
+a {
+    color: #fff;
+    transition: 0.5s all;
+}
+
+a:hover {
+    color: #e4464a;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: normal;
+}
+
+.h2-italics{
+    font-style: italic;
+}
+
+h4 {
+    font-size: 2em;
+    letter-spacing: 5px;
+    font-weight: lighter;
+}
+
+h5 {
+    font-size: 3em;
+    font-weight: lighter;
+}
+
+h6 {
+    font-size: 1.5em;
+    font-weight: lighter;
+}
+
+footer {
+    margin: 30px 0;
+    text-align: center;
+    font-size: 2em;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: black;
+}
+
+/* Classes */
+
+.content {
+    display: none;
+}
+
+.box {
+    margin: 120px 0;
+}
+
+.boxhead {
+    text-align: center;
+}
+
+.boxcontent {
+    text-align: center;
+}
+
+.boxcontent > div {
+    padding: 50px 60px 0 60px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.boxtext {
+    text-align: justify;
+    max-width: 600px;
+}
+
+.decor img {
+    max-width: 200px;
+    max-height: 300px;
+}
+
+.btn {
+    border: 2px solid #e4464a;
+    border-radius: 5px;
+    padding: 10px 30px;
+    margin: 5px;
+    font-size: 1.2em;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: #e4464a;
+    color: #fff;
+}
+
+/* IDs */
+
+/* Navbar */
+
+#navbar {
+    z-index: 1;
+    width: 100%;
+    min-height: 40px;
+    position: fixed;
+    top: 0;
+    text-align: center;
+    line-height: 40px;
+    border-bottom: 3px solid #e4464a;
+    background-color: black;
+}
+
+#navbar > * {
+    display: inline-block;
+}
+
+#navbar > div:first-child {
+    padding-left: 2em;
+}
+
+#navbar > div > * {
+    vertical-align: middle;
+    padding-right: 2em;
+}
+
+#navbar a {
+    color: white;
+    text-decoration: none;
+}
+
+#navbar a:hover {
+    color: #e4464a;
+}
+
+/* .active-nav {
+  border-bottom: 3px solid #e4464a;
+} */
+
+#main {
+    margin-top: 40px;
+    text-align: center;
+    background-image: url("../img/UGAH4-BG1.jpg");
+    height: calc(100vh - 40px);
+}
+
+#main > div {
+    width: 100%;
+    align-items: center;
+    margin: auto;
+}
+
+#main > div > div {
+    margin-top: -100px;
+}
+
+/* #main > div > div > *:nth-child(1) {
+    margin-left: 7vw;
+} */
+
+#main > div > div > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#main img {
+    min-width: 100px;
+    width: 80%;
+    max-width: 768px;
+    margin-bottom: 50px;
+}
+
+#main h1 {
+    font-size: 1.8vw;
+}
+
+#main .btn {
+    position: absolute;
+    bottom: 15%;
+    left: 0%;
+    right: 0%;
+    max-width: 120px;
+    margin: 0 auto;
+}
+
+#about, #overview,
+#friday-prep {
+    background-image: url("../img/UGAH4-BG2.jpg");
+}
+
+#challenges,
+#online {
+    background-image: url("../img/UGAH4-BG3.jpg");
+}
+
+#schedule {
+    display: grid;
+    text-align: center;
+}
+
+#schedule,
+#onsite {
+    background-image: url("../img/UGAH4-BG4.jpg");
+}
+
+#schedule .table-wrapper {
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#schedule table {
+    width: 300px;
+    padding: 20px 10px;
+    margin: 0 auto;
+}
+
+#schedule tr {
+    line-height: 1.25em;
+    text-align: left; /*maybe center is better*/
+}
+
+#schedule tr > th {
+    padding: 1em 0;
+    text-align: center;
+}
+
+#schedule tr > td:first-of-type {
+    padding-right: 20px;
+    text-align: right;
+    font-weight: bold;
+}
+
+#schedule tr > td {
+    padding: 10px 0;
+}
+
+/* adding Timeline - like UGAHACKS3*/
+.timeline-line {
+    margin: auto 0;
+    flex: initial; /*setting height and width*/
+    width: 100%; /*change width? Does this make it look more elegant? How can I change its width to match mobile?*/
+    border-top: 3px solid #93c611;
+}
+
+.timeline-box {
+    display: block;
+    width: 100%; /*change to %?*/
+    margin: 0 auto;
+    align-content: center;
+}
+
+#timeline {
+    width: 100%;
+    display: flex;
+    align-content: center;
+    text-align: center;
+    padding-top: 50px;
+}
+
+hr {
+    /*line break - can be used as timeline. svg? Annoying*/
+    flex: auto;
+    display: block;
+    height: 3px;
+    margin: auto 0 auto 20px;
+    border: 0;
+    border-top: 3px solid #93c611;
+}
+
+/*h4 -for month
+h5 - for date
+h6 - for subject*/
+/*End of adding Timeline - like UGAHACKS3*/
+
+#registration, #responsibilities,
+#workshops {
+    background-image: url("../img/UGAH4-BG5.jpg");
+}
+
+#faq, #rules,
+#hotels {
+    background-image: url("../img/UGAH4-BG6.jpg");
+}
+
+#faq h3 {
+    margin-top: 1em;
+    font-weight: bold;
+}
+
+#thankyou {
+    background: url("../img/UGAH4-BG7-black.jpg");
+    min-height: 60vh;
+    background-size: cover;
+    min-height: 800px;
+    background-position: top center;
+}
+
+#sponsors {
+    display: grid;
+    background: linear-gradient(
+            to bottom,
+            rgba(40, 40, 40, 1) 0%,
+            rgba(20, 20, 20, 0.4) 20%,
+            rgba(0, 0, 0, 0) 30%
+        ),
+        url("../img/UGAH4-BG7.jpg");
+    min-height: 60vh;
+    background-size: cover;
+    min-height: 800px;
+    background-position: top center;
+}
+
+#sponsors h2 {
+    font-weight: bold;
+}
+
+#sponsors a h2 {
+    font-weight: normal;
+}
+
+#sponsors .box {
+    margin: 0;
+}
+
+#sponsors .boxhead {
+    margin-top: 90px;
+}
+
+.sponsorlogos {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.sponsorlogos img {
+    max-width: 120px;
+    padding: 20px;
+}
+
+.uga-logo {
+    max-width: 160px !important;
+}
+
+.partnerlogos {
+    display: flex;
+    margin-top: 0.5em;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+.partnerlogos img {
+    max-height: 60px;
+}
+
+.footer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background-color: #e4464a;
+}
+
+@media (max-width: 768px), (orientation: portrait) {
+    html {
+        font-size: 80%;
+    }
+    .btn {
+        font-size: 1em;
+    }
+    .box {
+        margin: 80px 0;
+    }
+
+    .boxcontent > div {
+        padding: 30px 20px 0 20px;
+    }
+    .decor {
+        width: calc(100% - 100px);
+    }
+    .decor img {
+        max-width: 150px;
+        max-height: 150px;
+    }
+    #schedule #boxtext {
+        padding: 0 !important;
+    }
+    #timeline {
+        font-size: 80%;
+    }
+    #navbar {
+        display: none;
+    }
+    #main {
+        margin-top: 0;
+    }
+    #main > div > div > * {
+        margin: 1em auto;
+        display: block;
+    }
+    #main h1 {
+        font-size: 2em;
+    }
+    #main .btn {
+        bottom: 12%;
+    }
+    .sponsorlogos {
+        display: flex;
+        flex-direction: column;
+    }
+    #parking-map {
+        max-height: 35vh;
+    }
+    /* .table-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    } */
+}
