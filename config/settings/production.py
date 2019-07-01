@@ -10,9 +10,19 @@ ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "165.227.125.129", "ugahac
 
 # DATABASES
 # ------------------------------------------------------------------------------
-DATABASES["default"] = env.db("DATABASE_URL")  # noqa F405
-DATABASES["default"]["ATOMIC_REQUESTS"] = True  # noqa F405
-DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+
+DATABASES = {
+    'default': {
+        'CONN_MAX_AGE': 0,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'HOST': 'localhost',
+        'NAME': 'ugahacks5.db',
+        'PASSWORD': 'debug',
+        'PORT': '',
+        'USER': 'ugahacks5'
+    }
+}
 
 # CACHES
 # ------------------------------------------------------------------------------
