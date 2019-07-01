@@ -4,9 +4,9 @@ from .base import env
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+SECRET_KEY = "hsybsdkhfgbskj"
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["ugahacks.com"])
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "165.227.125.129", "ugahacks.com", "my.ugahacks.com"]
 
 # DATABASES
 # ------------------------------------------------------------------------------
