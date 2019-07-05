@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 body {
-    background-image: url("./Images/spcrept.jpg");
+    background-image: url("../images/spcrept.jpg");
 }
 html
 {
@@ -138,7 +138,7 @@ div
 }
 #Sponsors
 {
-  background-image: url(./Images/startrail.jpg);
+  background-image: url(../images/startrail.jpg);
   height: 80%;
   width: auto;
 }
@@ -194,7 +194,7 @@ footer
   width: 100%;
   margin: 0 auto;
   text-align: center;
-  background-image: url(./Images/startrail.jpg);
+  background-image: url(../images/startrail.jpg);
   padding-bottom: 25px;
 }
 .footericons

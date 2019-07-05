@@ -25,6 +25,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',  views.home, name='Home'),
+    path('test', views.new_home, name='New Home'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup/', views.signup, name='Sign Up'),
 

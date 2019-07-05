@@ -8,6 +8,10 @@ def home(request):
     return render(request, 'home.html')
 
 
+def new_home(request):
+    return render(request, 'index.html')
+
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
