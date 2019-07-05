@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+body {
+    background-image: url("./Images/spcrept.jpg");
+}
+html
+{
+  scroll-behavior: smooth;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+div
+{
+  font-family: "Quicksand";
+  color: white;
+}
+.sectionhead
+{
+  padding-top: 75px;
+  text-align: center;
+}
+.sectiontext
+{
+  padding-top: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+  font-size: 1.2em;
+}
+.textlink
+{
+  text-decoration: underline;
+  color: white;
+}
+.textlink:hover, .sponsorlink:hover
+{
+  color:#e7be48;
+}
+.sponsorlink
+{
+  text-decoration: underline;
+  font-size: 1.4em;
+  color: white;
+}
+.card-img-top
+{
+  width: 250px;
+  height: 200px;
+}
+.container-fluid
+{
+  margin: auto;
+}
+.questionrow, .scheduletext, .keydatestext
+{
+  display: flex;
+}
+.schedulecol, .datecol
+{
+  flex: 33%;
+  text-align: center;
+  align-items: center;
+  padding-top: 20px;
+}
+.awardtitle, #keydates
+{
+  text-align: center;
+}
+.questioncol
+{
+  flex: 50%;
+  padding: 70px;
+  padding-top: 30px;
+}
+#nav-tab a, .tabhead
+{
+  color: white;
+}
+.active
+{
+  color: black !important;
+}
+
+#nav-tab a:hover
+{
+  color:#e7be48;
+}
+#mainheader
+{
+  height: 100%;
+  width: auto;
+}
+#HOF
+{
+  height: 90%;
+  width: auto;
+}
+#congrats
+{
+  text-align: center;
+  color:#e7be48;
+}
+#About
+{
+  height: 90%;
+}
+#Challenges
+{
+  height: 90%;
+  width: auto;
+}
+#Schedule
+{
+  height: 100%;
+  width: auto;
+}
+#Registration
+{
+  height: 50%;
+  width: 100;
+}
+#FAQ
+{
+  height: 150%;
+  width: auto;
+}
+#Map {
+    height: auto;
+    width: auto;
+    margin: 0px 0px 70px 0px;
+}
+#Organizers {
+    height: 80%;
+    width: auto;
+}
+#Pasthack {
+    height: auto;
+    width: auto;
+    margin: 0px 0px 70px 0px;
+}
+#Sponsors
+{
+  background-image: url(./Images/startrail.jpg);
+  height: 80%;
+  width: auto;
+}
+#navbarlogo
+{
+height: 25%;
+width: 200px;
+top: 0;
+}
+#mainbannerlogo
+{
+  display: block;
+  margin: auto;
+  padding-top: 30px;
+  width: 70%;
+  height: 45%;
+}
+@media (max-width:900px) {
+  #mainbannerlogo
+  {
+    width: 75%;
+    height: 30%;
+  }
+}
+@media (max-width:600px)
+{
+  .questionrow, .scheduletext, .keydatestext
+  {
+    flex-wrap: wrap;
+  }
+  .schedulecol, .datecol, .questioncol
+  {
+    flex-basis: 100%;
+  }
+}
+#regbtn, .devpostbtn
+{
+  text-align: center;
+  text-decoration: none;
+  border: 4px solid #bb1b1b;
+  border-radius: 14px;
+  padding: 10px;
+  color: white;
+  font-size: 1.7em;
+  transition: all 0.25s ease-out;
+}
+#regbtn:hover , .devpostbtn:hover
+{
+  background-color: #bb1b1b;
+}
+footer
+{
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  background-image: url(./Images/startrail.jpg);
+  padding-bottom: 25px;
+}
+.footericons
+{
+  opacity: 0.65;
+  transition: opacity 0.25s ease-in-out;
+}
+.footericons:hover
+{
+  opacity: 1;
+}
