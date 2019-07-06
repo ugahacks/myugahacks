@@ -15,6 +15,6 @@ Local Setup Instructions
 
 4. Install the required packages by entering "pip install -r requirements.txt".
 
-5. Create & migrate the server by typing "python manage.py migrate".
+5. Create & migrate the server by typing "python manage.py migrate". Note: You may need to run python manage.py runserver at least once first before running the migration command.
 
 6. Finally to run the app enter "python manage.py runserver --settings=ugahacks5.settings.local".
