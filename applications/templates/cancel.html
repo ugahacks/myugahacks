@@ -1,0 +1,21 @@
+{% extends 'base_tabs.html' %}
+{% load static %}
+{% block head_title %}Cancel application{% endblock %}
+{% block panel %}
+
+    {% if error %}
+
+        {{ error }}.Please contact us if you think this is an error: {{ h_contact_email|urlize }}.
+        <a href="{% url 'dashboard' %}" class="btn btn-info btn-block"> Back to your profile</a>
+
+    {% else %}
+
+        <p class="lead">Remember! After cancelling your application you will lose the right to attend the hackathon as a
+        participant. Are you sure you want to cancel your application?</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" value="cancel_anyway" name="action">
+            <button class="btn btn-danger btn-lg btn-block">Cancel anyways</button>
+        </form>
+    {% endif %}
+{% endblock %}
