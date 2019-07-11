@@ -207,7 +207,7 @@ DEFAULT_FROM_EMAIL = 'UGA Hacks Team <team@ugahacks.com>'
 
 
 # Load filebased email backend if no Sendgrid credentials and debug mode
-if not SENDGRID_API_KEY and not EMAIL_HOST and DEBUG:
+if not SENDGRID_API_KEY and DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
     EMAIL_FILE_PATH = 'tmp/email-messages/'
 else:
