@@ -71,12 +71,12 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
     cvs_edition = forms.BooleanField(
         required=False,
-        label='I authorize "Hackers at UPC" to share my CV with HackUPC 2018 Sponsors.'
+        label='I authorize "UGAHacks" to share my CV with UGAHacks 2018 Sponsors.'
     )
 
     diet_notice = forms.BooleanField(
         required=False,
-        label='I authorize "Hackers at UPC" to use my food allergies and intolerances information to '
+        label='I authorize "UGAHacks" to use my food allergies and intolerances information to '
               'manage the catering service only.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
@@ -220,10 +220,10 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fields that we only need the first time the hacker fills the application
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
         if not self.instance.pk:
-            self._fieldsets.append(('HackUPC Policies', {
+            self._fieldsets.append(('UGAHacks Policies', {
                 'fields': ('terms_and_conditions', 'diet_notice', 'cvs_edition'),
                 'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
-                               'margin-bottom: 1em;line-height: 1.25em;">We, Hackers at UPC, '
+                               'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
                                'process your information to organize an awesome hackaton. It '
                                'will also include images and videos of yourself during the event. '
                                'Your data will be used for admissions mainly. We may also reach '
