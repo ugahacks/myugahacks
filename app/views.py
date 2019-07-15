@@ -15,8 +15,7 @@ from app import utils, mixins
 
 
 def root_view(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('dashboard'))
+
     if not request.user.is_authenticated() and not utils.is_app_closed():
         return render(request, 'home.html')
     if not request.user.is_authenticated() and utils.is_app_closed():
