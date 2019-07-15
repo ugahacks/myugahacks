@@ -3,8 +3,7 @@ env/
 venv/
 *.swp
 *.pyc
-*migrations/
-migrations/*
+
 /staticfiles
 fetch.sh
 app/db_settings.py
