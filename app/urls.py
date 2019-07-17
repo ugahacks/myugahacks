@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^files/(?P<file_>.*)$', views.protectedMedia, name="protect_media"),
     url(r'^meals/', include('meals.urls')),
     url(r'^judging/', include('judging.urls')),
+    url(r'test/$', views.home5, name='UGAHacks 5'),
 ]
 
 if settings.BAGGAGE_ENABLED:
