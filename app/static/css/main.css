@@ -4,14 +4,14 @@
 }
 
 body {
-	background-color: #787878;
+	  background-image: url(../images/startrail.jpg);
     background-position: center center;
     background-attachment: fixed;
     /*background: linear-gradient(#26ADB5 0%, #1DA3AD 33%, #1597A3 67%, #0E8C99 100%) no-repeat center center fixed;*/
     background-repeat: repeat repeat;
     font-family: ProximaNovaRegular, 'Roboto', sans-serif;
     font-size: 15px;
-    color: #202326;
+    color: #262424;
 }
 
 html {
@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 a {
-    color: #B4C959;
+    color: #cf4c4c;
     text-decoration: none;
     -webkit-transition: all .1s linear;
     -moz-transition: all .1s linear;
@@ -38,12 +38,12 @@ a {
 }
 
 a:hover, a:active, a:focus {
-    color: #B4C959;
+    color: #e67a7a;
     text-decoration: none;
 }
 
 .navbar-header img {
-    height: 100%;
+    height: 125%;
     padding: 0;
 }
 
@@ -55,7 +55,7 @@ a:hover, a:active, a:focus {
 
     width: 100%;
     /* Set the fixed height of the footer here */
-    background-color: #f8f8f8;
+    background-color: #080808;
     border-color: #e7e7e7;
 
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
@@ -64,7 +64,7 @@ a:hover, a:active, a:focus {
 }
 
 .btn {
-    background: #B4C959;
+    background: #b83737;
     color: white;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -84,7 +84,7 @@ a:hover, a:active, a:focus {
 }
 
 .btn:hover, .btn:active, .btn:focus {
-    background: #B4C959 !important;
+    background: #db4848 !important;
     color: white;
 }
 
@@ -100,7 +100,7 @@ a:hover, a:active, a:focus {
 }
 
 footer p, footer small {
-    color: #777;
+    color: #b4b4b4;
 }
 
 footer .row {
@@ -271,7 +271,7 @@ img {
         /* Margin bottom by footer height */
         margin-bottom: 145px;
     }
-    
+
     .content {
         margin-bottom: 16em !important;
     }
