@@ -13,6 +13,9 @@ import os
 
 from app import utils, mixins
 
+def home5(request):
+    return render(request, 'home-hacks-5.html')
+
 
 def root_view(request):
 
