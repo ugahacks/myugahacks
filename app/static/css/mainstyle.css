@@ -30,11 +30,11 @@ div
   text-decoration: underline;
   color: white;
 }
-.textlink:hover, .sponsorlink:hover
+.textlink:hover, .sponlink:hover
 {
   color:#e7be48;
 }
-.sponsorlink
+.sponlink
 {
   text-decoration: underline;
   font-size: 1.4em;

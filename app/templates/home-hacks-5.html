@@ -29,6 +29,12 @@
         <a class="nav-item nav-link" href="#Organizers">Organizers</a>
         <a class="nav-item nav-link" href="#Pasthack">Past Events</a>
         <a class="nav-item nav-link" href="#Sponsors">Sponsors</a>
+        {% if user.is_authenticated %}
+            <a class="nav-item nav-link" href="user/logout">Log out</a>
+        {% else %}
+            <a class="nav-item nav-link" href="user/signup"><b>Sign up</b></a>
+            <a class="nav-item nav-link" href="user/login"><b>Log in</b></a>
+        {% endif %}
         <a class="nav-item nav-link" href="mailto:hackathon@uga.edu" class="textlink">Contact Us</a>
     </div>
     </nav>
@@ -191,7 +197,7 @@
             <h4>Where will I sleep?</h4>
             <p>We'll have designated sleeping areas for hackers, but they will be on a first-come-first-serve basis. You're welcome and even encouraged to bring a sleeping bag!</p>
             <h4>Who do I reach out to if I have more questions?</h4>
-            <p>Reach out to <a href="mailto:hello@uga.edu" class="textlink">hello@uga.edu</a> and we'll be happy to answer it!</p>
+            <p>Reach out to <a href="mailto:hello@ugahacks.com" class="textlink">hello@ugahacks.com</a> and we'll be happy to answer it!</p>
           </div>
           <div class="questioncol" data-aos="fade-up-left">
             <h4>Who can sign up?</h4>
@@ -517,9 +523,9 @@
         <div class="sectiontext">
           <h4>Interested in sponsoring us?</h4>
           <p>By sponsoring UGAHacks, your company will have the opportunity to inspire new programmers while also reaching out to and recruiting the rising stars of the tech industry. Please look over the sponsorship packet linked below and reach out to our sponsorship team for more information.</p>
-          <a href="{% static "docs/UGAHacks 5 Sponsorship Deck.pdf" %}" class="sponsorlink">Sponsorship Packet</a>
+          <a href="{% static "docs/UGAHacks 5 Sponsorship Deck.pdf" %}" class="sponlink">Sponsorship Packet</a>
           <br>
-          <a href="mailto:sponsor@uga.com" class="sponsorlink">sponsor@uga.com</a>
+          <a href="mailto:sponsor@ugahacks.com" class="sponlink">sponsor@ugahacks.com</a>
         </div>
       </div>
     </div>
