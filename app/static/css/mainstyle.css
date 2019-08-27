@@ -23,18 +23,18 @@ div
   padding-top: 10px;
   padding-left: 50px;
   padding-right: 50px;
-  font-size: 1.2em;
+  font-size: 1.4em;
 }
 .textlink
 {
   text-decoration: underline;
   color: white;
 }
-.textlink:hover, .sponsorlink:hover
+.textlink:hover, .sponlink:hover
 {
   color:#e7be48;
 }
-.sponsorlink
+.sponlink
 {
   text-decoration: underline;
   font-size: 1.4em;
@@ -69,6 +69,7 @@ div
   flex: 50%;
   padding: 70px;
   padding-top: 30px;
+  font-size: 1.2em;
 }
 #nav-tab a, .tabhead
 {
@@ -163,8 +164,11 @@ top: 0;
     height: 30%;
   }
 }
-@media (max-width:600px)
+@media (max-width:770px)
 {
+  html{
+    font-size: 105%;
+  }
   .questionrow, .scheduletext, .keydatestext
   {
     flex-wrap: wrap;
