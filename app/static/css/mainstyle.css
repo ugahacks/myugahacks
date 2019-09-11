@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap');
+
 body {
-    background-image: url("../images/spcrept.jpg");
+    background-image: url("../images/binary.png");
 }
 html
 {
@@ -10,8 +11,13 @@ html
 }
 div
 {
-  font-family: "Quicksand";
+  font-family: "Poppins";
+  font-weight: 400;
   color: white;
+}
+.navbar-custom
+{
+  background-color: #0d0d0d;
 }
 .sectionhead
 {
@@ -30,15 +36,9 @@ div
   text-decoration: underline;
   color: white;
 }
-.textlink:hover, .sponlink:hover
+.textlink:hover
 {
   color:#e7be48;
-}
-.sponlink
-{
-  text-decoration: underline;
-  font-size: 1.4em;
-  color: white;
 }
 .card-img-top
 {
@@ -71,6 +71,12 @@ div
   padding-top: 30px;
   font-size: 1.2em;
 }
+#navbarNavAltMarkup > a
+{
+  font-weight: 600;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 #nav-tab a, .tabhead
 {
   color: white;
@@ -79,7 +85,6 @@ div
 {
   color: black !important;
 }
-
 #nav-tab a:hover
 {
   color:#e7be48;
@@ -143,11 +148,13 @@ div
   height: 80%;
   width: auto;
 }
+#Sponsors .sectiontext
+{
+  text-align: center;
+}
 #navbarlogo
 {
-height: 25%;
 width: 200px;
-top: 0;
 }
 #mainbannerlogo
 {

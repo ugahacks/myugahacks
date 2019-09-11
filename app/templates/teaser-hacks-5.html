@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
   <body>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark navbar-custom">
     <a class="navbar-brand" href="#"><img src="{% static "images/hackslogo.png" %}" alt="UGAHacks 5" id="navbarlogo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -53,7 +53,7 @@
           <h1>Registration</h1>
         </div>
         <div class="sectiontext">
-          <h4 style="text-align: center">Stay tuned as we are finalizing the details for the event and for the registration to open in November!</h4>
+        <p id="regcountdown"></p>
         </div>
         <br>
         <br>
@@ -67,10 +67,8 @@
         </div>
         <div class="sectiontext">
           <h4>Interested in sponsoring us?</h4>
-          <p>By sponsoring UGAHacks, your company will have the opportunity to inspire new programmers while also reaching out to and recruiting the rising stars of the tech industry. Please look over the sponsorship packet linked below and reach out to our sponsorship team for more information.</p>
-          <a href="{% static "docs/UGAHacks 5 Sponsorship Deck.pdf" %}" class="sponlink">Sponsorship Packet</a>
+          <p>By sponsoring UGAHacks, your company will have the opportunity to inspire new programmers while also reaching out to and recruiting the rising stars of the tech industry. Please look over the <a href="{% static "docs/UGAHacks 5 Sponsorship Deck.pdf" %}" class="textlink">Sponsorship Packet</a> and <a href="mailto:sponsor@ugahacks.com" class="textlink">reach out to our sponsorship team for more information.</a></p>
           <br>
-          <a href="mailto:sponsor@ugahacks.com" class="sponlink">sponsor@ugahacks.com</a>
         </div>
       </div>
     </div>
@@ -78,10 +76,30 @@
       <a href="https://github.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-github.png"></a>
       <a href="https://www.facebook.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-facebook.png"></a>
       <a href="https://twitter.com/ugahacks" class="footericons"><img src="../static/images/icons/icons8-twitter.png"></a>
+      <a href="https://www.instagram.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-instagram.png"></a>
     </footer>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       AOS.init();
+    </script>
+    <script type="text/javascript">
+    var regtime = new Date("Nov 30, 2019 00:00:00").getTime();
+    var x = setInterval(function() {
+      var currtime = new Date().getTime();
+      var timeleft = regtime - currtime;
+      var days = Math.floor(timeleft/(1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24))/(1000 * 3600));
+      var mins = Math.floor((timeleft % (1000 * 60 * 60))/(1000 * 60));
+      var secs = Math.floor((timeleft % (1000 * 60))/ 1000);
+
+      if(timeleft < 0) {
+        clearInterval(x);
+        document.getElementById("regcountdown").innerHTML = "Registration is Open!!!";
+      }
+      else {
+        document.getElementById("regcountdown").innerHTML = days + " Days " + hours + " Hours " + mins + " Minutes " + secs + " Seconds";
+      }
+    })
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
   <body>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark navbar-custom">
     <a class="navbar-brand" href="#"><img src="{% static "images/hackslogo.png" %}" alt="UGAHacks 5" id="navbarlogo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -523,10 +523,8 @@
         </div>
         <div class="sectiontext">
           <h4>Interested in sponsoring us?</h4>
-          <p>By sponsoring UGAHacks, your company will have the opportunity to inspire new programmers while also reaching out to and recruiting the rising stars of the tech industry. Please look over the sponsorship packet linked below and reach out to our sponsorship team for more information.</p>
-          <a href="{% static "docs/UGAHacks 5 Sponsorship Deck.pdf" %}" class="sponlink">Sponsorship Packet</a>
+          <p>By sponsoring UGAHacks, your company will have the opportunity to inspire new programmers while also reaching out to and recruiting the rising stars of the tech industry. Please look over the <a href="{% static "docs/UGAHacks 5 Sponsorship Deck.pdf" %}" class="textlink">Sponsorship Packet</a> and <a href="mailto:sponsor@ugahacks.com" class="textlink">reach out to our sponsorship team for more information.</a></p>
           <br>
-          <a href="mailto:sponsor@ugahacks.com" class="sponlink">sponsor@ugahacks.com</a>
         </div>
       </div>
     </div>
@@ -534,6 +532,7 @@
       <a href="https://github.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-github.png"></a>
       <a href="https://www.facebook.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-facebook.png"></a>
       <a href="https://twitter.com/ugahacks" class="footericons"><img src="../static/images/icons/icons8-twitter.png"></a>
+      <a href="https://www.instagram.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-instagram.png"></a>
     </footer>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
