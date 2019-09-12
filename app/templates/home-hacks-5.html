@@ -15,29 +15,23 @@
   </head>
   <body>
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark navbar-custom">
-    <a class="navbar-brand" href="#"><img src="{% static "images/hackslogo.png" %}" alt="UGAHacks 5" id="navbarlogo"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse navbar-nav" id="navbarNavAltMarkup">
-        <a class="nav-item nav-link" href="#HOF">Hall of Fame</a>
-        <a class="nav-item nav-link" href="#About">About</a>
-        <a class="nav-item nav-link" href="#Challenges">Challenges</a>
-        <a class="nav-item nav-link" href="#Schedule">Schedule</a>
-        <a class="nav-item nav-link" href="#Registration">Registration</a>
-        <a class="nav-item nav-link" href="#FAQ">FAQ</a>
-        <a class="nav-item nav-link" href="#Map">Map</a>
-        <a class="nav-item nav-link" href="#Organizers">Organizers</a>
-        <a class="nav-item nav-link" href="#Pasthack">Past Events</a>
-        <a class="nav-item nav-link" href="#Sponsors">Sponsors</a>
-        {% if user.is_authenticated %}
-            <a class="nav-item nav-link" href="user/logout">Log out</a>
-        {% else %}
-            <a class="nav-item nav-link" href="user/signup"><b>Sign up</b></a>
-            <a class="nav-item nav-link" href="user/login"><b>Log in</b></a>
-        {% endif %}
-        <a class="nav-item nav-link" href="mailto:hackathon@uga.edu" class="textlink">Contact Us</a>
-    </div>
+      <a class="navbar-brand" href="#"><img src="{% static "images/hackslogo.png" %}" alt="UGAHacks 5" id="navbarlogo"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse navbar-nav" id="navbarNavAltMarkup">
+          <a class="nav-item nav-link" href="#HOF" hidden>Hall of Fame</a>
+          <a class="nav-item nav-link" href="#Registration">Registration</a>
+          <a class="nav-item nav-link" href="user/login">Login</a>
+          <a class="nav-item nav-link" href="#About">About</a>
+          <a class="nav-item nav-link" href="#Schedule">Schedule</a>
+          <a class="nav-item nav-link" href="#FAQ">FAQ</a>
+          <a class="nav-item nav-link" href="#Map">Map</a>
+          <a class="nav-item nav-link" href="#Organizers">Organizers</a>
+          <a class="nav-item nav-link" href="#Pasthack">Past Events</a>
+          <a class="nav-item nav-link" href="#Sponsors">Sponsors</a>
+          <a class="nav-item nav-link" href="mailto:hello@ugahacks.com" class="textlink">Contact Us</a>
+      </div>
     </nav>
     <div id="mainheader">
       <img src="{% static "images/hackslogo.png" %}" alt="" id="mainbannerlogo">
@@ -45,10 +39,52 @@
         <h3><b>February 7 - 9, 2020 at Zell B. Miller Learning Center</b></h3>
         <br>
         <br>
-        <a href="/" id="regbtn">Registration</a>
       </div>
     </div>
-    <div id="HOF">
+    <div id="Registration">
+      <div class="section" data-aos="fade-up">
+        <div class="sectionhead">
+          <br>
+          <h1 id="regcountdown">Registration Opens In . . .</h1>
+        </div>
+        <div class="sectiontext">
+          <div class="keydatestext" data-aos="fade-up">
+            <div class="timecol">
+              <h1 id="countdownd"></h1>
+              <h2> Days </h2>
+            </div>
+            <div class="timecol">
+              <h1 id="countdownh"></h1>
+              <h2> Hours </h2>
+            </div>
+            <div class="timecol">
+              <h1 id="countdownm"></h1>
+              <h2> Minutes </h2>
+            </div>
+            <div class="timecol">
+              <h1 id="countdowns"></h1>
+              <h2> Seconds </h2>
+            </div>
+          </div>
+          <h2 id="keydates">Key Dates</h2>
+          <div class="keydatestext">
+            <div class="datecol" data-aos="fade-up-right">
+              <h3>Registration Opens:</h3>
+              <h2><b>November 30</b></h2>
+            </div>
+            <div class="datecol" data-aos="fade-up">
+              <h3>Registration Closes:</h3>
+              <h2><b>Sample Date</b></h2>
+            </div>
+            <div class="datecol" data-aos="fade-up-left">
+              <h3>Decision Response:</h3>
+              <h2><b>Sample Date</b></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="HOF" hidden>
       <div class="section" data-aos="fade-up">
         <div class="sectionhead">
           <br>
@@ -105,21 +141,8 @@
       <div class="sectiontext">
         <p>This year at UGAHacks, we are all about helping your ideas blast off. Hackathons are all about exploring the galaxies filled with ideas and claiming one for yourself. You might even explore multiple planets before settling on one ,or use one as a base station to reach other ones. Log on and join us for this epic 36 hour programming sleepover, hosted at UGA's <a href="https://goo.gl/maps/rMa5f99XiaW39a8e6" class="textlink">Zell B. Miller Learning Center.</a></p>
         <p>Houston -- we got a problem! Fret not, we have mentors, workshops, and volunteers to help you get those critical resources so you can venture forth. Two resources you'll not need to worry about is food and water as plenty of shipments from Earth will be sent out throughout the event. We also got fun events such as karaoke and video game tournaments when you just want to unwind and float around in space. Just remember not to get sucked up into the black hole of procrastination!</p>
-        <p>Don't worry if you are not a CS major, or don't feel comfortable coding! We have many workshops for you to attend, mentors to straighten the trajectory of your project, and supportive teammates waiting for your arrival! We can't wait to see your otherworldly ideas!</p>
+        <p> We can't wait to see your otherworldly ideas!</p>
       </div>
-      </div>
-    </div>
-    <div id="Challenges">
-      <div class="section" data-aos="fade-up">
-        <div class="sectionhead">
-          <br>
-          <h1>Challenges</h1>
-        </div>
-        <div class="sectiontext">
-          <p>Stranded and don't know what to code? Don't worry - challenges have your back.
-            Challenges are projects geared around using a specific theme or tool ,and the best project built around a challenge's criteria will receive a prize.
-            We'll post more information detailing the list of challenges from us and our sponsors as the event goes on.</p>
-        </div>
       </div>
     </div>
     <div id="Schedule">
@@ -145,35 +168,6 @@
             <h3>Sunday - Feb. 9th</h3>
             <div class="sectiontext">
               <p><b>9:00 am</b> Example Workshop by ___ (Location)</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="Registration">
-      <div class="section" data-aos="fade-up">
-        <div class="sectionhead">
-          <br>
-          <h1>Registration</h1>
-        </div>
-        <div class="sectiontext">
-          <h4><a href="#" class="textlink">Join us for UGA's 5th annual hackathon!</a></h4>
-          <br>
-          <p>This year is all about expanding our horizons and reaching for the stars. Hope to see you in February!</p>
-          <p>UGAHacks will be following the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" class="textlink"> MLH Code of Conduct</a>. By participating in UGAHacks, you are agreeing to follow the Code of Conduct throughout the duration of the event.</p>
-          <h2 id="keydates">Key Dates</h2>
-          <div class="keydatestext">
-            <div class="datecol" data-aos="fade-up-right">
-              <h3>Registration Opens:</h3>
-              <h2><b>November Date</b></h2>
-            </div>
-            <div class="datecol" data-aos="fade-up">
-              <h3>Registration Closes:</h3>
-              <h2><b>Sample Date</b></h2>
-            </div>
-            <div class="datecol" data-aos="fade-up-left">
-              <h3>Decision Response:</h3>
-              <h2><b>Sample Date</b></h2>
             </div>
           </div>
         </div>
@@ -210,7 +204,7 @@
             <h4>Will you be offering travel reimbursements?</h4>
             <p>Yes, we will be offering travel reimbursements! Please make sure to note it on your registration and we will reach out to you upon acceptance. University of Georgia students are not eligible to receive travel reimbursements.</p>
             <h4>Can I volunteer/mentor at UGAHacks?</h4>
-            <p>We love your enthusiasm! Volunteers and mentors can apply via the registration form above! If you have any questions regarding the position, please contact us at <a href="mailto:hackathon@uga.edu" class="textlink">hackathon@uga.edu</a> - Be sure to mention the specific position in the subject of the email. See you at the event!</p>
+            <p>We love your enthusiasm! Volunteers and mentors can apply via the registration form above! If you have any questions regarding the position, please contact us at <a href="mailto:hello@ugahacks.com" class="textlink">hello@ugahacks.com</a> - Be sure to mention the specific position in the subject of the email. See you at the event!</p>
           </div>
         </div>
       </div>
@@ -539,6 +533,30 @@
       AOS.init();
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    var regtime = new Date("Nov 30, 2019 00:00:00").getTime();
+    var x = setInterval(function() {
+      var currtime = new Date().getTime();
+      var timeleft = regtime - currtime;
+      var days = Math.floor(timeleft/(1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24))/(1000 * 3600));
+      var mins = Math.floor((timeleft % (1000 * 60 * 60))/(1000 * 60));
+      var secs = Math.floor((timeleft % (1000 * 60))/ 1000);
+
+      if(timeleft < 0) {
+        clearInterval(x);
+        document.getElementById("regcountdown").innerHTML = "Registration is Now Open!!!";
+        document.getElementById("regcountdown").insertAdjacentHTML("afterend", "<br><a href='user/signup' id='regbtn'>Registration</a>");
+        $(".timecol").remove();
+      }
+      else {
+        document.getElementById("countdownd").innerHTML = days;
+        document.getElementById("countdownh").innerHTML = hours;
+        document.getElementById("countdownm").innerHTML = mins;
+        document.getElementById("countdowns").innerHTML = secs;
+      }
+    })
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>

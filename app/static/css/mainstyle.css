@@ -19,6 +19,15 @@ div
 {
   background-color: #0d0d0d;
 }
+nav a
+{
+  transition: 0.3s ease;
+  border-bottom: 4px solid transparent;
+}
+nav a:hover
+{
+  border-bottom: 4px solid #bb1b1b;
+}
 .sectionhead
 {
   padding-top: 75px;
@@ -30,6 +39,7 @@ div
   padding-left: 50px;
   padding-right: 50px;
   font-size: 1.4em;
+  text-align: center;
 }
 .textlink
 {
@@ -60,6 +70,13 @@ div
   align-items: center;
   padding-top: 20px;
 }
+.timecol
+{
+  flex: 25%;
+  text-align: center;
+  align-items: center;
+  padding-top: 20px;
+}
 .awardtitle, #keydates
 {
   text-align: center;
@@ -70,6 +87,10 @@ div
   padding: 70px;
   padding-top: 30px;
   font-size: 1.2em;
+}
+.timecol > h1
+{
+  font-size: 3.7em;
 }
 #navbarNavAltMarkup > a
 {
@@ -121,7 +142,7 @@ div
 #Registration
 {
   height: 50%;
-  width: 100;
+  width: auto;
 }
 #FAQ
 {
@@ -147,10 +168,6 @@ div
   background-image: url(../images/startrail.jpg);
   height: 80%;
   width: auto;
-}
-#Sponsors .sectiontext
-{
-  text-align: center;
 }
 #navbarlogo
 {
@@ -180,10 +197,14 @@ width: 200px;
   {
     flex-wrap: wrap;
   }
-  .schedulecol, .datecol, .questioncol
+  .schedulecol, .datecol, .questioncol, .timecol
   {
     flex-basis: 100%;
   }
+}
+#keydates
+{
+  margin-top: 120px;
 }
 #regbtn, .devpostbtn
 {
