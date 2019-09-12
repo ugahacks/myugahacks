@@ -238,3 +238,41 @@ footer
 {
   opacity: 1;
 }
+
+.carousel-indicators > li{
+  background-color: rgba(154, 12, 12, 0.5) !important;
+}
+
+.carousel-indicators > li[class="active"]{
+  background-color: #D51010 !important;
+}
+
+.profimgsize1 {
+  width: 50%;
+  height: 25%;
+}
+.profimgsize2 {
+  width: 50%;
+  height: 50%;
+}
+.profimgsize3 {
+  width: 50%;
+  height: 75%;
+}
+
+#nav-tab{
+  font-size: 1.6em;
+}
+
+#carstext1{
+  color: white;
+}
+#carstext2{
+  color: black;
+}
+#carstext3{
+  color: black;
+}
+#carstext4{
+  color: white;
+}
