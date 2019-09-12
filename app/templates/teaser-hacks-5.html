@@ -19,10 +19,10 @@
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse navbar-nav" id="navbarNavAltMarkup">
-        <a class="nav-item nav-link" href="#About">About</a>
         <a class="nav-item nav-link" href="#Registration">Registration</a>
+        <a class="nav-item nav-link" href="#About">About</a>
         <a class="nav-item nav-link" href="#Sponsors">Sponsors</a>
-        <a class="nav-item nav-link" href="mailto:hackathon@uga.edu" class="textlink">Contact Us</a>
+        <a class="nav-item nav-link" href="mailto:hello@ugahacks.com" class="textlink">Contact Us</a>
     </div>
     </nav>
     <div id="mainheader">
@@ -31,6 +31,34 @@
         <h3><b>February 7 - 9, 2020 at Zell B. Miller Learning Center</b></h3>
         <br>
         <br>
+      </div>
+    </div>
+    <div id="Registration">
+      <div class="section" data-aos="fade-up">
+        <div class="sectionhead">
+          <br>
+          <h1 id="regcountdown">Registration Opens In . . .</h1>
+        </div>
+        <div class="sectiontext">
+        <div class="keydatestext" data-aos="fade-up">
+          <div class="timecol">
+            <h1 id="countdownd"></h1>
+            <h2> Days </h2>
+          </div>
+          <div class="timecol">
+            <h1 id="countdownh"></h1>
+            <h2> Hours </h2>
+          </div>
+          <div class="timecol">
+            <h1 id="countdownm"></h1>
+            <h2> Minutes </h2>
+          </div>
+          <div class="timecol">
+            <h1 id="countdowns"></h1>
+            <h2> Seconds </h2>
+          </div>
+        </div>
+        </div>
       </div>
     </div>
     <div id="About">
@@ -42,23 +70,11 @@
       <div class="sectiontext">
         <p>This year at UGAHacks, we are all about helping your ideas blast off. Hackathons are all about exploring the galaxies filled with ideas and claiming one for yourself. You might even explore multiple planets before settling on one ,or use one as a base station to reach other ones. Join us for this epic 36 hour programming sleepover, hosted at UGA's <a href="https://goo.gl/maps/rMa5f99XiaW39a8e6" class="textlink">Zell B. Miller Learning Center.</a></p>
         <p>Houston -- we got a problem! Fret not, we have mentors, workshops, and volunteers to help you get those critical resources so you can venture forth. Two resources you'll not need to worry about is food and water as plenty of shipments from Earth will be sent out throughout the event. We also got fun events such as karaoke and video game tournaments when you just want to unwind and float around in space. Just remember not to get sucked up into the black hole of procrastination!</p>
-        <p>Don't worry if you are not a CS major, or don't feel comfortable coding! We have many workshops for you to attend, mentors to straighten the trajectory of your project, and supportive teammates waiting for your arrival! We can't wait to see your otherworldly ideas!</p>
+        <p> We can't wait to see your otherworldly ideas!</p>
       </div>
       </div>
     </div>
-    <div id="Registration">
-      <div class="section" data-aos="fade-up">
-        <div class="sectionhead">
-          <br>
-          <h1>Registration</h1>
-        </div>
-        <div class="sectiontext">
-        <p id="regcountdown"></p>
-        </div>
-        <br>
-        <br>
-      </div>
-    </div>
+    <br>
     <div id="Sponsors">
       <div class="section" data-aos="fade-up">
         <div class="sectionhead">
@@ -82,6 +98,7 @@
     <script>
       AOS.init();
     </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script type="text/javascript">
     var regtime = new Date("Nov 30, 2019 00:00:00").getTime();
     var x = setInterval(function() {
@@ -94,14 +111,18 @@
 
       if(timeleft < 0) {
         clearInterval(x);
-        document.getElementById("regcountdown").innerHTML = "Registration is Open!!!";
+        document.getElementById("regcountdown").innerHTML = "Registration is Now Open!!!";
+        document.getElementById("regcountdown").insertAdjacentHTML("afterend", "<br><a href='user/signup' id='regbtn'>Registration</a>");
+        $(".timecol").remove();
       }
       else {
-        document.getElementById("regcountdown").innerHTML = days + " Days " + hours + " Hours " + mins + " Minutes " + secs + " Seconds";
+        document.getElementById("countdownd").innerHTML = days;
+        document.getElementById("countdownh").innerHTML = hours;
+        document.getElementById("countdownm").innerHTML = mins;
+        document.getElementById("countdowns").innerHTML = secs;
       }
     })
     </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
