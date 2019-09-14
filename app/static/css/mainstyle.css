@@ -19,14 +19,36 @@ div
 {
   background-color: #0d0d0d;
 }
-nav a
+.nav-link , #navbarlogo
 {
   transition: 0.3s ease;
   border-bottom: 4px solid transparent;
 }
-nav a:hover
+.nav-link:hover , #navbarlogo:hover
 {
   border-bottom: 4px solid #bb1b1b;
+}
+.dropdown-item
+{
+  position: relative;
+}
+.dropdown-item:before
+{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background: #bb1b1b;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+.dropdown-item:hover:before
+{
+  visibility: visible;
+  transform: scaleX(1);
 }
 .sectionhead
 {
@@ -97,6 +119,10 @@ nav a:hover
   font-weight: 600;
   padding-left: 20px;
   padding-right: 20px;
+}
+#dropdownhead
+{
+  font-weight: 600;
 }
 #nav-tab a, .tabhead
 {
