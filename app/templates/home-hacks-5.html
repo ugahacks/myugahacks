@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
   <title>UGAHacks 5</title>
   <link rel="apple-touch-icon" sizes="180x180" href="{% static "images/favicon/apple-touch-icon.png" %}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static "images/favicon/favicon-32x32.png" %}">
@@ -26,16 +26,30 @@
     </button>
     <div class="collapse navbar-collapse navbar-nav" id="navbarNavAltMarkup">
       <a class="nav-item nav-link" href="#HOF" hidden>Hall of Fame</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownhead" data-toggle="dropdown">
+          Event Info
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownhead">
+          <a class="dropdown-item" href="#About">About</a>
+          <a class="dropdown-item" href="#Map">Map</a>
+          <a class="dropdown-item" href="#FAQ">FAQ</a>
+        </div>
+      </li>
+      <a class="nav-item nav-link" href="#Schedule">Schedule</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownhead" data-toggle="dropdown">
+          UGAHacks Team
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownhead">
+          <a class="dropdown-item" href="#Organizers">Organizers</a>
+          <a class="dropdown-item" href="#Pasthack">Past Events</a>
+          <a class="dropdown-item" href="mailto:hello@ugahacks.com" class="textlink">Contact Us</a>
+        </div>
+      </li>
+      <a class="nav-item nav-link" href="#Sponsors">Sponsors</a>
       <a class="nav-item nav-link" href="#Registration">Registration</a>
       <a class="nav-item nav-link" href="user/login">Login</a>
-      <a class="nav-item nav-link" href="#About">About</a>
-      <a class="nav-item nav-link" href="#Schedule">Schedule</a>
-      <a class="nav-item nav-link" href="#FAQ">FAQ</a>
-      <a class="nav-item nav-link" href="#Map">Map</a>
-      <a class="nav-item nav-link" href="#Organizers">Organizers</a>
-      <a class="nav-item nav-link" href="#Pasthack">Past Events</a>
-      <a class="nav-item nav-link" href="#Sponsors">Sponsors</a>
-      <a class="nav-item nav-link" href="mailto:hello@ugahacks.com" class="textlink">Contact Us</a>
     </div>
   </nav>
   <div id="mainheader">
@@ -291,13 +305,13 @@
                 <img src="../static/images/profilepic/best-doggo.png" alt="profile-pic" class="profimgsize1">
                 <p>Lead Director: Mohd Tanjim Hasan (TJ)</p>
               </a>
-              <a href="https://www.linkedin.com/company/ugahacks/about/">
+              <a href="https://www.linkedin.com/in/annie-lian/">
                 <img src="../static/images/profilepic/AnnieLian.jpg" alt="profile-pic" class="profimgsize1">
                 <p>Marketing Director: Annie Lian</p>
               </a>
             </div>
             <div class="col">
-              <a href="https://www.linkedin.com/company/ugahacks/about/">
+              <a href="https://www.linkedin.com/in/amanda-yang-2020/">
                 <img src="../static/images/profilepic/amandayang.jpg" alt="profile-pic" class="profimgsize1">
                 <p> Sponsorship Director: Amanda Yang</p>
               </a>
@@ -315,7 +329,7 @@
                 <img src="../static/images/profilepic/best-doggo.png" alt="profile-pic" class="profimgsize1">
                 <p>Logistics Director: Tobie</p>
               </a>
-              <a href="https://www.linkedin.com/company/ugahacks/about/">
+              <a href="https://www.linkedin.com/in/andrei-s/">
                 <img src="../static/images/profilepic/andreispatariu.jpg" alt="profile-pic" class="profimgsize1">
                 <p>Web Director: Andrei Spatariu</p>
               </a>
@@ -336,7 +350,7 @@
               </a>
             </div>
             <div class="col">
-              <a href="https://www.linkedin.com/company/ugahacks/about/">
+              <a href="https://www.linkedin.com/in/dannylee25/">
                 <img src="../static/images/profilepic/OGDanng.jpg" alt="profile-pic" class="profimgsize2">
                 <p>Danny Lee </p>
               </a>
@@ -357,7 +371,7 @@
           <br>
           <div class="row">
             <div class="col">
-              <a href="https://www.linkedin.com/company/ugahacks/about/">
+              <a href="https://www.linkedin.com/in/annie-lian/">
                 <img src="../static/images/profilepic/AnnieLian.jpg" alt="profile-pic" class="profimgsize3">
                 <p>Annie Lian</p>
               </a>
@@ -434,8 +448,8 @@
           <br>
           <div class="row">
             <div class="col">
-              <a href="https://www.linkedin.com/company/ugahacks/about/">
-                <img src="../static/images/profilepic/best-doggo.png" alt="profile-pic" class="profimgsize3">
+              <a href="https://www.linkedin.com/in/noahbarnette/">
+                <img src="../static/images/profilepic/noahb.jpg" alt="profile-pic" class="profimgsize3">
                 <p>Noah Barnette</p>
               </a>
             </div>
@@ -474,7 +488,7 @@
           </ol>
           <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-              <a href="https://web.archive.org/web/20190305191220/https://ugahacks.com/"> <img class="d-block w-100 "
+              <a href="https://4.ugahacks.com/"> <img class="d-block w-100 "
                   src="../static/images/banner/ugahacks4banner.JPG " alt="First slide "></a>
 
               <div class=" carousel-caption d-none d-md-block ">
@@ -482,7 +496,7 @@
               </div>
             </div>
             <div class="carousel-item ">
-              <a href="https://web.archive.org/web/20180505170945/https://ugahacks.com/"><img class="d-block w-100 "
+              <a href="https://3.ugahacks.com/"><img class="d-block w-100 "
                   src="../static/images/banner/ugahacks3banner.JPG " alt="Second slide "></a>
 
               <div class="carousel-caption d-none d-md-block ">
