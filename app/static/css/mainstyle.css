@@ -186,9 +186,10 @@ div
     width: auto;
 }
 #Pasthack {
+    background-image: url(../images/startrail.jpg);
     height: auto;
     width: auto;
-    margin: 0px 0px 70px 0px;
+    margin: 0px;
 }
 #Sponsors
 {
@@ -217,9 +218,6 @@ width: 200px;
 }
 @media (max-width:770px)
 {
-  html{
-    font-size: 105%;
-  }
   .questionrow, .scheduletext, .keydatestext
   {
     flex-wrap: wrap;
@@ -231,7 +229,11 @@ width: 200px;
 }
 #keydates
 {
-  margin-top: 120px;
+  margin-bottom: 10px;
+}
+#keydates + .keydatestext
+{
+  margin-bottom: 70px;
 }
 #regbtn, .devpostbtn
 {
@@ -251,7 +253,7 @@ width: 200px;
 footer
 {
   width: 100%;
-  margin: 0 auto;
+  padding: 40px;
   text-align: center;
   background-image: url(../images/startrail.jpg);
   padding-bottom: 25px;
