@@ -26,6 +26,7 @@
         <a class="nav-item nav-link" href="mailto:hello@ugahacks.com" class="textlink">Contact Us</a>
     </div>
     </nav>
+    <div id="particles-js"></div>
     <div id="mainheader">
       <img src="{% static "images/hackslogo.png" %}" alt="" id="mainbannerlogo">
       <div class="sectionhead">
@@ -95,6 +96,7 @@
       <a href="https://www.instagram.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-instagram.png"></a>
     </footer>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script>
       AOS.init();
     </script>
@@ -122,6 +124,11 @@
         document.getElementById("countdowns").innerHTML = secs;
       }
     })
+    </script>
+    <script type="text/javascript">
+    particlesJS.load('particles-js', '{% static "js/particles-config.json" %}', function() {
+      console.log('callback - particles.js config loaded');
+    });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
