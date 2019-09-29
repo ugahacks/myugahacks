@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap');
 
-body {
-    background-image: url("../images/binary.png");
+body{
+    /* background-image: url("../images/binary.png"); */
+    background: linear-gradient(#17182f,#0d0f12);
 }
 html
 {
@@ -14,6 +15,19 @@ div
   font-family: "Poppins";
   font-weight: 400;
   color: white;
+}
+/* body > div[id]
+{
+  min-height: 100vh;
+} */
+#particles-js
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 .navbar-custom
 {
@@ -52,7 +66,7 @@ div
 }
 .sectionhead
 {
-  padding-top: 75px;
+  padding-top: 125px;
   padding-bottom: 50px;
   text-align: center;
 }
@@ -137,65 +151,10 @@ div
 {
   color:#e7be48;
 }
-#mainheader
-{
-  height: 100%;
-  width: auto;
-}
-#HOF
-{
-  height: 90%;
-  width: auto;
-}
 #congrats
 {
   text-align: center;
   color:#e7be48;
-}
-#About
-{
-  height: 90%;
-}
-#Challenges
-{
-  height: 90%;
-  width: auto;
-}
-#Schedule
-{
-  height: 100%;
-  width: auto;
-}
-#Registration
-{
-  height: 50%;
-  width: auto;
-}
-#FAQ
-{
-  height: 150%;
-  width: auto;
-}
-#Map {
-    height: auto;
-    width: auto;
-    margin: 0px 0px 70px 0px;
-}
-#Organizers {
-    height: 80%;
-    width: auto;
-}
-#Pasthack {
-    background-image: url(../images/startrail.jpg);
-    height: auto;
-    width: auto;
-    margin: 0px;
-}
-#Sponsors
-{
-  background-image: url(../images/startrail.jpg);
-  height: 80%;
-  width: auto;
 }
 #navbarlogo
 {
@@ -227,6 +186,14 @@ height: 75px;
     flex-basis: 100%;
   }
 }
+@media (min-width: 320px) and (max-width: 480px) {
+
+  .sectiontext , .questioncol
+  {
+    font-size: 1.1em;
+  }
+
+}
 #keydates
 {
   margin-bottom: 10px;
@@ -255,7 +222,6 @@ footer
   width: 100%;
   padding: 40px;
   text-align: center;
-  background-image: url(../images/startrail.jpg);
   padding-bottom: 25px;
 }
 .footericons
