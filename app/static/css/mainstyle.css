@@ -175,6 +175,13 @@ height: 75px;
     height: 30%;
   }
 }
+@media (max-width: 990px)
+{
+  #mlh-trust-badge
+  {
+    right: 80px !important;
+  }
+}
 @media (max-width:770px)
 {
   .questionrow, .scheduletext, .keydatestext
@@ -192,7 +199,6 @@ height: 75px;
   {
     font-size: 1.1em;
   }
-
 }
 #keydates
 {
