@@ -76,7 +76,7 @@
       <div class="sectiontext">
         <p>This year at UGAHacks, we are all about helping your ideas blast off. Hackathons are all about exploring the galaxies filled with ideas and claiming one for yourself. You might even explore multiple planets before settling on one ,or use one as a base station to reach other ones. Join us for this epic 36 hour programming sleepover, hosted at UGA's <a href="https://goo.gl/maps/rMa5f99XiaW39a8e6" class="textlink">Zell B. Miller Learning Center.</a></p>
         <p>Houston -- we got a problem! Fret not, we have mentors, workshops, and volunteers to help you get those critical resources so you can venture forth. Two resources you'll not need to worry about is food and water as plenty of shipments from Earth will be sent out throughout the event. We also got fun events such as karaoke and video game tournaments when you just want to unwind and float around in space. Just remember not to get sucked up into the black hole of procrastination!</p>
-        <p> We can't wait to see your otherworldly ideas!</p>
+        <p class="subheader"> We can't wait to see your otherworldly ideas!</p>
       </div>
       </div>
     </div>
@@ -88,7 +88,7 @@
           <h1>Sponsors</h1>
         </div>
         <div class="sectiontext">
-          <h4>Interested in sponsoring us?</h4>
+          <h3 class="subheader">Interested in sponsoring us?</h3>
           <p>By sponsoring UGAHacks, your company will have the opportunity to inspire new programmers while also reaching out to and recruiting the rising stars of the tech industry. Please look over the <a href="{% static "docs/UGAHacks-5-Sponsorship-Deck.pdf" %}" class="textlink">Sponsorship Packet</a> and <a href="mailto:sponsor@ugahacks.com" class="textlink">reach out to our sponsorship team for more information.</a></p>
         </div>
       </div>
@@ -105,7 +105,7 @@
       AOS.init();
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script type="text/javascript">
+    <script>
     var regtime = new Date("Nov 30, 2019 00:00:00").getTime();
     var x = setInterval(function() {
       var currtime = new Date().getTime();
@@ -129,7 +129,7 @@
       }
     })
     </script>
-    <script type="text/javascript">
+    <script>
     particlesJS.load('particles-js', '{% static "js/particles-config.json" %}', function() {
       console.log('callback - particles.js config loaded');
     });
