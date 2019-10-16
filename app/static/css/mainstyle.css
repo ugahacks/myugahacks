@@ -216,13 +216,20 @@ height: 75px;
 }
 @media (max-width:770px)
 {
-  .questionrow, .scheduletext, .keydatestext
+  .questionrow, .keydatestext
   {
     flex-wrap: wrap;
   }
   .schedulecol, .datecol, .questioncol, .timecol
   {
     flex-basis: 100%;
+  }
+}
+@media (max-width:1100px)
+{
+  .scheduletext
+  {
+    flex-wrap: wrap;
   }
 }
 @media (min-width: 320px) and (max-width: 480px) {
