@@ -272,69 +272,50 @@ footer
   opacity: 1;
 }
 
+.tempimg{
+  width: 185px;
+  height: 185px;
+}
+
+.imgtext{
+  text-align: center;
+  width: 70%;
+  color: white;
+}
+
+.imgtext:hover{
+  text-shadow: 3px 3px 3px #bb1b1b;
+}
+
+.imgstyle:hover{
+  box-shadow: 0 0 10px 5px rgba(187, 27, 27, 0.767);
+}
+
+.imgstyle{
+  width: 70%;
+  border-radius: 15%;
+  border: 4px solid white;
+}
+
+.img-head{
+  text-align: center;
+  padding: 2% 0%;
+}
+
+.imgsec{
+  padding-left: 3%;
+}
+
+.imgsec a{
+  text-decoration: none !important;
+}
+
 .carousel-indicators > li{
   background-color: rgba(154, 12, 12, 0.5) !important;
 }
 
 .carousel-indicators > li[class="active"]{
   background-color: #D51010 !important;
-}
-
-.org-pad{
-  margin-left: 5%;
-}
-
-.dnle{
-  margin-left: 75%;
-}
-.dnle > p{
-  margin-left: 80%;
-  width: 300px;
-}
-
-.advimg {
-  margin-left: 19%;
-}
-
-div.row > div a{
-  text-decoration: none;
-  color: white;
-}
-
-div.row > div img{
-  border-radius: 15%;
-  border: 4px solid #ddd;
-  margin-bottom: 3%;
-}
-
-div.row > div[class*="col"] p{
-  text-align: center;
-  padding-right: 18%;
-}
-
-div.row > div[class*="col"] img:hover{
-  box-shadow: 0 0 10px 5px rgba(187, 27, 27, 0.767);
-}
-div.row > div[class*="col"] p:hover{
-  text-shadow: 3px 3px 3px #bb1b1b;
-}
-
-.spswebtext {
-  text-align: center;
-  padding-right: 48% !important;
-}
-
-.profimg{
-  width: 225px;
-  height: 225px;
-}
-
-.proftext{
-  padding-right: 45% !important;
-}
-
-.tabposition{
-  padding-left: 12%;
 }
 
 #nav-tab{
