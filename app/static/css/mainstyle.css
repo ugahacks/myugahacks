@@ -81,7 +81,7 @@ div
   padding-right: 50px;
   font-size: 1.4em;
   text-align: justify;
-  max-width: 1500px;
+  max-width: 1300px;
   margin: auto;
 }
 .textlink
@@ -185,7 +185,12 @@ table
 }
 #HOF
 {
-  max-width: 1500px;
+  max-width: 1300px;
+  margin: auto;
+}
+#Organizers
+{
+  max-width: 1300px;
   margin: auto;
 }
 #navbarlogo
@@ -216,7 +221,11 @@ height: 75px;
 }
 @media (max-width:770px)
 {
-  .questionrow, .keydatestext
+  .imgsec
+  {
+    padding-left: 15% !important;
+  }
+  .questionrow, .keydatestext, .d-flex
   {
     flex-wrap: wrap;
   }
