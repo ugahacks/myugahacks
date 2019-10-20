@@ -225,7 +225,7 @@ height: 75px;
   {
     padding-left: 15% !important;
   }
-  .questionrow, .keydatestext, .d-flex
+  .questionrow, .keydatestext
   {
     flex-wrap: wrap;
   }
