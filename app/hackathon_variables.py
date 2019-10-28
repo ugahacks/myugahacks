@@ -14,7 +14,7 @@ HACKATHON_DESCRIPTION = "University of Georgia's Hackathon"
 # Domain where application is deployed, can be set by env variable
 HACKATHON_DOMAIN = os.environ.get('my.ugahacks.com', 'localhost:8000')
 # Hackathon contact email: where should all hackers contact you. It will also be used as a sender for all emails
-HACKATHON_CONTACT_EMAIL = 'team@ugahacks.com'
+HACKATHON_CONTACT_EMAIL = 'hello@ugahacks.com'
 # Hackathon logo url, will be used on all emails
 HACKATHON_LOGO_URL = 'https://cdn.discordapp.com/attachments/546552287569379368/565280887177216011/email-sig.png'
 
@@ -100,4 +100,3 @@ SLACK_BOT = {
 
 # Can Hackers start a request on the hardware lab?
 # HACKERS_CAN_REQUEST = False
-
