@@ -8,20 +8,19 @@ from app.mixins import OverwriteOnlyModelFormMixin
 from app.utils import validate_url
 from applications import models
 
-YEARS= [x for x in range(1930,2021)]
 
 class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     github = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control',
-               'placeholder': 'https://github.com/byte'}))
+               'placeholder': 'https://github.com/johnBiene'}))
     devpost = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control',
-               'placeholder': 'https://devpost.com/byte'}))
+               'placeholder': 'https://devpost.com/JohnBiene'}))
     linkedin = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control',
-               'placeholder': 'https://www.linkedin.com/in/byte'}))
+               'placeholder': 'https://www.linkedin.com/in/john_biene'}))
     site = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'https://byte.space'}))
+        attrs={'class': 'form-control', 'placeholder': 'https://biene.space'}))
     phone_number = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': '+#########'}))
     university = forms.CharField(required=True,
@@ -52,45 +51,27 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         widget=forms.RadioSelect
     )
 
-    #remember to edit "other" option to include text box for specification
-    ethnicity = forms.TypedChoiceField(
-        required=False,
-        label='What race/ethnicity do you identify with?',
-        choices=(('amIndian', 'American Indian or Alaskan Native'), ('asian', 'Asian/Pacific Islander'), ('aAm', 'Black or African American'), ('hispanic', 'Hispanic'), ('white', 'White or Caucasian'), ('multiple', 'Multiple ethnicities/Other (please specify)'), ('noAnswer', 'Prefer not to answer')),
-        initial=False,
-        widget=forms.RadioSelect
-    )
-
-    part_type = forms.TypedChoiceField(
-        required=False,
-        label='What are you applying for?',
-        choices=(('hacker', 'Hacker'), ('mentor', 'Mentor'), ('vol', 'Volunteer')),
-        initial=False,
-        widget=forms.RadioSelect
-    )
-    """
-    #should I change this to birthday? - yes
-        #under_age
-        under_age = forms.IntegerField(
-            required=True,
-            label='What is your birth date?',
-        )
-    """
-    #MLH Code of Conduct
-    code_of_conduct = forms.BooleanField(
+    under_age = forms.TypedChoiceField(
         required=True,
-        label='I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.<span style="color: red; font-weight: bold;"> *</span>'
+        label='How old are you?',
+        initial=False,
+        coerce=lambda x: x == 'True',
+        choices=((False, '18 or over'), (True, 'Between 14 (included) and 18')),
+        widget=forms.RadioSelect
     )
 
-    #MLH Terms and Conditions
     terms_and_conditions = forms.BooleanField(
-        required=True,
-        label='I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post- event informational e-mails, and occasional messages about hackathons with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.  I further agree to the terms of both the MLH Contest Terms and Conditions and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>.'
+        required=False,
+        label='I’ve read, understand and accept <a href="/terms_and_conditions" target="_blank">%s '
+              'Terms & Conditions</a> and <a href="/privacy_and_cookies" target="_blank">%s '
+              'Privacy and Cookies Policy</a>.<span style="color: red; font-weight: bold;"> *</span>' % (
+                  settings.HACKATHON_NAME, settings.HACKATHON_NAME
+              )
     )
 
     cvs_edition = forms.BooleanField(
         required=False,
-        label='I authorize "UGAHacks" to share my resumé with UGAHacks5 Sponsors.'
+        label='I authorize "UGAHacks" to share my CV with UGAHacks 2018 Sponsors.'
     )
 
     diet_notice = forms.BooleanField(
@@ -122,18 +103,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             raise forms.ValidationError(
                 "In order to apply and attend you have to accept our Terms & Conditions and"
                 " our Privacy and Cookies Policy."
-            )
-        return cc
-
-    def clean_code_of_conduct(self):
-        cc = self.cleaned_data.get('code_of_conduct', False)
-        # Check that if it's the first submission hackers checks terms and conditions checkbox
-        # self.instance.pk is None if there's no Application existing before
-        # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
-        if not cc and not self.instance.pk:
-            raise forms.ValidationError(
-                "In order to apply and attend you have to accept our Terms & Conditions and"
-                " our Code of Conduct."
             )
         return cc
 
@@ -218,7 +187,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             ('Personal Info',
              {'fields': ('university', 'degree', 'graduation_year', 'gender', 'other_gender',
                          'phone_number', 'tshirt_size', 'diet', 'other_diet',
-                         'birthday', 'part_type', 'ethnicity', 'hardware'),
+                         'under_age', 'lennyface', 'hardware'),
               'description': 'Hey there, before we begin we would like to know a little more about you.', }),
             ('Hackathons?', {'fields': ('description', 'first_timer', 'projects'), }),
             ('Show us what you\'ve built',
@@ -252,7 +221,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
         if not self.instance.pk:
             self._fieldsets.append(('UGAHacks Policies', {
-                'fields': ('terms_and_conditions', 'code_of_conduct', 'diet_notice', 'cvs_edition'),
+                'fields': ('terms_and_conditions', 'diet_notice', 'cvs_edition'),
                 'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
                                'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
                                'process your information to organize an awesome hackaton. It '
@@ -274,6 +243,8 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'graduation_year': 'What year have you graduated on or when will you graduate',
             'degree': 'What\'s your major/degree?',
             'other_diet': 'Please fill here in your dietary requirements. We want to make sure we have food for you!',
+            'lennyface': 'tip: you can chose from here <a href="http://textsmili.es/" target="_blank">'
+                         ' http://textsmili.es/</a>',
             'hardware': 'Any hardware that you would like us to have. We can\'t promise anything, '
                         'but at least we\'ll try!',
             'projects': 'You can talk about about past hackathons, personal projects, awards etc. '
@@ -294,6 +265,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'graduation_year': 'What year will you graduate?',
             'tshirt_size': 'What\'s your t-shirt size?',
             'diet': 'Dietary requirements',
+            'lennyface': 'Describe yourself in one "lenny face"?',
             'hardware': 'Hardware you would like us to have',
             'origin': 'Where are you joining us from?',
             'description': 'Why are you excited about %s?' % settings.HACKATHON_NAME,

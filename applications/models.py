@@ -122,9 +122,11 @@ class Application(models.Model):
     gender = models.CharField(max_length=23, choices=GENDERS, default=NO_ANSWER)
     other_gender = models.CharField(max_length=50, blank=True, null=True)
 
-    # Personal data (asking here because we don't want to ask birthday)
-    under_age = models.BooleanField()
 
+    """
+        # Personal data (asking here because we don't want to ask birthday)
+        under_age = models.IntegerField(null=True)
+    """
     phone_number = models.CharField(blank=True, null=True, max_length=16,
                                     validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                                                message="Phone number must be entered in the format: \
@@ -145,8 +147,7 @@ class Application(models.Model):
     reimb_amount = models.FloatField(blank=True, null=True, validators=[
         MinValueValidator(0, "Negative? Really? Please put a positive value")])
 
-    # Random lenny face
-    lennyface = models.CharField(max_length=300, default='-.-')
+
 
     # Giv me a resume here!
     resume = models.FileField(upload_to='resumes', null=True, blank=True)
