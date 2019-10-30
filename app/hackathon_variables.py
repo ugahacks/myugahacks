@@ -12,7 +12,7 @@ TIME_ZONE = 'EST'
 # This description will be used on the html and sharing meta tags
 HACKATHON_DESCRIPTION = "University of Georgia's Hackathon"
 # Domain where application is deployed, can be set by env variable
-HACKATHON_DOMAIN = os.environ.get('my.ugahacks.com', 'localhost:8000')
+HACKATHON_DOMAIN = 'my.ugahacks.com'
 # Hackathon contact email: where should all hackers contact you. It will also be used as a sender for all emails
 HACKATHON_CONTACT_EMAIL = 'team@ugahacks.com'
 # Hackathon logo url, will be used on all emails
