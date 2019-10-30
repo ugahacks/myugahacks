@@ -8,9 +8,8 @@
 
     <meta name="theme-color" content="#f8f8f8">
     <meta name="author" content="{{ h_name }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static "images/favicon/apple-touch-icon.png" %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static "images/favicon/favicon-32x32.png" %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static "images/favicon/favicon-16x16.png" %}">
+{#    <link rel="icon" href="{% static 'img/icons/favicon.png' %}" type="image/png">#}
+    <link rel="icon" href="{% static 'img/icons/favicon.ico' %}" type="image/x-icon">
     <meta name="description" content="{{ h_description }}">
 
 
@@ -201,6 +200,8 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <small>Made with <i class="fa fa-laptop" aria-hidden="true"></i> and <i class="fa fa-heart" aria-hidden="true"></i> by {{ h_name }} </small>
+
+                <span style="display: none">BIENE {{ h_name }}</span>
                 <br><br>
                 <a href="/legal_notice/">Legal notice</a> |
                 <a href="/terms_and_conditions/">Terms and conditions</a> |

@@ -38,8 +38,8 @@ class MealsList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView):
     filterset_class = MealsListFilter
     table_pagination = {'per_page': 100}
 
-    def g_tet_current_tabs(self):
-        return organizerabs(self.request.user)
+    def get_current_tabs(self):
+        return organizer_tabs(self.request.user)
 
     def get_queryset(self):
         if self.request.user.is_organizer:

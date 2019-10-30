@@ -4,7 +4,7 @@
 }
 
 body {
-	  background-image: url(../images/binary.png);
+	  background-image: url(../images/startrail.jpg);
     background-position: center center;
     background-attachment: fixed;
     /*background: linear-gradient(#26ADB5 0%, #1DA3AD 33%, #1597A3 67%, #0E8C99 100%) no-repeat center center fixed;*/
@@ -43,14 +43,10 @@ a:hover, a:active, a:focus {
 }
 
 .navbar-header img {
-    height: 150%;
+    height: 125%;
     padding: 0;
 }
 
-.navbar-brand
-{
-  padding: 5px 15px 15px 15px;
-}
 .footer {
     position: absolute;
     bottom: 0;
@@ -242,17 +238,17 @@ img.icon {
 }
 
 .alert-danger {
-    background: #c93a2b;
+    background: #B4C959;
     color: #FBFBFB;
 }
 
 .alert-success {
-    background: #1e8e3c;
+    background: #11AFC9;
     color: #FBFBFB;
 }
 
 .alert-warning {
-    background: #dbd823;
+    background: #B4C959;
     color: #FBFBFB;
 }
 
@@ -289,7 +285,7 @@ img {
     padding: 0.5em 1em;
     text-align: center;
     transition: bottom 1s;
-    background-color:#e65050;
+    background-color:#B4C959;
     z-index:1031; /*footer was set to 1030*/
     box-shadow: 0px 15px 15px 15px black;
     color:white;
@@ -310,7 +306,7 @@ img {
 }
 
 .team-info {
-    color: #e0a52c;
+    color: #B4C959;
     font-size: 18px;
 }
 

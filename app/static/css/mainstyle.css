@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap');
-
-body{
-    /* background-image: url("../images/binary.png"); */
-    background: linear-gradient(#17182f,#0d0f12);
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+body {
+    background-image: url("../images/spcrept.jpg");
 }
 html
 {
@@ -12,66 +10,12 @@ html
 }
 div
 {
-  font-family: "Poppins";
-  font-weight: 400;
+  font-family: "Quicksand";
   color: white;
-}
-/* body > div[id]
-{
-  min-height: 100vh;
-} */
-#particles-js
-{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-.navbar-custom
-{
-  background-color: #0d0d0d;
-}
-.nav-link , #navbarlogo
-{
-  transition: 0.3s ease;
-  border-bottom: 4px solid transparent;
-}
-.nav-link:hover , #navbarlogo:hover
-{
-  border-bottom: 4px solid #bb1b1b;
-}
-.dropdown-item
-{
-  position: relative;
-}
-.dropdown-item:before
-{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background: #bb1b1b;
-  visibility: hidden;
-  transform: scaleX(0);
-  transition: all 0.3s ease-in-out;
-}
-.dropdown-item:hover:before
-{
-  visibility: visible;
-  transform: scaleX(1);
-}
-.subheader
-{
-  text-align: center;
 }
 .sectionhead
 {
-  padding-top: 125px;
-  padding-bottom: 50px;
+  padding-top: 75px;
   text-align: center;
 }
 .sectiontext
@@ -79,19 +23,22 @@ div
   padding-top: 10px;
   padding-left: 50px;
   padding-right: 50px;
-  font-size: 1.4em;
-  text-align: justify;
-  max-width: 1300px;
-  margin: auto;
+  font-size: 1.2em;
 }
 .textlink
 {
   text-decoration: underline;
   color: white;
 }
-.textlink:hover
+.textlink:hover, .sponlink:hover
 {
   color:#e7be48;
+}
+.sponlink
+{
+  text-decoration: underline;
+  font-size: 1.4em;
+  color: white;
 }
 .card-img-top
 {
@@ -105,19 +52,10 @@ div
 .questionrow, .scheduletext, .keydatestext
 {
   display: flex;
-  max-width: 1500px;
-  margin: auto;
 }
 .schedulecol, .datecol
 {
   flex: 33%;
-  text-align: center;
-  align-items: center;
-  padding-top: 20px;
-}
-.timecol
-{
-  flex: 25%;
   text-align: center;
   align-items: center;
   padding-top: 20px;
@@ -131,40 +69,6 @@ div
   flex: 50%;
   padding: 70px;
   padding-top: 30px;
-  font-size: 1.3em;
-}
-.questioncol > p
-{
-  padding-bottom: 25px;
-}
-.timecol > h1
-{
-  font-size: 3.7em;
-}
-td:first-child
-{
-  white-space: nowrap;
-  padding-right: 20px;
-  padding-bottom: 15px;
-}
-td:last-child
-{
-  padding-bottom: 15px;
-  text-align: left;
-}
-table
-{
-  align: center;
-}
-#navbarNavAltMarkup > a
-{
-  font-weight: 600;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-#dropdownhead
-{
-  font-weight: 600;
 }
 #nav-tab a, .tabhead
 {
@@ -174,28 +78,75 @@ table
 {
   color: black !important;
 }
+
 #nav-tab a:hover
 {
   color:#e7be48;
+}
+#mainheader
+{
+  height: 100%;
+  width: auto;
+}
+#HOF
+{
+  height: 90%;
+  width: auto;
 }
 #congrats
 {
   text-align: center;
   color:#e7be48;
 }
-#HOF
+#About
 {
-  max-width: 1300px;
-  margin: auto;
+  height: 90%;
 }
-#Organizers
+#Challenges
 {
-  max-width: 1300px;
-  margin: auto;
+  height: 90%;
+  width: auto;
+}
+#Schedule
+{
+  height: 100%;
+  width: auto;
+}
+#Registration
+{
+  height: 50%;
+  width: 100;
+}
+#FAQ
+{
+  height: 150%;
+  width: auto;
+}
+#Map {
+    height: auto;
+    width: auto;
+    margin: 0px 0px 70px 0px;
+}
+#Organizers {
+    height: 80%;
+    width: auto;
+}
+#Pasthack {
+    height: auto;
+    width: auto;
+    margin: 0px 0px 70px 0px;
+}
+#Sponsors
+{
+  background-image: url(../images/startrail.jpg);
+  height: 80%;
+  width: auto;
 }
 #navbarlogo
 {
-height: 75px;
+height: 25%;
+width: 200px;
+top: 0;
 }
 #mainbannerlogo
 {
@@ -212,49 +163,16 @@ height: 75px;
     height: 30%;
   }
 }
-@media (max-width: 990px)
+@media (max-width:600px)
 {
-  #mlh-trust-badge
-  {
-    right: 80px !important;
-  }
-}
-@media (max-width:770px)
-{
-  .imgsec
-  {
-    padding-left: 15% !important;
-  }
-  .questionrow, .keydatestext
+  .questionrow, .scheduletext, .keydatestext
   {
     flex-wrap: wrap;
   }
-  .schedulecol, .datecol, .questioncol, .timecol
+  .schedulecol, .datecol, .questioncol
   {
     flex-basis: 100%;
   }
-}
-@media (max-width:1100px)
-{
-  .scheduletext
-  {
-    flex-wrap: wrap;
-  }
-}
-@media (min-width: 320px) and (max-width: 480px) {
-
-  .sectiontext , .questioncol
-  {
-    font-size: 1.1em;
-  }
-}
-#keydates
-{
-  margin-bottom: 10px;
-}
-#keydates + .keydatestext
-{
-  margin-bottom: 70px;
 }
 #regbtn, .devpostbtn
 {
@@ -274,8 +192,9 @@ height: 75px;
 footer
 {
   width: 100%;
-  padding: 40px;
+  margin: 0 auto;
   text-align: center;
+  background-image: url(../images/startrail.jpg);
   padding-bottom: 25px;
 }
 .footericons
@@ -286,61 +205,4 @@ footer
 .footericons:hover
 {
   opacity: 1;
-}
-
-.tempimg{
-  width: 185px;
-  height: 185px;
-}
-
-.imgtext{
-  text-align: center;
-  width: 70%;
-  color: white;
-}
-
-.imgtext:hover{
-  text-shadow: 3px 3px 3px #bb1b1b;
-}
-
-.imgstyle:hover{
-  box-shadow: 0 0 10px 5px rgba(187, 27, 27, 0.767);
-}
-
-.imgstyle{
-  width: 70%;
-  border-radius: 15%;
-  border: 4px solid white;
-}
-
-.img-head{
-  text-align: center;
-  padding: 2% 0%;
-}
-
-.imgsec{
-  padding-left: 3%;
-}
-
-.imgsec a{
-  text-decoration: none !important;
-}
-
-.carousel-indicators > li{
-  background-color: rgba(154, 12, 12, 0.5) !important;
-}
-
-.carousel-indicators > li[class="active"]{
-  background-color: #D51010 !important;
-}
-
-#nav-tab{
-  font-size: 1.6em;
-}
-
-#carstext1, #carstext4{
-  color: white;
-}
-#carstext2, #carstext3{
-  color: black;
 }

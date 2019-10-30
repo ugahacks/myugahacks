@@ -9,7 +9,6 @@ from app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include('user.urls')),
-    url(r'^test/user/', include('user.urls')),
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     url(r'^applications/', include('organizers.urls')),
@@ -26,7 +25,6 @@ urlpatterns = [
     url(r'^files/(?P<file_>.*)$', views.protectedMedia, name="protect_media"),
     url(r'^meals/', include('meals.urls')),
     url(r'^judging/', include('judging.urls')),
-    url(r'^workshops/', include('workshops.urls')),
     url(r'test/$', views.home5, name='UGAHacks 5'),
 ]
 

@@ -3,7 +3,6 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
     <title>UGAHacks 5</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{% static "images/favicon/apple-touch-icon.png" %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static "images/favicon/favicon-32x32.png" %}">
@@ -14,57 +13,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
   <body>
-    <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000"
-	 href="https://mlh.io/seasons/na-2020/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2020-season&utm_content=white"
-	 target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2020/mlh-trust-badge-2020-gray.svg" alt="Major League Hacking 2020 Hackathon Season"
-		 style="width:100%"></a>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark navbar-custom">
-    <a class="navbar-brand" href="#"><img src="{% static "images/navbarlogo.png" %}" alt="UGAHacks 5" id="navbarlogo"></a>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#"><img src="{% static "images/hackslogo.png" %}" alt="UGAHacks 5" id="navbarlogo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse navbar-nav" id="navbarNavAltMarkup">
-        <a class="nav-item nav-link" href="#Registration">Registration</a>
         <a class="nav-item nav-link" href="#About">About</a>
+        <a class="nav-item nav-link" href="#Registration">Registration</a>
         <a class="nav-item nav-link" href="#Sponsors">Sponsors</a>
-        <a class="nav-item nav-link" href="mailto:hello@ugahacks.com" class="textlink">Contact Us</a>
+        <a class="nav-item nav-link" href="mailto:hackathon@uga.edu" class="textlink">Contact Us</a>
     </div>
     </nav>
-    <div id="particles-js"></div>
     <div id="mainheader">
       <img src="{% static "images/hackslogo.png" %}" alt="" id="mainbannerlogo">
       <div class="sectionhead">
         <h3><b>February 7 - 9, 2020 at Zell B. Miller Learning Center</b></h3>
         <br>
         <br>
-      </div>
-    </div>
-    <div id="Registration">
-      <div class="section" data-aos="fade-up">
-        <div class="sectionhead">
-          <br>
-          <h1 id="regcountdown">Registration Opens In . . .</h1>
-        </div>
-        <div class="sectiontext">
-        <div class="keydatestext" data-aos="fade-up">
-          <div class="timecol">
-            <h1 id="countdownd"></h1>
-            <h2> Days </h2>
-          </div>
-          <div class="timecol">
-            <h1 id="countdownh"></h1>
-            <h2> Hours </h2>
-          </div>
-          <div class="timecol">
-            <h1 id="countdownm"></h1>
-            <h2> Minutes </h2>
-          </div>
-          <div class="timecol">
-            <h1 id="countdowns"></h1>
-            <h2> Seconds </h2>
-          </div>
-        </div>
-        </div>
       </div>
     </div>
     <div id="About">
@@ -76,11 +42,23 @@
       <div class="sectiontext">
         <p>This year at UGAHacks, we are all about helping your ideas blast off. Hackathons are all about exploring the galaxies filled with ideas and claiming one for yourself. You might even explore multiple planets before settling on one ,or use one as a base station to reach other ones. Join us for this epic 36 hour programming sleepover, hosted at UGA's <a href="https://goo.gl/maps/rMa5f99XiaW39a8e6" class="textlink">Zell B. Miller Learning Center.</a></p>
         <p>Houston -- we got a problem! Fret not, we have mentors, workshops, and volunteers to help you get those critical resources so you can venture forth. Two resources you'll not need to worry about is food and water as plenty of shipments from Earth will be sent out throughout the event. We also got fun events such as karaoke and video game tournaments when you just want to unwind and float around in space. Just remember not to get sucked up into the black hole of procrastination!</p>
-        <p class="subheader"> We can't wait to see your otherworldly ideas!</p>
+        <p>Don't worry if you are not a CS major, or don't feel comfortable coding! We have many workshops for you to attend, mentors to straighten the trajectory of your project, and supportive teammates waiting for your arrival! We can't wait to see your otherworldly ideas!</p>
       </div>
       </div>
     </div>
-    <br>
+    <div id="Registration">
+      <div class="section" data-aos="fade-up">
+        <div class="sectionhead">
+          <br>
+          <h1>Registration</h1>
+        </div>
+        <div class="sectiontext">
+          <h4 style="text-align: center">Stay tuned as we are finalizing the details for the event and for the registration to open in November!</h4>
+        </div>
+        <br>
+        <br>
+      </div>
+    </div>
     <div id="Sponsors">
       <div class="section" data-aos="fade-up">
         <div class="sectionhead">
@@ -88,8 +66,11 @@
           <h1>Sponsors</h1>
         </div>
         <div class="sectiontext">
-          <h3 class="subheader">Interested in sponsoring us?</h3>
-          <p>By sponsoring UGAHacks, your company will have the opportunity to inspire new programmers while also reaching out to and recruiting the rising stars of the tech industry. Please look over the <a href="{% static "docs/UGAHacks-5-Sponsorship-Deck.pdf" %}" class="textlink">Sponsorship Packet</a> and <a href="mailto:sponsor@ugahacks.com" class="textlink">reach out to our sponsorship team for more information.</a></p>
+          <h4>Interested in sponsoring us?</h4>
+          <p>By sponsoring UGAHacks, your company will have the opportunity to inspire new programmers while also reaching out to and recruiting the rising stars of the tech industry. Please look over the sponsorship packet linked below and reach out to our sponsorship team for more information.</p>
+          <a href="{% static "docs/UGAHacks 5 Sponsorship Deck.pdf" %}" class="sponlink">Sponsorship Packet</a>
+          <br>
+          <a href="mailto:sponsor@ugahacks.com" class="sponlink">sponsor@ugahacks.com</a>
         </div>
       </div>
     </div>
@@ -97,43 +78,12 @@
       <a href="https://github.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-github.png"></a>
       <a href="https://www.facebook.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-facebook.png"></a>
       <a href="https://twitter.com/ugahacks" class="footericons"><img src="../static/images/icons/icons8-twitter.png"></a>
-      <a href="https://www.instagram.com/ugahacks/" class="footericons"><img src="../static/images/icons/icons8-instagram.png"></a>
     </footer>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script>
       AOS.init();
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>
-    var regtime = new Date("Nov 30, 2019 00:00:00").getTime();
-    var x = setInterval(function() {
-      var currtime = new Date().getTime();
-      var timeleft = regtime - currtime;
-      var days = Math.floor(timeleft/(1000 * 60 * 60 * 24));
-      var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24))/(1000 * 3600));
-      var mins = Math.floor((timeleft % (1000 * 60 * 60))/(1000 * 60));
-      var secs = Math.floor((timeleft % (1000 * 60))/ 1000);
-
-      if(timeleft < 0) {
-        clearInterval(x);
-        document.getElementById("regcountdown").innerHTML = "Registration is Now Open!!!";
-        document.getElementById("regcountdown").insertAdjacentHTML("afterend", "<br><a href='user/signup' id='regbtn'>Registration</a>");
-        $(".timecol").remove();
-      }
-      else {
-        document.getElementById("countdownd").innerHTML = days;
-        document.getElementById("countdownh").innerHTML = hours;
-        document.getElementById("countdownm").innerHTML = mins;
-        document.getElementById("countdowns").innerHTML = secs;
-      }
-    })
-    </script>
-    <script>
-    particlesJS.load('particles-js', '{% static "js/particles-config.json" %}', function() {
-      console.log('callback - particles.js config loaded');
-    });
-    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
