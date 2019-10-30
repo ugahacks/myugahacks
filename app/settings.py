@@ -102,6 +102,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -126,6 +127,20 @@ if os.environ.get('PG_PWD', None):
             'PORT': '5432',
         }
     }
+
+"""
+DATABASES = {
+    'default': {
+        'CONN_MAX_AGE': 0,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'HOST': 'localhost',
+        'NAME': 'project.db',
+        'PASSWORD': '',
+        'PORT': '',
+        'USER': ''
+    }
+}
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -194,27 +209,14 @@ if os.environ.get('DROPBOX_OAUTH2_TOKEN', False):
 
 
 
-# Sendgrid API key
-SENDGRID_API_KEY = os.environ.get('SG_KEY', None)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-# SMTP
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'ugahacks'
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'no-reply@ugahacks.com'
+EMAIL_HOST_PASSWORD = '<password>'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'UGA Hacks Team <team@ugahacks.com>'
-
-
-# Load filebased email backend if no Sendgrid credentials and debug mode
-if not SENDGRID_API_KEY and DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    EMAIL_FILE_PATH = 'tmp/email-messages/'
-else:
-    if SENDGRID_API_KEY:
-        EMAIL_BACKEND = "sgbackend.SendGridBackend"
-    else:
-        EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+DEFAULT_FROM_EMAIL = 'UGAHacks Team <no-reply@ugahacks.com>'
 
 
 # Jet configs
