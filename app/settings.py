@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET', '<ENTER_YOUR_OWN_KEY>')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('PROD_MODE', "false").lower() == "false"
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'my.ugahacks.com','ugahacks.com', '165.227.125.129']
+ALLOWED_HOSTS = ['my.ugahacks.com','ugahacks.com', 'localhost', '127.0.0.1', '0.0.0.0', '165.227.125.129']
 
 # Application definition
 INSTALLED_APPS = [
