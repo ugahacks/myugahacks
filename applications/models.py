@@ -125,7 +125,7 @@ class Application(models.Model):
 
     """
         # Personal data (asking here because we don't want to ask birthday)
-        under_age = models.IntegerField(null=True)
+        birth_year = models.IntegerField(null=True)
     """
     phone_number = models.CharField(blank=True, null=True, max_length=16,
                                     validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',

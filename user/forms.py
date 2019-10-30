@@ -40,7 +40,9 @@ class RegisterForm(LoginForm):
         label='I\'ve read, understand and accept <a href="/privacy_and_cookies" target="_blank">UGAHacks '
               'Privacy and Cookies Policy</a>.<span style="color: red; font-weight: bold;"> *</span>')
 
-    field_order = ['name', 'email', 'password', 'password2', 'terms_and_conditions']
+    birth_year = forms.IntegerField(label="Birth Year")
+
+    field_order = ['name', 'email', 'password', 'password2', 'birth_year', 'terms_and_conditions']
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -62,6 +64,16 @@ class RegisterForm(LoginForm):
                 " our Privacy and Cookies Policy."
             )
         return cc
+
+
+    def clean_birth_year(self):
+         birth_year = self.cleaned_data.get('birth_year')
+
+         if (2019-birth_year) < 18:
+            raise forms.ValidationError(
+                "In order to apply and attend you must be at least 18 years old."
+            )
+         return birth_year
 
 
 class PasswordResetForm(forms.Form):
