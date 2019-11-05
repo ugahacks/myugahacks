@@ -129,8 +129,7 @@ div
 .questioncol
 {
   flex: 50%;
-  padding: 70px;
-  padding-top: 30px;
+  padding: 30px 70px 0px;
   font-size: 1.3em;
 }
 .questioncol > p
