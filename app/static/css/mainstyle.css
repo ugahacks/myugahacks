@@ -255,7 +255,11 @@ height: 75px;
 {
   margin-bottom: 70px;
 }
-#regbtn, .devpostbtn
+#collapsebtn
+{
+  font-size: inherit !important;
+}
+#regbtn,#collapsebtn, .devpostbtn
 {
   text-align: center;
   text-decoration: none;
@@ -266,7 +270,7 @@ height: 75px;
   font-size: 1.7em;
   transition: all 0.25s ease-out;
 }
-#regbtn:hover , .devpostbtn:hover
+#regbtn:hover, #collapsebtn:hover, .devpostbtn:hover
 {
   background-color: #bb1b1b;
 }
@@ -286,7 +290,10 @@ footer
 {
   opacity: 1;
 }
-
+.invis
+{
+  display: none;
+}
 .tempimg{
   width: 185px;
   height: 185px;
