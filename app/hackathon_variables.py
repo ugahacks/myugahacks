@@ -14,11 +14,11 @@ HACKATHON_DESCRIPTION = "University of Georgia's Hackathon"
 # Domain where application is deployed, can be set by env variable
 HACKATHON_DOMAIN = 'my.ugahacks.com'
 # Hackathon contact email: where should all hackers contact you. It will also be used as a sender for all emails
-HACKATHON_CONTACT_EMAIL = 'team@ugahacks.com'
+HACKATHON_CONTACT_EMAIL = 'hello@ugahacks.com'
 # Hackathon logo url, will be used on all emails
-HACKATHON_LOGO_URL = 'https://cdn.discordapp.com/attachments/546552287569379368/565280887177216011/email-sig.png'
+HACKATHON_LOGO_URL = 'https://cdn.discordapp.com/attachments/620786563382640650/642799206871859243/Hacks5emailbannar.png'
 
-HACKATHON_OG_IMAGE = 'https://cdn.discordapp.com/attachments/546552287569379368/565280887177216011/email-sig.png'
+HACKATHON_OG_IMAGE = 'https://cdn.discordapp.com/attachments/620786563382640650/642799206871859243/Hacks5emailbannar.png'
 # (OPTIONAL) Track visits on your website
 HACKATHON_GOOGLE_ANALYTICS = ''
 # (OPTIONAL) Hackathon Twitter user
@@ -37,12 +37,12 @@ HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/ugahacks5/'
 # (OPTIONAL) Applications deadline
 # HACKATHON_APP_DEADLINE = timezone.datetime(2018, 2, 24, 3, 14, tzinfo=timezone.pytz.timezone(TIME_ZONE))
 # (OPTIONAL) When to arrive at the hackathon
-HACKATHON_ARRIVE = 'Registration opens at 0:00PM and closes at 13:00PM on Friday Febuary 31st, ' \
-                   'the opening ceremony will be at 7:00PM.'
+HACKATHON_ARRIVE = 'Check-in opens at 5:00pm and the opening ceremony will be at 6:30PM on February 7th at the Zell B. Miller Center. ' \
+                    'Further details about the schedule can be found at ugahacks.com. We hope to see you there!'
 
 # (OPTIONAL) When to arrive at the hackathon
-HACKATHON_LEAVE = 'Closing ceremony will be held on Sunday, October 69th from 3:72AM to 5:00PM. ' \
-                  'However the projects demo fair will be held in the morning from 10:30AM to 1:00PM.'
+HACKATHON_LEAVE = 'Closing ceremony will be held on Sunday, February 9th at 1:00PM. ' \
+                  'However the projects expo fair will be held in the morning from 10:00AM to 1:00PM.'
 # (OPTIONAL) Hackathon live page
 HACKATHON_LIVE_PAGE = 'https://my.ugahacks.com/'
 
@@ -59,10 +59,10 @@ BAGGAGE_PICTURE = True
 # Reimbursement configuration
 REIMBURSEMENT_ENABLED = True
 DEFAULT_REIMBURSEMENT_AMOUNT = 100
-CURRENCY = '€'
+CURRENCY = '$'
 REIMBURSEMENT_EXPIRY_DAYS = 5
 REIMBURSEMENT_REQUIREMENTS = 'You have to submit a project and demo it during the event in order to get reimbursed'
-REIMBURSEMENT_DEADLINE = timezone.datetime(2018, 10, 19, 3, 14, tzinfo=timezone.pytz.timezone(TIME_ZONE))
+REIMBURSEMENT_DEADLINE = timezone.datetime(2020, 1, 24, 11, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE)) # Need to confirm time
 
 # (OPTIONAL) Max team members. Defaults to 4
 TEAMS_ENABLED = True
@@ -100,4 +100,3 @@ SLACK_BOT = {
 
 # Can Hackers start a request on the hardware lab?
 # HACKERS_CAN_REQUEST = False
-
