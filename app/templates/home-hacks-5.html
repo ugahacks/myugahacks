@@ -92,6 +92,7 @@
       </div>
     </div>
   </div>
+  <img id="bytetyping" src="{% static "images/ByteTyping.png" %}" alt="Byte typing away on the laptop" data-aos="fade-up">
   <div id="HOF" hidden>
     <div class="section" data-aos="fade-up">
       <div class="sectionhead">
@@ -146,18 +147,24 @@
         <br>
         <h1>About</h1>
       </div>
-      <div class="sectiontext">
-        <p>This year at UGAHacks, we are all about helping your ideas blast off. Hackathons are all about exploring the
-          galaxies filled with ideas and claiming one for yourself. You might even explore multiple planets before
-          settling on one ,or use one as a base station to reach other ones. Log on and join us for this epic 36 hour
-          programming sleepover, hosted at UGA's <a href="https://goo.gl/maps/rMa5f99XiaW39a8e6" class="textlink">Zell
-            B. Miller Learning Center.</a></p>
-        <p>Houston -- we got a problem! Fret not, we have mentors, workshops, and volunteers to help you get those
-          critical resources so you can venture forth. Two resources you'll not need to worry about is food and water as
-          plenty of shipments from Earth will be sent out throughout the event. We also got fun events such as karaoke
-          and video game tournaments when you just want to unwind and float around in space. Just remember not to get
-          sucked up into the black hole of procrastination!</p>
-        <p class="subheader"> We can't wait to see your otherworldly ideas!</p>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div class="abouttext">
+          <p>This year at UGAHacks, we are all about helping your ideas blast off. Hackathons are all about exploring the
+            galaxies filled with ideas and claiming one for yourself. You might even explore multiple planets before
+            settling on one ,or use one as a base station to reach other ones. Log on and join us for this epic 36 hour
+            programming sleepover, hosted at UGA's <a href="https://goo.gl/maps/rMa5f99XiaW39a8e6" class="textlink">Zell
+              B. Miller Learning Center.</a></p>
+          <p>Houston -- we got a problem! Fret not, we have mentors, workshops, and volunteers to help you get those
+            critical resources so you can venture forth. Two resources you'll not need to worry about is food and water as
+            plenty of shipments from Earth will be sent out throughout the event. We also got fun events such as karaoke
+            and video game tournaments when you just want to unwind and float around in space. Just remember not to get
+            sucked up into the black hole of procrastination!</p>
+          <p class="subheader"> We can't wait to see your otherworldly ideas!</p>
+        </div>
+          <figure id="bytehello">
+            <img src="{% static "images/ByteHello.png" %}" alt="Byte (UGAHacks's new mascot) greeting everyone">
+            <figcaption>Welcome Byte - UGAHacks's new mascot!</figcaption>
+          </figure>
       </div>
     </div>
   </div>
@@ -182,6 +189,7 @@
           <h2><b>January 30<sup>th</sup></b></h2>
         </div>
       </div>
+      <img id="bytecal" src="{% static "images/ByteCalender.png" %}" alt="Byte looking at the deadlines" data-aos="fade-up">
       <div class="scheduletext">
         <div class="schedulecol" data-aos="fade-up-right">
           <h3>Friday - Feb. 7th</h3>
@@ -304,11 +312,10 @@
           <p>Enthusiasm! Laptops, phones, chargers, and other tools you might need for your project are also important!
             If you're staying overnight, be sure to bring the necessary toiletries and a sleeping bag. Additionally,
             please bring your official student ID or government ID (no photocopies allowed).</p>
-          <a id='collapsebtn'>Show More</a>
         </div>
       </div>
       <div class="questionrow invis" id="moreinfo">
-       <div class="questioncol">
+       <div class="questioncol" data-aos="fade-up-right">
          <h4><i>What if I don't have a team or idea?</i></h4>
          <p>Don't sweat it! You're free to join any existing team or form a new one when you get there. We'll also
            provide ample opportunities for hackers to meet each other and brainstorm some amazing ideas.</p>
@@ -322,7 +329,7 @@
              class="textlink">hello@ugahacks.com</a> - Be sure to mention the specific position in the subject of the
            email. See you at the event!</p>
        </div>
-       <div class="questioncol">
+       <div class="questioncol" data-aos="fade-up-left">
          <h4><i>How many people can I have on my team?</i></h4>
          <p>There is no hard limit, but we recommend teams be at most 4 people, as we only have prizes for 4 people per
            team.</p>
@@ -335,6 +342,11 @@
          <p>Reach out to <a href="mailto:hello@ugahacks.com" class="textlink">hello@ugahacks.com</a> and we'll be happy
            to answer it!</p>
        </div>
+      </div>
+      <div class="questionrow">
+        <div class="questioncol" id="buttoncol">
+          <a id='collapsebtn'>Show More</a>
+        </div>
       </div>
     </div>
   </div>

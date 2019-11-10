@@ -155,6 +155,39 @@ table
 {
   align: center;
 }
+#bytetyping
+{
+  width: 15%;
+  height: 15%;
+  margin: auto;
+  display: block;
+  padding-top: 25px;
+  min-width: 150px;
+}
+#bytecal
+{
+  width: 25%;
+  height: 25%;
+  margin: auto;
+  display: block;
+  padding-bottom: 25px;
+  min-width: 200px;
+}
+#bytehello > img
+{
+  width: 80%;
+  padding-left: 15px;
+  min-width: 200px;
+}
+.abouttext
+{
+  padding-top: 10px;
+  padding-left: 50px;
+  padding-right: 70px;
+  font-size: 1.2em;
+  text-align: justify;
+  max-width: 800px;
+}
 #navbarNavAltMarkup > a
 {
   font-weight: 600;
@@ -232,6 +265,12 @@ height: 75px;
   {
     flex-basis: 100%;
   }
+  #bytehello > img
+  {
+    width: 20%;
+    margin: auto;
+    display: block;
+  }
 }
 @media (max-width:1100px)
 {
@@ -253,11 +292,11 @@ height: 75px;
 }
 #keydates + .keydatestext
 {
-  margin-bottom: 70px;
+  margin-bottom: 5px;
 }
 #collapsebtn
 {
-  font-size: inherit !important;
+  font-size: x-large !important;
 }
 #regbtn,#collapsebtn, .devpostbtn
 {
@@ -273,6 +312,10 @@ height: 75px;
 #regbtn:hover, #collapsebtn:hover, .devpostbtn:hover
 {
   background-color: #bb1b1b;
+}
+#buttoncol
+{
+  text-align: center !important;
 }
 footer
 {
