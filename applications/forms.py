@@ -22,8 +22,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                'placeholder': 'https://www.linkedin.com/in/byte'}))
     site = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'https://byte.space'}))
-    phone_number = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': '+#########'}))
     university = forms.CharField(required=True,
                                  label='What university do you study at?',
                                  help_text='Current or most recent school you attended.',
@@ -61,13 +59,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         widget=forms.RadioSelect
     )
 
-    part_type = forms.TypedChoiceField(
-        required=False,
-        label='What are you applying for?',
-        choices=(('hacker', 'Hacker'), ('mentor', 'Mentor'), ('vol', 'Volunteer')),
-        initial=False,
-        widget=forms.RadioSelect
-    )
     """
     #should I change this to birthday? - yes
         #under_age
@@ -85,12 +76,12 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     #MLH Terms and Conditions
     terms_and_conditions = forms.BooleanField(
         required=True,
-        label='I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post- event informational e-mails, and occasional messages about hackathons with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.  I further agree to the terms of both the MLH Contest Terms and Conditions and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>.'
+        label='I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post- event informational e-mails, and occasional messages about hackathons with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.  I further agree to the terms of both the MLH Contest Terms and Conditions and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
     cvs_edition = forms.BooleanField(
-        required=False,
-        label='I authorize "UGAHacks" to share my resumé with UGAHacks5 Sponsors.'
+        required=True,
+        label='I have read and agree to the above UGAHacks policies upon submitting my application.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
     diet_notice = forms.BooleanField(
@@ -99,7 +90,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
               'manage the catering service only.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
-    resume = forms.FileField(required=True)
+    resume = forms.FileField(required=False)
 
     def clean_resume(self):
         resume = self.cleaned_data['resume']
@@ -216,9 +207,9 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fieldsets ordered and with description
         self._fieldsets = [
             ('Personal Info',
-             {'fields': ('university', 'degree', 'graduation_year', 'gender', 'other_gender',
-                         'phone_number', 'tshirt_size', 'diet', 'other_diet',
-                         'birthday', 'part_type', 'ethnicity', 'hardware'),
+             {'fields': ('university', 'degree', 'graduation_year', 'gender', 'other_gender','ethnicity',
+                          'tshirt_size', 'diet', 'other_diet',
+                           'hardware'),
               'description': 'Hey there, before we begin we would like to know a little more about you.', }),
             ('Hackathons?', {'fields': ('description', 'first_timer', 'projects'), }),
             ('Show us what you\'ve built',
@@ -252,12 +243,14 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
         if not self.instance.pk:
             self._fieldsets.append(('UGAHacks Policies', {
-                'fields': ('terms_and_conditions', 'code_of_conduct', 'diet_notice', 'cvs_edition'),
+                'fields': ('cvs_edition', 'terms_and_conditions', 'code_of_conduct', 'diet_notice'),
                 'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
                                'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
-                               'process your information to organize an awesome hackaton. It '
-                               'will also include images and videos of yourself during the event. '
-                               'Your data will be used for admissions mainly. We may also reach '
+                               'will be processing your information with the aim of giving you and others the best possible experience come next February. '
+                               'Your data will mainly be used for admissions and promotional purposes. '
+                               'By submitting an application, you are authorizing us to share your resume with our Sponsors. This '
+                               'will also include the use of any images and videos of yourself during the event. '
+                               'We may also reach '
                                'out to you (sending you an e-mail) about other events that we are '
                                'organizing and that are of a similar nature to those previously '
                                'requested by you. For more information on the processing of your '
@@ -295,7 +288,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'tshirt_size': 'What\'s your t-shirt size?',
             'diet': 'Dietary requirements',
             'hardware': 'Hardware you would like us to have',
-            'origin': 'Where are you joining us from?',
+            'origin': 'What city are you joining us from?',
             'description': 'Why are you excited about %s?' % settings.HACKATHON_NAME,
             'projects': 'What projects have you worked on?',
             'resume': 'Upload your resume',

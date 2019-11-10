@@ -127,10 +127,6 @@ class Application(models.Model):
         # Personal data (asking here because we don't want to ask birthday)
         birth_year = models.IntegerField(null=True)
     """
-    phone_number = models.CharField(blank=True, null=True, max_length=16,
-                                    validators=[RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                                                               message="Phone number must be entered in the format: \
-                                                                  '+#########'. Up to 15 digits allowed.")])
 
     # Where is this person coming from?
     origin = models.CharField(max_length=300)
