@@ -185,6 +185,7 @@ table
   margin: auto;
   padding-top: 30px;
   vertical-align: middle;
+  transform: scaleX(-1);
 }
 .abouttext
 {
