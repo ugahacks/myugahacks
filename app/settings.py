@@ -24,11 +24,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import environ
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, False)
+    DEBUG=(bool, True)
 )
 
-DEBUG = env('DEBUG')
+environ.Env.read_env()
 
+
+DEBUG = env('DEBUG')
+SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS = ['my.ugahacks.com','ugahacks.com', 'localhost', '127.0.0.1', '0.0.0.0', '165.227.125.129']
 
