@@ -27,6 +27,7 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
+DEBUG = env('DEBUG')
 
 
 ALLOWED_HOSTS = ['my.ugahacks.com','ugahacks.com', 'localhost', '127.0.0.1', '0.0.0.0', '165.227.125.129']
