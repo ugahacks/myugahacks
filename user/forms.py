@@ -40,7 +40,7 @@ class RegisterForm(LoginForm):
         label='I\'ve read, understand and accept <a href="/privacy_and_cookies" target="_blank">UGAHacks '
               'Privacy and Cookies Policy</a>.<span style="color: red; font-weight: bold;"> *</span>')
 
-    birth_year = forms.IntegerField(label="Birth Year")
+    birth_year = forms.IntegerField(label="Age")
 
     field_order = ['name', 'email', 'password', 'password2', 'birth_year', 'terms_and_conditions']
 
