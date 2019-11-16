@@ -21,11 +21,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET', '<ENTER_YOUR_OWN_KEY>')
+import environ
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, True)
+)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('PROD_MODE', "false").lower() == "false"
+environ.Env.read_env()
+
+
+DEBUG = env('DEBUG')
+SECRET_KEY = env('SECRET_KEY')
+
 ALLOWED_HOSTS = ['my.ugahacks.com','ugahacks.com', 'localhost', '127.0.0.1', '0.0.0.0', '165.227.125.129']
 
 # Application definition
@@ -128,19 +135,6 @@ if os.environ.get('PG_PWD', None):
         }
     }
 
-"""
-DATABASES = {
-    'default': {
-        'CONN_MAX_AGE': 0,
-        'ENGINE': 'django.db.backends.sqlite3',
-        'HOST': 'localhost',
-        'NAME': 'project.db',
-        'PASSWORD': '',
-        'PORT': '',
-        'USER': ''
-    }
-}
-"""
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -213,7 +207,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'no-reply@ugahacks.com'
-EMAIL_HOST_PASSWORD = '<password>'
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'UGAHacks Team <no-reply@ugahacks.com>'
