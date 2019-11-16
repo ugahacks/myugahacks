@@ -192,7 +192,7 @@ table
   padding-top: 10px;
   padding-left: 50px;
   padding-right: 70px;
-  font-size: 1.2em;
+  font-size: 1.3em;
   text-align: justify;
   max-width: 800px;
 }
@@ -283,7 +283,7 @@ height: 75px;
 }
 @media (min-width: 320px) and (max-width: 480px) {
 
-  .sectiontext , .questioncol
+  .sectiontext , .questioncol, .abouttext
   {
     font-size: 1.1em;
   }
