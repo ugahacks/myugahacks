@@ -20,6 +20,10 @@ div
 {
   min-height: 100vh;
 } */
+figcaption
+{
+  text-align: center;
+}
 #particles-js
 {
   position: fixed;
@@ -157,12 +161,12 @@ table
 }
 #bytetyping
 {
-  width: 15%;
-  height: 15%;
+  width: 25%;
+  height: 25%;
   margin: auto;
   display: block;
   padding-top: 25px;
-  min-width: 150px;
+  min-width: 250px;
 }
 #bytecal
 {
@@ -175,16 +179,20 @@ table
 }
 #bytehello > img
 {
-  width: 80%;
-  padding-left: 15px;
+  width: 45%;
   min-width: 200px;
+  display: block;
+  margin: auto;
+  padding-top: 30px;
+  vertical-align: middle;
+  transform: scaleX(-1);
 }
 .abouttext
 {
   padding-top: 10px;
   padding-left: 50px;
   padding-right: 70px;
-  font-size: 1.2em;
+  font-size: 1.3em;
   text-align: justify;
   max-width: 800px;
 }
@@ -265,12 +273,6 @@ height: 75px;
   {
     flex-basis: 100%;
   }
-  #bytehello > img
-  {
-    width: 20%;
-    margin: auto;
-    display: block;
-  }
 }
 @media (max-width:1100px)
 {
@@ -281,7 +283,7 @@ height: 75px;
 }
 @media (min-width: 320px) and (max-width: 480px) {
 
-  .sectiontext , .questioncol
+  .sectiontext , .questioncol, .abouttext
   {
     font-size: 1.1em;
   }
