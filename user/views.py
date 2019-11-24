@@ -6,7 +6,6 @@ from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
-
 from app.utils import reverse
 from applications import models as a_models
 from user import forms, models, tokens, providers

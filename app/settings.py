@@ -30,6 +30,7 @@ env = environ.Env(
 environ.Env.read_env()
 
 
+DEBUG = True;
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
@@ -57,7 +58,8 @@ INSTALLED_APPS = [
     'stats',
     'storages',
     'meals',
-    'judging'
+    'judging',
+    'workshops',
 ]
 
 if BAGGAGE_ENABLED:
