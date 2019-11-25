@@ -30,7 +30,7 @@ env = environ.Env(
 environ.Env.read_env()
 
 
-DEBUG = True;
+
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
@@ -114,8 +114,13 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
+        'CONN_MAX_AGE': 0,
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'HOST': 'localhost',
+        'NAME': 'project.db',
+        'PASSWORD': '',
+        'PORT': '',
+        'USER': ''
     }
 }
 
@@ -136,6 +141,9 @@ if os.environ.get('PG_PWD', None):
             'PORT': '5432',
         }
     }
+
+
+
 
 
 # Password validation
