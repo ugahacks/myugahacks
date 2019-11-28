@@ -178,7 +178,7 @@ class HackerApplication(IsHackerMixin, TabsView):
 
             messages.success(request, 'Application changes saved successfully!')
 
-            return HttpResponseRedirect(reverse('application'))
+            return HttpResponseRedirect(reverse('dashboard'))
         else:
             c = self.get_context_data()
             c.update({'form': form})

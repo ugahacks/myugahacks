@@ -22,6 +22,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                'placeholder': 'https://www.linkedin.com/in/byte'}))
     site = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'https://byte.space'}))
+        
     university = forms.CharField(required=True,
                                  label='What university do you study at?',
                                  help_text='Current or most recent school you attended.',
@@ -184,6 +185,28 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             raise forms.ValidationError("Reimbursement applications are now closed. Trying to hack us?")
         return reimb
 
+    def clean_volunteer_time(self):
+        data = self.cleaned_data['volunteer_time']
+        participant = self.cleaned_data['participant']
+        if participant == 'volunteer' and not data:
+            raise forms.ValidationError("Please tell us what time you want to volunteer")
+        return data
+
+    def clean_mentor_topic(self):
+        data = self.cleaned_data['mentor_topic']
+        participant = self.cleaned_data['participant']
+        if participant == 'mentor' and not data:
+            raise forms.ValidationError("Please tell us what topic you want to mentor for")
+        return data
+
+    def clean_mentor_workshop(self):
+        data = self.cleaned_data['mentor_workshop']
+        participant = self.cleaned_data['participant']
+        if participant == 'mentor' and not data:
+            raise forms.ValidationError("Please tell us if you would like to host a workshop")
+        return data
+
+
     def clean_other_diet(self):
         data = self.cleaned_data['other_diet']
         diet = self.cleaned_data['diet']
@@ -207,7 +230,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fieldsets ordered and with description
         self._fieldsets = [
             ('Personal Info',
-             {'fields': ('university', 'degree', 'graduation_year', 'gender', 'other_gender','ethnicity',
+             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree', 'graduation_year', 'gender', 'other_gender','ethnicity',
                           'tshirt_size', 'diet', 'other_diet',
                            'hardware'),
               'description': 'Hey there, before we begin we would like to know a little more about you.', }),
@@ -263,6 +286,9 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     class Meta:
         model = models.Application
         help_texts = {
+            'volunteer_time' : 'What time can you volunteer?',
+            'mentor_topic' : 'What topic do you want to mentor?',
+            'mentor_workshop' : 'Would you like to host a workshop?',
             'gender': 'This is for demographic purposes. You can skip this question if you want.',
             'graduation_year': 'What year have you graduated on or when will you graduate',
             'degree': 'What\'s your major/degree?',
@@ -282,6 +308,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         }
 
         labels = {
+            'participant' : 'What type of participant are you?',
             'gender': 'What gender do you identify as?',
             'other_gender': 'Self-describe',
             'graduation_year': 'What year will you graduate?',

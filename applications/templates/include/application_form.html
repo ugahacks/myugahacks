@@ -62,6 +62,24 @@
                 }
             });
 
+            // This variable is needed for next 3 functions
+            var participant = $('#id_participant');
+
+            var volunteer_time = $('#id_volunteer_time');
+            conditional_field(volunteer_time, participant, () => {
+                return participant.val() === 'Volunteer';
+            })
+
+            var mentor_topic = $('#id_mentor_topic');
+            conditional_field(mentor_topic, participant, () => {
+                return participant.val() === 'Mentor';
+            })
+
+            var mentor_workshop = $('#id_mentor_workshop');
+            conditional_field(mentor_workshop, participant, () => {
+                return participant.val() === 'Mentor';
+            })
+
             var other_gender = $('#id_other_gender');
             var gender = $('#id_gender');
             conditional_field(other_gender, gender, () => {
@@ -71,6 +89,7 @@
             var other_diet = $('#id_other_diet');
             var diet = $('#id_diet');
             conditional_field(other_diet, diet, function () {
+                console.log(diet.val())
                 return diet.val() === 'Others';
             }, 1);
             var diet_notice = $('#id_diet_notice');

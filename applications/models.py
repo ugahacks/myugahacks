@@ -64,6 +64,15 @@ DIETS = [
     (D_OTHER, 'Others')
 ]
 
+P_HACKER = 'Hacker'
+P_VOLUNTEER = 'Volunteer'
+P_MENTOR = 'Mentor'
+
+PARTICIPANTS = [
+    (P_HACKER, 'Hacker'),
+    (P_VOLUNTEER, 'Volunteer'),
+    (P_MENTOR, 'Mentor'),
+]
 
 W_XXS = 'W-XSS'
 W_XS = 'W-XS'
@@ -143,6 +152,12 @@ class Application(models.Model):
     reimb_amount = models.FloatField(blank=True, null=True, validators=[
         MinValueValidator(0, "Negative? Really? Please put a positive value")])
 
+
+    # Participant
+    participant = models.CharField(max_length=300, choices=PARTICIPANTS, default=P_HACKER)
+    volunteer_time = models.CharField(max_length=600, blank=True, null=True)
+    mentor_topic = models.CharField(max_length=600, blank=True, null=True)
+    mentor_workshop = models.CharField(max_length=600, blank=True, null=True)
 
 
     # Giv me a resume here!
