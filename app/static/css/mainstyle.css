@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap');
 
-body{
-    /* background-image: url("../images/binary.png"); */
-    background: linear-gradient(#17182f,#0d0f12);
+body
+{
+  background: linear-gradient(#17182f,#0d0f12);
 }
 html
 {
@@ -20,10 +20,6 @@ div
 {
   min-height: 100vh;
 } */
-figcaption
-{
-  text-align: center;
-}
 #particles-js
 {
   position: fixed;
@@ -68,7 +64,7 @@ figcaption
   visibility: visible;
   transform: scaleX(1);
 }
-.subheader
+figcaption, .subheader
 {
   text-align: center;
 }
@@ -206,29 +202,12 @@ table
 {
   font-weight: 600;
 }
-#nav-tab a, .tabhead
-{
-  color: white;
-}
-.active
-{
-  color: black !important;
-}
-#nav-tab a:hover
-{
-  color:#e7be48;
-}
 #congrats
 {
   text-align: center;
   color:#e7be48;
 }
-#HOF
-{
-  max-width: 1300px;
-  margin: auto;
-}
-#Organizers
+#HOF, #Organizers
 {
   max-width: 1300px;
   margin: auto;
@@ -383,10 +362,6 @@ footer
 
 .carousel-indicators > li[class="active"]{
   background-color: #D51010 !important;
-}
-
-#nav-tab{
-  font-size: 1.6em;
 }
 
 #carstext1, #carstext4{
