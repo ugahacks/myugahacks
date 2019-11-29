@@ -42,15 +42,7 @@ class RegisterForm(LoginForm):
 
     birth_year = forms.IntegerField(label="Birth Year",min_value=1920,max_value=2019)
 
-    part_type = forms.TypedChoiceField(
-            required=True,
-            label='What role are you applying for?',
-            choices=(('hacker', 'Hacker'), ('mentor', 'Mentor'), ('vol', 'Volunteer')),
-            initial=False,
-            widget=forms.RadioSelect
-        )
-
-    field_order = ['name', 'email', 'password', 'password2','part_type', 'birth_year', 'terms_and_conditions']
+    field_order = ['name', 'email', 'password', 'password2', 'birth_year', 'terms_and_conditions']
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -72,14 +64,6 @@ class RegisterForm(LoginForm):
                 " our Privacy and Cookies Policy."
             )
         return cc
-
-    def clean_part_type(self):
-        part = self.cleaned_data.get('part_type', False)
-        if not part and not self.instance.pk:
-            raise forms.ValidationError(
-                "In order to apply to the proper position and attend you have select a role you want to apply for."
-            )
-        return part
 
     def clean_birth_year(self):
          birth_year = self.cleaned_data.get('birth_year')
