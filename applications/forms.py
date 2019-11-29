@@ -294,7 +294,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'mentor_topic' : 'What topics are you confortable in mentoring?',
             'mentor_workshop' : 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',
             'gender': 'This is for demographic purposes. You can skip this question if you want.',
-            'hearabout': "This is for marketing purposes. You can skip this question if you want."
+            'hearabout': "This is for marketing purposes. You can skip this question if you want.",
             'class_status': 'Base your response on the number of years of college you have done not credit hours.',
             'graduation_year': 'What year have you graduated on or when will you graduate?',
             'degree': 'What\'s your major/degree?',
