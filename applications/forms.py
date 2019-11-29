@@ -22,12 +22,12 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                'placeholder': 'https://www.linkedin.com/in/byte'}))
     site = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'https://byte.space'}))
-        
+
     university = forms.CharField(required=True,
                                  label='What university do you study at?',
                                  help_text='Current or most recent school you attended.',
                                  widget=forms.TextInput(
-                                     attrs={'class': 'typeahead-schools', 'autocomplete': 'off'}))
+                                     attrs={'class': 'typeahead-schools2', 'autocomplete': 'off'}))
 
     degree = forms.CharField(required=True, label='What\'s your major/degree?',
                              help_text='Current or most recent degree you\'ve received',
@@ -42,20 +42,27 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         widget=forms.RadioSelect
     )
 
+    first_ugahacks = forms.TypedChoiceField(
+        required=True,
+        label='Have you attended any previous UGAHacks?'
+        coerce=lambda x: x == 'True',
+        choices=((False, 'No'), (True, 'Yes')),
+        widget=forms.RadioSelect
+    )
+
     reimb = forms.TypedChoiceField(
         required=False,
-        label='Do you need a travel reimbursement to attend?',
+        label='Would you like to apply for travel reimbursement?',
         coerce=lambda x: x == 'True',
         choices=((False, 'No'), (True, 'Yes')),
         initial=False,
         widget=forms.RadioSelect
     )
 
-    #remember to edit "other" option to include text box for specification
     ethnicity = forms.TypedChoiceField(
         required=False,
         label='What race/ethnicity do you identify with?',
-        choices=(('amIndian', 'American Indian or Alaskan Native'), ('asian', 'Asian/Pacific Islander'), ('aAm', 'Black or African American'), ('hispanic', 'Hispanic'), ('white', 'White or Caucasian'), ('multiple', 'Multiple ethnicities/Other (please specify)'), ('noAnswer', 'Prefer not to answer')),
+        choices=(('amIndian', 'American Indian or Alaskan Native'), ('asian', 'Asian/Pacific Islander'), ('aAm', 'Black or African American'), ('hispanic', 'Hispanic'), ('white', 'White or Caucasian'), ('multiple', 'Multiple ethnicities/Other'), ('noAnswer', 'Prefer not to answer')),
         initial=False,
         widget=forms.RadioSelect
     )
@@ -99,10 +106,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         if size > settings.MAX_UPLOAD_SIZE:
             raise forms.ValidationError("Please keep resume size under %s. Current filesize %s!" % (
                 filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(size)))
-        if not resume and not self.instance.pk:
-            raise forms.ValidationError(
-                "In order to apply and attend you have to provide a resume."
-            )
         return resume
 
     def clean_terms_and_conditions(self):
@@ -164,7 +167,8 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     def clean_projects(self):
         data = self.cleaned_data['projects']
         first_timer = self.cleaned_data['first_timer']
-        if not first_timer and not data:
+        first_ugahacks = self.cleaned_data['first_ugahacks']
+        if not first_timer and not first_ugahacks and not data:
             raise forms.ValidationError("Please fill this in order for us to know you a bit better.")
         return data
 
@@ -230,15 +234,15 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fieldsets ordered and with description
         self._fieldsets = [
             ('Personal Info',
-             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree', 'graduation_year', 'gender', 'other_gender','ethnicity',
+             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree','class_status', 'graduation_year', 'gender', 'other_gender','ethnicity',
                           'tshirt_size', 'diet', 'other_diet',
                            'hardware'),
               'description': 'Hey there, before we begin we would like to know a little more about you.', }),
-            ('Hackathons?', {'fields': ('description', 'first_timer', 'projects'), }),
+            ('Hackathons?', {'fields': ('description', 'first_timer', 'first_ugahacks', 'hearabout', 'projects'), }),
             ('Show us what you\'ve built',
              {'fields': ('github', 'devpost', 'linkedin', 'site', 'resume'),
               'description': 'Some of our sponsors may use this information for recruitment purposes,'
-              'so please include as much as you can.'}),
+              ' so please include as much as you can.'}),
         ]
         deadline = getattr(settings, 'REIMBURSEMENT_DEADLINE', False)
         r_enabled = getattr(settings, 'REIMBURSEMENT_ENABLED', False)
@@ -287,10 +291,12 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         model = models.Application
         help_texts = {
             'volunteer_time' : 'What time can you volunteer?',
-            'mentor_topic' : 'What topic do you want to mentor?',
-            'mentor_workshop' : 'Would you like to host a workshop?',
+            'mentor_topic' : 'What topics are you confortable in mentoring?',
+            'mentor_workshop' : 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',
             'gender': 'This is for demographic purposes. You can skip this question if you want.',
-            'graduation_year': 'What year have you graduated on or when will you graduate',
+            'hearabout': "This is for marketing purposes. You can skip this question if you want."
+            'class_status': 'Base your response on the number of years of college you have done not credit hours.',
+            'graduation_year': 'What year have you graduated on or when will you graduate?',
             'degree': 'What\'s your major/degree?',
             'other_diet': 'Please fill here in your dietary requirements. We want to make sure we have food for you!',
             'hardware': 'Any hardware that you would like us to have. We can\'t promise anything, '
@@ -305,17 +311,20 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'description': forms.Textarea(attrs={'rows': 3, 'cols': 40}),
             'projects': forms.Textarea(attrs={'rows': 3, 'cols': 40}),
             'graduation_year': forms.RadioSelect(),
+            'class_status': forms.RadioSelect(),
         }
 
         labels = {
             'participant' : 'What type of participant are you?',
             'gender': 'What gender do you identify as?',
             'other_gender': 'Self-describe',
+            'class_status': 'What is your class status?',
             'graduation_year': 'What year will you graduate?',
             'tshirt_size': 'What\'s your t-shirt size?',
             'diet': 'Dietary requirements',
             'hardware': 'Hardware you would like us to have',
             'origin': 'What city are you joining us from?',
+            'hearabout': "How did you hear about UGAHacks 5?",
             'description': 'Why are you excited about %s?' % settings.HACKATHON_NAME,
             'projects': 'What projects have you worked on?',
             'resume': 'Upload your resume',
