@@ -69,16 +69,19 @@
             conditional_field(volunteer_time, participant, () => {
                 return participant.val() === 'Volunteer';
             })
+            volunteer_time.parent().addClass('required');
 
             var mentor_topic = $('#id_mentor_topic');
             conditional_field(mentor_topic, participant, () => {
                 return participant.val() === 'Mentor';
             })
+            mentor_topic.parent().addClass('required');
 
             var mentor_workshop = $('#id_mentor_workshop');
             conditional_field(mentor_workshop, participant, () => {
                 return participant.val() === 'Mentor';
             })
+            mentor_workshop.parent().addClass('required');
 
             var other_gender = $('#id_other_gender');
             var gender = $('#id_gender');

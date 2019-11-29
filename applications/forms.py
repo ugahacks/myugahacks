@@ -44,7 +44,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
     first_ugahacks = forms.TypedChoiceField(
         required=True,
-        label='Have you attended any previous UGAHacks?'
+        label='Have you attended any previous UGAHacks?',
         coerce=lambda x: x == 'True',
         choices=((False, 'No'), (True, 'Yes')),
         widget=forms.RadioSelect
