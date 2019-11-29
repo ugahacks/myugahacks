@@ -38,14 +38,12 @@ NO_ANSWER = 'NA'
 MALE = 'M'
 FEMALE = 'F'
 NON_BINARY = 'NB'
-GENDER_OTHER = 'X'
 
 GENDERS = [
     (NO_ANSWER, 'Prefer not to answer'),
     (MALE, 'Male'),
     (FEMALE, 'Female'),
     (NON_BINARY, 'Non-binary'),
-    (GENDER_OTHER, 'Prefer to self-describe'),
 ]
 
 D_NONE = 'None'
@@ -74,13 +72,6 @@ PARTICIPANTS = [
     (P_MENTOR, 'Mentor'),
 ]
 
-W_XXS = 'W-XSS'
-W_XS = 'W-XS'
-W_S = 'W-S'
-W_M = 'W-M'
-W_L = 'W-L'
-W_XL = 'W-XL'
-W_XXL = 'W-XXL'
 T_XXS = 'XXS'
 T_XS = 'XS'
 T_S = 'S'
@@ -88,14 +79,8 @@ T_M = 'M'
 T_L = 'L'
 T_XL = 'XL'
 T_XXL = 'XXL'
+
 TSHIRT_SIZES = [
-    (W_XXS, "Women's - XXS"),
-    (W_XS, "Women's - XS"),
-    (W_S, "Women's - S"),
-    (W_M, "Women's - M"),
-    (W_L, "Women's - L"),
-    (W_XL, "Women's - XL"),
-    (W_XXL, "Women's - XXL"),
     (T_XXS, "Unisex - XXS"),
     (T_XS, "Unisex - XS"),
     (T_S, "Unisex - S"),
@@ -107,8 +92,51 @@ TSHIRT_SIZES = [
 DEFAULT_TSHIRT_SIZE = T_M
 
 YEARS = [(int(size), size) for size in ('2018 2019 2020 2021 2022 2023 2024'.split(' '))]
-DEFAULT_YEAR = 2018
+DEFAULT_YEAR = 2019
 
+C_FRESHMAN = 'Freshman'
+C_SOPHOMORE = 'Sophomore'
+C_JUNIOR = 'Junior'
+C_SENIOR = 'Senior'
+C_GRAD = 'Graduate Student'
+
+CLASSSTATUS = [
+    (C_FRESHMAN, 'Freshman'),
+    (C_SOPHOMORE, 'Sophomore'),
+    (C_JUNIOR, 'Junior'),
+    (C_SENIOR, 'Senior'),
+    (C_GRAD, 'Graduate Student'),
+]
+
+H_SEARCH = 'Search Engine'
+H_TWITTER = 'Twitter'
+H_FACEBOOK = 'Facebook'
+H_INSTAGRAM = 'Instagram'
+H_GITHUB = 'GitHub'
+H_EMAIL = "Promotional Emails"
+H_FRIENDS = "Friends"
+H_PROF = "Professors/University-wide annoucement"
+H_PREV = "Enjoyed the last one/Want to attend again"
+
+HEARABOUT = [
+    (H_SEARCH, 'Search Engine'),
+    (H_TWITTER, 'Twitter'),
+    (H_FACEBOOK, 'Facebook'),
+    (H_INSTAGRAM, 'Instagram'),
+    (H_GITHUB, 'Github'),
+    (H_EMAIL, 'Promotional Emails'),
+    (H_FRIENDS, 'Friends'),
+    (H_PROF, 'Professors/University-wide annoucement'),
+    (H_PREV, 'Enjoyed the last one/Want to attend again'),
+]
+
+CLASSSTATUS = [
+    (C_FRESHMAN, 'Freshman'),
+    (C_SOPHOMORE, 'Sophomore'),
+    (C_JUNIOR, 'Junior'),
+    (C_SENIOR, 'Senior'),
+    (C_GRAD, 'Graduate Student'),
+]
 
 class Application(models.Model):
     # META
@@ -142,8 +170,10 @@ class Application(models.Model):
 
     # Is this your first hackathon?
     first_timer = models.BooleanField(default=False)
+    first_ugahacks = models.BooleanField(default=False)
     # Why do you want to come to X?
     description = models.TextField(max_length=500)
+    hearabout = models.CharField(max_length=50, choices=HEARABOUT, default=H_SEARCH)
     # Explain a little bit what projects have you done lately
     projects = models.TextField(max_length=500, blank=True, null=True)
 
@@ -166,6 +196,7 @@ class Application(models.Model):
 
     # University
     graduation_year = models.IntegerField(choices=YEARS, default=DEFAULT_YEAR)
+    classstatus = models.CharField(max_length=300, choices=CLASSSTATUS, default=C_FRESHMAN)
     university = models.CharField(max_length=300)
     degree = models.CharField(max_length=300)
 
