@@ -50,7 +50,7 @@ HACKATHON_LIVE_PAGE = 'https://my.ugahacks.com/'
 REGEX_HACKATHON_ORGANIZER_EMAIL = '^.*@ugahacks\.com$'
 
 # (OPTIONAL) Send 500 errors to email while on production mode
-HACKATHON_DEV_EMAILS = ['noahbarnette@gmail.com']
+HACKATHON_DEV_EMAILS = ['noahbarnette@gmail.com', 'dev-team@ugahacks.com']
 
 # Baggage configuration
 BAGGAGE_ENABLED = True
