@@ -120,7 +120,7 @@ H_PROF = "Professors/University-wide annoucement"
 H_PREV = "Enjoyed the last one/Want to attend again"
 
 HEARABOUT = [
-    (H_NOANS, "N/A")
+    (H_NOANS, "N/A"),
     (H_SEARCH, 'Search Engine'),
     (H_TWITTER, 'Twitter'),
     (H_FACEBOOK, 'Facebook'),
