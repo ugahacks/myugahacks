@@ -344,7 +344,6 @@ h6 - for subject*/
     min-height: 800px;
     background-position: top center;
 }
-
 #sponsors h2 {
     font-weight: bold;
 }
@@ -359,18 +358,6 @@ h6 - for subject*/
 
 #sponsors .boxhead {
     margin-top: 90px;
-}
-
-.sponsorlogos {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    justify-content: space-evenly;
-}
-
-.sponsorlogos img {
-    max-width: 120px;
-    padding: 20px;
 }
 
 .uga-logo {
@@ -439,10 +426,6 @@ h6 - for subject*/
     }
     #main .btn {
         bottom: 12%;
-    }
-    .sponsorlogos {
-        display: flex;
-        flex-direction: column;
     }
     #parking-map {
         max-height: 35vh;
