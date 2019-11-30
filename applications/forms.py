@@ -268,23 +268,25 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
         # Fields that we only need the first time the hacker fills the application
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
-        if not self.instance.pk:
-            self._fieldsets.append(('UGAHacks Policies', {
-                'fields': ('cvs_edition', 'terms_and_conditions', 'code_of_conduct', 'diet_notice'),
-                'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
-                               'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
-                               'will be processing your information with the aim of giving you and others the best possible experience come next February. '
-                               'Your data will mainly be used for admissions and promotional purposes. '
-                               'By submitting an application, you are authorizing us to share your resume with our Sponsors. This '
-                               'will also include the use of any images and videos of yourself during the event. '
-                               'We may also reach '
-                               'out to you (sending you an e-mail) about other events that we are '
-                               'organizing and that are of a similar nature to those previously '
-                               'requested by you. For more information on the processing of your '
-                               'personal data and on how to exercise your rights of access, '
-                               'rectification, suppression, limitation, portability and opposition '
-                               'please visit our Privacy and Cookies Policy.</p>'
-            }))
+        
+        #this if statement gave a bug when the user tried to update their application
+        #if not self.instance.pk:
+        self._fieldsets.append(('UGAHacks Policies', {
+            'fields': ('cvs_edition', 'terms_and_conditions', 'code_of_conduct', 'diet_notice'),
+            'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
+                            'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
+                            'will be processing your information with the aim of giving you and others the best possible experience come next February. '
+                            'Your data will mainly be used for admissions and promotional purposes. '
+                            'By submitting an application, you are authorizing us to share your resume with our Sponsors. This '
+                            'will also include the use of any images and videos of yourself during the event. '
+                            'We may also reach '
+                            'out to you (sending you an e-mail) about other events that we are '
+                            'organizing and that are of a similar nature to those previously '
+                            'requested by you. For more information on the processing of your '
+                            'personal data and on how to exercise your rights of access, '
+                            'rectification, suppression, limitation, portability and opposition '
+                            'please visit our Privacy and Cookies Policy.</p>'
+        }))
         return super(ApplicationForm, self).fieldsets
 
     class Meta:
