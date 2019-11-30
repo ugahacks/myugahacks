@@ -264,7 +264,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                                     {'fields': ('origin',)}), )
         else:
             self._fieldsets.append(('Traveling',
-                                    {'fields': ('origin', 'reimb', 'reimb_amount'), }), )
+                                    {'fields': ('origin', 'reimb'), }), )
 
         # Fields that we only need the first time the hacker fills the application
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
