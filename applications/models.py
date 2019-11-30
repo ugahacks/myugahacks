@@ -196,7 +196,7 @@ class Application(models.Model):
 
     # University
     graduation_year = models.IntegerField(choices=YEARS, default=DEFAULT_YEAR)
-    classstatus = models.CharField(max_length=300, choices=CLASSSTATUS, default=C_FRESHMAN)
+    class_status = models.CharField(max_length=300, choices=CLASSSTATUS, default=C_FRESHMAN)
     university = models.CharField(max_length=300)
     degree = models.CharField(max_length=300)
 
