@@ -172,15 +172,15 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             raise forms.ValidationError("Please fill this in order for us to know you a bit better.")
         return data
 
-    def clean_reimb_amount(self):
-        data = self.cleaned_data['reimb_amount']
-        reimb = self.cleaned_data.get('reimb', False)
-        if reimb and not data:
-            raise forms.ValidationError("To apply for reimbursement please set a valid amount.")
-        deadline = getattr(settings, 'REIMBURSEMENT_DEADLINE', False)
-        if data and deadline and deadline <= timezone.now():
-            raise forms.ValidationError("Reimbursement applications are now closed. Trying to hack us?")
-        return data
+    # def clean_reimb_amount(self):
+    #     data = self.cleaned_data['reimb_amount']
+    #     reimb = self.cleaned_data.get('reimb', False)
+    #     if reimb and not data:
+    #         raise forms.ValidationError("To apply for reimbursement please set a valid amount.")
+    #     deadline = getattr(settings, 'REIMBURSEMENT_DEADLINE', False)
+    #     if data and deadline and deadline <= timezone.now():
+    #         raise forms.ValidationError("Reimbursement applications are now closed. Trying to hack us?")
+    #     return data
 
     def clean_reimb(self):
         reimb = self.cleaned_data.get('reimb', False)
@@ -264,11 +264,11 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                                     {'fields': ('origin',)}), )
         else:
             self._fieldsets.append(('Traveling',
-                                    {'fields': ('origin', 'reimb', 'reimb_amount'), }), )
+                                    {'fields': ('origin', 'reimb'), }), )
 
         # Fields that we only need the first time the hacker fills the application
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
-        
+
         #this if statement gave a bug when the user tried to update their application
         #if not self.instance.pk:
         self._fieldsets.append(('UGAHacks Policies', {
@@ -282,10 +282,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                             'We may also reach '
                             'out to you (sending you an e-mail) about other events that we are '
                             'organizing and that are of a similar nature to those previously '
-                            'requested by you. For more information on the processing of your '
-                            'personal data and on how to exercise your rights of access, '
-                            'rectification, suppression, limitation, portability and opposition '
-                            'please visit our Privacy and Cookies Policy.</p>'
+                            'requested/attended by you. </p>'
         }))
         return super(ApplicationForm, self).fieldsets
 
@@ -297,7 +294,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'mentor_workshop' : 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',
             'gender': 'This is for demographic purposes. You can skip this question if you want.',
             'hearabout': "This is for marketing purposes. You can skip this question if you want.",
-            'class_status': 'Base your response on the number of years of college you have done not credit hours.',
+            'class_status': 'Base your response on the number of years of college you have completed not credit hours.',
             'graduation_year': 'What year have you graduated on or when will you graduate?',
             'degree': 'What\'s your major/degree?',
             'other_diet': 'Please fill here in your dietary requirements. We want to make sure we have food for you!',
@@ -305,7 +302,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                         'but at least we\'ll try!',
             'projects': 'You can talk about about past hackathons, personal projects, awards etc. '
                         '(we love links) Show us your passion! :D',
-            'reimb_amount': 'We try our best to cover costs for all hackers, but our budget is limited.'
         }
 
         widgets = {
@@ -330,8 +326,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'description': 'Why are you excited about %s?' % settings.HACKATHON_NAME,
             'projects': 'What projects have you worked on?',
             'resume': 'Upload your resume',
-            'reimb_amount': 'How much money (%s) would you need to afford traveling to %s?' % (
-                getattr(settings, 'CURRENCY', '$'), settings.HACKATHON_NAME),
         }
 
         exclude = ['user', 'uuid', 'invited_by', 'submission_date', 'status_update_date', 'status', ]

@@ -108,6 +108,7 @@ CLASSSTATUS = [
     (C_GRAD, 'Graduate Student'),
 ]
 
+H_NOANS = "N/A"
 H_SEARCH = 'Search Engine'
 H_TWITTER = 'Twitter'
 H_FACEBOOK = 'Facebook'
@@ -119,6 +120,7 @@ H_PROF = "Professors/University-wide annoucement"
 H_PREV = "Enjoyed the last one/Want to attend again"
 
 HEARABOUT = [
+    (H_NOANS, "N/A")
     (H_SEARCH, 'Search Engine'),
     (H_TWITTER, 'Twitter'),
     (H_FACEBOOK, 'Facebook'),
@@ -173,7 +175,7 @@ class Application(models.Model):
     first_ugahacks = models.BooleanField(default=False)
     # Why do you want to come to X?
     description = models.TextField(max_length=500)
-    hearabout = models.CharField(max_length=50, choices=HEARABOUT, default=H_SEARCH)
+    hearabout = models.CharField(max_length=50, choices=HEARABOUT, default=H_NOANS)
     # Explain a little bit what projects have you done lately
     projects = models.TextField(max_length=500, blank=True, null=True)
 
