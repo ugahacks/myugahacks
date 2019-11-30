@@ -192,21 +192,21 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     def clean_volunteer_time(self):
         data = self.cleaned_data['volunteer_time']
         participant = self.cleaned_data['participant']
-        if participant == 'volunteer' and not data:
+        if participant == 'Volunteer' and not data:
             raise forms.ValidationError("Please tell us what time you want to volunteer")
         return data
 
     def clean_mentor_topic(self):
         data = self.cleaned_data['mentor_topic']
         participant = self.cleaned_data['participant']
-        if participant == 'mentor' and not data:
+        if participant == 'Mentor' and not data:
             raise forms.ValidationError("Please tell us what topic you want to mentor for")
         return data
 
     def clean_mentor_workshop(self):
         data = self.cleaned_data['mentor_workshop']
         participant = self.cleaned_data['participant']
-        if participant == 'mentor' and not data:
+        if participant == 'Mentor' and not data:
             raise forms.ValidationError("Please tell us if you would like to host a workshop")
         return data
 
