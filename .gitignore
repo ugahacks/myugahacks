@@ -32,3 +32,4 @@ share/
 ./#.env#
 pyvenv.cfg
 app/.env
+*.db
