@@ -85,6 +85,7 @@
 
             var other_gender = $('#id_other_gender');
             var gender = $('#id_gender');
+            gender.parent().removeClass('required');
             conditional_field(other_gender, gender, () => {
               return gender.val() === 'X';
             })
@@ -133,6 +134,8 @@
            // }, 1);
             // Making projects look like required
             projects.parent().addClass('required');
+            var hearabout = $('#id_hearabout');
+            hearabout.parent().removeClass('required');
 
             {% if not application %}
                 var timer;
