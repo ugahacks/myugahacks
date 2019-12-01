@@ -109,28 +109,21 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         return resume
 
     def clean_terms_and_conditions(self):
-        cc = self.cleaned_data.get('terms_and_conditions', False)
-        # Check that if it's the first submission hackers checks terms and conditions checkbox
-        # self.instance.pk is None if there's no Application existing before
-        # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
-        if not cc and not self.instance.pk:
+        terms = self.cleaned_data.get('terms_and_conditions', False)
+        if not terms:
             raise forms.ValidationError(
-                "In order to apply and attend you have to accept our Terms & Conditions and"
-                " our Privacy and Cookies Policy."
+                "In order to apply and attend you have to accept MLH's Terms & Conditions and"
+                " Privacy Policy."
             )
-        return cc
+        return terms
 
     def clean_code_of_conduct(self):
-        cc = self.cleaned_data.get('code_of_conduct', False)
-        # Check that if it's the first submission hackers checks terms and conditions checkbox
-        # self.instance.pk is None if there's no Application existing before
-        # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
-        if not cc and not self.instance.pk:
+        code = self.cleaned_data.get('code_of_conduct', False)
+        if not code:
             raise forms.ValidationError(
-                "In order to apply and attend you have to accept our Terms & Conditions and"
-                " our Code of Conduct."
+                "In order to apply and attend you have to accept MLH's Code of Conduct."
             )
-        return cc
+        return code
 
     def clean_cvs_edition(self):
         cc = self.cleaned_data.get('cvs_edition', False)
@@ -142,7 +135,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Check that if it's the first submission hackers checks terms and conditions checkbox
         # self.instance.pk is None if there's no Application existing before
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
-        if diet != 'None' and not diet_notice and not self.instance.pk:
+        if diet != 'None' and not diet_notice:
             raise forms.ValidationError(
                 "In order to apply and attend you have to accept us to use your personal data related to your food "
                 "allergies and intolerances only in order to manage the catering service."
@@ -166,9 +159,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
     def clean_projects(self):
         data = self.cleaned_data['projects']
-        first_timer = self.cleaned_data['first_timer']
-        first_ugahacks = self.cleaned_data['first_ugahacks']
-        if not first_timer and not first_ugahacks and not data:
+        if not data:
             raise forms.ValidationError("Please fill this in order for us to know you a bit better.")
         return data
 
@@ -255,7 +246,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         elif self.instance.pk and r_enabled:
             self._fieldsets.append(('Traveling',
                                     {'fields': ('origin',),
-                                     'description': 'If you applied for reimbursement, check out the Travel tab. '
+                                     'description': 'If you applied for reimbursement, check out the Travel tab (available in January). We will also contact you about the status of fulfilling your reimbursement. '
                                                     'Email us at %s for any change needed on reimbursements.' %
                                                     settings.HACKATHON_CONTACT_EMAIL,
                                      }))
@@ -289,7 +280,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     class Meta:
         model = models.Application
         help_texts = {
-            'volunteer_time' : 'What time can you volunteer?',
+            'volunteer_time' : 'What time(s) can you volunteer? (Please give date and time ranges if possible)',
             'mentor_topic' : 'What topics are you confortable in mentoring?',
             'mentor_workshop' : 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',
             'gender': 'This is for demographic purposes. You can skip this question if you want.',
