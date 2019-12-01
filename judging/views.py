@@ -12,7 +12,7 @@ from app.mixins import TabsViewMixin
 from app.utils import reverse
 from app.views import TabsView
 from judging import forms
-from judging.models import Project, Presentation, Room, PresentationEvaluation
+# from judging.models import Project, Presentation, Room, PresentationEvaluation
 from user.mixins import IsDirectorMixin
 
 

@@ -160,7 +160,7 @@ class Application(models.Model):
     # Population analysis, optional
     gender = models.CharField(max_length=23, choices=GENDERS, default=NO_ANSWER)
     other_gender = models.CharField(max_length=50, blank=True, null=True)
-
+    ethnicity = models.CharField(max_length=50, blank=True)
 
     """
         # Personal data (asking here because we don't want to ask birthday)
@@ -195,6 +195,8 @@ class Application(models.Model):
     # Giv me a resume here!
     resume = models.FileField(upload_to='resumes', null=True, blank=True)
     cvs_edition = models.BooleanField(default=False)
+    code_of_conduct = models.BooleanField(default=False)
+    terms_and_conditions = models.BooleanField(default=False)
 
     # University
     graduation_year = models.IntegerField(choices=YEARS, default=DEFAULT_YEAR)

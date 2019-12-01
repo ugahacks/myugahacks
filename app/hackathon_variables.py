@@ -53,8 +53,8 @@ REGEX_HACKATHON_ORGANIZER_EMAIL = '^.*@ugahacks\.com$'
 HACKATHON_DEV_EMAILS = ['noahbarnette@gmail.com', 'dev-team@ugahacks.com']
 
 # Baggage configuration
-BAGGAGE_ENABLED = True
-BAGGAGE_PICTURE = True
+BAGGAGE_ENABLED = False
+BAGGAGE_PICTURE = False
 
 # Reimbursement configuration
 REIMBURSEMENT_ENABLED = True

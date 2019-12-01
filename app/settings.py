@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'stats',
     'storages',
     'meals',
-    'judging',
+    # 'judging',
     'workshops',
 ]
 
