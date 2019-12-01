@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView
 from applications.models import Application
 from reimbursement.models import Reimbursement
-from baggage.models import Bag
+# from baggage.models import Bag
 from django.shortcuts import get_object_or_404
 from urllib.parse import quote
 from django.http import StreamingHttpResponse
