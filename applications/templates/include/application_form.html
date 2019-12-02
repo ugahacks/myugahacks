@@ -83,6 +83,24 @@
             })
             mentor_workshop.parent().addClass('required');
 
+            var hacker_or_volunteer_reimb = $('#id_reimb');
+            conditional_field(hacker_or_volunteer_reimb, participant, () => {
+                
+                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            })
+            
+            var hacker_or_volunteer_class_status = $('#id_class_status');
+            conditional_field(hacker_or_volunteer_class_status, participant, () => {
+                
+                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            })
+
+            var hacker_or_volunteer_graduation_year = $('#id_graduation_year');
+            conditional_field(hacker_or_volunteer_graduation_year, participant, () => {
+                
+                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            })
+
             var other_gender = $('#id_other_gender');
             var gender = $('#id_gender');
             gender.parent().removeClass('required');
