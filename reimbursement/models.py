@@ -60,7 +60,7 @@ def check_friend_emails(friend_emails, user_email):
 
 class Reimbursement(models.Model):
     # Admin controlled
-    assigned_money = models.FloatField(null=True)
+    assigned_money = models.FloatField(null=True, blank=True)
     reimbursement_money = models.FloatField(null=True, blank=True)
     public_comment = models.CharField(max_length=300, null=True, blank=True)
 
