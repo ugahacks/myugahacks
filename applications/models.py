@@ -166,7 +166,7 @@ class Application(models.Model):
         # Personal data (asking here because we don't want to ask birthday)
         birth_year = models.IntegerField(null=True)
     """
-
+    uniemail = models.EmailField(verbose_name='university_email', max_length=255, unique=True, blank=True, null=True)
     # Where is this person coming from?
     origin = models.CharField(max_length=300)
 

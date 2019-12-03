@@ -6,7 +6,7 @@ from django.utils.timesince import timesince
 
 from applications import models
 
-EXPORT_CSV_FIELDS = ['name', 'lastname', 'university', 'country', 'email']
+EXPORT_CSV_FIELDS = ['name', 'lastname', 'participant', 'university', 'country', 'email']
 
 
 class ApplicationAdmin(admin.ModelAdmin):

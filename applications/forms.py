@@ -182,23 +182,14 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
     def clean_volunteer_time(self):
         data = self.cleaned_data['volunteer_time']
-        participant = self.cleaned_data['participant']
-        if participant == 'Volunteer' and not data:
-            raise forms.ValidationError("Please tell us what time you want to volunteer")
         return data
 
     def clean_mentor_topic(self):
         data = self.cleaned_data['mentor_topic']
-        participant = self.cleaned_data['participant']
-        if participant == 'Mentor' and not data:
-            raise forms.ValidationError("Please tell us what topic you want to mentor for")
         return data
 
     def clean_mentor_workshop(self):
         data = self.cleaned_data['mentor_workshop']
-        participant = self.cleaned_data['participant']
-        if participant == 'Mentor' and not data:
-            raise forms.ValidationError("Please tell us if you would like to host a workshop")
         return data
 
 
@@ -209,12 +200,43 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             raise forms.ValidationError("Please tell us your specific dietary requirements")
         return data
 
+    def clean_uniemail(self):
+        data = self.cleaned_data['uniemail']
+        return data
+
+
 #    def clean_other_gender(self):
 #        data = self.cleaned_data['other_gender']
 #        gender = self.cleaned_data['gender']
 #        if gender == models.GENDER_OTHER and not data:
 #            raise forms.ValidationError("Please enter this field or select 'Prefer not to answer'")
 #        return data
+
+    def clean(self):
+        cleaned_data = super().clean()
+        participant = cleaned_data.get('participant')
+
+        volunteer_time = cleaned_data.get('volunteer_time')
+        if participant == 'Volunteer' and not volunteer_time:
+            raise forms.ValidationError("Please tell us what time you want to volunteer")
+        
+        mentor_topic = cleaned_data.get('mentor_topic')
+        if participant == 'Mentor' and not mentor_topic:
+            raise forms.ValidationError("Please tell us what topic you want to mentor for")
+
+        mentor_workshop = cleaned_data.get('mentor_workshop')
+        if participant == 'Mentor' and not mentor_workshop:
+            raise forms.ValidationError("Please tell us if you would like to host a workshop")
+
+        uniemail = cleaned_data.get('uniemail')
+        if uniemail:
+            if (participant == 'Hacker' or participant == 'Volunteer') and '.edu' not in uniemail:
+                raise forms.ValidationError("Please enter your school email")
+        else:
+            if participant == 'Mentor':
+                uniemail = 'byte@uga.edu'
+            else:
+                raise forms.ValidationError("Please enter your school email")
 
     def __getitem__(self, name):
         item = super(ApplicationForm, self).__getitem__(name)
@@ -225,7 +247,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fieldsets ordered and with description
         self._fieldsets = [
             ('Personal Info',
-             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree','class_status', 'graduation_year', 'gender', 'other_gender','ethnicity',
+             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree','class_status', 'graduation_year', 'uniemail', 'gender', 'other_gender','ethnicity',
                           'tshirt_size', 'diet', 'other_diet',
                            'hardware'),
               'description': 'Hey there, before we begin we would like to know a little more about you.', }),
@@ -287,6 +309,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'hearabout': "This is for marketing purposes. You can skip this question if you want.",
             'class_status': 'Base your response on the number of years of college you have completed not credit hours.',
             'graduation_year': 'What year have you graduated on or when will you graduate?',
+            'uniemail': 'This will be used to verify that you are a student.',
             'degree': 'What\'s your major/degree?',
             'other_diet': 'Please fill here in your dietary requirements. We want to make sure we have food for you!',
             'hardware': 'Any hardware that you would like us to have. We can\'t promise anything, '
@@ -309,6 +332,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'other_gender': 'Self-describe',
             'class_status': 'What is your class status?',
             'graduation_year': 'What year will you graduate?',
+            'uniemail': 'What is your university/school email (.edu)?',
             'tshirt_size': 'What\'s your t-shirt size?',
             'diet': 'Dietary requirements',
             'hardware': 'Hardware you would like us to have',
