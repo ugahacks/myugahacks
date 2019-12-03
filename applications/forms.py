@@ -225,7 +225,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fieldsets ordered and with description
         self._fieldsets = [
             ('Personal Info',
-             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree','class_status', 'graduation_year', 'gender', 'other_gender','ethnicity',
+             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree','class_status', 'graduation_year', 'uniemail', 'gender', 'other_gender','ethnicity',
                           'tshirt_size', 'diet', 'other_diet',
                            'hardware'),
               'description': 'Hey there, before we begin we would like to know a little more about you.', }),
@@ -287,6 +287,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'hearabout': "This is for marketing purposes. You can skip this question if you want.",
             'class_status': 'Base your response on the number of years of college you have completed not credit hours.',
             'graduation_year': 'What year have you graduated on or when will you graduate?',
+            'uniemail': 'This will be used to verify that you are a student.',
             'degree': 'What\'s your major/degree?',
             'other_diet': 'Please fill here in your dietary requirements. We want to make sure we have food for you!',
             'hardware': 'Any hardware that you would like us to have. We can\'t promise anything, '
@@ -309,6 +310,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'other_gender': 'Self-describe',
             'class_status': 'What is your class status?',
             'graduation_year': 'What year will you graduate?',
+            'uniemail': 'What is your university/school email (.edu)?',
             'tshirt_size': 'What\'s your t-shirt size?',
             'diet': 'Dietary requirements',
             'hardware': 'Hardware you would like us to have',

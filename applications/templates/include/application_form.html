@@ -83,6 +83,12 @@
             })
             mentor_workshop.parent().addClass('required');
 
+            var universityemail = $('#id_uniemail');
+            conditional_field(universityemail, participant, () => {
+
+                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            })
+
             var other_gender = $('#id_other_gender');
             var gender = $('#id_gender');
             gender.parent().removeClass('required');
