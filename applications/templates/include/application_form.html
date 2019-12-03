@@ -83,9 +83,21 @@
             })
             mentor_workshop.parent().addClass('required');
 
-            var universityemail = $('#id_uniemail');
-            conditional_field(universityemail, participant, () => {
+            var hacker_or_volunteer_reimb = $('#id_reimb');
+            conditional_field(hacker_or_volunteer_reimb, participant, () => {
+                
+                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            })
+            
+            var hacker_or_volunteer_class_status = $('#id_class_status');
+            conditional_field(hacker_or_volunteer_class_status, participant, () => {
+                
+                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            })
 
+            var hacker_or_volunteer_graduation_year = $('#id_graduation_year');
+            conditional_field(hacker_or_volunteer_graduation_year, participant, () => {
+              
                 return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
             })
 
@@ -95,7 +107,11 @@
             conditional_field(other_gender, gender, () => {
               return gender.val() === 'X';
             })
-
+            
+            var universityemail = $('#id_uniemail');
+            conditional_field(universityemail, participant, () => {  
+                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            })
             var other_diet = $('#id_other_diet');
             var diet = $('#id_diet');
             conditional_field(other_diet, diet, function () {
