@@ -181,27 +181,15 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         return reimb
 
     def clean_volunteer_time(self):
-        cleaned_data = super().clean()
         data = self.cleaned_data['volunteer_time']
-        participant = cleaned_data.get('participant')
-        if participant == 'Volunteer' and not data:
-            raise forms.ValidationError("Please tell us what time you want to volunteer")
         return data
 
     def clean_mentor_topic(self):
-        cleaned_data = super().clean()
         data = self.cleaned_data['mentor_topic']
-        participant = cleaned_data.get('participant')
-        if participant == 'Mentor' and not data:
-            raise forms.ValidationError("Please tell us what topic you want to mentor for")
         return data
 
     def clean_mentor_workshop(self):
-        cleaned_data = super().clean()
         data = self.cleaned_data['mentor_workshop']
-        participant = cleaned_data.get('participant')
-        if participant == 'Mentor' and not data:
-            raise forms.ValidationError("Please tell us if you would like to host a workshop")
         return data
 
 
@@ -213,13 +201,9 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         return data
 
     def clean_uniemail(self):
-        cleaned_data = super().clean()
         data = self.cleaned_data['uniemail']
-        participant = cleaned_data.get('participant')
-        if (participant == 'Hacker' or participant == 'Volunteer') and data:
-            if '.edu' not in data:
-                raise forms.ValidationError("Please enter your school email")
         return data
+
 
 #    def clean_other_gender(self):
 #        data = self.cleaned_data['other_gender']
@@ -227,6 +211,32 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 #        if gender == models.GENDER_OTHER and not data:
 #            raise forms.ValidationError("Please enter this field or select 'Prefer not to answer'")
 #        return data
+
+    def clean(self):
+        cleaned_data = super().clean()
+        participant = cleaned_data.get('participant')
+
+        volunteer_time = cleaned_data.get('volunteer_time')
+        if participant == 'Volunteer' and not volunteer_time:
+            raise forms.ValidationError("Please tell us what time you want to volunteer")
+        
+        mentor_topic = cleaned_data.get('mentor_topic')
+        if participant == 'Mentor' and not mentor_topic:
+            raise forms.ValidationError("Please tell us what topic you want to mentor for")
+
+        mentor_workshop = cleaned_data.get('mentor_workshop')
+        if participant == 'Mentor' and not mentor_workshop:
+            raise forms.ValidationError("Please tell us if you would like to host a workshop")
+
+        uniemail = cleaned_data.get('uniemail')
+        if uniemail:
+            if (participant == 'Hacker' or participant == 'Volunteer') and '.edu' not in uniemail:
+                raise forms.ValidationError("Please enter your school email")
+        else:
+            if participant == 'Mentor':
+                uniemail = 'byte@uga.edu'
+            else:
+                raise forms.ValidationError("Please enter your school email")
 
     def __getitem__(self, name):
         item = super(ApplicationForm, self).__getitem__(name)
