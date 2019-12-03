@@ -107,11 +107,12 @@
             conditional_field(other_gender, gender, () => {
               return gender.val() === 'X';
             })
-            
+
             var universityemail = $('#id_uniemail');
-            conditional_field(universityemail, participant, () => {  
+            conditional_field(universityemail, participant, () => {
                 return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
             })
+            universityemail.parent().addClass('required');
             var other_diet = $('#id_other_diet');
             var diet = $('#id_diet');
             conditional_field(other_diet, diet, function () {
