@@ -15,7 +15,7 @@ class ApplicationFilter(django_filters.FilterSet):
 
     def search_filter(self, queryset, name, value):
         return queryset.filter(Q(user__email__icontains=value) | Q(user__name__icontains=value) |
-                               Q(university__icontains=value) | Q(origin__icontains=value))
+                               Q(university__icontains=value) | Q(origin__icontains=value) | Q(participant__icontains=value))
 
     class Meta:
         model = Application
@@ -27,7 +27,7 @@ class DubiousApplicationFilter(django_filters.FilterSet):
 
     def search_filter(self, queryset, name, value):
         return queryset.filter(Q(user__email__icontains=value) | Q(user__name__icontains=value) |
-                               Q(university__icontains=value) | Q(origin__icontains=value))
+                               Q(university__icontains=value) | Q(origin__icontains=value) | Q(participant__icontains=value))
 
     class Meta:
         model = Application
@@ -39,7 +39,7 @@ class InviteFilter(django_filters.FilterSet):
 
     def search_filter(self, queryset, name, value):
         return queryset.filter(Q(user__email__icontains=value) | Q(user__name__icontains=value) |
-                               Q(university__icontains=value) | Q(origin__icontains=value))
+                               Q(university__icontains=value) | Q(origin__icontains=value) | Q(participant__icontains=value))
 
     class Meta:
         model = Application
