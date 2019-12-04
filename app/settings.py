@@ -112,35 +112,43 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
-        'CONN_MAX_AGE': 0,
-        'ENGINE': 'django.db.backends.sqlite3',
-        'HOST': 'localhost',
-        'NAME': 'project.db',
-        'PASSWORD': '',
-        'PORT': '',
-        'USER': ''
-    }
-}
 
-if os.environ.get('DATABASE_URL', None):
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=600,
-        ssl_require=os.environ.get('DATABASE_SECURE', 'true').lower() != 'false',
-    )
 
-if os.environ.get('PG_PWD', None):
+if DEBUG == True:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ.get('PG_NAME', 'backend'),
-            'USER': os.environ.get('PG_USER', 'backenduser'),
-            'PASSWORD': os.environ.get('PG_PWD'),
-            'HOST': os.environ.get('PG_HOST', 'localhost'),
-            'PORT': '5432',
+            'CONN_MAX_AGE': 0,
+            'ENGINE': 'django.db.backends.sqlite3',
+            'HOST': 'localhost',
+            'NAME': 'project.db',
+            'PASSWORD': '',
+            'PORT': '',
+            'USER': ''
         }
     }
+
+else:
+
+
+
+
+    if os.environ.get('DATABASE_URL', None):
+        DATABASES['default'] = dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=os.environ.get('DATABASE_SECURE', 'true').lower() != 'false',
+        )
+
+    if os.environ.get('PG_PWD', None):
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': os.environ.get('PG_NAME', 'backend'),
+                'USER': os.environ.get('PG_USER', 'backenduser'),
+                'PASSWORD': os.environ.get('PG_PWD'),
+                'HOST': os.environ.get('PG_HOST', 'localhost'),
+                'PORT': '5432',
+            }
+        }
 
 
 
