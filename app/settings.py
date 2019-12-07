@@ -113,7 +113,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 
 
-
 if DEBUG == True:
     DATABASES = {
         'default': {
