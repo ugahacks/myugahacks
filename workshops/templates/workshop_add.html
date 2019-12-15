@@ -2,45 +2,17 @@
 {% block head_title %}Add workshop{% endblock %}
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
-    <form id="workshop-form" action="" method="post">
-	{% csrf_token %}
-	<div class="form-group">
-	    <label class="control-label" for="workshop_title">Title </label>
-	    <input type="text" class="form-control" name="workshop_title" />
-	</div>
-	
-    <div class="form-group">
-        <label class="control-label" for="workshop_location">Location</label>
-        <input type="text" class="form-control" name="workshop_location" />
-    </div>
-
-    <div class="form-group">
-        <label class="control-label" for="workshop_host">Host</label>
-        <input type="text" class="form-control" name="workshop_host" />
-    </div>
-
-	<div class="form-group">
-	    <label class="control-label" for="workshop_starts">Starting time</label>
-	    <input type="text" class="form-control" name="workshop_starts" value="{{ time1 }}" />
-	</div>
-	<div class="form-group">
-	    <label class="control-label" for="workshop_ends">Ending time</label>
-	    <input type="text" class="form-control" name="workshop_ends" value="{{ time2 }}" />
-	</div>
-
-	<div class="form-group">
-	    <input type="checkbox" name="workshop_opened" value="opened"> Active
-	</div>
-        <input type="hidden" name="workshop_id" value="{{ workshop.id }}"/>
-	<button class="btn btn-success" name="update">Add workshop</button>
+    <form id="workshop-form" action="/workshops/add/" method="post">
+	     {% csrf_token %}
+	      {{ form }}
+        <input type="submit" value="Submit">
     </form>
-    
+
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
     <script>
-
         $(document).ready(function () {
                 var exp_time = $('input[name="workshop_starts"]');
                 exp_time.daterangepicker({
