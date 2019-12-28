@@ -15,9 +15,12 @@ class Workshop(models.Model):
 	def __str__(self):
 		return str(self.title)
 
-	def attended(self):
-		return Attended.objects.filter(workshop=self).count()
+	#Attended model not implemented yet. Ignore this for now.
+	#def attended(self):
+		#return Attended.objects.filter(workshop=self).count()
 
+#Todo:
+#Time in the admin panel is not the time displayed to users for somereason. Needs to be fixed.
 class Timeslot(models.Model):
 	start = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
 
