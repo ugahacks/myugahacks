@@ -2,10 +2,10 @@
 {% block head_title %}Add workshop{% endblock %}
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
-  {% for workshop in workshops %}
-    <a href="{% url 'workshop_detail' workshop.id %}">{{ workshop.title }}</a>
-    <br>
-  {% endfor %}
-
-
+  <h1>{{ title }}</h1>
+  <h1>{{ description }}</h1>
+  <h1>{{ location }}</h1>
+  <h1>{{ host }}</h1>
+  <h1>{{ start }}</h1>
+  <h1>{{ end }}</h1>
 {% endblock %}

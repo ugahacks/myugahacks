@@ -7,9 +7,7 @@ from django.views.generic import ListView, DetailView
 from user.mixins import IsOrganizerMixin, IsVolunteerMixin
 from .forms import AddWorkshopForm
 
-#To do:
-#New AddWorkshopForm instance isnt being created everytime this view is accessed (I think). Does not refresh the list of
-#timeslots to choose from. Need to figure out fix.
+
 class WorkshopAdd(IsOrganizerMixin, FormView):
     template_name = 'workshop_add.html'
     form_class = AddWorkshopForm
@@ -20,7 +18,10 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
         workshop.save()
         #form.cleaned_data['timeslot'] returns the unique id of the timeslot. this
         #id is then used to get the timeslow object.
-        timeslot = Timeslot.objects.get(pk=form.cleaned_data['timeslot'])
+        #timeslot = Timeslot.objects.get(pk=form.cleaned_data['timeslot'])
+        timeslot = form.cleaned_data['timeslot']
+        if not timeslot:
+            pass
         timeslot.workshop = workshop
         timeslot.save()
         return super().form_valid(form)
@@ -37,18 +38,22 @@ class WorkshopList(IsVolunteerMixin, ListView):
 
 class WorkshopDetail(IsOrganizerMixin, DetailView):
     model = Workshop
+    template_name = 'workshop_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(WorkshopDetail, self).get_context_data(**kwargs)
-        workshopid = kwargs['id']
-        workshop = Workshop.objects.filter(id=workshopid).first()
+        workshop = kwargs['object']
+        #workshopid = kwargs['object']
+        #workshop = Workshop.objects.get(pk=workshopid)
         #Since workshop is a ForeignKey in timeslot, the start and end attributes are retrieved from
         #the timeslot model.
-        timeslot = Timeslot.objects.filter(workshop=workshop).first()
+        #There should only be one workshop per timeslot. Gets the timeslot related to the given workshop.
+        timeslot = workshop.timeslot_set.first()
         if not workshop or not timeslot:
             raise Http404
         context.update({
             'title': workshop.title,
+            'description': workshop.description,
             'location': workshop.location,
             'host': workshop.host,
             'start': timeslot.start,

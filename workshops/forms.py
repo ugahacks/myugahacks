@@ -11,13 +11,9 @@ class AddWorkshopForm(forms.ModelForm):
 
     host = forms.CharField(max_length=63, help_text='If you are affiliated with an organization, please list your organization name.', label='Organization name')
 
-    #Dropdown field where choices are available timeslots to register a workshop.
-    #Available timeslows are defined by whether the Timeslot.workshop field is
-    #empty (null) or not.
-    #NOTE: The value of the choices are the timeslow id's. For passing in the
-    #timeslot object itself would not work. If you could get it to work, go
-    #for it.
-    timeslot = forms.ChoiceField(choices=[(ts.id, str(ts)) for ts in Timeslot.objects.filter(workshop__isnull=True)])
+    #Change the __str__ method in the Timeslot model to change how the choices are displayed to users.
+    #empty_label set to none because users should NOT be able to add empty timeslots.
+    timeslot = forms.ModelChoiceField(queryset=Timeslot.objects.filter(workshop__isnull=True), empty_label=None)
 
     class Meta:
         model = Workshop
