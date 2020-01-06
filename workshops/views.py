@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from workshops.models import Workshop, Timeslot
+from django.http import Http404
 
 from django.views.generic.edit import FormView
 from django.views.generic import ListView, DetailView
@@ -7,11 +8,12 @@ from django.views.generic import ListView, DetailView
 from user.mixins import IsOrganizerMixin, IsVolunteerMixin
 from .forms import AddWorkshopForm
 
-
+#TODO:
+#Add message (or redirect w/ different context) when there are no more timeslots available.
 class WorkshopAdd(IsOrganizerMixin, FormView):
     template_name = 'workshop_add.html'
-    form_class = AddWorkshopForm
     success_url = '#'
+    form_class = AddWorkshopForm
 
     def form_valid(self, form):
         workshop = form.save()
@@ -20,8 +22,6 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
         #id is then used to get the timeslow object.
         #timeslot = Timeslot.objects.get(pk=form.cleaned_data['timeslot'])
         timeslot = form.cleaned_data['timeslot']
-        if not timeslot:
-            pass
         timeslot.workshop = workshop
         timeslot.save()
         return super().form_valid(form)
@@ -36,6 +36,8 @@ class WorkshopList(IsVolunteerMixin, ListView):
         workshops = Workshop.objects.all()
         return workshops
 
+## TODO:
+#Make a better message for users when workshop/timeslot is not found.
 class WorkshopDetail(IsOrganizerMixin, DetailView):
     model = Workshop
     template_name = 'workshop_detail.html'
