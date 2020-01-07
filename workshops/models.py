@@ -26,7 +26,9 @@ class Timeslot(models.Model):
 
 	end = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
 
-	workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, blank=True, default=None)
+	workshop_one = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='workshop_one_set')
+
+	workshop_two = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='workshop_two_set')
 
     #Intended use is the list the timeslot for users.
 	def __str__(self):

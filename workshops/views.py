@@ -45,12 +45,11 @@ class WorkshopDetail(IsOrganizerMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(WorkshopDetail, self).get_context_data(**kwargs)
         workshop = kwargs['object']
-        #workshopid = kwargs['object']
-        #workshop = Workshop.objects.get(pk=workshopid)
         #Since workshop is a ForeignKey in timeslot, the start and end attributes are retrieved from
         #the timeslot model.
         #There should only be one workshop per timeslot. Gets the timeslot related to the given workshop.
-        timeslot = workshop.timeslot_set.first()
+        timeslot = workshop.workshop_one_set.first() or workshop.workshop_two_set.first()
+        #TODO: Make this statement more descriptive.
         if not workshop or not timeslot:
             raise Http404
         context.update({

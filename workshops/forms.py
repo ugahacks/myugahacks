@@ -13,7 +13,7 @@ class AddWorkshopForm(forms.ModelForm):
 
     #Change the __str__ method in the Timeslot model to change how the choices are displayed to users.
     #empty_label set to none because users should NOT be able to add empty timeslots.
-    timeslot = forms.ModelChoiceField(queryset=Timeslot.objects.filter(workshop__isnull=True), empty_label=None)
+    timeslot = forms.ModelChoiceField(queryset=Timeslot.objects.filter(workshop_one__isnull=True).filter(workshop_two__isnull=True), empty_label=None)
 
     class Meta:
         model = Workshop
