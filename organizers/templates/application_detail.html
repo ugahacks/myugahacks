@@ -22,7 +22,6 @@
                 <h3>Personal</h3>
                 </dt>
                 <dd></dd>
-                {% include 'include/field.html' with desc='Lenny face' value=app.lennyface %}
                 {% include 'include/field.html' with desc='Name' value=app.user.name %}
                 {% include 'include/field.html' with desc='Submitted' value=app.submission_date|naturaltime %}
                 {% include 'include/field.html' with desc='Country' value=app.origin_country %}
@@ -30,11 +29,26 @@
                     {% include 'include/field.html' with desc='Status' value=app.get_status_display %}
                     {% include 'include/field.html' with desc='Email' value=app.user.email %}
                     {% include 'include/field.html' with desc='Travel reimbursement?' value=app.reimb|yesno:'Yes,No,Maybe' %}
+                    {% include 'include/field.html' with desc='Traveling From' value=app.origin|safe|urlize %}
                     {% include 'include/field.html' with desc='Money needed' value=app.reimb_amount %}
                 {% endif %}
-                {% include 'include/field.html' with desc='Under age (-18)' value=app.under_age|yesno:'Yes,No,Maybe' %}
                 {% if app.resume %}
                     {% include 'include/field.html' with desc='Resume' value='<a href="'|add:app.resume.url|add:'" target="_blank">'|add:app.resume.name|add:"</a>"|safe %}
+                {% endif %}
+                <hr>
+                <dt>
+                <h3>Role</h3>
+                </dt>
+                <dd></dd>
+                {% include 'include/field.html' with desc='Type' value=app.participant|safe|urlize %}
+                {% if app.volunteer_time %}
+                  {% include 'include/field.html' with desc='Volunteer Time Slot(s)' value=app.volunteer_time|safe|urlize %}
+                {% endif %}
+                {% if app.mentor_topic %}
+                  {% include 'include/field.html' with desc='What topics?' value=app.mentor_topic|safe|urlize %}
+                {% endif %}
+                {% if app.mentor_workshop %}
+                  {% include 'include/field.html' with desc='Potential Workshop?' value=app.mentor_workshop|safe|urlize %}
                 {% endif %}
                 <hr>
                 <dt>
@@ -42,6 +56,8 @@
                 </dt>
                 <dd></dd>
                 {% include 'include/field.html' with desc='University' value=app.university %}
+                {% include 'include/field.html' with desc='University Email' value=app.uniemail %}
+                {% include 'include/field.html' with desc='Class Status' value=app.class_status %}
                 {% include 'include/field.html' with desc='Graduation' value=app.graduation_year %}
                 {% include 'include/field.html' with desc='Degree' value=app.degree %}
                 <hr>
@@ -49,10 +65,11 @@
                 <h3>Background</h3>
                 </dt>
                 <dd></dd>
-                {% include 'include/field.html' with desc='First time' value=app.first_timer|yesno:'Yes,No,Maybe' %}
+                {% include 'include/field.html' with desc='First hackathon?' value=app.first_timer|yesno:'Yes,No,Maybe' %}
+                {% include 'include/field.html' with desc='First UGAHacks?' value=app.first_ugahacks|yesno:'Yes,No,Maybe' %}
                 {% include 'include/field.html' with desc='Why excited?' showlength="true" value=app.description|safe|urlize %}
                 {% include 'include/field.html' with desc='Projects' showlength="true" value=app.projects|safe|urlize %}
-                {% include 'include/field.html' with desc='Team mates' value=app.teammates %}
+                {% include 'include/field.html' with desc='Team Code' value=team_code|safe|urlize %}
                 {% include 'include/field.html' with desc='Excited about' value=app.excited %}
             </dl>
             {% if not vote and teammates %}
