@@ -8,4 +8,6 @@
   <h1>{{ host }}</h1>
   <h1>{{ start }}</h1>
   <h1>{{ end }}</h1>
+  <h1>{{ attendance }}</h1>
+  <a href="{% url 'workshop_checkin' workshop.id %}">Scan</a>
 {% endblock %}

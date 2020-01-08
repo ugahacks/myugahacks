@@ -34,9 +34,7 @@ class Timeslot(models.Model):
 	def __str__(self):
 		return f'{str(self.start.strftime("%D %I:%M %p"))} to {str(self.end.strftime("%D %I:%M %p"))}'
 
-'''
-class Attended(models.Model):
+class Attendance(models.Model):
 	workshop = models.ForeignKey(Workshop, null=False, on_delete=models.CASCADE)
 
 	user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
-'''

@@ -2,8 +2,10 @@
 {% block head_title %}Add workshop{% endblock %}
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
+  <h1>{{ is_available }}</h1>
     <form id="workshop-form" action="/workshops/add/" method="post">
 	     {% csrf_token %}
+
 	      {{ form }}
         <input type="submit" value="Submit">
     </form>
