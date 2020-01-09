@@ -141,8 +141,8 @@ else:
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                'NAME': os.environ.get('PG_NAME', 'backend'),
-                'USER': os.environ.get('PG_USER', 'backenduser'),
+                'NAME': os.environ.get('PG_NAME', 'ugahacksfive'),
+                'USER': os.environ.get('PG_USER', 'ugahacksfiveuser'),
                 'PASSWORD': os.environ.get('PG_PWD'),
                 'HOST': os.environ.get('PG_HOST', 'localhost'),
                 'PORT': '5432',
