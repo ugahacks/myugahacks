@@ -45,6 +45,8 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
         timeslot.save()
         return super().form_valid(form)
 
+## TODO:
+#Add user filtering and search functionality.
 class WorkshopList(IsVolunteerMixin, ListView):
     template_name = 'workshop_list.html'
     context_object_name = 'workshops'
@@ -66,7 +68,7 @@ class WorkshopDetail(IsOrganizerMixin, DetailView):
         workshop = kwargs['object']
         #Since workshop is a ForeignKey in timeslot, the start and end attributes are retrieved from
         #the timeslot model.
-        #There should only be one workshop per timeslot. Gets the timeslot related to the given workshop.
+        #There should only be two workshops per timeslot. Gets the timeslot related to the given workshop.
         timeslot = workshop.workshop_one_set.first() or workshop.workshop_two_set.first()
         #Recieves the total amount of people that attended this workshop
         attendance = workshop.attendance_set.count()
