@@ -18,7 +18,7 @@ from workshops.tables import WorkshopListTable, WorkshopListFilter
 #Better fronend...
 class WorkshopAdd(IsOrganizerMixin, FormView):
     template_name = 'workshop_add.html'
-    success_url = 'workshop_list'
+    success_url = '/workshops/list/'
     form_class = AddWorkshopForm
 
     #use {% if is_available %} in html template to check if there are any timeslots available. If not, do not display the form.

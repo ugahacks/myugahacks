@@ -34,9 +34,11 @@ class Timeslot(models.Model):
 
 	end = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
 
-	workshop_one = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='workshop_one_set')
 
-	workshop_two = models.ForeignKey(Workshop, on_delete=models.CASCADE, null=True, blank=True, default=None, related_name='workshop_two_set')
+	#models.SET_NULL is used so when a workshop is deleted, the timeslot is not deleted along with it.
+	workshop_one = models.ForeignKey(Workshop, on_delete=models.SET_NULL, null=True, blank=True, default=None, related_name='workshop_one_set')
+
+	workshop_two = models.ForeignKey(Workshop, on_delete=models.SET_NULL, null=True, blank=True, default=None, related_name='workshop_two_set')
 
     #Intended use is the list the timeslot for users.
 	def __str__(self):
