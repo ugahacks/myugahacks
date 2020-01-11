@@ -6,11 +6,19 @@ class Workshop(models.Model):
 
 	description = models.CharField(max_length=300, null=True)
 
-	location = models.CharField(max_length=63, null=False)
+	#Should be specified by an admin after it is added.
+	location = models.CharField(max_length=63, null=True, blank=True)
 
 	host = models.CharField(max_length=63, null=False)
 
 	open = models.BooleanField(null=False, default=False)
+
+	#I got really upset because i couldnt reverse reference Timeslots since it
+	#has two workshop foreign keys, so im including these fields as well. >:(
+	#It is really redundant but im tilted.
+	start = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
+
+	end = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
 
 	def __str__(self):
 		return str(self.title)

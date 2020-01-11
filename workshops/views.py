@@ -4,16 +4,21 @@ from django.http import Http404, JsonResponse
 
 from django.views.generic.edit import FormView
 from django.views.generic import ListView, DetailView, TemplateView
+from django_filters.views import FilterView
 
+from app.mixins import TabsViewMixin
+from django_tables2 import SingleTableMixin
 from user.mixins import IsOrganizerMixin, IsVolunteerMixin
 from .forms import AddWorkshopForm
 
 from checkin.models import CheckIn
+from workshops.tables import WorkshopListTable, WorkshopListFilter
 ## TODO:
 # make sure to display different content when there are no available timeslots in html template.
+#Better fronend...
 class WorkshopAdd(IsOrganizerMixin, FormView):
     template_name = 'workshop_add.html'
-    success_url = '#'
+    success_url = 'workshop_list'
     form_class = AddWorkshopForm
 
     #use {% if is_available %} in html template to check if there are any timeslots available. If not, do not display the form.
@@ -31,13 +36,15 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
         return context
 
     def form_valid(self, form):
-        workshop = form.save()
-        workshop.save()
+        workshop = form.save(commit=False)
         #form.cleaned_data['timeslot'] returns the unique id of the timeslot. this
         #id is then used to get the timeslow object.
         #timeslot = Timeslot.objects.get(pk=form.cleaned_data['timeslot'])
         timeslot = form.cleaned_data['timeslot']
         #Checks if workshop_one is filled first.
+        workshop.start = timeslot.start
+        workshop.end = timeslot.end
+        workshop.save()
         if not timeslot.workshop_one:
             timeslot.workshop_one = workshop
         else:
@@ -45,20 +52,15 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
         timeslot.save()
         return super().form_valid(form)
 
-## TODO:
-#Add user filtering and search functionality.
-class WorkshopList(IsVolunteerMixin, ListView):
+class WorkshopList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView):
     template_name = 'workshop_list.html'
-    context_object_name = 'workshops'
-    #Change pagination accordingly as needed.
-    paginate_by = 100
-    def get_queryset(self):
-        #Maybe add ordering based off of the the timeslot. Not sure how to do this right now since it would be a reverse forgign key.
-        workshops = Workshop.objects.all().order_by('-open')
-        return workshops
+    table_class = WorkshopListTable
+    filterset_class = WorkshopListFilter
+    table_pagination = {'per_page': 100}
 
 ## TODO:
 #Make a better message for users when workshop/timeslot is not found.
+#Better frontend...
 class WorkshopDetail(IsOrganizerMixin, DetailView):
     model = Workshop
     template_name = 'workshop_detail.html'
