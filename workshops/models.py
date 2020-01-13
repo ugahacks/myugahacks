@@ -1,5 +1,8 @@
 from django.db import models
 from user.models import User
+from django.template import defaultfilters
+from datetime import timedelta
+
 
 class Workshop(models.Model):
 	title = models.CharField(max_length=63, null=False)
@@ -42,7 +45,10 @@ class Timeslot(models.Model):
 
     #Intended use is the list the timeslot for users.
 	def __str__(self):
-		return f'{str(self.start.strftime("%D %I:%M %p"))} to {str(self.end.strftime("%D %I:%M %p"))}'
+		#Time printed is 5 hours ahead so i just adjust it manually.
+		adjusted_start = self.start - timedelta(hours=5)
+		adjusted_end = self.end - timedelta(hours=5)
+		return f'{adjusted_start.strftime("%d/%m %X")} to {adjusted_end.strftime("%d/%m %X")}'
 
 class Attendance(models.Model):
 	workshop = models.ForeignKey(Workshop, null=False, on_delete=models.CASCADE)

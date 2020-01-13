@@ -129,12 +129,11 @@ class WorkshopCheckin(IsVolunteerMixin, TemplateView):
         hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_id).first()
         if not hacker_checkin:
             return JsonResponse({'error': 'Invalid QR code!'})
-        #Not sure what this line is for.
-        hacker_application = getattr(hacker_checkin, 'application', None)
+        hacker = hacker
         if not hacker_application:
-            return JsonResponse({'error': 'No application found for current code'})
+            return JsonResponse({'error': 'No user for current code'})
         #Checks if the user has attended this workshop already. If they have, then a message is displayed.
-        hacker_attended = workshop.attendance_set().filter(user=hacker_application.user).first()
+        hacker_attended = workshop.attendance_set().filter(user=hacker).first()
         if hacker_attended:
             return JsonResponse({'error': 'Hacker has already checked in for this workshop'})
 

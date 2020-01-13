@@ -1,38 +1,42 @@
-
-{% extends "base.html" %}
+{% extends "base_tabs.html" %}
 
 {% load static %}
+{% load bootstrap3 %}
 
-{% block head %}
-    <link rel="stylesheet" href="{% static 'css/meals.css' %}">
-
-{% endblock %}
-
-{% block extra_scripts %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/checkin.css' %}">
     <script src="{% static 'lib/instascan.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/meals_checkin.js' %}"></script>
-
+    <script type="text/javascript" src="{% static 'js/checkin_add.js' %}"></script>
 {% endblock %}
 
-{% block navbar %}{% endblock %}
+{% block head_title %}{{ workshop.title }} Workshop Check-in {% endblock %}
 
-{% block head_title %}Workshop Checkin {{ workshop.title }}{% endblock %}
+{% block panel %}
+    <dl class="dl-horizontal">
+        {% include 'include/field.html' with desc='Lenny face' value=app.lennyface %}
+        {% include 'include/field.html' with desc='Title' value=workshop.title %}
+        {% include 'include/field.html' with desc='Description' value=workshop.description %}
+    </dl>
+{% endblock %}
 
-{% block body_plain %}
-<div class="container-fluid full-screen">
-    <div class="row full-screen">
-        <div class="col-md-offset-3 col-md-6 col full-screen">
-            <div id="meals-scan-image" class="meals-inside-scan" style="max-width: 100%;max-height: 100%;" data-mealid="{{ workshop.id }}"
-            data-apiurl="{% url 'workshop_checkin' workshop.id %}">
-                <a class="btn btn-default btn-block" href="{% url 'workshop_list' %}">< Back</a>
-                <video id="meals-scan-video" style="width: 100%; max-height: 80%; margin:0 auto;">   </video>
-                <select class="form-control"></select>
+{% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
+
+{% block out_panel %}
+    <div class="panel-footer">
+        {% if checkedin %}
+            <div style="padding: 1em 1.5em 1.5em 1.5em;">
+                <h4 style="margin-bottom: 15px;">Let's keep this up!</h4>
+                <a class="btn btn-default btn-block" href="{% url 'workshop_detail' workshop.id %}">Check-in more hackers!</a>
             </div>
-        </div>
+        {% else %}
+            <form action="" method="post" style="padding-top: 1.5em;">
+                {% csrf_token %}
+		<div class="form-group">
+		    {% include 'include/input.html' with type='qr' desc='QR code' name='qr_code' id='qr_code' %}
+		</div>
+                <input type="hidden" name="workshop_id" value="{{ workshop.id }}"/>
+                <button class="btn btn-success btn-block" name="checkin">Check In</button>
+            </form>
+        {% endif %}
     </div>
-</div>
-{% endblock %}
-
-
-{% block footer %}
 {% endblock %}
