@@ -14,7 +14,6 @@ from .forms import AddWorkshopForm
 from checkin.models import CheckIn
 from workshops.tables import WorkshopListTable, WorkshopListFilter
 ## TODO:
-# make sure to display different content when there are no available timeslots in html template.
 #Better fronend...
 class WorkshopAdd(IsOrganizerMixin, FormView):
     template_name = 'workshop_add.html'

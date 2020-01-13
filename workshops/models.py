@@ -31,7 +31,6 @@ class Workshop(models.Model):
 		#return Attended.objects.filter(workshop=self).count()
 
 #Todo:
-#Time in the admin panel is not the time displayed to users for somereason. Needs to be fixed.
 class Timeslot(models.Model):
 	start = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
 
