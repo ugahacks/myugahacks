@@ -8,8 +8,8 @@
 <h1 class="text-center">Add Workshop</h1>
     <form id="workshop-form" action="/workshops/add/" method="post">
 	     {% csrf_token %}
-	      {{ form }}
-        <input type="submit" value="Submit">
+	      {{ form.as_p }}
+        <input class="btn btn-success" type="submit" value="Add Workshop">
     </form>
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
