@@ -1,11 +1,13 @@
-{% extends "base_tabs.html" %}
-{% block head_title %}Add workshop{% endblock %}
-{% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
-{% block out_panel %}
-  {% for workshop in workshops %}
-    <a href="{% url 'workshop_detail' workshop.id %}">{{ workshop.title }}</a>
-    <br>
-  {% endfor %}
+{% extends "base_table.html" %}
 
 
+{% block head_title %}Workshop List{% endblock %}
+
+
+{% block table_footer %}
+    {%  if user.is_organizer %}
+    <div class="panel-footer">
+	    <a href="{% url 'workshop_add' %}" class="btn btn-success btn-block">Add new workshop</a>
+    </div>
+    {% endif %}
 {% endblock %}

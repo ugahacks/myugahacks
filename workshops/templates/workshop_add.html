@@ -2,18 +2,20 @@
 {% block head_title %}Add workshop{% endblock %}
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
-  <h1>{{ is_available }}</h1>
+{% if not is_available %}
+<h1>There are no timeslots available at the moment.</h1>
+{% else %}
+<h1 class="text-center">Add Workshop</h1>
     <form id="workshop-form" action="/workshops/add/" method="post">
 	     {% csrf_token %}
-
-	      {{ form }}
-        <input type="submit" value="Submit">
+	      {{ form.as_p }}
+        <input class="btn btn-success" type="submit" value="Add Workshop">
     </form>
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
+{% endif %}
     <script>
         $(document).ready(function () {
                 var exp_time = $('input[name="workshop_starts"]');
