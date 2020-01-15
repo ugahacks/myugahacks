@@ -188,6 +188,8 @@ class ApplicationDetailView(TabsViewMixin, IsOrganizerMixin, TemplateView):
         try:
             application.reject(self.request)
             messages.success(self.request, "%s application wait listed" % application.user.email)
+            m = emails.create_waitlist_email(application, self.request)
+            m.send()
         except ValidationError as e:
             messages.error(self.request, e.message)
 
