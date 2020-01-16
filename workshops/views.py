@@ -118,27 +118,27 @@ class WorkshopCheckin(IsVolunteerMixin, TemplateView):
         qr_id = request.POST.get('qr_code', None)
 
         if not qr_id or not workshop_id:
-            messages.success(self.request, 'The QR code or workshop is not available.')
+            messages.error(self.request, 'The QR code or workshop is not available.')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         workshop = Workshop.objects.filter(id=workshop_id).first()
 
         if not workshop.open and not self.request.user.is_organizer:
-            messages.success(self.request, 'This workshop is not open yet or it has ended.')
+            messages.error(self.request, 'This workshop is not open yet or it has ended.')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_id).first()
         if not hacker_checkin:
-            messages.success(self.request, 'Invalid QR code!')
+            messages.error(self.request, 'Invalid QR code!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         hacker = hacker_checkin.user
         if not hacker:
-            messages.success(self.request, 'No user found for this QR code!')
+            messages.error(self.request, 'No user found for this QR code!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         #Checks if the user has attended this workshop already. If they have, then a message is displayed.
         hacker_attended = workshop.attendance_set.filter(user=hacker).first()
         if hacker_attended:
-            messages.success(self.request, 'This hacker has already been marked for attendance for this workshop!')
+            messages.error(self.request, 'This hacker has already been marked for attendance for this workshop!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         #Logs user attendance to a workshop.
         attendance = Attendance(workshop=workshop, user=hacker.user)
