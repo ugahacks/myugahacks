@@ -132,7 +132,7 @@ class WorkshopCheckin(IsVolunteerMixin, TemplateView):
         if not hacker:
             return JsonResponse({'error': 'No user for current code'})
         #Checks if the user has attended this workshop already. If they have, then a message is displayed.
-        hacker_attended = workshop.attendance_set().filter(user=hacker).first()
+        hacker_attended = workshop.attendance_set.filter(user=hacker).first()
         if hacker_attended:
             return JsonResponse({'error': 'Hacker has already checked in for this workshop'})
 
