@@ -19,9 +19,9 @@ class Workshop(models.Model):
 	#I got really upset because i couldnt reverse reference Timeslots since it
 	#has two workshop foreign keys, so im including these fields as well. >:(
 	#It is really redundant but im tilted.
-	start = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
+	start = models.DateTimeField(auto_now=False, auto_now_add=False, null=False, editable=False)
 
-	end = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
+	end = models.DateTimeField(auto_now=False, auto_now_add=False, null=False, editable=False)
 
 	def __str__(self):
 		return str(self.title)
