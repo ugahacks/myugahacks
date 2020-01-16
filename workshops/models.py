@@ -16,21 +16,22 @@ class Workshop(models.Model):
 
 	open = models.BooleanField(null=False, default=False)
 
-	#I got really upset because i couldnt reverse reference Timeslots since it
-	#has two workshop foreign keys, so im including these fields as well. >:(
-	#It is really redundant but im tilted.
-	start = models.DateTimeField(auto_now=False, auto_now_add=False, null=False, editable=False)
-
-	end = models.DateTimeField(auto_now=False, auto_now_add=False, null=False, editable=False)
-
 	def __str__(self):
 		return str(self.title)
 
 	def time_period(self):
 		#Time printed is 5 hours ahead so i just adjust it manually.
-		adjusted_start = self.start - timedelta(hours=5)
-		adjusted_end = self.end - timedelta(hours=5)
-		return f'{adjusted_start.strftime("%m/%d %X")} to {adjusted_end.strftime("%m/%d %X")}'
+		adjusted_start = self.get_time_slot().start - timedelta(hours=5)
+		adjusted_end = self.get_time_slot().end - timedelta(hours=5)
+		return f'{adjusted_start.strftime("%m/%d %l:%M %p")} to {adjusted_end.strftime("%m/%d %l:%M %p")}'
+
+	#Finds the timeslot associated with this workshop. Needed for tables.py !
+	def get_time_slot(self):
+		timeslot = Timeslot.objects.filter(workshop_one=self).first()
+		if not timeslot:
+			timeslot = Timeslot.objects.filter(workshop_two=self).first()
+		return timeslot
+
 
 
 	#Attended model not implemented yet. Ignore this for now.
@@ -54,7 +55,7 @@ class Timeslot(models.Model):
 		#Time printed is 5 hours ahead so i just adjust it manually.
 		adjusted_start = self.start - timedelta(hours=5)
 		adjusted_end = self.end - timedelta(hours=5)
-		return f'{adjusted_start.strftime("%d/%m %X")} to {adjusted_end.strftime("%d/%m %X")}'
+		return f'{adjusted_start.strftime("%m/%d %l:%M %p")} to {adjusted_end.strftime("%m/%d %l:%M %p")}'
 
 class Attendance(models.Model):
 	workshop = models.ForeignKey(Workshop, null=False, on_delete=models.CASCADE)
