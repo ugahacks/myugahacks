@@ -60,7 +60,7 @@ class WorkshopList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView
 ## TODO:
 #Make a better message for users when workshop/timeslot is not found.
 #Better frontend...
-class WorkshopDetail(IsOrganizerMixin, DetailView):
+class WorkshopDetail(IsVolunteerMixin, DetailView):
     model = Workshop
     template_name = 'workshop_detail.html'
 
