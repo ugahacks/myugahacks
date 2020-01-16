@@ -26,6 +26,13 @@ class Workshop(models.Model):
 	def __str__(self):
 		return str(self.title)
 
+	def time_period(self):
+		#Time printed is 5 hours ahead so i just adjust it manually.
+		adjusted_start = self.start - timedelta(hours=5)
+		adjusted_end = self.end - timedelta(hours=5)
+		return f'{adjusted_start.strftime("%d/%m %X")} to {adjusted_end.strftime("%d/%m %X")}'
+
+
 	#Attended model not implemented yet. Ignore this for now.
 	#def attended(self):
 		#return Attended.objects.filter(workshop=self).count()

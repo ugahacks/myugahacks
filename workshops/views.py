@@ -115,7 +115,7 @@ class WorkshopCheckin(IsVolunteerMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         workshop_id = request.POST.get('workshop_id', None)
-        qr_id = request.POST.get('qr_id', None)
+        qr_id = request.POST.get('qr_code', None)
 
         if not qr_id or not workshop_id:
             return JsonResponse({'error': 'QR or workshop is not available.'})
@@ -128,8 +128,8 @@ class WorkshopCheckin(IsVolunteerMixin, TemplateView):
         hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_id).first()
         if not hacker_checkin:
             return JsonResponse({'error': 'Invalid QR code!'})
-        hacker = hacker
-        if not hacker_application:
+        hacker = hacker_checkin.user
+        if not hacker:
             return JsonResponse({'error': 'No user for current code'})
         #Checks if the user has attended this workshop already. If they have, then a message is displayed.
         hacker_attended = workshop.attendance_set().filter(user=hacker).first()
@@ -137,7 +137,7 @@ class WorkshopCheckin(IsVolunteerMixin, TemplateView):
             return JsonResponse({'error': 'Hacker has already checked in for this workshop'})
 
         #Logs user attendance to a workshop.
-        attendance = Attendance(workshop=workshop, user=hacker_application.user)
+        attendance = Attendance(workshop=workshop, user=hacker.user)
         attendance.save()
 
         return JsonResponse({'success': True})
