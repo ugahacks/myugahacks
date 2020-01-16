@@ -30,7 +30,7 @@ class Workshop(models.Model):
 		#Time printed is 5 hours ahead so i just adjust it manually.
 		adjusted_start = self.start - timedelta(hours=5)
 		adjusted_end = self.end - timedelta(hours=5)
-		return f'{adjusted_start.strftime("%d/%m %X")} to {adjusted_end.strftime("%d/%m %X")}'
+		return f'{adjusted_start.strftime("%m/%d %X")} to {adjusted_end.strftime("%m/%d %X")}'
 
 
 	#Attended model not implemented yet. Ignore this for now.

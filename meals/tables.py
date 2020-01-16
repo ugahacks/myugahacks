@@ -23,8 +23,8 @@ class MealsListTable(tables.Table):
     checkin = tables.TemplateColumn(
         "<a href='{% url 'meal_checkin' record.id %}'>Check-in hacker</a> ",
         verbose_name='Check-in', orderable=False)
-    starts = tables.DateColumn(accessor='starts', verbose_name='Starts', format='d/m G:i')
-    ends = tables.DateTimeColumn(accessor='ends', verbose_name='Ends', format='d/m G:i')
+    starts = tables.DateColumn(accessor='starts', verbose_name='Starts', format='m/d G:i')
+    ends = tables.DateTimeColumn(accessor='ends', verbose_name='Ends', format='m/d G:i')
     eaten = tables.Column(accessor='eaten', verbose_name='Total rations served')
     times = tables.Column(accessor='times', verbose_name='Rations/hacker')
     opened = tables.Column(accessor='opened', verbose_name='Active')
@@ -58,7 +58,7 @@ class MealsUsersFilter(django_filters.FilterSet):
 
 
 class MealsUsersTable(tables.Table):
-    time2 = tables.DateTimeColumn(accessor='time', verbose_name='Time', format='d/m/Y G:i')
+    time2 = tables.DateTimeColumn(accessor='time', verbose_name='Time', format='m/d/Y G:i')
 
     class Meta:
         model = Meal

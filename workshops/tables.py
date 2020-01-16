@@ -8,7 +8,7 @@ class WorkshopListTable(tables.Table):
     title = tables.TemplateColumn(
         "<a href='{% url 'workshop_detail' record.id %}'>{{ record.title }}</a> ")
     starts = tables.DateTimeColumn(accessor='start', verbose_name='Starts', format='d/m G:i')
-    ends = tables.DateTimeColumn(accessor='end', verbose_name='Ends', format='d/m G:i')
+    ends = tables.DateTimeColumn(accessor='end', verbose_name='Ends', format='m/d G:i')
     update = tables.TemplateColumn(
         "<a href='{% url 'admin:workshops_workshop_change' record.id %}'>Modify</a> ",
         verbose_name='Actions', orderable=False)
