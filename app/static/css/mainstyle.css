@@ -238,7 +238,7 @@ height: 75px;
     right: 80px !important;
   }
 }
-@media (max-width:770px)
+@media (max-width:767px)
 {
   .imgsec
   {
@@ -251,6 +251,10 @@ height: 75px;
   .schedulecol, .datecol, .questioncol, .timecol
   {
     flex-basis: 100%;
+  }
+  #Organizers, #Organizernav
+  {
+    display: none;
   }
 }
 @media (max-width:1100px)

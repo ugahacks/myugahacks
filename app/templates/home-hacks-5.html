@@ -56,7 +56,7 @@
           UGAHacks Team
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownhead">
-          <a class="dropdown-item" href="#Organizers">Organizers</a>
+          <a class="dropdown-item" id="Organizernav" href="#Organizers">Organizers</a>
           <a class="dropdown-item" href="#Pasthack">Past Events</a>
           <a class="dropdown-item" href="mailto:hello@ugahacks.com">Contact Us</a>
         </div>
@@ -381,47 +381,42 @@
         </div>
         <div class="sponimgsec">
           <a href="https://technology.macysjobs.com/">
-            <img src="../static/images/sponsorpics/Macyslogo.svg" class="needsBG_white" alt="macy's tech">
+            <img src="../static/images/sponsorpics/Macyslogo.svg" alt="macy's tech">
           </a>
         </div>
         <div class="sponimgsec">
           <a href="https://www.blackrock.com/corporate/about-us/mission-and-principles">
-            <img src="../static/images/sponsorpics/blackrock.svg" class="needsBG_white" alt="blackrock">
-          </a>
-        </div>
-        <div class="sponimgsec">
-          <a href="https://www.fiserv.com/">
-            <img src="../static/images/sponsorpics/fiserv.png" class="needsBG_white" alt="fiserv">
+            <img src="../static/images/sponsorpics/blackrock.svg" alt="blackrock">
           </a>
         </div>
         <div class="sponimgsec">
           <a href="https://www.statefarm.com/about-us/">
-            <img src="../static/images/sponsorpics/statefarm.png" class="needsBG_white" alt="statefarm">
+            <img src="../static/images/sponsorpics/statefarm.png" alt="statefarm">
           </a>
         </div>
         <div class="sponimgsec">
           <a href="https://hpccsystems.com/">
-            <img src="../static/images/sponsorpics/HPCCSystems.png" class="needsBG_white" alt="hpcc systems">
+            <img src="../static/images/sponsorpics/HPCCSystems.png" alt="hpcc systems">
           </a>
         </div>
         <div class="sponimgsec">
           <a href="https://www.equifax.com/personal/">
-            <img src="../static/images/sponsorpics/equifax.svg" class="needsBG_white" alt="equifax">
+            <img src="../static/images/sponsorpics/equifax.svg" alt="equifax">
           </a>
         </div>
         <div class="sponimgsec">
           <a href="https://www.digitalocean.com/">
-            <img src="../static/images/sponsorpics/DigitalOcean_Logo.svg" class="needsBG_white" alt="digital ocean">
+            <img src="../static/images/sponsorpics/DigitalOcean_Logo.svg" alt="digital ocean">
           </a>
         </div>
         <div class="sponimgsec">
           <a href="https://www.cs.uga.edu/">
-            <img src="../static/images/sponsorpics/csdept.png" class="needsBG_white" alt="UGA CS Department">
+            <img src="../static/images/sponsorpics/csdept.png" alt="UGA CS Department">
           </a>
         </div>
         <div class="sponimgsec" id="acm">
           <a href="https://www.ugaacm.com/#who-we-are">
-            <img src="../static/images/sponsorpics/acm.png" class="needsBG_white" alt="UGA ACM">
+            <img src="../static/images/sponsorpics/acm.png" alt="UGA ACM">
           </a>
         </div>
       </div>
@@ -431,7 +426,7 @@
       <div class="sponsorlogos">
         <div class="sponimgsec">
           <a href="http://hackp.ac/mlh-stickermule-hackathons">
-            <img src="../static/images/sponsorpics/sticker-mule-logo-light-bg.svg" class="needsBG_white" alt="Sticker mule">
+            <img src="../static/images/sponsorpics/sticker-mule-logo-light-bg.svg" alt="Sticker mule">
           </a>
         </div>
     </div>
@@ -732,7 +727,7 @@
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
   <script>
-    var regtime = new Date("Dec 01, 2019 21:00:00").getTime();
+    var regtime = new Date("Jan 24, 2020 23:59:59").getTime();
     var x = setInterval(function () {
       var currtime = new Date().getTime();
       var timeleft = regtime - currtime;
@@ -741,17 +736,20 @@
       var mins = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
       var secs = Math.floor((timeleft % (1000 * 60)) / 1000);
 
-      if (timeleft < 0) {
+      if (timeleft > 0) {
         clearInterval(x);
         document.getElementById("regcountdown").innerHTML = "Registration is Now Open!!!";
         document.getElementById("regcountdown").insertAdjacentHTML("afterend", "<br><a href='user/signup' id='regbtn'>Registration</a>");
         $(".timecol").remove();
       }
       else {
-        document.getElementById("countdownd").innerHTML = days;
-        document.getElementById("countdownh").innerHTML = hours;
-        document.getElementById("countdownm").innerHTML = mins;
-        document.getElementById("countdowns").innerHTML = secs;
+        clearInterval(x);
+        document.getElementById("regcountdown").innerHTML = "Registration is Now Closed. Thanks to all that applied!";
+        $(".timecol").remove();
+        // document.getElementById("countdownd").innerHTML = days;
+        // document.getElementById("countdownh").innerHTML = hours;
+        // document.getElementById("countdownm").innerHTML = mins;
+        // document.getElementById("countdowns").innerHTML = secs;
       }
     })
   </script>
