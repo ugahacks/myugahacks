@@ -29,7 +29,7 @@ class WorkshopListFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method='search_filter', label='Search')
 
     def search_filter(self, queryset, name, value):
-        return queryset.filter((Q(title__icontains=value) | Q(location__icontains=value)))
+        return queryset.filter((Q(title__icontains=value) | Q(location__icontains=value)) | Q(host_icontains=value))
 
     class Meta:
         model = Workshop
