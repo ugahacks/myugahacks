@@ -9,6 +9,8 @@ class AddWorkshopForm(forms.ModelForm):
         'rows': '4',
     }))
 
+    location = forms.CharField(max_length=63, label='Location')
+
     host = forms.CharField(max_length=63, label='Organization name')
 
     #Change the __str__ method in the Timeslot model to change how the choices are displayed to users.
@@ -17,4 +19,4 @@ class AddWorkshopForm(forms.ModelForm):
 
     class Meta:
         model = Workshop
-        fields = ['title', 'description', 'host']
+        fields = ['title', 'description','location', 'host']

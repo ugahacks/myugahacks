@@ -30,10 +30,11 @@ class WorkshopListTable(tables.Table):
 
 class WorkshopListFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method='search_filter', label='Search')
+    open = django_filters.BooleanFilter()
 
     def search_filter(self, queryset, name, value):
-        return queryset.filter((Q(title__icontains=value) | Q(location__icontains=value)))
+        return queryset.filter((Q(title__icontains=value) | Q(location__icontains=value) | Q(host__icontains=value)))
 
     class Meta:
         model = Workshop
-        fields = ['search',]
+        fields = ['search','open']

@@ -3,7 +3,7 @@
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
 {% if not is_available %}
-<h1>There are no timeslots available at the moment.</h1>
+<h1 class="text-center" style="padding: 10px;">There are no timeslots available at the moment.</h1>
 {% else %}
 <h1 class="text-center">Add Workshop</h1>
     <form id="workshop-form" action="/workshops/add/" method="post">
