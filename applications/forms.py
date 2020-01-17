@@ -219,7 +219,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         volunteer_time = cleaned_data.get('volunteer_time')
         if participant == 'Volunteer' and not volunteer_time:
             raise forms.ValidationError("Please tell us what time you want to volunteer")
-        
+
         mentor_topic = cleaned_data.get('mentor_topic')
         if participant == 'Mentor' and not mentor_topic:
             raise forms.ValidationError("Please tell us what topic you want to mentor for")
@@ -302,6 +302,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     class Meta:
         model = models.Application
         help_texts = {
+            'participant' : 'Volunteers will still be able to participate in the hackathon and submit projects',
             'volunteer_time' : 'What time(s) can you volunteer? (Please give date and time ranges if possible)',
             'mentor_topic' : 'What topics are you confortable in mentoring?',
             'mentor_workshop' : 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',

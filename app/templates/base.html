@@ -124,6 +124,8 @@
                             {% if request.user.is_organizer or request.user.is_volunteer %}
                                 <li class="{% if 'checkin' in request.build_absolute_uri %}active{% endif %}">
                                     <a href="{% url 'check_in_list' %}">Check-in</a></li>
+                                <li class="{% if 'workshops' in request.build_absolute_uri %}active{% endif %}">
+                                  <a href="{% url 'workshop_list' %}">Workshops</a></li>
                             {% endif %}
                             {% include 'include/meals_tab.html' %}
                         {% endif %}

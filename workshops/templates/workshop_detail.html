@@ -1,5 +1,5 @@
 {% extends "base_tabs.html" %}
-{% block head_title %}Add workshop{% endblock %}
+{% block head_title %}Workshop Details{% endblock %}
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
   <h1 class='text-center'>{{ title }}</h1>
@@ -10,8 +10,10 @@
     <p><b>Time:</b> {{ start }} -- {{ end }}</p>
     <p><b>Attendance:</b> {{ attendance }}</p>
   </div>
-
+  {%  if workshop.open %}
   <div class="text-center mb-5">
     <a class="btn btn-success mb-5" href="{% url 'workshop_checkin' workshop.id %}">Scan</a>
   </div>
+  {% endif %}
+  <br>
 {% endblock %}

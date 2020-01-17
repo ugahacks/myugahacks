@@ -30,6 +30,10 @@ class LoginForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=100)
     password = forms.CharField(widget=forms.PasswordInput, label='Password', max_length=100)
 
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        return email.lower()
+
 
 class RegisterForm(LoginForm):
     password2 = forms.CharField(widget=forms.PasswordInput, label='Repeat password', max_length=100,
@@ -74,17 +78,24 @@ class RegisterForm(LoginForm):
             )
          return birth_year
 
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        return email.lower()
 
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=254)
 
     def clean_email(self):
         email = self.cleaned_data['email']
-        if not User.objects.filter(email=email).exists():
+        emailcap = self.cleaned_data['email'].capitalize()
+        if not User.objects.filter(email=email).exists() and not User.objects.filter(email=emailcap).exists():
             raise forms.ValidationError(
                 "We couldn't find a user with that email address. Why not register an account?"
             )
-        return email
+        elif  User.objects.filter(email=email).exists():
+            return email
+        else:
+            return emailcap
 
 
 class SetPasswordForm(forms.Form):

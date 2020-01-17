@@ -7,8 +7,11 @@ class WorkshopListTable(tables.Table):
 
     title = tables.TemplateColumn(
         "<a href='{% url 'workshop_detail' record.id %}'>{{ record.title }}</a> ")
-    starts = tables.DateTimeColumn(accessor='start', verbose_name='Starts', format='d/m G:i')
-    ends = tables.DateTimeColumn(accessor='end', verbose_name='Ends', format='d/m G:i')
+    #starts = tables.DateTimeColumn(accessor='get_time_slot', verbose_name='Starts', format='d/m G:i')
+    start = tables.TemplateColumn(
+        "{{ record.get_time_slot.start }}")
+    end = tables.TemplateColumn(
+        "{{ record.get_time_slot.end }}")
     update = tables.TemplateColumn(
         "<a href='{% url 'admin:workshops_workshop_change' record.id %}'>Modify</a> ",
         verbose_name='Actions', orderable=False)
@@ -27,10 +30,11 @@ class WorkshopListTable(tables.Table):
 
 class WorkshopListFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method='search_filter', label='Search')
+    open = django_filters.BooleanFilter()
 
     def search_filter(self, queryset, name, value):
-        return queryset.filter((Q(title__icontains=value) | Q(location__icontains=value)) | Q(host_icontains=value))
+        return queryset.filter((Q(title__icontains=value) | Q(location__icontains=value) | Q(host__icontains=value)))
 
     class Meta:
         model = Workshop
-        fields = ['search',]
+        fields = ['search','open']

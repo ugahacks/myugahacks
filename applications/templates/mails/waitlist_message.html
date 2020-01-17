@@ -1,0 +1,32 @@
+{% extends 'base_email.html' %}
+{% block preheader %} A Update on your {{ h_name }} Application {% endblock %}
+
+{% block content %}
+    <p>
+        Hi {{ name }},
+    </p>
+    <p>
+        Every year, hundreds of students across the US apply to UGAHacks and we are impressed
+        by the passion and creativity each one of you have shown in your projects and enthusiasm for attending {{ h_name }}
+        in your application.
+    </p>
+    <p>
+        However, there is unfortunately a limit to how many hackers we can accept every year due to the venue size and budgetary reasons. At this time,
+        we have decided on the initial batch of applicants to accept for {{ h_name }} and your application has been <b> waitlisted </b> for the time being.
+    </p>
+    <p>
+        Over the next week, the batch of invited applicants will have a chance to confirmed their attendance to {{ h_name }}. There is the possibility that some
+        may no longer be able to attend the event, so some spots may still open up.
+    </p>
+    <p>
+        <b>Keep an eye out for any emails from us over the next week as you can still be invited to join us at {{ h_name }}!</b>
+    </p>
+    <p>
+        Again, we really appreciate the time you took to apply to our event, and we hope to see you at UGAHacks sometime in the future!
+    </p>
+    <p>
+    Have any other questions? Email us at {{ h_contact_email|urlize }}
+    </p>
+    <p>Best, </p>
+    <p>  {{ h_name }} Team</p>
+{% endblock %}

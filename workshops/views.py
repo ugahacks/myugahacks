@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from workshops.models import Workshop, Timeslot, Attendance
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponseRedirect
 
 from django.views.generic.edit import FormView
 from django.views.generic import ListView, DetailView, TemplateView
@@ -13,6 +13,8 @@ from .forms import AddWorkshopForm
 
 from checkin.models import CheckIn
 from workshops.tables import WorkshopListTable, WorkshopListFilter
+from django.contrib import messages
+
 ## TODO:
 #Better fronend...
 class WorkshopAdd(IsOrganizerMixin, FormView):
@@ -41,8 +43,6 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
         #timeslot = Timeslot.objects.get(pk=form.cleaned_data['timeslot'])
         timeslot = form.cleaned_data['timeslot']
         #Checks if workshop_one is filled first.
-        workshop.start = timeslot.start
-        workshop.end = timeslot.end
         workshop.save()
         if not timeslot.workshop_one:
             timeslot.workshop_one = workshop
@@ -60,7 +60,7 @@ class WorkshopList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView
 ## TODO:
 #Make a better message for users when workshop/timeslot is not found.
 #Better frontend...
-class WorkshopDetail(IsOrganizerMixin, DetailView):
+class WorkshopDetail(IsVolunteerMixin, DetailView):
     model = Workshop
     template_name = 'workshop_detail.html'
 
@@ -115,29 +115,35 @@ class WorkshopCheckin(IsVolunteerMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         workshop_id = request.POST.get('workshop_id', None)
-        qr_id = request.POST.get('qr_id', None)
+        qr_id = request.POST.get('qr_code', None)
 
         if not qr_id or not workshop_id:
-            return JsonResponse({'error': 'QR or workshop is not available.'})
+            messages.error(self.request, 'The QR code or workshop is not available.')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         workshop = Workshop.objects.filter(id=workshop_id).first()
 
         if not workshop.open and not self.request.user.is_organizer:
-            return JsonResponse({'error': 'Workshop is not open yet or it has already ended.'})
+            messages.error(self.request, 'This workshop is not open yet or it has ended.')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_id).first()
         if not hacker_checkin:
-            return JsonResponse({'error': 'Invalid QR code!'})
-        hacker = hacker
-        if not hacker_application:
-            return JsonResponse({'error': 'No user for current code'})
+            messages.error(self.request, 'Invalid QR code!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        hacker = hacker_checkin.user
+        if not hacker:
+            messages.error(self.request, 'No user found for this QR code!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         #Checks if the user has attended this workshop already. If they have, then a message is displayed.
-        hacker_attended = workshop.attendance_set().filter(user=hacker).first()
+        hacker_attended = workshop.attendance_set.filter(user=hacker).first()
         if hacker_attended:
-            return JsonResponse({'error': 'Hacker has already checked in for this workshop'})
-
+            messages.error(self.request, 'This hacker has already been marked for attendance for this workshop!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         #Logs user attendance to a workshop.
-        attendance = Attendance(workshop=workshop, user=hacker_application.user)
+        attendance = Attendance(workshop=workshop, user=hacker.user)
         attendance.save()
 
-        return JsonResponse({'success': True})
+        messages.success(self.request, 'Hacker attendance logged!')
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
