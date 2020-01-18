@@ -12,9 +12,8 @@
 {% block head_title %}{{ workshop.title }} Workshop Check-in {% endblock %}
 
 {% block panel %}
+<h1 class='text-center'>{{ workshop.title }}</h1>
     <dl class="dl-horizontal">
-        {% include 'include/field.html' with desc='Lenny face' value=app.lennyface %}
-        {% include 'include/field.html' with desc='Title' value=workshop.title %}
         {% include 'include/field.html' with desc='Description' value=workshop.description %}
         {% include 'include/field.html' with desc='Location' value=workshop.location %}
         {% include 'include/field.html' with desc='Time' value=workshop.time_period %}
