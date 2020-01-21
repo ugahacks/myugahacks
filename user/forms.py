@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.password_validation import validate_password, password_validators_help_texts
+from django.utils.safestring import mark_safe
+from django.urls import reverse
 
 from user.models import User
 
@@ -90,7 +92,7 @@ class PasswordResetForm(forms.Form):
         emailcap = self.cleaned_data['email'].capitalize()
         if not User.objects.filter(email=email).exists() and not User.objects.filter(email=emailcap).exists():
             raise forms.ValidationError(
-                "We couldn't find a user with that email address. Why not register an account?"
+                mark_safe(f"We couldn't find a user with that email address. <a href={reverse('account_signup')} style='color: inherit; text-decoration: underline;'>Why not register an account?</a>")
             )
         elif  User.objects.filter(email=email).exists():
             return email
