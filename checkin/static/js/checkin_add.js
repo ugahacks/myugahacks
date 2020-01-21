@@ -6,7 +6,7 @@ let checkin_qr = (()=>{
     obj.initScanner = ()=>{
         Instascan.Camera.getCameras().then(function (cameras) {
             if (cameras.length > 0) {
-                cams = cameras
+                cams = cameras[cameras.length - 1]
                 console.log(cams)
             } else {
                 console.error('No cameras found.');
@@ -17,7 +17,7 @@ let checkin_qr = (()=>{
     }
     //-Updates the content
     //-Shows a toast if there's a message
-    obj.processResponse = (data)=>{        
+    obj.processResponse = (data)=>{
         if(data.content){
             $('#checkin-container').fadeTo(200, 0, ()=>{
                 $('#checkin-container').html(data.content)
@@ -39,7 +39,7 @@ let checkin_qr = (()=>{
     }
 
     //Opens a popup with a camera preview. If a QR is detected,
-    //it's value is set into 'inputElem'. 
+    //it's value is set into 'inputElem'.
     //Clicking the bg cancels the operation
     //pre: call initScanner
     obj.qrScan = (inputElem)=>{
@@ -53,7 +53,7 @@ let checkin_qr = (()=>{
         //Create element to darken the rest of the page
         let veil = document.createElement("div")
         //Init scanner with this element
-        let scanner = new Instascan.Scanner({ video: videoElem });
+        let scanner = new Instascan.Scanner({ video: videoElem, scanPeriod: 5});
         //Once we scan a value, set the inputElem to this value and close the popup
         scanner.addListener('scan', function (content) {
             console.info("Read QR content: "+content)
@@ -97,12 +97,12 @@ let checkin_qr = (()=>{
                 popup = ""
             }
         })
-        
+
         //Start the scanner with the stored value
         scanner.start(cams[selectedCam])
-        
+
     }
-    
+
     return obj
 })()
 
