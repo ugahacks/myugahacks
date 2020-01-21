@@ -7,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.core.serializers.python import Serializer
 from django.http import Http404
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic import TemplateView
@@ -19,6 +19,7 @@ from rest_framework.views import APIView
 from app.mixins import TabsViewMixin
 from app.views import TabsView
 from applications import models as models_app
+from applications.models import Application
 from checkin.models import CheckIn
 from meals.models import Meal, Eaten, MEAL_TYPE
 from meals.tables import MealsListTable, MealsListFilter, MealsUsersTable, MealsUsersFilter
@@ -110,7 +111,7 @@ class MealAdd(IsOrganizerMixin, TabsView):
     template_name = 'meal_add.html'
 
     def get_back_url(self):
-        return redirect('meals_list')
+        return reverse('meals_list')
 
     def get_context_data(self, **kwargs):
         context = super(MealAdd, self).get_context_data(**kwargs)
@@ -173,33 +174,36 @@ class MealsCheckin(IsVolunteerMixin, TemplateView):
             })
         return context
 
-
-class MealsCoolAPI(View, IsVolunteerMixin):
-
     def post(self, request, *args, **kwargs):
-        mealid = request.POST.get('meal_id', None)
-        qrid = request.POST.get('qr_id', None)
+        meal_id = request.POST.get('meal_id', None)
+        qr_id = request.POST.get('qr_code', None)
 
-        if not qrid or not mealid:
-            return JsonResponse({'error': 'Missing meal and/or QR. Trying to trick us?'})
+        if not qr_id or not meal_id:
+            messages.error(self.request, 'The QR code or meal is not available.')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-        current_meal = Meal.objects.filter(id=mealid).first()
+        current_meal = Meal.objects.filter(id=meal_id).first()
+
         if not current_meal.opened and not self.request.user.is_organizer:
-            return JsonResponse({'error': 'Meal has been closed. Reach out to an organizer to activate it again'})
-        hacker_checkin = CheckIn.objects.filter(qr_identifier=qrid).first()
+            messages.error(self.request, 'This meal is not open yet or it has ended. Reach out to an organizer to activate it again')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_id).first()
         if not hacker_checkin:
-            return JsonResponse({'error': 'Invalid QR code!'})
+            messages.error(self.request, 'Invalid QR code!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         hacker_application = getattr(hacker_checkin, 'application', None)
         if not hacker_application:
-            return JsonResponse({'error': 'No application found for current code'})
+            messages.error(self.request, 'No user found for this QR code!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         times_hacker_ate = Eaten.objects.filter(meal=current_meal, user=hacker_application.user).count()
         if times_hacker_ate >= current_meal.times:
             error_message = 'Warning! Hacker already ate %d out of %d available times!' % \
                             (times_hacker_ate, current_meal.times)
-
-            return JsonResponse({'error': error_message})
+            messages.error(self.request, error_message)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         checkin = Eaten(meal=current_meal, user=hacker_application.user)
         checkin.save()
@@ -211,7 +215,9 @@ class MealsCoolAPI(View, IsVolunteerMixin):
         else:
             diet = hacker_application.diet
 
-        return JsonResponse({'success': True, 'diet': diet})
+        messages.success(self.request, f'Hacker has been successfully logged for this meal! DIET INFO: {diet}')
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class MealSerializer(Serializer):
@@ -262,12 +268,14 @@ class MealsApi(APIView):
             obj_checkin = CheckIn.objects.filter(qr_identifier=var_user).first()
             if obj_checkin is None:
                 return HttpResponse(json.dumps({'code': 1, 'message': 'Invalid user'}), content_type='application/json')
-            obj_application = obj_checkin.application
-            obj_user = obj_application.user
-            if obj_application is None:
-                return HttpResponse(json.dumps({'code': 1, 'message': 'No application found'}),
-                                    content_type='application/json')
-            var_diet = obj_application.diet
+            obj_user = obj_checkin.application_user
+            obj_application = Application.objects.filter(user=obj_user).first()
+            if obj_user.diet:
+                var_diet = obj_user.diet
+            elif obj_application:
+                var_diet = obj_application.diet
+            else:
+                var_diet = "UNKNOWN"
             var_eatens = Eaten.objects.filter(meal=obj_meal, user=obj_user).count()
             if var_eatens >= var_repetitions:
                 return HttpResponse(json.dumps({'code': 2, 'message': 'Hacker alreay ate'}),
