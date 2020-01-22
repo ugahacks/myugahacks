@@ -110,7 +110,7 @@ class MealAdd(IsOrganizerMixin, TabsView):
     template_name = 'meal_add.html'
 
     def get_back_url(self):
-        return redirect('meals_list')
+        return reverse('meals_list')
 
     def get_context_data(self, **kwargs):
         context = super(MealAdd, self).get_context_data(**kwargs)

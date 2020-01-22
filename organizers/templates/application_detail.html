@@ -69,11 +69,10 @@
                 {% include 'include/field.html' with desc='First UGAHacks?' value=app.first_ugahacks|yesno:'Yes,No,Maybe' %}
                 {% include 'include/field.html' with desc='Why excited?' showlength="true" value=app.description|safe|urlize %}
                 {% include 'include/field.html' with desc='Projects' showlength="true" value=app.projects|safe|urlize %}
-                {% include 'include/field.html' with desc='Team Code' value=team_code|safe|urlize %}
                 {% include 'include/field.html' with desc='Excited about' value=app.excited %}
             </dl>
             {% if not vote and teammates %}
-                <h3>Teammates</h3>
+                <h3>Teammates (Team Code: {{app.user.team.team_code}})</h3>
                 <ul>
                     {% for mate in teammates %}
                         <li>
