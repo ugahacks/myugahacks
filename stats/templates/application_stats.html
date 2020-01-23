@@ -2,7 +2,7 @@
 
 {% block head_title %}Application stats{% endblock %}
 {% block panel %}
-    <h1>Application stats</h1>
+    <h1>Application Stats</h1>
     <small class="pull-right"><b>Last updated:</b> <span id="update_date"></span></small>
     <div class="row">
         <div class="col-md-12">
@@ -14,11 +14,32 @@
         <div class="col-md-6">
             <h3>Status</h3>
             <div id="applications_stats"></div>
-            <p><b>Application count:</b> <span id="app_count"></span></p>
         </div>
         <div class="col-md-6">
-            <h3>Gender</h3>
+          <br>
+          <h3 style="text-align: center;"><b># of Applications:</b> <span id="app_count"></span></h3>
+        </div>
+    </div>
+    <h2>Gender</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>All</h3>
             <div id="gender_stats"></div>
+        </div>
+        <div class="col-md-6">
+            <h3>Confirmed</h3>
+            <div id="gender_stats_confirmed"></div>
+        </div>
+    </div>
+    <h2>Class Status</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>All</h3>
+            <div id="class_stats"></div>
+        </div>
+        <div class="col-md-6">
+            <h3>Confirmed</h3>
+            <div id="class_stats_confirmed"></div>
         </div>
     </div>
     <h2>T-Shirts sizes</h2>
@@ -45,7 +66,7 @@
             <div id="diet_stats_confirmed"></div>
         </div>
         <div class="col-md-12">
-            <p><b>Confirmed extra diet requirements:</b><br> <span id="other_diet"></span></p>
+            <h4><b>Confirmed extra diet requirements:</b><br> <span id="other_diet"></span></h4>
         </div>
 
     </div>
@@ -124,6 +145,69 @@
                 bindto: '#gender_stats',
                 data: {
                     json: gender_data,
+                    type: 'donut'
+
+                },
+                donut: {
+                    label: {
+                        format: function (value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
+            });
+            var gender_data_confirmed = {};
+            var genders = [];
+            $(data['gender_confirmed']).each(function (c, e) {
+                genders.push(e.gender_name);
+                gender_data_confirmed[e.gender_name] = e.applications;
+            });
+            c3.generate({
+                bindto: '#gender_stats_confirmed',
+                data: {
+                    json: gender_data_confirmed,
+                    type: 'donut'
+
+                },
+                donut: {
+                    label: {
+                        format: function (value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
+            });
+            var class_data = {};
+            var classes = [];
+            $(data['class']).each(function (c, e) {
+                classes.push(e.class_name);
+                class_data[e.class_name] = e.applications;
+            });
+            c3.generate({
+                bindto: '#class_stats',
+                data: {
+                    json: class_data,
+                    type: 'donut'
+
+                },
+                donut: {
+                    label: {
+                        format: function (value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
+            });
+            var class_data_confirmed = {};
+            var classes = [];
+            $(data['class_confirmed']).each(function (c, e) {
+                classes.push(e.class_name);
+                class_data_confirmed[e.class_name] = e.applications;
+            });
+            c3.generate({
+                bindto: '#class_stats_confirmed',
+                data: {
+                    json: class_data_confirmed,
                     type: 'donut'
 
                 },
