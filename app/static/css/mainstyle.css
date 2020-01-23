@@ -221,14 +221,29 @@ height: 75px;
   display: block;
   margin: auto;
   padding-top: 30px;
-  width: 70%;
+  width: 80%;
   height: 45%;
+}
+#ugacombologo
+{
+  width: 400px;
 }
 @media (max-width:900px) {
   #mainbannerlogo
   {
-    width: 75%;
-    height: 30%;
+    width: 95%;
+    height: 50%;
+  }
+  #ugacombologo
+  {
+    margin: 0;
+    width: 300px;
+  }
+  #mainsubtitle
+  {
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 @media (max-width: 990px)

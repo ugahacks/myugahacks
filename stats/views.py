@@ -7,12 +7,12 @@ from django.utils import timezone
 
 from app.views import TabsView
 from applications import models as a_models
-from applications.models import Application, STATUS, APP_CONFIRMED, GENDERS
+from applications.models import Application, STATUS, APP_CONFIRMED, GENDERS, CLASSSTATUS, P_MENTOR
 from user.mixins import is_organizer, IsOrganizerMixin
 
 STATUS_DICT = dict(STATUS)
 GENDER_DICT = dict(GENDERS)
-
+CLASSSTATUS_DICT = dict(CLASSSTATUS)
 
 def stats_tabs():
     tabs = [('Applications', reverse('app_stats'), False), ]
@@ -58,6 +58,16 @@ def app_stats_api(request):
     gender_count = Application.objects.all().values('gender') \
         .annotate(applications=Count('gender'))
     gender_count = map(lambda x: dict(gender_name=GENDER_DICT[x['gender']], **x), gender_count)
+
+    gender_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).values('gender').annotate(applications=Count('gender'))
+    gender_count_confirmed = map(lambda x: dict(gender_name=GENDER_DICT[x['gender']], **x), gender_count_confirmed)
+
+    class_count = Application.objects.all().exclude(participant=P_MENTOR).values('class_status').annotate(applications=Count('class_status'))
+    class_count = map(lambda x: dict(class_name=CLASSSTATUS_DICT[x['class_status']], **x), class_count)
+
+    class_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).exclude(participant=P_MENTOR).values('class_status').annotate(applications=Count('class_status'))
+    class_count_confirmed = map(lambda x: dict(class_name=CLASSSTATUS_DICT[x['class_status']], **x), class_count_confirmed)
+
     tshirt_dict = dict(a_models.TSHIRT_SIZES)
     shirt_count = map(
         lambda x: {'tshirt_size': tshirt_dict.get(x['tshirt_size'], 'Unknown'), 'applications': x['applications']},
@@ -87,6 +97,9 @@ def app_stats_api(request):
             'shirt_count_confirmed': list(shirt_count_confirmed),
             'timeseries': list(timeseries),
             'gender': list(gender_count),
+            'gender_confirmed': list(gender_count_confirmed),
+            'class': list(class_count),
+            'class_confirmed': list(class_count_confirmed),
             'diet': list(diet_count),
             'diet_confirmed': list(diet_count_confirmed),
             'other_diet': '<br>'.join([el['other_diet'] for el in other_diets if el['other_diet']])
