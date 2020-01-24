@@ -197,8 +197,12 @@ def save_draft(request):
 
 
 def export_resume(request):
+    try:
         response = HttpResponse(open("./files/resumes/resume_export.tar.gz", 'rb').read())
         response['Content-Type'] = 'text/plain'
         response['Content-Disposition'] = 'attachment; filename=resume_export.tar.gz'
         return response
+    except:
+        raise Http404
+
 
