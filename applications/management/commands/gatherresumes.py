@@ -15,6 +15,7 @@ class Command(BaseCommand):
                 for resume in users:
                     if resume.resume:
                         tar_handle.add(f"./{resume.resume.url}", resume.resume.name)
+            
             print("Finished gathering resumes.")
         except:
             print("Error: gathering resumes.")
