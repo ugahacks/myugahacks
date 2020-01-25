@@ -732,7 +732,7 @@
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
   <script>
-    var regtime = new Date("Jan 24, 2020 23:59:59").getTime();
+    var regtime = new Date("Jan 28, 2020 23:59:59").getTime();
     var x = setInterval(function () {
       var currtime = new Date().getTime();
       var timeleft = regtime - currtime;
@@ -743,7 +743,7 @@
 
       if (timeleft > 0) {
         clearInterval(x);
-        document.getElementById("regcountdown").innerHTML = "Registration is Now Open!!!";
+        document.getElementById("regcountdown").innerHTML = "Registration has been extended til Tuesday!!!";
         document.getElementById("regcountdown").insertAdjacentHTML("afterend", "<br><a href='user/signup' id='regbtn'>Registration</a>");
         $(".timecol").remove();
       }
