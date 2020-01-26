@@ -8,7 +8,7 @@ from django import http
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import ValidationError
-from django.http import Http404, HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views import View
@@ -194,3 +194,15 @@ def save_draft(request):
     d.save_dict(dict((k, v) for k, v in request.POST.items() if k in valid_keys.intersection(form_keys) and v))
     d.save()
     return JsonResponse({'saved': True})
+
+
+def export_resume(request):
+    try:
+        response = HttpResponse(open("./files/resumes/resume_export.tar.gz", 'rb').read())
+        response['Content-Type'] = 'text/plain'
+        response['Content-Disposition'] = 'attachment; filename=resume_export.tar.gz'
+        return response
+    except:
+        raise Http404
+
+

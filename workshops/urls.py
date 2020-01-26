@@ -6,4 +6,6 @@ urlpatterns = [
     url(r'^list/$', views.WorkshopList.as_view(), name='workshop_list'),
     url(r'^detail/(?P<pk>\d+)/$', views.WorkshopDetail.as_view(), name='workshop_detail'),
     url(r'^scan/(?P<id>[\w-]+)$', views.WorkshopCheckin.as_view(), name='workshop_checkin'),
+    url(r'^update/(?P<pk>\d+)/$', views.WorkshopUpdate.as_view(), name='workshop_update'),
+
 ]

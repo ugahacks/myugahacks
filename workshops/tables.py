@@ -13,7 +13,7 @@ class WorkshopListTable(tables.Table):
     end = tables.TemplateColumn(
         "{{ record.get_time_slot.end }}")
     update = tables.TemplateColumn(
-        "<a href='{% url 'admin:workshops_workshop_change' record.id %}'>Modify</a> ",
+        "<a href='{% url 'workshop_update' record.id %}'>Modify</a> ",
         verbose_name='Actions', orderable=False)
 
     def before_render(self, request):
