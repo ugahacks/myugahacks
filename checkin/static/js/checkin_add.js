@@ -6,7 +6,7 @@ let checkin_qr = (()=>{
     obj.initScanner = ()=>{
         Instascan.Camera.getCameras().then(function (cameras) {
             if (cameras.length > 0) {
-                cams = cameras[cameras.length - 1]
+                cams = cameras
                 console.log(cams)
             } else {
                 console.error('No cameras found.');
@@ -53,7 +53,7 @@ let checkin_qr = (()=>{
         //Create element to darken the rest of the page
         let veil = document.createElement("div")
         //Init scanner with this element
-        let scanner = new Instascan.Scanner({ video: videoElem, scanPeriod: 5});
+        let scanner = new Instascan.Scanner({ video: videoElem });
         //Once we scan a value, set the inputElem to this value and close the popup
         scanner.addListener('scan', function (content) {
             console.info("Read QR content: "+content)
@@ -67,20 +67,20 @@ let checkin_qr = (()=>{
         let popup = document.createElement("div")
         popup.classList.add("checkin-popup-scan")
         //Append camera selector
-        let selectCam = document.createElement("select")
-        let optionsStr=""
-        for(let i =0; i < cams.length; i++)
-            optionsStr += "<option value='"+i+"'>" + (cams[i].name || "Camera "+i) + "</option>"
-        selectCam.innerHTML=optionsStr
-        popup.appendChild(selectCam)
-        selectCam.value = ""+selectedCam
-        //On selector change, we stop the scanner preview and change the camera
-        selectCam.addEventListener("change", ()=>{
-            let selectedCam = parseInt($(".selected-camera-class option:selected").val())
-            localStorage.setItem("selectedCam", selectedCam)
-            scanner.stop()
-            scanner.start(cams[seletedCam])
-        })
+        // let selectCam = document.createElement("select")
+        // let optionsStr=""
+        // for(let i =0; i < cams.length; i++)
+        //     optionsStr += "<option value='"+i+"'>" + (cams[i].name || "Camera "+i) + "</option>"
+        // selectCam.innerHTML=optionsStr
+        // popup.appendChild(selectCam)
+        // selectCam.value = ""+selectedCam
+        // //On selector change, we stop the scanner preview and change the camera
+        // selectCam.addEventListener("change", ()=>{
+        //     let selectedCam = parseInt($(".selected-camera-class option:selected").val())
+        //     localStorage.setItem("selectedCam", selectedCam)
+        //     scanner.stop()
+        //     scanner.start(cams[seletedCam])
+        // })
         //Then we append the video preview
         popup.appendChild(videoElem)
         //Append popup to document
@@ -99,7 +99,7 @@ let checkin_qr = (()=>{
         })
 
         //Start the scanner with the stored value
-        scanner.start(cams[selectedCam])
+        scanner.start(cams[cams.length-1])
 
     }
 
