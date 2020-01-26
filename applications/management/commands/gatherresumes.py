@@ -13,9 +13,11 @@ class Command(BaseCommand):
         
             with tarfile.open(f"./files/resumes/resume_export.tar.gz", "w:gz") as tar_handle:
                 for resume in users:
-                    if resume.resume:
-                        tar_handle.add(f"./{resume.resume.url}", resume.resume.name)
-            
+                    if resume.resume:  
+                        try: 
+                            tar_handle.add(f".{resume.resume.url}", resume.resume.name)
+                        except Exception as f:
+                            print(f"Error adding a file:{f}")
             print("Finished gathering resumes.")
-        except:
-            print("Error: gathering resumes.")
+        except Exception as e: 
+            print(f"Error: {e}")
