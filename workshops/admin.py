@@ -4,6 +4,8 @@ from workshops import models
 
 # Register your models here.
 
+admin.site.register(models.Attendance)
+
 admin.site.register(models.Workshop)
 
 admin.site.register(models.Timeslot)
