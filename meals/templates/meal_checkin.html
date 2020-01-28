@@ -1,37 +1,44 @@
-{% extends "base.html" %}
+{% extends "base_tabs.html" %}
 
 {% load static %}
+{% load bootstrap3 %}
 
-{% block head %}
-    <link rel="stylesheet" href="{% static 'css/meals.css' %}">
-
-{% endblock %}
-
-{% block extra_scripts %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/checkin.css' %}">
     <script src="{% static 'lib/instascan.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/meals_checkin.js' %}"></script>
-
+    <script type="text/javascript" src="{% static 'js/checkin_add.js' %}"></script>
 {% endblock %}
-
-{% block navbar %}{% endblock %}
 
 {% block head_title %}Check-in meal {{meal.name}}{% endblock %}
 
-{% block body_plain %}
-<div class="container-fluid full-screen">
-    <div class="row full-screen">
-        <div class="col-md-offset-3 col-md-6 col full-screen">
-            <div id="meals-scan-image" class="meals-inside-scan" style="max-width: 100%;max-height: 100%;" data-mealid="{{ meal.id }}"
-            data-apiurl="{% url 'cool_meals_api' %}">
-                <a class="btn btn-default btn-block" href="{% url 'meals_list' %}">< Back</a>
-                <video id="meals-scan-video" style="width: 100%; max-height: 80%; margin:0 auto;">   </video>
-                <select class="form-control"></select>
-            </div>
-        </div>
-    </div>
-</div>
+{% block panel %}
+<h1 class='text-center'>{{ meal.name }}</h1>
+    <dl class="dl-horizontal">
+        {% include 'include/field.html' with desc='Type' value=meal.get_kind_display %}
+        {% include 'include/field.html' with desc='Starting Time' value=meal.starts %}
+        {% include 'include/field.html' with desc='Ending Time' value=meal.ends %}
+        {% include 'include/field.html' with desc='Times a hacker can eat' value=meal.times %}
+    </dl>
 {% endblock %}
 
+{% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 
-{% block footer %}
+{% block out_panel %}
+    <div class="panel-footer">
+        {% if checkedin %}
+            <div style="padding: 1em 1.5em 1.5em 1.5em;">
+                <h4 style="margin-bottom: 15px;">Let's keep this up!</h4>
+                <a class="btn btn-default btn-block" href="{% url 'meal_checkin' meal.id %}">Check-in more hackers!</a>
+            </div>
+        {% else %}
+            <form action="" method="post" style="padding-top: 1.5em;">
+                {% csrf_token %}
+		<div class="form-group">
+		    {% include 'include/input.html' with type='qr' desc='QR code' name='qr_code' id='qr_code' %}
+		</div>
+                <input type="hidden" name="meal_id" value="{{ meal.id }}"/>
+                <button class="btn btn-success btn-block" name="checkin">Check In</button>
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}

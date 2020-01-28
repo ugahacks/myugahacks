@@ -2,7 +2,7 @@ from django.shortcuts import render
 from workshops.models import Workshop, Timeslot, Attendance
 from django.http import Http404, JsonResponse, HttpResponseRedirect
 
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import ListView, DetailView, TemplateView
 from django_filters.views import FilterView
 
@@ -50,6 +50,40 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
             timeslot.workshop_two = workshop
         timeslot.save()
         return super().form_valid(form)
+
+class WorkshopUpdate(IsOrganizerMixin, UpdateView):
+    model = Workshop
+    success_url = '/workshops/list/'
+    fields = ['title', 'description', 'location', 'host', 'open',]
+    template_name = 'workshop_update_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(WorkshopUpdate, self).get_context_data(**kwargs)
+        timeslot_list = Timeslot.objects.filter(workshop_one__isnull=True) | Timeslot.objects.filter(workshop_two__isnull=True)
+        context.update({
+            'timeslot_list': timeslot_list,
+        })
+        return context
+
+    def form_valid(self, form):
+        workshop = form.save(commit=False)
+        #clearing the workshop from the previous timeslot so there are no duplicate workshops
+        old_timeslot = Timeslot.objects.filter(workshop_one=workshop).first()
+        if old_timeslot:
+            old_timeslot.workshop_one = None
+        else:
+            old_timeslot = Timeslot.objects.filter(workshop_two=workshop).first()
+            old_timeslot.workshop_two = None
+        old_timeslot.save()
+        #adding workshop to new timeslot.
+        timeslot = Timeslot.objects.filter(id=self.request.POST['workshop_timeslot']).first()
+        if not timeslot.workshop_one:
+            timeslot.workshop_one = workshop
+        else:
+            timeslot.workshop_two = workshop
+        timeslot.save()
+        workshop.save()
+        return super(WorkshopUpdate, self).form_valid(form)
 
 class WorkshopList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView):
     template_name = 'workshop_list.html'
@@ -141,7 +175,7 @@ class WorkshopCheckin(IsVolunteerMixin, TemplateView):
             messages.error(self.request, 'This hacker has already been marked for attendance for this workshop!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         #Logs user attendance to a workshop.
-        attendance = Attendance(workshop=workshop, user=hacker.user)
+        attendance = Attendance(workshop=workshop, user=hacker)
         attendance.save()
 
         messages.success(self.request, 'Hacker attendance logged!')

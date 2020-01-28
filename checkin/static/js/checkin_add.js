@@ -17,7 +17,7 @@ let checkin_qr = (()=>{
     }
     //-Updates the content
     //-Shows a toast if there's a message
-    obj.processResponse = (data)=>{
+    obj.processResponse = (data)=>{        
         if(data.content){
             $('#checkin-container').fadeTo(200, 0, ()=>{
                 $('#checkin-container').html(data.content)
@@ -39,7 +39,7 @@ let checkin_qr = (()=>{
     }
 
     //Opens a popup with a camera preview. If a QR is detected,
-    //it's value is set into 'inputElem'.
+    //it's value is set into 'inputElem'. 
     //Clicking the bg cancels the operation
     //pre: call initScanner
     obj.qrScan = (inputElem)=>{
@@ -97,12 +97,12 @@ let checkin_qr = (()=>{
                 popup = ""
             }
         })
-
+        
         //Start the scanner with the stored value
         scanner.start(cams[cams.length-1])
 
     }
-
+    
     return obj
 })()
 
