@@ -43,9 +43,7 @@ class MealsList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView):
         return organizer_tabs(self.request.user)
 
     def get_queryset(self):
-        if self.request.user.is_organizer:
-            return Meal.objects.all()
-        return Meal.objects.filter(opened=True)
+        return Meal.objects.all()
 
 
 class MealsUsers(IsOrganizerMixin, TabsViewMixin, SingleTableMixin, FilterView):
