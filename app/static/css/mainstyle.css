@@ -271,6 +271,10 @@ height: 75px;
   {
     display: none;
   }
+  #regcountdown
+  {
+    padding: 5px;
+  }
 }
 @media (max-width:1100px)
 {
