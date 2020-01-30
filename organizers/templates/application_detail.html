@@ -70,6 +70,7 @@
                 {% include 'include/field.html' with desc='Why excited?' showlength="true" value=app.description|safe|urlize %}
                 {% include 'include/field.html' with desc='Projects' showlength="true" value=app.projects|safe|urlize %}
                 {% include 'include/field.html' with desc='Excited about' value=app.excited %}
+                {% include 'include/field.html' with desc='Hardware Request' value=app.hardware %}
             </dl>
             {% if not vote and teammates %}
                 <h3>Teammates (Team Code: {{app.user.team.team_code}})</h3>
