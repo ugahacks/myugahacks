@@ -62,7 +62,6 @@
         </div>
       </li>
       <a class="nav-item nav-link" href="#Sponsors">Sponsors</a>
-      <a class="nav-item nav-link" href="#Registration">Registration</a>
       <a class="nav-item nav-link" href="user/login">Login</a>
     </div>
   </nav>
@@ -79,7 +78,7 @@
     <div class="section" data-aos="fade-up">
       <div class="sectionhead">
         <br>
-        <h1 id="regcountdown">Registration Opens In . . .</h1>
+        <h1 id="regcountdown">UGAHacks 5 starts in . . .</h1>
       </div>
       <div class="sectiontext">
         <div class="keydatestext" data-aos="fade-up">
@@ -732,7 +731,7 @@
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
   <script>
-    var regtime = new Date("Jan 28, 2020 23:59:59").getTime();
+    var regtime = new Date("Feb 7, 2020 18:30:00").getTime();
     var x = setInterval(function () {
       var currtime = new Date().getTime();
       var timeleft = regtime - currtime;
@@ -742,19 +741,15 @@
       var secs = Math.floor((timeleft % (1000 * 60)) / 1000);
 
       if (timeleft > 0) {
-        clearInterval(x);
-        document.getElementById("regcountdown").innerHTML = "Registration has been extended til Tuesday!!!";
-        document.getElementById("regcountdown").insertAdjacentHTML("afterend", "<br><a href='user/signup' id='regbtn'>Registration</a>");
-        $(".timecol").remove();
+        document.getElementById("countdownd").innerHTML = days;
+        document.getElementById("countdownh").innerHTML = hours;
+        document.getElementById("countdownm").innerHTML = mins;
+        document.getElementById("countdowns").innerHTML = secs;
       }
       else {
         clearInterval(x);
-        document.getElementById("regcountdown").innerHTML = "Registration is Now Closed. Thanks to all that applied!";
+        document.getElementById("regcountdown").innerHTML = "Let the Hacking Begin!";
         $(".timecol").remove();
-        // document.getElementById("countdownd").innerHTML = days;
-        // document.getElementById("countdownh").innerHTML = hours;
-        // document.getElementById("countdownm").innerHTML = mins;
-        // document.getElementById("countdowns").innerHTML = secs;
       }
     })
   </script>

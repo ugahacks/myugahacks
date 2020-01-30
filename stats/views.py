@@ -7,12 +7,13 @@ from django.utils import timezone
 from workshops.models import  Workshop, Attendance
 from app.views import TabsView
 from applications import models as a_models
-from applications.models import Application, STATUS, APP_CONFIRMED, GENDERS, CLASSSTATUS, P_MENTOR
+from applications.models import Application, STATUS, APP_CONFIRMED, GENDERS, CLASSSTATUS, P_MENTOR, HEARABOUT
 from user.mixins import is_organizer, IsOrganizerMixin
 
 STATUS_DICT = dict(STATUS)
 GENDER_DICT = dict(GENDERS)
 CLASSSTATUS_DICT = dict(CLASSSTATUS)
+HEARABOUT_DICT = dict(HEARABOUT)
 
 def stats_tabs():
     tabs = [('Applications', reverse('app_stats'), False),('Workshops', reverse('workshop_stats'), False) ]
@@ -68,6 +69,21 @@ def app_stats_api(request):
     class_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).exclude(participant=P_MENTOR).values('class_status').annotate(applications=Count('class_status'))
     class_count_confirmed = map(lambda x: dict(class_name=CLASSSTATUS_DICT[x['class_status']], **x), class_count_confirmed)
 
+    major_count = Application.objects.all().values('degree').annotate(applications=Count('degree'))
+    major_count = map(lambda x: dict(**x), major_count)
+
+    major_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).values('degree').annotate(applications=Count('degree'))
+    major_count_confirmed = map(lambda x: dict(**x), major_count_confirmed)
+
+    hear_about_count = Application.objects.all().values('hearabout').annotate(applications=Count('hearabout'))
+    hear_about_count = map(lambda x: dict(**x), hear_about_count)
+
+    first_timer_count = Application.objects.all().values('first_timer').annotate(applications=Count('first_timer'))
+    first_timer_count = map(lambda x: dict(**x), first_timer_count)
+
+    first_timer_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).values('first_timer').annotate(applications=Count('first_timer'))
+    first_timer_count_confirmed = map(lambda x: dict(**x), first_timer_count_confirmed)
+
     tshirt_dict = dict(a_models.TSHIRT_SIZES)
     shirt_count = map(
         lambda x: {'tshirt_size': tshirt_dict.get(x['tshirt_size'], 'Unknown'), 'applications': x['applications']},
@@ -86,7 +102,7 @@ def app_stats_api(request):
         .annotate(applications=Count('diet'))
     other_diets = Application.objects.filter(status=APP_CONFIRMED).values('other_diet')
 
-    hardware_count = Application.objects.values('hardware')
+    hardware_count = Application.objects.filter(hardware__isnull=False).values('hardware')
 
     timeseries = Application.objects.all().annotate(date=TruncDate('submission_date')).values('date').annotate(
         applications=Count('date'))
@@ -100,12 +116,17 @@ def app_stats_api(request):
             'timeseries': list(timeseries),
             'gender': list(gender_count),
             'gender_confirmed': list(gender_count_confirmed),
+            'major_count': list(major_count),
+            'major_count_confirmed': list(major_count_confirmed),
             'class': list(class_count),
             'class_confirmed': list(class_count_confirmed),
+            'hearabout_count': list(hear_about_count),
+            'firsttimer_count': list(first_timer_count),
+            'firsttimer_count_confirmed': list(first_timer_count_confirmed),
             'diet': list(diet_count),
             'diet_confirmed': list(diet_count_confirmed),
             'other_diet': '<br>'.join([el['other_diet'] for el in other_diets if el['other_diet']]),
-            'hardware': list(hardware_count)
+            'hardware': '<br>'.join([equip['hardware'] for equip in hardware_count])
         }
     )
 

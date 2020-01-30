@@ -31,6 +31,34 @@
             <div id="gender_stats_confirmed"></div>
         </div>
     </div>
+    <h2>First Timer</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>All</h3>
+            <div id="first_timer_stats"></div>
+        </div>
+        <div class="col-md-6">
+            <h3>Confirmed</h3>
+            <div id="first_timer_stats_confirmed"></div>
+        </div>
+    </div>
+    <h3>Heard about us</h3>
+    <div class="row">
+        <div class="col-md-6">
+          <div id="hearabout_stats"></div>
+        </div>
+    </div>
+    <h2>Major</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>All</h3>
+            <div id="major_stats"></div>
+        </div>
+        <div class="col-md-6">
+            <h3>Confirmed</h3>
+            <div id="major_stats_confirmed"></div>
+        </div>
+    </div>
     <h2>Class Status</h2>
     <div class="row">
         <div class="col-md-6">
@@ -65,10 +93,12 @@
             <h3>Confirmed only</h3>
             <div id="diet_stats_confirmed"></div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             <h4><b>Confirmed extra diet requirements:</b><br> <span id="other_diet"></span></h4>
         </div>
-
+        <div class="col-md-6">
+            <h4><b>Confirmed hardware requests:</b><br> <span id="hardware"></span></h4>
+        </div>
     </div>
 
 
@@ -177,6 +207,111 @@
                     }
                 }
             });
+            var major_data = {};
+            var choices = [];
+            $(data['major_count']).each(function (c, e) {
+                choices.push(e.degree);
+                major_data[e.degree] = e.applications;
+            });
+            c3.generate({
+                bindto: '#major_stats',
+                data: {
+                    json: major_data,
+                    type: 'donut'
+
+                },
+                donut: {
+                    label: {
+                        format: function (value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
+            });
+            var major_data_confirmed = {};
+            var choices = [];
+            $(data['major_count_confirmed']).each(function (c, e) {
+                choices.push(e.degree);
+                major_data_confirmed[e.degree] = e.applications;
+            });
+            c3.generate({
+                bindto: 'major_stats_confirmed',
+                data: {
+                    json: major_data_confirmed,
+                    type: 'donut'
+
+                },
+                donut: {
+                    label: {
+                        format: function (value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
+            });
+            var first_timer_data = {};
+            var choices = [];
+            $(data['firsttimer_count']).each(function (c, e) {
+                choices.push(e.first_timer);
+                first_timer_data[e.first_timer] = e.applications;
+            });
+            c3.generate({
+                bindto: '#first_timer_stats',
+                data: {
+                    json: first_timer_data,
+                    type: 'donut'
+
+                },
+                donut: {
+                    label: {
+                        format: function (value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
+            });
+            var first_timer_data_confirmed = {};
+            var choices = [];
+            $(data['firsttimer_count_confirmed']).each(function (c, e) {
+                choices.push(e.first_timer);
+                first_timer_data_confirmed[e.first_timer] = e.applications;
+            });
+            c3.generate({
+                bindto: 'first_timer_stats_confirmed',
+                data: {
+                    json: first_timer_data_confirmed,
+                    type: 'donut'
+
+                },
+                donut: {
+                    label: {
+                        format: function (value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
+            });
+            var hearabout_data = {};
+            var choices = [];
+            $(data['hearabout_count']).each(function (c, e) {
+                choices.push(e.hearabout);
+                hearabout_data[e.hearabout] = e.applications;
+            });
+            c3.generate({
+                bindto: '#hearabout_stats',
+                data: {
+                    json: hearabout_data,
+                    type: 'donut'
+
+                },
+                donut: {
+                    label: {
+                        format: function (value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
+            });
             var class_data = {};
             var classes = [];
             $(data['class']).each(function (c, e) {
@@ -274,6 +409,7 @@
                 }
             });
             $('#other_diet').html(data['other_diet']);
+            $('#hardware').html(data['hardware']);
             $('#update_date').html(data['update_time']);
             $('#app_count').html(data['app_count']);
         })
