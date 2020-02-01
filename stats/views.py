@@ -71,9 +71,11 @@ def app_stats_api(request):
 
     major_count = Application.objects.all().values('degree').annotate(applications=Count('degree'))
     major_count = map(lambda x: dict(**x), major_count)
+    major_count = [major for major in major_count if major['applications'] > 5]
 
     major_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).values('degree').annotate(applications=Count('degree'))
     major_count_confirmed = map(lambda x: dict(**x), major_count_confirmed)
+    major_count_confirmed = [major for major in major_count_confirmed if major['applications'] > 5]
 
     hear_about_count = Application.objects.all().values('hearabout').annotate(applications=Count('hearabout'))
     hear_about_count = map(lambda x: dict(**x), hear_about_count)
@@ -102,7 +104,8 @@ def app_stats_api(request):
         .annotate(applications=Count('diet'))
     other_diets = Application.objects.filter(status=APP_CONFIRMED).values('other_diet')
 
-    hardware_count = Application.objects.filter(hardware__isnull=False).values('hardware')
+    hardware_count = Application.objects.filter(hardware__isnull=False).exclude(hardware__icontains="N/A").exclude(hardware__icontains="na") \
+        .exclude(hardware__icontains="NA").exclude(hardware__icontains="n/a").exclude(hardware__icontains="None").exclude(hardware__icontains="Nothing").values('hardware')
 
     timeseries = Application.objects.all().annotate(date=TruncDate('submission_date')).values('date').annotate(
         applications=Count('date'))
@@ -116,8 +119,8 @@ def app_stats_api(request):
             'timeseries': list(timeseries),
             'gender': list(gender_count),
             'gender_confirmed': list(gender_count_confirmed),
-            'major_count': list(major_count),
-            'major_count_confirmed': list(major_count_confirmed),
+            'major_count': major_count,
+            'major_count_confirmed': major_count_confirmed,
             'class': list(class_count),
             'class_confirmed': list(class_count_confirmed),
             'hearabout_count': list(hear_about_count),
