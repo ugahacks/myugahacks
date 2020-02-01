@@ -35,7 +35,7 @@ HACKATHON_MEDIUM_ACCOUNT = ''
 HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/ugahacks5/'
 
 # (OPTIONAL) Applications deadline
-HACKATHON_APP_DEADLINE = timezone.datetime(2020, 1, 28, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
+HACKATHON_APP_DEADLINE = timezone.datetime(2020, 2, 3, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
 # (OPTIONAL) When to arrive at the hackathon
 HACKATHON_ARRIVE = 'Check-in opens at 5:00PM and the opening ceremony will be at 6:30PM on February 7th at the Zell B. Miller Center. ' \
                     'Further details about the schedule can be found at ugahacks.com. We hope to see you there!'
