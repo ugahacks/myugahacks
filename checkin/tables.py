@@ -39,3 +39,16 @@ class RankingListTable(tables.Table):
         fields = ['email', 'checkin_count', ]
         empty_text = 'No checked in hacker yet... Why? :\'('
         order_by = '-checkin_count'
+
+
+class ApplicationsReIssueTable(tables.Table):
+    detail = tables.TemplateColumn(
+        "<a href='{% url 're_issue_hacker' record.uuid %}'>Re-issue</a> ",
+        verbose_name='Actions', )
+
+    class Meta:
+        model = Application
+        attrs = {'class': 'table table-hover'}
+        template = 'django_tables2/bootstrap-responsive.html'
+        fields = ['user.name', 'user.email']
+        empty_text = 'No hacker found, have any hackers checked-in??'

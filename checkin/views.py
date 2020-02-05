@@ -10,7 +10,7 @@ from app.utils import reverse
 from app.views import TabsView
 from applications import models
 from checkin.models import CheckIn
-from checkin.tables import ApplicationsCheckInTable, ApplicationCheckinFilter, RankingListTable
+from checkin.tables import ApplicationsCheckInTable, ApplicationCheckinFilter, RankingListTable, ApplicationsReIssueTable
 from user.mixins import IsVolunteerMixin, IsOrganizerMixin
 from user.models import User
 from django.conf import settings
@@ -86,3 +86,58 @@ class CheckinRankingView(TabsViewMixin, IsOrganizerMixin, SingleTableMixin, Temp
     def get_queryset(self):
         return User.objects.annotate(
             checkin_count=Count('checkin__application')).exclude(checkin_count=0)
+
+
+class ReIssueList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView):
+    template_name = 'checkin/list.html'
+    table_class = ApplicationsReIssueTable
+    filterset_class = ApplicationCheckinFilter
+    table_pagination = {'per_page': 50}
+
+    def get_current_tabs(self):
+        return user_tabs(self.request.user)
+
+    def get_queryset(self):
+        return models.Application.objects.filter(status=models.APP_ATTENDED)
+
+
+class ReIssueHackerView(IsVolunteerMixin, TabsView):
+    template_name = 'checkin/reissue.html'
+
+    def get_back_url(self):
+        return 'javascript:history.back()'
+
+    def get_context_data(self, **kwargs):
+        context = super(ReIssueHackerView, self).get_context_data(**kwargs)
+        appid = kwargs['id']
+        app = models.Application.objects.filter(uuid=appid).first()
+        ci = CheckIn.objects.get(application=app)
+        if not app:
+            raise Http404
+        context.update({
+            'app': app,
+            'checkedin': app.status == models.APP_ATTENDED,
+            'ci': ci
+        })
+        try:
+            context.update({'checkin': CheckIn.objects.filter(application=app).first()})
+        except:
+            pass
+        return context
+
+    def post(self, request, *args, **kwargs):
+        appid = request.POST.get('app_id')
+        qrcode = request.POST.get('qr_code')
+        if qrcode is None or qrcode == '':
+            messages.success(self.request, 'The QR code is mandatory!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        app = models.Application.objects.filter(uuid=appid).first()
+        
+        ci = CheckIn.objects.get(application=app)
+        ci.qr_identifier = qrcode
+        ci.save()
+
+        messages.success(self.request, 'Hacker re-issued! Good job! '
+                                       'Nothing else to see here, '
+                                       'you can move on :D')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
