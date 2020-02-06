@@ -122,9 +122,15 @@
                                 {% include 'include/hardware_tab.html' %}
                             {% endif %}
                             {% if request.user.is_organizer or request.user.is_volunteer %}
-                                <li class="{% if 'checkin' in request.build_absolute_uri %}active{% endif %}">
+                                <li class="{% if 'checkin' in request.build_absolute_uri and 'reissue' not in request.build_absolute_uri%}active{% endif %}">
                                     <a href="{% url 'check_in_list' %}">Check-in</a></li>
-                                <li class="{% if 'workshops' in request.build_absolute_uri %}active{% endif %}">
+                            {% endif %}
+                            {% if request.user.is_organizer %}
+                                <li class="{% if 'reissue' in request.build_absolute_uri %}active{% endif %}">
+                                    <a href="{% url 're_issue_list' %}">Reissue Badge</a></li>
+                            {% endif %}
+                            {% if request.user.is_organizer or request.user.is_volunteer %}
+                                <li class="{% if 'workshops' in request.build_absolute_uri and 'stats' not in request.build_absolute_uri%}active{% endif %}">
                                   <a href="{% url 'workshop_list' %}">Workshops</a></li>
                             {% endif %}
                             {% include 'include/meals_tab.html' %}
