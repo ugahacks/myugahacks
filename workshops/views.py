@@ -165,7 +165,7 @@ class WorkshopCheckin(IsVolunteerMixin, TemplateView):
         if not hacker_checkin:
             messages.error(self.request, 'Invalid QR code!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        hacker = hacker_checkin.user
+        hacker = hacker_checkin.application.user
         if not hacker:
             messages.error(self.request, 'No user found for this QR code!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
