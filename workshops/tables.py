@@ -10,9 +10,12 @@ class WorkshopListTable(tables.Table):
     #starts = tables.DateTimeColumn(accessor='get_time_slot', verbose_name='Starts', format='d/m G:i')
     start = tables.TemplateColumn(
         "{{ record.get_time_slot.start }}",
+        orderable=False
         )
     end = tables.TemplateColumn(
-        "{{ record.get_time_slot.end }}")
+        "{{ record.get_time_slot.end }}",
+        orderable=False,
+        )
     update = tables.TemplateColumn(
         "<a href='{% url 'workshop_update' record.id %}'>Modify</a> ",
         verbose_name='Actions', orderable=False)
@@ -20,15 +23,6 @@ class WorkshopListTable(tables.Table):
     def before_render(self, request):
         if not request.user.is_organizer:
             self.columns.hide('update')
-
-    #The queryset passed in is sorted by default, but if this method isnt included,
-    #we can't resort afer something else is being sorted. Please leave this to keep sorting
-    #on start and end fields.
-    def order_start(self, queryset, is_descending):
-        return (queryset, True)
-
-    def order_end(self, queryset, is_descending):
-        return (queryset, True)
 
     class Meta:
         model = Workshop
