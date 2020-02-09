@@ -820,7 +820,8 @@
       }
       else {
         clearInterval(x);
-        document.getElementById("regcountdown").innerHTML = "Let the Hacking Begin!";
+        document.getElementById("regcountdown").innerHTML = "Submit your project to the Devpost by 9 am!";
+        document.getElementById("regcountdown").insertAdjacentHTML("afterend", "<br><a href='https://ugahacks5.devpost.com/' id='regbtn'>Devpost</a>");
         $(".timecol").remove();
       }
     })
