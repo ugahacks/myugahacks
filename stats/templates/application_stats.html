@@ -27,8 +27,8 @@
             <div id="gender_stats"></div>
         </div>
         <div class="col-md-6">
-            <h3>Confirmed</h3>
-            <div id="gender_stats_confirmed"></div>
+            <h3>Attended</h3>
+            <div id="gender_stats_attended"></div>
         </div>
     </div>
     <h2>First Timer</h2>
@@ -38,8 +38,8 @@
             <div id="first_timer_stats"></div>
         </div>
         <div class="col-md-6">
-            <h3>Confirmed</h3>
-            <div id="first_timer_stats_confirmed"></div>
+            <h3>Attended</h3>
+            <div id="first_timer_stats_attended"></div>
         </div>
     </div>
     <h3>Heard about us</h3>
@@ -55,8 +55,8 @@
             <div id="major_stats"></div>
         </div>
         <div class="col-md-6">
-            <h3>Confirmed</h3>
-            <div id="major_stats_confirmed"></div>
+            <h3>Attended</h3>
+            <div id="major_stats_attended"></div>
         </div>
     </div>
     <h2>Class Status</h2>
@@ -66,8 +66,8 @@
             <div id="class_stats"></div>
         </div>
         <div class="col-md-6">
-            <h3>Confirmed</h3>
-            <div id="class_stats_confirmed"></div>
+            <h3>Attended</h3>
+            <div id="class_stats_attended"></div>
         </div>
     </div>
     <h2>T-Shirts sizes</h2>
@@ -186,16 +186,16 @@
                     }
                 }
             });
-            var gender_data_confirmed = {};
+            var gender_data_attended = {};
             var genders = [];
-            $(data['gender_confirmed']).each(function (c, e) {
+            $(data['gender_attended']).each(function (c, e) {
                 genders.push(e.gender_name);
-                gender_data_confirmed[e.gender_name] = e.applications;
+                gender_data_attended[e.gender_name] = e.applications;
             });
             c3.generate({
-                bindto: '#gender_stats_confirmed',
+                bindto: '#gender_stats_attended',
                 data: {
-                    json: gender_data_confirmed,
+                    json: gender_data_attended,
                     type: 'donut'
 
                 },
@@ -228,16 +228,16 @@
                     }
                 }
             });
-            var major_data_confirmed = {};
+            var major_data_attended = {};
             var choices = [];
-            $(data['major_count_confirmed']).each(function (c, e) {
+            $(data['major_count_attended']).each(function (c, e) {
                 choices.push(e.degree);
-                major_data_confirmed[e.degree] = e.applications;
+                major_data_attended[e.degree] = e.applications;
             });
             c3.generate({
-                bindto: '#major_stats_confirmed',
+                bindto: '#major_stats_attended',
                 data: {
-                    json: major_data_confirmed,
+                    json: major_data_attended,
                     type: 'donut'
 
                 },
@@ -270,16 +270,16 @@
                     }
                 }
             });
-            var first_timer_data_confirmed = {};
+            var first_timer_data_attended = {};
             var choices = [];
-            $(data['firsttimer_count_confirmed']).each(function (c, e) {
+            $(data['firsttimer_count_attended']).each(function (c, e) {
                 choices.push(e.first_timer);
-                first_timer_data_confirmed[e.first_timer] = e.applications;
+                first_timer_data_attended[e.first_timer] = e.applications;
             });
             c3.generate({
-                bindto: '#first_timer_stats_confirmed',
+                bindto: '#first_timer_stats_attended',
                 data: {
-                    json: first_timer_data_confirmed,
+                    json: first_timer_data_attended,
                     type: 'donut'
 
                 },
@@ -333,16 +333,16 @@
                     }
                 }
             });
-            var class_data_confirmed = {};
+            var class_data_attended = {};
             var classes = [];
-            $(data['class_confirmed']).each(function (c, e) {
+            $(data['class_attended']).each(function (c, e) {
                 classes.push(e.class_name);
-                class_data_confirmed[e.class_name] = e.applications;
+                class_data_attended[e.class_name] = e.applications;
             });
             c3.generate({
-                bindto: '#class_stats_confirmed',
+                bindto: '#class_stats_attended',
                 data: {
-                    json: class_data_confirmed,
+                    json: class_data_attended,
                     type: 'donut'
 
                 },
