@@ -7,7 +7,7 @@ from django.utils import timezone
 from workshops.models import  Workshop, Attendance
 from app.views import TabsView
 from applications import models as a_models
-from applications.models import Application, STATUS, APP_CONFIRMED, GENDERS, CLASSSTATUS, P_MENTOR, HEARABOUT
+from applications.models import Application, STATUS, APP_CONFIRMED, APP_ATTENDED, GENDERS, CLASSSTATUS, P_MENTOR, HEARABOUT
 from user.mixins import is_organizer, IsOrganizerMixin
 
 STATUS_DICT = dict(STATUS)
@@ -60,22 +60,22 @@ def app_stats_api(request):
         .annotate(applications=Count('gender'))
     gender_count = map(lambda x: dict(gender_name=GENDER_DICT[x['gender']], **x), gender_count)
 
-    gender_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).values('gender').annotate(applications=Count('gender'))
-    gender_count_confirmed = map(lambda x: dict(gender_name=GENDER_DICT[x['gender']], **x), gender_count_confirmed)
+    gender_count_attended = Application.objects.filter(status=APP_ATTENDED).values('gender').annotate(applications=Count('gender'))
+    gender_count_attended= map(lambda x: dict(gender_name=GENDER_DICT[x['gender']], **x), gender_count_attended)
 
     class_count = Application.objects.all().exclude(participant=P_MENTOR).values('class_status').annotate(applications=Count('class_status'))
     class_count = map(lambda x: dict(class_name=CLASSSTATUS_DICT[x['class_status']], **x), class_count)
 
-    class_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).exclude(participant=P_MENTOR).values('class_status').annotate(applications=Count('class_status'))
-    class_count_confirmed = map(lambda x: dict(class_name=CLASSSTATUS_DICT[x['class_status']], **x), class_count_confirmed)
+    class_count_attended = Application.objects.filter(status=APP_ATTENDED).exclude(participant=P_MENTOR).values('class_status').annotate(applications=Count('class_status'))
+    class_count_attended = map(lambda x: dict(class_name=CLASSSTATUS_DICT[x['class_status']], **x), class_count_attended)
 
     major_count = Application.objects.all().values('degree').annotate(applications=Count('degree'))
     major_count = map(lambda x: dict(**x), major_count)
     major_count = [major for major in major_count if major['applications'] > 5]
 
-    major_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).values('degree').annotate(applications=Count('degree'))
-    major_count_confirmed = map(lambda x: dict(**x), major_count_confirmed)
-    major_count_confirmed = [major for major in major_count_confirmed if major['applications'] > 5]
+    major_count_attended = Application.objects.filter(status=APP_ATTENDED).values('degree').annotate(applications=Count('degree'))
+    major_count_attended = map(lambda x: dict(**x), major_count_attended)
+    major_count_attended = [major for major in major_count_attended if major['applications'] > 5]
 
     hear_about_count = Application.objects.all().values('hearabout').annotate(applications=Count('hearabout'))
     hear_about_count = map(lambda x: dict(**x), hear_about_count)
@@ -83,8 +83,8 @@ def app_stats_api(request):
     first_timer_count = Application.objects.all().values('first_timer').annotate(applications=Count('first_timer'))
     first_timer_count = map(lambda x: dict(**x), first_timer_count)
 
-    first_timer_count_confirmed = Application.objects.filter(status=APP_CONFIRMED).values('first_timer').annotate(applications=Count('first_timer'))
-    first_timer_count_confirmed = map(lambda x: dict(**x), first_timer_count_confirmed)
+    first_timer_count_attended = Application.objects.filter(status=APP_ATTENDED).values('first_timer').annotate(applications=Count('first_timer'))
+    first_timer_count_attended = map(lambda x: dict(**x), first_timer_count_attended)
 
     tshirt_dict = dict(a_models.TSHIRT_SIZES)
     shirt_count = map(
@@ -118,14 +118,14 @@ def app_stats_api(request):
             'shirt_count_confirmed': list(shirt_count_confirmed),
             'timeseries': list(timeseries),
             'gender': list(gender_count),
-            'gender_confirmed': list(gender_count_confirmed),
+            'gender_attended': list(gender_count_attended),
             'major_count': major_count,
-            'major_count_confirmed': major_count_confirmed,
+            'major_count_attended': major_count_attended,
             'class': list(class_count),
-            'class_confirmed': list(class_count_confirmed),
+            'class_attended': list(class_count_attended),
             'hearabout_count': list(hear_about_count),
             'firsttimer_count': list(first_timer_count),
-            'firsttimer_count_confirmed': list(first_timer_count_confirmed),
+            'firsttimer_count_attended': list(first_timer_count_attended),
             'diet': list(diet_count),
             'diet_confirmed': list(diet_count_confirmed),
             'other_diet': '<br>'.join([el['other_diet'] for el in other_diets if el['other_diet']]),
