@@ -40,7 +40,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse navbar-nav" id="navbarNavAltMarkup">
-      <a class="nav-item nav-link" href="#HOF" hidden>Hall of Fame</a>
+      <a class="nav-item nav-link" href="#HOF">Hall of Fame</a>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdownhead" data-toggle="dropdown">
           Event Info
@@ -74,7 +74,7 @@
       <br>
     </div>
   </div>
-  <div id="Registration">
+  <div id="Registration" hidden>
     <div class="section" data-aos="fade-up">
       <div class="sectionhead">
         <br>
@@ -102,9 +102,7 @@
       </div>
     </div>
   </div>
-  <img id="bytetyping" src="{% static "images/ByteTyping.png" %}" alt="Byte typing away on the laptop"
-    data-aos="fade-up">
-  <div id="HOF" hidden>
+  <div id="HOF">
     <div class="section" data-aos="fade-up">
       <div class="sectionhead">
         <br>
@@ -116,43 +114,160 @@
       </div>
       <div class="container-fluid" data-aos="fade-right">
         <div class="card-deck">
-          <div class="col-12 col-sm-6 col-md-4">
-            <h4 class="awardtitle">Best Overall</h4>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+            <h4 class="awardtitle">Overall - First Place</h4>
             <div class="card bg-transparent border-0">
-              <img class="card-img-top" src="{% static "images/hackslogo.png" %}" alt="">
+              <img class="card-img-top" src="{% static "images/winnerpics/vrm.png" %}" alt="">
               <div class="card-body">
-                <h5 class="card-title"><b>Sample Project - Sample Team Members</b></h5>
-                <p class="card-text">Brief Description about the project</p>
-                <a href="/" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+                <h5 class="card-title"><b>VRM - Jawad Iqbal, Kevin Koffroth, Emily Nieves, Hunter, Jake Alford</b></h5>
+                <p class="card-text">VRM is a teleoperated robot arm coupled with an intuitive VR user interface that consolidates visualization of sensor readout and control over the arm. </p>
+                <a href="https://devpost.com/software/vrm-vr-teleoperated-robot-arm" class="btn btn-outline-warning">Check out their project on DevPost!</a>
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-4">
-            <h4 class="awardtitle">Best Idea</h4>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+            <h4 class="awardtitle">Overall - Second Place</h4>
             <div class="card bg-transparent border-0">
-              <img class="card-img-top" src="{% static "images/hackslogo.png" %}" alt="">
+              <img class="card-img-top" src="{% static "images/winnerpics/wand.png" %}" alt="">
               <div class="card-body">
-                <h5 class="card-title"><b>Sample Project - Sample Team Members</b></h5>
-                <p class="card-text">Brief Description about the project</p>
-                <a href="/" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+                <h5 class="card-title"><b>WAND - Danny Tang, 6cho, Aladdin Al-Khatib</b></h5>
+                <p class="card-text">WAND is a device that is able to detect and identify objects that may pose a risk to a blind person by taking in input from its surroundings and outputting audio feedback about the distance and type of the object.</p>
+                <a href="https://devpost.com/software/wand-hbf0ke" class="btn btn-outline-warning">Check out their project on DevPost!</a>
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-4">
-            <h4 class="awardtitle">Best Design</h4>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+            <h4 class="awardtitle">Overall - Third Place</h4>
             <div class="card bg-transparent border-0">
-              <img class="card-img-top" src="{% static "images/hackslogo.png" %}" alt="">
+              <img class="card-img-top" src="{% static "images/winnerpics/projectsunflower.png" %}" alt="">
               <div class="card-body">
-                <h5 class="card-title"><b>Sample Project - Sample Team Members</b></h5>
-                <p class="card-text">Brief Description about the project</p>
-                <a href="/" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+                <h5 class="card-title"><b>Project Sunflower - Michael Marra, Daniel Ling, Corey Xing, Preston Lee</b></h5>
+                <p class="card-text">Project Sunflower is a proof of concept for a tracking solar panel device equipped with
+various other sensors connected to a MongoDB database for analysis in order to determine the direction of the greatest light source like a sunflower.</p>
+                <a href="https://devpost.com/software/project-sunflower" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+            <h4 class="awardtitle">Best Video Game</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/bestvideogame.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title"><b>Going Dark - Nikhil Chittaluru, Fuad Youssef, Jason Park, Keun Park </b></h5>
+                <p class="card-text">Going Dark is a web-based mobile multiplayer game to allow groups of friends to play against each other in team-based caputre-the-flag. Players can also capture enemy players while freeing their own in order to grab an advantage.</p>
+                <a href="https://devpost.com/software/going-dark" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+            <h4 class="awardtitle">Best Beginner Hack</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/beginnerhack.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title"><b>BurntOut - Nick Kreitz, Yaoviav, Proxence</b></h5>
+                <p class="card-text">Burntout is a website designed to help you find the right way to destress by pulling gifs based upon one of four thematic planets - Cute Planet, Satisfying Planet, Funny Planet, and Dash-Cam Planet.</p>
+                <a href="https://devpost.com/software/burnt-out-txpj7k" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+            <h4 class="awardtitle">Best Solo Hack</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/solohack.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title"><b>MEAL : Accessible Eating - Jack Towery</b></h5>
+                <p class="card-text">MEAL is a mobile application that aims to solve the problem of finding nutritious foods for low-income students and families as food deserts become more prevalent and the cost of living continues to rise. This is done by allowing users to search for summer lunch sites and Georgia farmers markets to  get directions and information about them.</p>
+                <a href="https://devpost.com/software/meal-making-eating-accessible-locally" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 moreawards awardinvis">
+            <h4 class="awardtitle">PwC Capture the Flag - First <br>Place</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/greyhat.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title text-center"><b>GreyHat</b></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4  moreawards awardinvis">
+            <h4 class="awardtitle">PwC Capture the Flag - Second Place</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/danglingpointers.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title text-center"><b>Dangling Pointers</b></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4  moreawards awardinvis">
+            <h4 class="awardtitle">PwC Capture the Flag - Third Place</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/sorrydevs.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title text-center"><b>SorryDevs</b></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4  moreawards awardinvis">
+            <h4 class="awardtitle">BlackRock Hackathon API - Winner</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/Genie.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title"><b>Genie - Andrew Zhao, Stephanie Yang, Jakub Jackowiak</b></h5>
+                <p class="card-text">Genie allows users to set short and long term goals then connect these goals to investments. By showing the connection between accomplishment and investment, the app encourages students to enter the world of investing as well as prompting them to plan for their future. </p>
+                <a href="https://devpost.com/software/genie-isj1tw" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4  moreawards awardinvis">
+            <h4 class="awardtitle">BlackRock Hackathon API - Runner Up</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/Invez.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title"><b>invEZ - Armaan Lala, Michael Rehman, Joshua Biswas</b></h5>
+                <p class="card-text">Investing is an extremely good financial option that everyone in this day and age should be utilizing. The problem with this is that it can be a very daunting task to get into. invEZ is an app that takes the stressful parts out of investing and helps to curate a tailored list of possible stocks specifically for the user.</p>
+                <a href="https://devpost.com/software/invez-nl12ax" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 moreawards awardinvis">
+            <h4 class="awardtitle">BlackRock Hackathon API - Runner Up</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/Jasmine.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title"><b>Jasmine - Samuel Yuen, Manu Puduvalli, William Vega, Yi Jian Ma</b></h5>
+                <p class="card-text">Jasmine is made to help you get into investing while making sure you avoid the noise. Don't be baited by the news about "popular" stocks/companies or potentially huge gains from betting on a company. Instead, Jasmine has two API endpoints which access BlackRock's Aladdin, which in turn, returns financial information that Jasmine uses to show users the advantages of diversification.</p>
+                <a href="https://devpost.com/software/brc" class="btn btn-outline-warning">Check out their project on DevPost!</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 moreawards awardinvis">
+            <h4 class="awardtitle">Art Contest Winner</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/artwinner.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title text-center"><b>"Dog Days of Summer" - Stephanie Yang</b></h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-4 moreawards awardinvis">
+            <h4 class="awardtitle">Art Contest Runner-Up</h4>
+            <div class="card bg-transparent border-0">
+              <img class="card-img-top" src="{% static "images/winnerpics/artrunnerup.png" %}" alt="">
+              <div class="card-body">
+                <h5 class="card-title text-center"><b>"Under the Sea" - Stephanie He</b></h5>
               </div>
             </div>
           </div>
         </div>
+        <div class="questioncol" id="buttoncol">
+          <a id='collapsebtnaward'>Show More</a>
+        </div>
       </div>
     </div>
   </div>
+  <img id="bytetyping" src="{% static "images/ByteTyping.png" %}" alt="Byte typing away on the laptop"
+    data-aos="fade-up">
   <div id="About">
     <div class="section" data-aos="fade-up">
       <div class="sectionhead">
@@ -836,6 +951,15 @@
           $("#collapsebtn").text("Show More");
         }
         $("#moreinfo").toggleClass("invis");
+      });
+      $("#collapsebtnaward").click(function () {
+        if ($("#collapsebtnaward").text() === "Show More") {
+          $("#collapsebtnaward").text("Show Less");
+        }
+        else {
+          $("#collapsebtnaward").text("Show More");
+        }
+        $(".moreawards").toggleClass("awardinvis");
       });
     });
   </script>

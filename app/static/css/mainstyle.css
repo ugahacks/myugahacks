@@ -96,7 +96,10 @@ figcaption, .subheader
 .card-img-top
 {
   width: 250px;
-  height: 200px;
+  height: 300px;
+}
+.card-body{
+  padding: 25px 0px 25px 0px !important;
 }
 .container-fluid
 {
@@ -298,11 +301,11 @@ height: 75px;
 {
   margin-bottom: 5px;
 }
-#collapsebtn
+#collapsebtn, #collapsebtnaward
 {
   font-size: x-large !important;
 }
-#regbtn,#collapsebtn, .devpostbtn
+#regbtn,#collapsebtn,#collapsebtnaward, .devpostbtn
 {
   text-align: center;
   text-decoration: none;
@@ -313,7 +316,7 @@ height: 75px;
   font-size: 1.7em;
   transition: all 0.25s ease-out;
 }
-#regbtn:hover, #collapsebtn:hover, .devpostbtn:hover
+#regbtn:hover, #collapsebtn:hover,#collapsebtnaward:hover, .devpostbtn:hover
 {
   background-color: #bb1b1b;
 }
@@ -337,7 +340,7 @@ footer
 {
   opacity: 1;
 }
-.invis
+.invis, .awardinvis
 {
   display: none;
 }
