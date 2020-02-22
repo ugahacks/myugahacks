@@ -9,8 +9,8 @@ from user.models import User
 
 
 class CheckIn(models.Model):
-    application = models.OneToOneField('applications.Application')
-    user = models.ForeignKey(User)
+    application = models.OneToOneField('applications.Application', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     update_time = models.DateTimeField()
 
     # QR identifier for wristband identification

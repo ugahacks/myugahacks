@@ -26,8 +26,8 @@ VOTES = (
 
 
 class Vote(models.Model):
-    application = models.ForeignKey(Application)
-    user = models.ForeignKey(User)
+    application = models.ForeignKey(Application, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     tech = models.IntegerField(choices=VOTES, null=True)
     personal = models.IntegerField(choices=VOTES, null=True)
     calculated_vote = models.FloatField(null=True)
@@ -89,7 +89,7 @@ class Vote(models.Model):
 
 
 class ApplicationComment(models.Model):
-    application = models.ForeignKey(Application, null=False)
-    author = models.ForeignKey(User)
+    application = models.ForeignKey(Application, null=False, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=500)
     created_at = models.DateTimeField(default=timezone.now)
