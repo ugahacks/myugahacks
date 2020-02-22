@@ -101,7 +101,7 @@ let checkin_qr = (()=>{
 
         //Start the scanner with the stored value
         if(navigator.userAgent.indexOf('iPhone') != -1 | navigator.userAgent.indexOf('iPad') != -1){
-          scanner.start(cams[0])
+          scanner.start(cams[cams.length-2])
         }
         else {
           scanner.start(cams[cams.length-1])
