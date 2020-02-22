@@ -7,9 +7,11 @@ let checkin_qr = (()=>{
         Instascan.Camera.getCameras().then(function (cameras) {
             if (cameras.length > 0) {
                 cams = cameras
-                console.log(cams)
-                console.log(cams[0].name)
-                console.log(navigator.userAgent)
+                for (i = 0; i < cams.length; i++)
+                {
+                  alert("Camera " + i + ": " + cams[i].name)
+                }
+                alert(navigator.userAgent)
             } else {
                 console.error('No cameras found.');
             }
@@ -109,6 +111,7 @@ let checkin_qr = (()=>{
 
         //Start the scanner with the stored value
         if(navigator.userAgent.indexOf('iPhone') != -1 | navigator.userAgent.indexOf('iPad') != -1){
+          alert("Succesfully detected it's an iPhone")
           scanner.start(cams[cams.length-2])
         }
         else {
