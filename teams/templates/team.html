@@ -49,6 +49,12 @@
 
     {% elif not h_app_closed and not team %}
         <p>Do you have a team already? Join it below. Otherwise you can create a new team. </p>
+        <i class="fa fa-exclamation-triangle"></i>
+        <b>Note:</b> Team management is <b>solely</b> to help our organizer team manage your applications and leave no one from the team behind when inviting you to
+        the event. Hence, we highly recommend finalizing as soon as possible for the highest chance that everyone on your team will be invited to the event.
+        <b>This does not mean you cannot add/change your team members later on or at the event as long as they have also been invited at the event.</b>
+        <br>
+        <br>
         <form action="" method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}
