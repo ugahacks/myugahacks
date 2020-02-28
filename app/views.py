@@ -16,9 +16,9 @@ from app import utils, mixins
 
 def root_view(request):
 
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return render(request, 'home-hacks-5.html')
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('account_login'))
     if not request.user.has_usable_password():
         return HttpResponseRedirect(reverse('set_password'))
@@ -55,17 +55,17 @@ def protectedMedia(request, file_):
     downloadable_path = None
     if path == "resumes":
         app = get_object_or_404(Application, resume=file_)
-        if request.user.is_authenticated() and (request.user.is_organizer or
+        if request.user.is_authenticated and (request.user.is_organizer or
                                                 (app and (app.user_id == request.user.id))):
             downloadable_path = app.resume.path
     elif path == "receipt":
         app = get_object_or_404(Reimbursement, receipt=file_)
-        if request.user.is_authenticated() and (request.user.is_organizer or
+        if request.user.is_authenticated and (request.user.is_organizer or
                                                 (app and (app.hacker_id == request.user.id))):
             downloadable_path = app.receipt.path
     elif path == "baggage":
         bag = get_object_or_404(Bag, image=file_)
-        if request.user.is_authenticated() and (request.user.is_organizer or request.user.is_volunteer):
+        if request.user.is_authenticated and (request.user.is_organizer or request.user.is_volunteer):
             downloadable_path = bag.image.path
     if downloadable_path:
         response = StreamingHttpResponse(open(downloadable_path, 'rb'))

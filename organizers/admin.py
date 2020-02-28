@@ -9,7 +9,7 @@ class OrganizerBaseAdmin(admin.ModelAdmin):
     list_per_page= 200
     list_filter = ()
     search_fields = ()
-    actions = ['delete_selected']
+    #actions = ['delete_selected']
 
 
 class CommentAdmin(OrganizerBaseAdmin):
@@ -18,11 +18,13 @@ class CommentAdmin(OrganizerBaseAdmin):
     date_hierarchy = 'created_at'
 
 
+
 class VoteAdmin(OrganizerBaseAdmin):
     list_display = OrganizerBaseAdmin.list_display + ('application', 'user', 'tech', 'personal', 'calculated_vote')
     #list_per_page = 200
     list_filter = OrganizerBaseAdmin.list_filter + ('user', 'application')
     search_fields = OrganizerBaseAdmin.search_fields + ('user', 'application')
+
 
 
 admin.site.register(models.ApplicationComment, admin_class=CommentAdmin)
