@@ -1,4 +1,5 @@
 {% extends "base_tabs.html" %}
+{% load crispy_forms_tags %}
 {% block head_title %}Add workshop{% endblock %}
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
@@ -8,7 +9,7 @@
 <h1 class="text-center">Add Workshop</h1>
     <form id="workshop-form" action="/workshops/add/" method="post">
 	     {% csrf_token %}
-	      {{ form.as_p }}
+	      {{ form|crispy }}
         <input class="btn btn-success" type="submit" value="Add Workshop">
     </form>
 

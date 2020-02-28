@@ -7,6 +7,7 @@ class AddWorkshopForm(forms.ModelForm):
 
     description = forms.CharField(max_length=300, label='Workshop description', widget=forms.Textarea(attrs={
         'rows': '4',
+        'style':'resize:none;',
     }))
 
     location = forms.CharField(max_length=63, label='Location')
