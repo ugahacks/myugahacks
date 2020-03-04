@@ -143,10 +143,10 @@ CLASSSTATUS = [
 class Application(models.Model):
     # META
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
-    user = models.OneToOneField(User, primary_key=True)
-    invited_by = models.ForeignKey(User, related_name='invited_applications', blank=True, null=True)
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
+    invited_by = models.ForeignKey(User, related_name='invited_applications', blank=True, null=True, on_delete=models.CASCADE)
     contacted = models.BooleanField(default=False)  # If a dubious application has been contacted yet
-    contacted_by = models.ForeignKey(User, related_name='contacted_by', blank=True, null=True)
+    contacted_by = models.ForeignKey(User, related_name='contacted_by', blank=True, null=True, on_delete=models.CASCADE)
 
     # When was the application submitted
     submission_date = models.DateTimeField(default=timezone.now)
@@ -366,7 +366,7 @@ class Application(models.Model):
 
 class DraftApplication(models.Model):
     content = models.CharField(max_length=7000)
-    user = models.OneToOneField(User, primary_key=True)
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
 
     def save_dict(self, d):
         self.content = json.dumps(d)

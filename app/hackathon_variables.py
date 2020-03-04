@@ -22,13 +22,13 @@ HACKATHON_OG_IMAGE = 'https://cdn.discordapp.com/attachments/620786563382640650/
 # (OPTIONAL) Track visits on your website
 HACKATHON_GOOGLE_ANALYTICS = ''
 # (OPTIONAL) Hackathon Twitter user
-HACKATHON_TWITTER_ACCOUNT = 'https://twitter.com/ugahacks'
+HACKATHON_TWITTER_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Facebook page
-HACKATHON_FACEBOOK_PAGE = 'https://www.facebook.com/ugahacks/'
+HACKATHON_FACEBOOK_PAGE = 'ugahacks/'
 # (OPTIONAL) Hackathon YouTube channel
 HACKATHON_YOUTUBE_PAGE = ''
 # (OPTIONAL) Hackathon Instagram user
-HACKATHON_INSTAGRAM_ACCOUNT = 'https://www.instagram.com/ugahacks/'
+HACKATHON_INSTAGRAM_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Medium user
 HACKATHON_MEDIUM_ACCOUNT = ''
 # (OPTIONAL) Github Repo for this project (so meta)

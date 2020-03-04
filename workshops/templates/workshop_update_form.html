@@ -1,11 +1,12 @@
 {% extends "base_tabs.html" %}
+{% load crispy_forms_tags %}
 {% block head_title %}Update workshop{% endblock %}
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
 <h1 class="text-center">Update Workshop</h1>
     <form method="post">
 	     {% csrf_token %}
-	      {{ form.as_p }}
+	      {{ form|crispy }}
         <div class="form-group">
       	    <label class="control-label" for="workshop_timeslot">Timeslot</label>
       	    <select class="form-control" name="workshop_timeslot">

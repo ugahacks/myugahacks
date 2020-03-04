@@ -60,7 +60,10 @@ INSTALLED_APPS = [
     'meals',
     # 'judging',
     'workshops',
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 if BAGGAGE_ENABLED:
     INSTALLED_APPS.append('baggage')
