@@ -22,7 +22,8 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                'placeholder': 'https://www.linkedin.com/in/byte'}))
     site = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'https://byte.space'}))
-
+    phone_number = forms.CharField(required=True, label='What phone number should we contact in case of an emergency?',help_text='We will use this number solely for emergency purposes.',
+     widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '(###) ###-####'}))
     university = forms.CharField(required=True,
                                  label='What university do you study at?',
                                  help_text='Current or most recent school you attended.',
@@ -248,7 +249,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         self._fieldsets = [
             ('Personal Info',
              {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree','class_status', 'graduation_year', 'uniemail', 'gender', 'other_gender','ethnicity',
-                          'tshirt_size', 'diet', 'other_diet',
+                          'phone_number','tshirt_size', 'diet', 'other_diet',
                            'hardware'),
               'description': 'Hey there, before we begin we would like to know a little more about you.', }),
             ('Hackathons?', {'fields': ('description', 'first_timer', 'first_ugahacks', 'hearabout', 'projects'), }),
@@ -268,7 +269,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         elif self.instance.pk and r_enabled:
             self._fieldsets.append(('Traveling',
                                     {'fields': ('origin',),
-                                     'description': 'If you applied for reimbursement, check out the Travel tab (available in January). We will also contact you about the status of fulfilling your reimbursement. '
+                                     'description': 'If you applied for reimbursement, we will reach out to you about fulfilling your reimbursement during the event. '
                                                     'Email us at %s for any change needed on reimbursements.' %
                                                     settings.HACKATHON_CONTACT_EMAIL,
                                      }))
@@ -288,11 +289,12 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'fields': ('cvs_edition', 'terms_and_conditions', 'code_of_conduct', 'diet_notice'),
             'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
                             'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
-                            'will be processing your information with the aim of giving you and others the best possible experience come next February. '
+                            'will be processing your information with the aim of giving you and others the best possible experience. '
                             'Your data will mainly be used for admissions and promotional purposes. '
                             'By submitting an application, you are authorizing us to share your resume with our Sponsors. This '
                             'will also include the use of any images and videos of yourself during the event. '
-                            'We may also reach '
+                            'You are also agreeing to the terms in the "Liability Release, Covenant Not to Sue, and Ownership Agreement" linked <a href="url legal_notice" target="_blank">here</a> '
+                            'in order to participant in the event. We may also reach '
                             'out to you (sending you an e-mail) about other events that we are '
                             'organizing and that are of a similar nature to those previously '
                             'requested/attended by you. </p>'
