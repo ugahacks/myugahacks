@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import RedirectView
 
+from django.urls import path
+
 from app import views
 
 urlpatterns = [
@@ -26,6 +28,7 @@ urlpatterns = [
     url(r'^meals/', include('meals.urls')),
     url(r'^judging/', include('judging.urls')),
     url(r'^workshops/', include('workshops.urls')),
+    path('sponsors/', include('sponsors.urls')),
 ]
 
 if settings.BAGGAGE_ENABLED:

@@ -65,6 +65,7 @@ class User(AbstractBaseUser):
     is_volunteer = models.BooleanField(default=False)
     is_organizer = models.BooleanField(default=False)
     is_director = models.BooleanField(default=False)
+    is_sponsor = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_hardware_admin = models.BooleanField(default=False)
     created_time = models.DateTimeField(default=timezone.now)

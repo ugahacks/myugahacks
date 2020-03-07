@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     # 'judging',
     'workshops',
     'crispy_forms',
+    'sponsors',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
