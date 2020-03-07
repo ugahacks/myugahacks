@@ -6,11 +6,13 @@ class SponsorForm(forms.ModelForm):
 
     diet = forms.TypedChoiceField(choices=DIETS)
 
-    company_logo = forms.ImageField()
+    other_diet = forms.CharField(max_length=255,required=False,help_text='If you selected "Others" above, please describe your dietary restrictions in this field.')
+
+    company_logo = forms.ImageField(required=False, help_text="We would highly appreciate if you could upload your company's logo (preferably in .svg or .png format) in order to speed up the process of getting your company's logo onto our site.")
 
     class Meta:
         model = SponsorApplication
-        fields = ['tshirt_size', 'diet', 'company_logo']
+        fields = ['tshirt_size', 'diet', 'other_diet', 'company_logo']
 
 class AddSponsorForm(forms.ModelForm):
     company = forms.CharField(max_length=255, label='Company Name')
@@ -22,4 +24,3 @@ class AddSponsorForm(forms.ModelForm):
     class Meta:
         model = Sponsor
         fields = ['company', 'email_domain', 'tier']
-        
