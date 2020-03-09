@@ -8,7 +8,15 @@ class SponsorApplication(FormView):
     success_url = ''
     form_class = SponsorForm
 
+    def form_valid(self, form):
+        sponsor_application = form.save()
+        return super().form_valid(form)
+
 class AddSponsor(FormView):
     template_name = 'add_sponsor.html'
     success_url = ''
     form_class = AddSponsorForm
+
+    def form_valid(self, form):
+        sponsor = form.save()
+        return super().form_valid(form)

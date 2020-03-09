@@ -12,6 +12,7 @@ from user import forms, models, tokens, providers
 from user.forms import SetPasswordForm, PasswordResetForm
 from user.models import User
 from user.tokens import account_activation_token, password_reset_token
+from sponsors.models import Sponsor
 
 
 def login(request):
@@ -98,8 +99,13 @@ def activate(request, uid, token):
 
     if account_activation_token.check_token(user, token):
         messages.success(request, "Email verified!")
-
         user.email_verified = True
+
+        #CHECKING IF THE USER IS A SPONSOR
+        user_email_domain = '@' + user.email.split('@')[1] #Getting the domain of the user's email i.e @ugahacks.com
+        if Sponsor.objects.filter(email_domain=user_email_domain):
+            user.is_sponsor = True
+
         user.save()
         auth.login(request, user)
     else:
