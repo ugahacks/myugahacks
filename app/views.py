@@ -81,3 +81,6 @@ def protectedMedia(request, file_):
 
 class TabsView(mixins.TabsViewMixin, TemplateView):
     pass
+
+class SponsorshipPacketView(TemplateView):
+    template_name = 'sponsorship_deck.html'
