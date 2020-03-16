@@ -31,6 +31,7 @@ class UserManager(BaseUserManager):
             mlh_id=mlh_id
         )
         user.set_unusable_password()
+        user.email_verified = True
         user.save(using=self._db)
         return user
 
