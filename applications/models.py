@@ -43,7 +43,7 @@ GENDERS = [
     (NO_ANSWER, 'Prefer not to answer'),
     (MALE, 'Male'),
     (FEMALE, 'Female'),
-    (NON_BINARY, 'Non-binary'),
+    (NON_BINARY, 'Non-Binary'),
 ]
 
 D_NONE = 'None'
