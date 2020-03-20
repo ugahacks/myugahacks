@@ -34,7 +34,16 @@ environ.Env.read_env()
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
-ALLOWED_HOSTS = ['my.ugahacks.com','ugahacks.com', 'localhost', '127.0.0.1', '0.0.0.0', '165.227.125.129']
+ALLOWED_HOSTS = [
+    'my.ugahacks.com',
+    'ugahacks.com',
+    '5,ugahacks.com',
+    'localhost',
+    '5.localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    '165.227.125.129',
+    ]
 
 # Application definition
 INSTALLED_APPS = [
@@ -60,7 +69,9 @@ INSTALLED_APPS = [
     'meals',
     # 'judging',
     'workshops',
+    'archives',
     'crispy_forms',
+    'django_hosts'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -79,6 +90,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware', #This MUST be first
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -86,7 +99,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django_hosts.middleware.HostsResponseMiddleware' #This MUST be last
 ]
+
+ROOT_HOSTCONF = 'app.hosts'
+DEFAULT_HOST = 'my'
 
 ROOT_URLCONF = 'app.urls'
 

@@ -16,6 +16,8 @@ from app import utils, mixins
 
 def root_view(request):
 
+    return render(request, 'ugahacks6/UGAHacks6-teaser.html')
+    
     if not request.user.is_authenticated:
         return render(request, 'home-hacks-5.html')
     if not request.user.is_authenticated:
@@ -29,6 +31,7 @@ def root_view(request):
     elif request.user.is_volunteer:
         return HttpResponseRedirect(reverse('check_in_list'))
     return HttpResponseRedirect(reverse('dashboard'))
+
 
 
 def code_conduct(request):
