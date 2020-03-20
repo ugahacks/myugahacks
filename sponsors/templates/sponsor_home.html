@@ -1,0 +1,14 @@
+{% extends "base_tabs.html" %}
+{% load crispy_forms_tags %}
+{% block head_title %}Sponsor Home{% endblock %}
+{% block cols-panel %}col-md-12{% endblock %}
+{% block out_panel %}
+
+<h1 class="text-center">Sponsor Home</h1>
+
+<ul>
+{% for hacker in hackers%}
+    <li> {{hacker.user.get_full_name}} --- {{hacker.class_status}} --- {{hacker.university}} </li>
+{% endfor %}
+</ul>
+{% endblock %}

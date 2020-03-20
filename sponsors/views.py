@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .forms import SponsorForm, AddSponsorForm
 from django.views.generic.edit import FormView
+from applications.models import Application
 # Create your views here.
 
 class SponsorApplication(FormView):
@@ -20,3 +21,10 @@ class AddSponsor(FormView):
     def form_valid(self, form):
         sponsor = form.save()
         return super().form_valid(form)
+
+def sponsor_home(request):
+
+    checked_in_hackers = Application.objects.all().filter(participant='Hacker').filter(status='A')
+    context = {'hackers' : checked_in_hackers}
+    
+    return render(request,'sponsor_home.html',context)
