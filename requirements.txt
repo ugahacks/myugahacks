@@ -55,7 +55,7 @@ oauthlib==2.0.2
 odfpy==1.4.0
 openpyxl==3.0.0
 packaging==16.8
-Pillow==6.1.0
+Pillow==6.2.0
 protobuf==3.6.1
 psycopg2==2.8.3
 psycopg2-binary==2.8.3
