@@ -37,7 +37,7 @@ SECRET_KEY = env('SECRET_KEY')
 ALLOWED_HOSTS = [
     'my.ugahacks.com',
     'ugahacks.com',
-    '5,ugahacks.com',
+    '5.ugahacks.com',
     'localhost',
     '5.localhost',
     '127.0.0.1',
