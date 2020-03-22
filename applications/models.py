@@ -99,6 +99,7 @@ C_SOPHOMORE = 'Sophomore'
 C_JUNIOR = 'Junior'
 C_SENIOR = 'Senior'
 C_GRAD = 'Graduate Student'
+C_GRADUATED = 'Graduated'
 
 CLASSSTATUS = [
     (C_FRESHMAN, 'Freshman'),
@@ -106,6 +107,7 @@ CLASSSTATUS = [
     (C_JUNIOR, 'Junior'),
     (C_SENIOR, 'Senior'),
     (C_GRAD, 'Graduate Student'),
+    (C_GRADUATED, 'Graduated')
 ]
 
 H_NOANS = "N/A"
@@ -117,7 +119,7 @@ H_GITHUB = 'GitHub'
 H_EMAIL = "Promotional Emails"
 H_FRIENDS = "Friends"
 H_PROF = "Professors/University-wide annoucement"
-H_PREV = "Enjoyed the last one/Want to attend again"
+H_MLH = "MLH Website"
 
 HEARABOUT = [
     (H_NOANS, "N/A"),
@@ -129,16 +131,9 @@ HEARABOUT = [
     (H_EMAIL, 'Promotional Emails'),
     (H_FRIENDS, 'Friends'),
     (H_PROF, 'Professors/University-wide annoucement'),
-    (H_PREV, 'Enjoyed the last one/Want to attend again'),
+    (H_MLH, 'MLH Website'),
 ]
 
-CLASSSTATUS = [
-    (C_FRESHMAN, 'Freshman'),
-    (C_SOPHOMORE, 'Sophomore'),
-    (C_JUNIOR, 'Junior'),
-    (C_SENIOR, 'Senior'),
-    (C_GRAD, 'Graduate Student'),
-]
 
 class Application(models.Model):
     # META
@@ -161,6 +156,10 @@ class Application(models.Model):
     gender = models.CharField(max_length=23, choices=GENDERS, default=NO_ANSWER)
     other_gender = models.CharField(max_length=50, blank=True, null=True)
     ethnicity = models.CharField(max_length=50, blank=True)
+    phone_number = models.CharField(max_length=14,
+                                    validators=[RegexValidator(regex=r'^\(\d{3}\)\s\d{3}-\d{4}',
+                                                               message="Phone number must be entered in the following format: \
+                                                                (999) 999-9999")])
 
     """
         # Personal data (asking here because we don't want to ask birthday)
@@ -171,8 +170,8 @@ class Application(models.Model):
     origin = models.CharField(max_length=300)
 
     # Is this your first hackathon?
-    first_timer = models.BooleanField(default=False)
-    first_ugahacks = models.BooleanField(default=False)
+    first_timer = models.BooleanField()
+    first_ugahacks = models.BooleanField()
     # Why do you want to come to X?
     description = models.TextField(max_length=500)
     hearabout = models.CharField(max_length=50, choices=HEARABOUT, default=H_NOANS)
