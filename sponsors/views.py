@@ -1,8 +1,15 @@
-from django.shortcuts import render
 from .forms import SponsorForm, AddSponsorForm
-from django.views.generic.edit import FormView
+from .tables import ApplicationsListSponsor
+from organizers.views import ApplicationDetailView
 from applications.models import Application
-# Create your views here.
+
+from app.mixins import TabsViewMixin
+from django_tables2.export import ExportMixin
+from django_tables2 import SingleTableMixin
+
+from django.views.generic import ListView
+from django.views.generic.edit import FormView
+from django.urls import reverse
 
 class SponsorApplication(FormView):
     template_name = 'sponsor_application.html'
@@ -22,9 +29,17 @@ class AddSponsor(FormView):
         sponsor = form.save()
         return super().form_valid(form)
 
-def sponsor_home(request):
 
-    checked_in_hackers = Application.objects.all().filter(participant='Hacker').filter(status='A')
-    context = {'hackers' : checked_in_hackers}
-    
-    return render(request,'sponsor_home.html',context)
+class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, ListView):
+    template_name = 'sponsor_home.html'
+    table_class = ApplicationsListSponsor
+    table_pagination = {'per_page': 50}
+    exclude_columns = ('detail', 'status', 'vote_avg')
+    export_name = 'applications'
+
+    def get_queryset(self):
+        return Application.objects.all().filter(participant='Hacker')
+
+class ApplicationDetailViewSponsor(ApplicationDetailView):
+    def get_back_url(self):
+        return reverse('sponsor_home')
