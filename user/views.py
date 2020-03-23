@@ -85,7 +85,7 @@ def logout(request):
     return resp
 
 
-def activate(request, uid, token):
+def activate(request, uid, token, backend="django.contrib.auth.backends.ModelBackend"):
     try:
         uid = force_text(urlsafe_base64_decode(uid))
         user = User.objects.get(pk=uid)
@@ -101,7 +101,7 @@ def activate(request, uid, token):
 
         user.email_verified = True
         user.save()
-        auth.login(request, user)
+        auth.login(request, user, backend="django.contrib.auth.backends.ModelBackend")
     else:
         messages.error(request, "Email verification url has expired. Log in so we can send it again!")
     return redirect('root')
@@ -178,7 +178,7 @@ def set_password(request):
         if form.is_valid():
             user = request.user
             form.save(user)
-            auth.login(request, user)
+            auth.login(request, user, backend="django.contrib.auth.backends.ModelBackend")
             messages.success(request, 'Password correctly set')
             return HttpResponseRedirect(reverse('root'))
         return TemplateResponse(request, 'callback.html', {'form': form, 'email': request.user.email})

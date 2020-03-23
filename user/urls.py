@@ -1,9 +1,11 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
+from django.urls import path
 
 from user import views
 
 urlpatterns = [
     url(r'^login/$', views.login, name='account_login'),
+    path('oauth/', include('social_django.urls', namespace="social")),
     url(r'^callback/(?P<provider>[0-9A-Za-z_\-]+)/$', views.callback, name='callback'),
     url(r'^signup/$', views.signup, name='account_signup'),
     url(r'^logout/$', views.logout, name='account_logout'),

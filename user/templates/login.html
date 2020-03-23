@@ -22,7 +22,8 @@
                 Sign in with MyMLH
             </a>
         {% endif %}
-
+        <a class="btn btn-warning btn-block" href="{% url 'social:begin' 'google-oauth2' %}">Sign in with Google</a>
+        <a class="btn btn-warning btn-block" href="{% url 'social:begin' 'github' %}">Sign in with GitHub</a>
         {% if not h_app_closed %}
             <a class="btn btn-block"
                href="{% url 'account_signup' %}">{% trans "Sign up" %}</a>
