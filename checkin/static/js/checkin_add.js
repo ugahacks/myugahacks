@@ -114,4 +114,4 @@ document.addEventListener("DOMContentLoaded", () => {
     checkin_qr.initListeners();
     //baggage_qr.initTypeaheads()
     checkin_qr.initScanner();
-});git
+});
