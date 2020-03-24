@@ -1,11 +1,13 @@
 const checkinQr = (() => {
     let cams = [];
+    const IS_IOS  =  /iPad|iPhone/.test(navigator.userAgent);
+
     const obj = {
         initCamera: () => {
             Instascan.Camera.getCameras().then(function (cameras) {
               if (cameras.length > 0) {
                 //Start the scanner with the stored value
-                if(navigator.userAgent.indexOf('iPhone') != -1 | navigator.userAgent.indexOf('iPad') != -1){
+                if(IS_IOS){
                     // Overrides the InstaScan.Camera start method
                     // This is because the default constraints that it uses
                     // are not valid for iOS devices as they true to use
@@ -97,7 +99,7 @@ const checkinQr = (() => {
             });
 
             // The back camera is located in different locations for iOS and Android
-            const cameraIndex = /iPad|iPhone/.test(navigator.userAgent) ? 0 : cams.length-1;
+            const cameraIndex = IS_IOS ? 0 : cams.length-1;
             scanner.start(cams[cameraIndex]);
         }
     };
