@@ -159,7 +159,8 @@ class Application(models.Model):
     phone_number = models.CharField(max_length=14,
                                     validators=[RegexValidator(regex=r'^\(\d{3}\)\s\d{3}-\d{4}',
                                                                message="Phone number must be entered in the following format: \
-                                                                (999) 999-9999")])
+                                                                (999) 999-9999")],
+                                    default='(999) 999-9999')
 
     """
         # Personal data (asking here because we don't want to ask birthday)
