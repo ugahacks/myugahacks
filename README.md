@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="UGAHacks 5" src="app/static/img/github-logo.png" width="80%"/>
+  <img alt="UGAHacks 6" src="app/static/img/github-logo.png" width="80%"/>
 </p>
 
 
