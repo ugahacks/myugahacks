@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'form_utils',
     'bootstrap3',
     'django_tables2',
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
     'workshops',
     'crispy_forms',
     'sponsors',
+    'points',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

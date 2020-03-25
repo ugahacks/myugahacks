@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^judging/', include('judging.urls')),
     url(r'^workshops/', include('workshops.urls')),
     path('sponsors/', include('sponsors.urls')),
+    path('points/', include('points.urls')),
 ]
 
 if settings.BAGGAGE_ENABLED:
