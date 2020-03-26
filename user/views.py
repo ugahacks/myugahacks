@@ -214,7 +214,7 @@ def callback(request, provider=None):
 
     user = User.objects.filter(mlh_id=mlhuser.get('id', -1)).first()
     if user:
-        auth.login(request, user)
+        auth.login(request, user, backend="django.contrib.auth.backends.ModelBackend")
     elif User.objects.filter(email=mlhuser.get('email', None)).first():
         messages.error(request, 'An account with this email already exists. Sign in using your password.')
     else:
@@ -223,7 +223,7 @@ def callback(request, provider=None):
             name=mlhuser.get('first_name', '') + ' ' + mlhuser.get('last_name', None),
             mlh_id=mlhuser.get('id', None),
         )
-        auth.login(request, user)
+        auth.login(request, user, backend="django.contrib.auth.backends.ModelBackend")
 
         # Save extra info
         draft = a_models.DraftApplication()
