@@ -25,6 +25,7 @@ class AddPointsView(View):
         qr_id = request.POST.get('qr_code', None)
         points = request.POST.get('points', None)
 
+        #TODO: Add error handling for below
         #Checkin object of a participants
         hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_id).first()
 
