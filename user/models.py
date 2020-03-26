@@ -19,13 +19,13 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, email):
+    def create_user(self, email, first_name, last_name):
         if not email:
             raise ValueError('Users must have a email')
 
         user = self.model(
             email=email,
-            name=email[:email.index("@")]
+            name=str(first_name + ' ' + last_name)
         )
 
         user.set_unusable_password()
