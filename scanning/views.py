@@ -133,7 +133,7 @@ def checkin_scan(request):
     checkin = CheckIn()
     checkin.user = request.user
     checkin.application = user_application
-    checkin.qr_identifier  badge_qr
+    checkin.qr_identifier = badge_qr
     checkin.save()
     return JsonResponse({
         'status': 200,
