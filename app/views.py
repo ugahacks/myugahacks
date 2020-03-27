@@ -17,7 +17,7 @@ from app import utils, mixins
 def root_view(request):
 
     if not request.user.is_authenticated:
-        return render(request, 'home-hacks-5.html')
+        return render(request, 'ugahacks6/UGAHacks6-teaser.html')
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('account_login'))
     if not request.user.has_usable_password():
@@ -31,6 +31,7 @@ def root_view(request):
     elif request.user.is_sponsor:
         return HttpResponseRedirect(reverse('sponsor_application'))
     return HttpResponseRedirect(reverse('dashboard'))
+
 
 
 def code_conduct(request):
@@ -83,3 +84,6 @@ def protectedMedia(request, file_):
 
 class TabsView(mixins.TabsViewMixin, TemplateView):
     pass
+
+class SponsorshipPacketView(TemplateView):
+    template_name = 'sponsorship_deck.html'
