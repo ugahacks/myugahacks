@@ -1,0 +1,105 @@
+#scanning-container {
+}
+
+.button-qr {
+    padding: 15px 20px 12px;
+    border: 3px solid #000;
+    font-size: 100px;
+    border-radius: 4px;
+    color: white;
+    background: #1e3158;
+    width: 100%;
+    text-align: center;
+}
+
+.button-qr-success {
+    color: #3c763d;
+    border-color: #3c763d;
+}
+
+.input-qr {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.help-block {
+    display:none;
+}
+
+.has-error .help-block {
+    display: block;
+}
+
+
+.scanning-popup-scan {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    padding: 15px;
+    border: 3px solid #333;
+    z-index: 1032;
+    background-color: white;
+}
+
+.scanning-popup-scan select {
+    margin-bottom: 15px;
+}
+
+.scanning-popup-scan video {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.scanning-popup-scan .container-fluid {
+    padding: 0;
+}
+
+.scanning-popup-scan .header {
+    background: #ffffff;
+    border: 1px solid #d6d4d4;
+    color: #3a3a3a;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.scanning-popup-scan .error {
+    color: #a60000;
+}
+
+.scanning-popup-scan .ready {
+    color: green;
+}
+
+.video-container {
+    position: relative;
+}
+
+.video-container .status {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 25px;
+    padding: 100px 10px 0 10px;
+    font-size: 24px;
+    display:none;
+    font-weight: bold;
+}
+
+.veil {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1031;
+    background-color: rgba(30,30,30,0.9);
+    cursor: pointer;
+}

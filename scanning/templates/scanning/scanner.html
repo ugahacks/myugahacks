@@ -1,0 +1,40 @@
+{% extends "base_plain.html" %}
+
+{% load static %}
+{% load bootstrap3 %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/scanning.css' %}">
+    <script src="{% static 'lib/instascan.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/scanning.js' %}"></script>
+{% endblock %}
+
+{% block head_title %}Scan{% endblock %}
+
+{% block panel %}
+    <div id="scanning-container">
+        <div class="input-qr form-group">
+            <select class="form-control" id="check-in-selector">
+              <option value="" selected disabled>Select an event..</option>
+              <optgroup label="Check-in">
+                <option value="Check-in">Check-in</option>
+                <option value="Reissue-Badge">Reissue Badge</option>
+              </optgroup>
+              <optgroup label="Meals">
+                <option value="1">Day 1 - Dinner</option>
+                <option value="2">Day 2 - Breakfast</option>
+                <option value="3">Day 2 - Lunch</option>
+                <option value="4">Day 2 - Dinner</option>
+                <option value="5">Day 3 - Breakfast</option>
+                <option value="6">Day 3 - Lunch</option>
+              </optgroup>
+              <optgroup label="Workshops">
+                <option value="1">PwC Challange</option>
+                <option value="2">MLB Cup Stack</option>
+              </optgroup>
+            </select>
+            <span class="help-block">Please select an event before opening the scanner.</span>
+          </div>
+          <i id="qr_code-qr" class="button-qr fa fa-camera fa-2x"></i>
+    </div>
+{% endblock %}
