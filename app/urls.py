@@ -5,6 +5,8 @@ from django.contrib import admin
 from django.views.generic import RedirectView
 from django.urls import include, path
 
+from django.urls import path
+
 from app import views
 
 urlpatterns = [
@@ -28,6 +30,9 @@ urlpatterns = [
     url(r'^meals/', include('meals.urls')),
     url(r'^judging/', include('judging.urls')),
     url(r'^workshops/', include('workshops.urls')),
+    path('sponsors/', include('sponsors.urls')),
+    path('points/', include('points.urls')),
+    path('scan/', include('scanning.urls')),
     path('sponsorship-packet/', views.SponsorshipPacketView.as_view(), name='sponsorship-packet'),
 ]
 

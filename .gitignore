@@ -33,3 +33,5 @@ share/
 pyvenv.cfg
 app/.env
 *.db
+
+.vscode/

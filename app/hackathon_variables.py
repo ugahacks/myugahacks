@@ -4,9 +4,9 @@ import os
 
 from django.utils import timezone
 
-HACKATHON_NAME = 'UGAHacks 5'
+HACKATHON_NAME = 'UGAHacks 6'
 # What's the name for the application
-HACKATHON_APPLICATION_NAME = "UGAHacks 5"
+HACKATHON_APPLICATION_NAME = "UGAHacks 6"
 # Hackathon timezone
 TIME_ZONE = 'EST'
 # This description will be used on the html and sharing meta tags
@@ -16,9 +16,9 @@ HACKATHON_DOMAIN = 'my.ugahacks.com'
 # Hackathon contact email: where should all hackers contact you. It will also be used as a sender for all emails
 HACKATHON_CONTACT_EMAIL = 'hello@ugahacks.com'
 # Hackathon logo url, will be used on all emails
-HACKATHON_LOGO_URL = 'https://cdn.discordapp.com/attachments/620786563382640650/642799206871859243/Hacks5emailbannar.png'
+HACKATHON_LOGO_URL = 'https://cdn.discordapp.com/attachments/620787206621233185/691814435202793492/Hacks6emailbanner.png'
 
-HACKATHON_OG_IMAGE = 'https://cdn.discordapp.com/attachments/620786563382640650/642799206871859243/Hacks5emailbannar.png'
+HACKATHON_OG_IMAGE = 'https://cdn.discordapp.com/attachments/620787206621233185/691814435202793492/Hacks6emailbanner.png'
 # (OPTIONAL) Track visits on your website
 HACKATHON_GOOGLE_ANALYTICS = ''
 # (OPTIONAL) Hackathon Twitter user

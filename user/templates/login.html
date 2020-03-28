@@ -23,10 +23,8 @@
             </a>
         {% endif %}
 
-        {% if not h_app_closed %}
-            <a class="btn btn-block"
-               href="{% url 'account_signup' %}">{% trans "Sign up" %}</a>
-        {% endif %}
+        <a class="btn btn-block"
+           href="{% url 'account_signup' %}">{% trans "Sign up" %}</a>
 
     </form>
 

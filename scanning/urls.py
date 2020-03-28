@@ -1,6 +1,6 @@
-from django.conf.urls import url
+from django.urls import include, path
 from scanning import views
 
 urlpatterns = [
-    url(r'^scan/$', views.Scanner.as_view(), name='scanner'),
+    path('', views.ScanningView.as_view(), name='scanning')
 ]
