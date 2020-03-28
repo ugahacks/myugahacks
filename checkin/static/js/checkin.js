@@ -1,6 +1,30 @@
 const checkinQr = (() => {
     let cams = [];
+    let canScan = true;
     const IS_IOS  =  /iPad|iPhone/.test(navigator.userAgent);
+
+    function setStatus(status, message) {
+        $("#error-message, .video-container .status").hide();
+
+        if (status == "ready") {
+            $("#status-indicator span").removeClass('error').addClass("ready").text("Ready");
+        } else if (status == "error") {
+            $("#status-indicator span").removeClass('ready').addClass("error").text("Error");
+            $(".video-container .status").addClass('error').show()
+                .html(message + " <br><br>Touch here to continue scanning.");
+        } else if (status == "scanning") {
+            $(".video-container .status").removeClass('error').show().text("Submitting..");
+        }
+    }
+
+    function getBackCamera() {
+        if(!cams) {
+            throw new Error("I can't scan without a camera");
+        }
+        // The back camera is located in different locations for iOS and Android
+        const cameraIndex = IS_IOS ? 0 : cams.length-1;
+        return cams[cameraIndex];
+    }
 
     const obj = {
         initCamera: () => {
@@ -37,6 +61,7 @@ const checkinQr = (() => {
                 console.error('No cameras found.');
               }
             }).catch(function (e) {
+                setStatus("error", e.message);
               console.error(e);
             });
         },
@@ -46,61 +71,89 @@ const checkinQr = (() => {
          */
         initListeners: function () {
             $("#id_search-qr").on("click", () => {
-                this.qrScan($("#id_search"), true);
+                this.openScanner();
             });
             $("#qr_code-qr").on("click", () => {
-                this.qrScan($("#qr_code"));
+                this.openScanner();
             });
         },
+
         /**
          * Opens a popup with a QRScanner Enabled Camera.
          * @param inputElem element that the qr code value is set to
          * @param canRedirect
          * pre: call initScanner
          */
-        qrScan: (inputElem, canRedirect = false) => {
-            if(!cams) {
-                console.error("I can't scan without a camera");
-            }
+        openScanner: () => {
+            const type = $('#check-in-selector :selected').parent().attr('label');
+            const name = $('#check-in-selector :selected').text();
 
             // Create the HTML for the popup
             $('body').append(`
                 <div class="veil"></div>
                 <div class="checkin-popup-scan">
-                    <video id="scan"></video>
+                    <div class="header container-fluid">
+                        <div class="row">
+                            <div class="col col-xs-7 col-sm-6 col-md-6">
+                                <strong>${type}:</strong> ${name}
+                            </div>
+                            <div class="col col-xs-5 col-sm-6 col-md-6 text-right" id="status-indicator">
+                                <strong>Status:</strong> <span>Initializing..</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-container">
+                        <div class="status"></div>
+                        <video id="scan" autoplay="autoplay"></video>
+                    </div>
                 </div>
             `);
 
             // Initialize a scanner and attach to the above video tag
             const scanner = new Instascan.Scanner({
                 video: document.getElementById("scan"),
-                scanPeriod: 5,
+                scanPeriod: 1,
                 mirror: false,
+                // only needed to test the same qr code
+                refractoryPeriod: 1000,
             });
 
             // Once a QRCode is scanned, then we should recognize its contents and more forward accordingly
             scanner.addListener('scan', (content) => {
-                const reg = /^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+                if (canScan) {
+                    canScan = false;
 
-                if (reg.test(content) && canRedirect) {
-                    window.location.href = 'checkin/' + content;
-                } else {
-                    inputElem.val(content);
-                    scanner.stop();
-                    $(".veil, .checkin-popup-scan").remove();
-                    document.getElementById("checkin-search").submit();
+                    setStatus("scanning");
+                    setTimeout(function () {
+                        let successRate = Math.round(Math.random());
+
+                        if (successRate == 1) {
+                            setStatus("ready");
+                            canScan = true;
+                        } else {
+                            setStatus("error", "[403] User cannot be checked-in. Please contact administrator.");
+                        }
+                    }, 500);
                 }
             });
 
-            // Cancel the operation when background is click
-            $('.veil').on("click", () => {
-                scanner.stop();
-                $(".veil, .checkin-popup-scan").remove();
+            scanner.addListener('active', () => {
+                setStatus("ready");
             });
 
-            // The back camera is located in different locations for iOS and Android
-            const cameraIndex = IS_IOS ? 0 : cams.length-1;
-            scanner.start(cams[cameraIndex]);
+            $(".video-container").on('touch click', () => {
+                $('.video-container .status').hide();
+                setStatus("ready");
+                canScan = true;
+            });
+
+            // Cancel the operation when background is click
+            $('.veil').on("touch click", () => {
+                $(".veil, .scanning-popup-scan").remove();
+                scanner.stop();
+            });
+
+            scanner.start(getBackCamera());
         }
     };
 

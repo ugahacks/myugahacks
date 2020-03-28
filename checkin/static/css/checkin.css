@@ -28,7 +28,6 @@
     max-width: 600px;
     padding: 15px;
     border: 3px solid #333;
-    text-align: center;
     z-index: 1032;
     background-color: white;
 }
@@ -40,6 +39,44 @@
 .checkin-popup-scan video {
     width: 100%;
     margin: 0 auto;
+}
+
+.checkin-popup-scan .container-fluid {
+    padding: 0;
+}
+
+.checkin-popup-scan .header {
+    background: #f4f4f4;
+    border: 1px solid #aeaeae;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.checkin-popup-scan .error {
+    color: #a60000;
+}
+
+.checkin-popup-scan .ready {
+    color: green;
+}
+
+.video-container {
+    position: relative;
+}
+
+.video-container .status {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 25px;
+    padding: 100px 10px 0 10px;
+    font-size: 24px;
+    display:none;
+    font-weight: bold;
 }
 
 .veil {

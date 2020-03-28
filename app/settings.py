@@ -44,7 +44,7 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     '165.227.125.129',
     '192.168.0.12',
-    '883ad0bc.ngrok.io'
+    'a0d5594c.ngrok.io'
     ]
 
 # Application definition
@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'meals',
     # 'judging',
     'workshops',
+    'scanning',
     'archives',
     'crispy_forms',
     'django_hosts'

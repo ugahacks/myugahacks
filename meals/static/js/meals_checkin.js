@@ -66,6 +66,7 @@ let meals_webcam = (()=>{
 
         //Init scanner with this element
         let scanner = new Instascan.Scanner({ video: videoElem });
+
         scanner.addListener('scan', function (content) {
             let meal = $('#meals-scan-image').data('mealid')
             let url = $('#meals-scan-image').data('apiurl')
