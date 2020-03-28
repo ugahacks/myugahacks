@@ -61,6 +61,11 @@ def workshop_scan(request):
         })
     attendance = Attendance(workshop=workshop, user=hacker_user)
     attendance.save()
+    #Adding points to the hacker for attending the hackathon
+    points = Points.objects.filter(user=hacker_user).first()
+    if not points:
+        points = Points(user=hacker_user)
+    points.add_points(workshop.points)
     return JsonResponse({
         'status': 200,
         'message': 'Attendance logged!'
