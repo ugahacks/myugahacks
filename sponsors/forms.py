@@ -17,7 +17,7 @@ class SponsorForm(forms.ModelForm):
 class AddSponsorForm(forms.ModelForm):
     company = forms.CharField(max_length=255, label='Company Name')
 
-    email_domain = forms.CharField(max_length=255, label='Email Domain', help_text='ex: @ugahacks.com')
+    email_domain = forms.CharField(max_length=255, label='Email Domain', help_text='ex: ugahacks.com')
 
     tier = forms.TypedChoiceField(choices=TIERS, label='Tier')
 
