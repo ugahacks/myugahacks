@@ -6,3 +6,6 @@ class Points(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     points = models.IntegerField(default=0)
+
+    def add_points(self, value):
+        self.points += value

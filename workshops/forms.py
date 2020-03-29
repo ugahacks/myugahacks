@@ -18,6 +18,8 @@ class AddWorkshopForm(forms.ModelForm):
     #empty_label set to none because users should NOT be able to add empty timeslots.
     timeslot = forms.ModelChoiceField(queryset=Timeslot.objects.filter(workshop_one__isnull=True) | Timeslot.objects.filter(workshop_two__isnull=True), empty_label=None)
 
+    points = forms.IntegerField(initial=0)
+
     class Meta:
         model = Workshop
-        fields = ['title', 'description','location', 'host']
+        fields = ['title', 'description','location', 'host', 'points']

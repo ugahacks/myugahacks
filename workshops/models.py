@@ -16,6 +16,9 @@ class Workshop(models.Model):
 
 	open = models.BooleanField(null=False, default=False)
 
+	#Amount of points awarded if user attends this workshop
+	points = models.IntegerField(default=0)
+
 	def __str__(self):
 		return str(self.title)
 

@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
-from user.models import User
 
 D_NONE = 'None'
 D_VEGETERIAN = 'Vegeterian'
@@ -52,7 +51,8 @@ TIERS = [
 
 
 class SponsorApplication(AbstractBaseUser):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    #String of user.User to prevent circular dependecies
+    user = models.OneToOneField('user.User', on_delete=models.CASCADE)
 
     tshirt_size = models.CharField(max_length=5, choices=TSHIRT_SIZES)
 

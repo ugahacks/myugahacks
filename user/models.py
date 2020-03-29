@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
 from django.utils import timezone
+from sponsors.models import Sponsor
 
 
 class UserManager(BaseUserManager):
@@ -97,6 +98,13 @@ class User(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+
+    def get_tier(self):
+        if not self.is_sponsor:
+            return None
+        domain = self.email.split('@')[1]
+        sponsor = Sponsor.objects.filter(email_domain=domain)
+        return sponsor.tier
 
     @property
     def is_superuser(self):

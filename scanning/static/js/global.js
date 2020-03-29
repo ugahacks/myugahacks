@@ -54,7 +54,7 @@ const global = (() => {
             return {
                 text: selected.text(),
                 value: selected.val(),
-                category: selected.parent().attr('label')
+                category: selected.data('type')
             }
         },
 
