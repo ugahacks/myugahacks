@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     'meals',
     # 'judging',
     'workshops',
-    'scanning',
     'archives',
     'crispy_forms',
     'sponsors',

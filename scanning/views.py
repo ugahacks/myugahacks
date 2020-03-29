@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 
 from django.http import JsonResponse
 
-from workshops.models import Workshop
+from workshops.models import Workshop, Attendance
 from checkin.models import CheckIn
 from meals.models import Meal, Eaten, MEAL_TYPE
 from applications.models import Application
@@ -18,23 +18,24 @@ class ScanningView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ScanningView, self).get_context_data(**kwargs)
         workshops = Workshop.objects.all()
-        meals = Meals.objects.all()
+        meals = Meal.objects.all()
         context.update({
             'workshops': workshops,
             'meals': meals,
+            'types': MEAL_TYPE
         })
         return context
 
     def post(self, request, *args, **kwargs):
         type = request.POST.get('type', None)
         if type == 'workshop':
-            workshop_scan(request)
+            return workshop_scan(request)
         elif type == 'meal':
-            meal_scan(request)
+            return meal_scan(request)
         elif type == 'checkin':
-            checkin_scan(request)
+            return checkin_scan(request)
         elif type =='reissue':
-            reissue_scan(request)
+            return reissue_scan(request)
 
 def workshop_scan(request):
     id = request.POST.get('id', None)

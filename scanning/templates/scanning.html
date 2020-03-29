@@ -6,6 +6,9 @@
 {% block extra_head %}
     <link rel="stylesheet" href="{% static 'css/scanning.css' %}">
     <script src="{% static 'lib/instascan.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/camera.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/scanner.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/scanning.js' %}"></script>
 {% endblock %}
 
@@ -14,26 +17,38 @@
 {% block panel %}
     <div id="scanning-container">
         <div class="input-qr form-group">
-            <select class="form-control" id="check-in-selector">
-              <option value="" selected disabled>Select an event..</option>
-              <optgroup label="Check-in">
-                <option value="Check-in">Check-in</option>
-                <option value="Reissue-Badge">Reissue Badge</option>
-              </optgroup>
-              <optgroup label="Meals">
-                <option value="1">Day 1 - Dinner</option>
-                <option value="2">Day 2 - Breakfast</option>
-                <option value="3">Day 2 - Lunch</option>
-                <option value="4">Day 2 - Dinner</option>
-                <option value="5">Day 3 - Breakfast</option>
-                <option value="6">Day 3 - Lunch</option>
-              </optgroup>
-              <optgroup label="Workshops">
-                <option value="1">PwC Challange</option>
-                <option value="2">MLB Cup Stack</option>
-              </optgroup>
-            </select>
-            <span class="help-block">Please select an event before opening the scanner.</span>
+              <select class="form-control" data-mode="organizer" id="check-in-selector">
+                <option value="" selected disabled>Select an event..</option>
+                {% if request.user.is_organizer %}
+                    <optgroup label="Check-in">
+                      <option value="Check-in">Check-in</option>
+                      <option value="Reissue-Badge">Reissue Badge</option>
+                    </optgroup>
+                    <optgroup label="Meals">
+                      {% for meal in meals %}
+                          {% for type in types %}
+                            {% if type.0 == meal.kind %}
+                              <option value="{{ meal.id }}">{{ meal.name }} - {{ type.1 }}</option>
+                            {% endif %}
+                          {% endfor %}
+                      {% empty %}
+                          <option value="" disabled>No meals</option>
+                      {% endfor %}
+                    </optgroup>
+                    <optgroup label="Workshops">
+                      {% for workshop in workshops %}
+                          <option value="{{ workshop.id }}">{{ workshop.name }}</option>
+                      {% empty %}
+                          <option value="" disabled>No workshops</option>
+                      {% endfor %}
+                    </optgroup>
+                {% elif request.user.is_sponsor %}
+                    <optgroup label="Sponsor">
+                      <option value="p">Give Points</option>
+                    </optgroup>
+                {% endif %}
+              </select>
+              <span class="help-block">Please select an event before opening the scanner.</span>
           </div>
           <i id="qr_code-qr" class="button-qr fa fa-camera fa-2x"></i>
     </div>
