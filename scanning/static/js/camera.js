@@ -1,18 +1,22 @@
 const IS_IOS = /iPad|iPhone/.test(navigator.userAgent);
 
+/**
+ * Camera classes gives us access to the camera. The class wraps the Instascan.Camera class and improves its
+ * implementation by providing back camera access to iOS.
+ */
 class Camera {
     constructor () {
         this.cameras = [];
 
+        // Get available cameras
         Instascan.Camera.getCameras().then((cameras) => {
           if (cameras.length > 0) {
-            //Start the scanner with the stored value
             if(IS_IOS){
                 // Overrides the InstaScan.Camera start method
-                // This is because the default constraints that it uses
-                // are not valid for iOS devices as they true to use
-                // width and height parameters not valid for the
-                // system
+                // This is because the default constraints that
+                // Instascan.Camera uses are not valid for iOS
+                // devices as they try to use width and height
+                // parameters which are not valid for the system.
                 cameras[0].start = async function start() {
                     let constraints = {
                       audio: false,
@@ -34,6 +38,7 @@ class Camera {
             }
             this.cameras = cameras;
           } else {
+            global.setStatus("error", "No cameras found");
             console.error('No cameras found.');
           }
         }).catch(function (e) {
@@ -47,7 +52,7 @@ class Camera {
             throw new Error("No cameras found.");
         }
         // The back camera is located in different locations for iOS and Android
-        const cameraIndex = IS_IOS ? 0 : this.cameras.length-1;
+        const cameraIndex = IS_IOS ? 0 : this.cameras.length - 1;
         return this.cameras[cameraIndex];
     }
 }
