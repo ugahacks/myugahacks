@@ -179,6 +179,9 @@ table
   vertical-align: middle;
   transform: scaleX(-1);
 }
+#sittingbyte {
+  width: 100%; 
+}
 .abouttext
 {
   padding-top: 10px;
