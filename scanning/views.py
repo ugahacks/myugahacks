@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 
 from django.http import JsonResponse
 
-from workshops.models import Workshop
+from workshops.models import Workshop, Attendance
 from checkin.models import CheckIn
 from meals.models import Meal, Eaten, MEAL_TYPE
 from applications.models import Application
@@ -25,21 +25,22 @@ class ScanningView(TemplateView):
         context.update({
             'workshops': workshops,
             'meals': meals,
+            'types': MEAL_TYPE
         })
         return context
 
     def post(self, request, *args, **kwargs):
         type = request.POST.get('type', None)
         if type == 'workshop':
-            workshop_scan(request)
+            return workshop_scan(request)
         elif type == 'meal':
-            meal_scan(request)
+            return meal_scan(request)
         elif type == 'checkin':
-            checkin_scan(request)
+            return checkin_scan(request)
         elif type == 'reissue':
-            reissue_scan(request)
+            return reissue_scan(request)
         elif type == 'sponsor':
-            sponsor_scan(request)
+            return sponsor_scan(request)
 
 def workshop_scan(request):
     id = request.POST.get('id', None)
@@ -49,7 +50,7 @@ def workshop_scan(request):
         return JsonResponse({
             'status': 403,
             'message': 'This workshop is not open yet or it has ended.'
-        })
+        }, status=403)
     response, hacker_user = get_user_from_qr(qr_code)
     if response != None:
         return response
@@ -58,7 +59,7 @@ def workshop_scan(request):
         return JsonResponse({
             'status': 409,
             'message': 'This hacker has already been marked for attendance for this workshop!'
-        })
+        }, status=409)
     attendance = Attendance(workshop=workshop, user=hacker_user)
     attendance.save()
     #Adding points to the hacker for attending the hackathon
@@ -79,7 +80,7 @@ def meal_scan(request):
         return JsonResponse({
             'status': 403,
             'message': 'This meal is not open yet or it has ended. Reach out to an organizer to activate it again'
-        })
+        }, status=403)
     response, hacker_user = get_user_from_qr(qr_code)
     if response != None:
         return response
@@ -88,7 +89,7 @@ def meal_scan(request):
         return JsonResponse({
             'status': 409,
             'message': f'Warning! Hacker already ate {times_hacker_ate} out of {meal.times} available times!'
-        })
+        }, status=409)
     eaten = Eaten(meal=current_meal, user=hacker_application.user)
     eaten.save()
     return JsonResponse({
@@ -104,13 +105,13 @@ def checkin_scan(request):
         return JsonResponse({
             'status': 404,
             'message': 'The QR code is mandatory!'
-        })
+        }, status=404)
     user_application = Application.objects.filter(uuid=participant_qr).first()
     if not user_application:
         return JsonResponse({
             'status': 404,
             'message': 'Hacker\'s application is not found'
-        })
+        }, status=404)
     user_application.checkin()
     checkin = CheckIn()
     checkin.user = request.user
@@ -131,13 +132,13 @@ def reissue_scan(request):
         return JsonResponse({
             'status': 404,
             'message': 'The QR code is mandatory!'
-        })
+        }, status=404)
     user_application = Application.objects.filter(uuid=participant_qr).first()
     if not user_application:
         return JsonResponse({
             'status': 404,
             'message': 'Hacker\'s application is not found'
-        })
+        }, status=404)
     checkin = CheckIn.objects.get(application=user_application)
     checkin.qr_identifier = badge_qr
     checkin.save()
@@ -161,7 +162,7 @@ def sponsor_scan(request):
         return JsonResponse({
             'status': 401,
             'message': 'We cannot verify you as a sponsor. Please contact an organizer.'
-        })
+        }, status=401)
     response, hacker_user = get_user_from_qr(qr_code)
     if response != None:
         return response
@@ -181,20 +182,20 @@ def get_user_from_qr(qr_code):
         response = JsonResponse({
             'status': 404,
             'message': 'The QR code is not available.'
-        })
+        }, status=404)
         return (response, hacker_user)
     hacker_checkin = CheckIn.objects.filter(qr_identifier=id).first()
     if not hacker_checkin:
         response = JsonResponse({
             'status': 404,
             'message': 'Invalid QR code!'
-        })
+        }, status=404)
         return (response, hacker_user)
     hacker_user = hacker_checkin.application.user
     if not hacker_user:
         response = JsonResponse({
             'status': 404,
             'message': 'No user found for this QR code!'
-        })
+        }, status=404)
     #response == None if hacker_user is found.
     return (response, hacker_user)

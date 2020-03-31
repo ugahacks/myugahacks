@@ -80,7 +80,7 @@ class BaggageUsersTable(tables.Table):
         model = CheckIn
         attrs = {'class': 'table table-hover'}
         template = 'templates/baggage_users.html'
-        fields = ['name', 'email', 'checkin', 'checkout']
+        fields = ['name', 'email', 'scanning', 'checkout']
         empty_text = 'No users!'
 
 

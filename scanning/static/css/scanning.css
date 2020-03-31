@@ -1,11 +1,12 @@
 .button-qr {
-    vertical-align: middle;
-    padding: 5px 7px 3px;
-    border: thin solid #ddd;
-    cursor: pointer;
-    float: left;
-    font-size: 24px;
+    padding: 15px 20px 12px;
+    border: 3px solid #000;
+    font-size: 100px;
     border-radius: 4px;
+    color: white;
+    background: #1e3158;
+    width: 100%;
+    text-align: center;
 }
 
 .button-qr-success {
@@ -16,10 +17,19 @@
 .input-qr {
     display: block;
     overflow: hidden;
-    padding-left: 10px;
+    margin-bottom: 10px;
 }
 
-.checkin-popup-scan {
+.help-block {
+    display:none;
+}
+
+.has-error .help-block {
+    display: block;
+}
+
+
+.scanning-popup-scan {
     position: absolute;
     top: 50px;
     left: 50%;
@@ -32,33 +42,34 @@
     background-color: white;
 }
 
-.checkin-popup-scan select {
+.scanning-popup-scan select {
     margin-bottom: 15px;
 }
 
-.checkin-popup-scan video {
+.scanning-popup-scan video {
     width: 100%;
     margin: 0 auto;
 }
 
-.checkin-popup-scan .container-fluid {
+.scanning-popup-scan .container-fluid {
     padding: 0;
 }
 
-.checkin-popup-scan .header {
-    background: #f4f4f4;
-    border: 1px solid #aeaeae;
+.scanning-popup-scan .header {
+    background: #ffffff;
+    border: 1px solid #d6d4d4;
+    color: #3a3a3a;
     padding: 5px 10px;
     border-radius: 4px;
     font-size: 18px;
     margin-bottom: 4px;
 }
 
-.checkin-popup-scan .error {
+.scanning-popup-scan .error {
     color: #a60000;
 }
 
-.checkin-popup-scan .ready {
+.scanning-popup-scan .ready {
     color: green;
 }
 
