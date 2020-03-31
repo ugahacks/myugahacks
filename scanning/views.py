@@ -21,7 +21,7 @@ class ScanningView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ScanningView, self).get_context_data(**kwargs)
         workshops = Workshop.objects.all()
-        meals = Meals.objects.all()
+        meals = Meal.objects.all()
         context.update({
             'workshops': workshops,
             'meals': meals,
