@@ -17,39 +17,39 @@
 {% block panel %}
     <div id="scanning-container">
         <div class="input-qr form-group">
-              <select class="form-control" data-mode="organizer" id="check-in-selector">
-                <option value="" selected disabled>Select an event..</option>
-                {% if request.user.is_organizer %}
-                    <optgroup label="Check-in">
-                      <option data-type="checkin" value="Check-in">Check-in</option>
-                      <option data-type="reissue" value="Reissue-Badge">Reissue Badge</option>
-                    </optgroup>
-                    <optgroup label="Meals">
-                      {% for meal in meals %}
-                          {% for type in types %}
-                            {% if type.0 == meal.kind %}
-                              <option data-type="meal" value="{{ meal.id }}">{{ meal.name }} - {{ type.1 }}</option>
-                            {% endif %}
-                          {% endfor %}
-                      {% empty %}
-                          <option value="" disabled>No meals</option>
-                      {% endfor %}
-                    </optgroup>
-                    <optgroup label="Workshops">
-                      {% for workshop in workshops %}
-                          <option data-type="workshop" value="{{ workshop.id }}">{{ workshop.name }}</option>
-                      {% empty %}
-                          <option value="" disabled>No workshops</option>
-                      {% endfor %}
-                    </optgroup>
-                {% elif request.user.is_sponsor %}
-                    <optgroup label="Sponsor">
-                      <option value="p">Give Points</option>
-                    </optgroup>
-                {% endif %}
-              </select>
-              <span class="help-block">Please select an event before opening the scanner.</span>
-          </div>
-          <i id="qr_code-qr" class="button-qr fa fa-camera fa-2x"></i>
+            <select class="form-control" data-mode="organizer" id="check-in-selector">
+              <option value="" selected disabled>Select an event..</option>
+              {% if request.user.is_organizer %}
+                  <optgroup label="Check-in">
+                    <option data-type="checkin" value="Check-in">Check-in</option>
+                    <option data-type="reissue" value="Reissue-Badge">Reissue Badge</option>
+                  </optgroup>
+                  <optgroup label="Meals">
+                    {% for meal in meals %}
+                        {% for type in types %}
+                          {% if type.0 == meal.kind %}
+                            <option data-type="meal" value="{{ meal.id }}">{{ meal.name }} - {{ type.1 }}</option>
+                          {% endif %}
+                        {% endfor %}
+                    {% empty %}
+                        <option value="" disabled>No meals</option>
+                    {% endfor %}
+                  </optgroup>
+                  <optgroup label="Workshops">
+                    {% for workshop in workshops %}
+                        <option data-type="workshop" value="{{ workshop.id }}">{{ workshop.name }}</option>
+                    {% empty %}
+                        <option value="" disabled>No workshops</option>
+                    {% endfor %}
+                  </optgroup>
+              {% elif request.user.is_sponsor %}
+                  <optgroup label="Sponsor">
+                    <option value="p">Give Points</option>
+                  </optgroup>
+              {% endif %}
+            </select>
+            <span class="help-block">Please select an event before opening the scanner.</span>
+        </div>
+        <button id="qr_code-qr" class="button-qr fa fa-camera fa-2x"></button>
     </div>
 {% endblock %}

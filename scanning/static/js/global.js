@@ -65,5 +65,12 @@ const global = (() => {
                 data: { type, id, qrContent }
             });
         },
+
+        sendMultiScan: function sendMultiScan(type, participantQR, badgeQR) {
+            return $.ajax({
+                type: "post",
+                data: { type, participantQR, badgeQR }
+            });
+        },
     }
 })();

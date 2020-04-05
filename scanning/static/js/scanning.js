@@ -35,10 +35,19 @@ const scanningQr = (() => {
         // Initialize a scanner and attach to the above video tag
         const scanner = new Scanner('flows', document.getElementById("scan"));
 
-        if (value == "Check-in") {
+        function clickContainerToContinue() {
+            $(".video-container").off('touch click').on('touch click', () => {
+                $('.video-container .status').hide();
+                global.setStatus("ready");
+                scanner.startFlow();
+            });
+        }
+
+        if (category == "Check-in") {
             scanner.beforeFlowSet(() => {
                 scanner.pauseFlow();
                 global.setStatus("message", "Scan the QRCode from Participant's email.");
+                clickContainerToContinue();
             });
 
             scanner.afterFlow(() => {
@@ -54,37 +63,44 @@ const scanningQr = (() => {
                     let emailQr = data.get("emailQr");
                     let participantQr = content;
 
-                    console.log("LINKING", emailQr, "TO", participantQr);
-                    //global.setStatus("ready");
-                    scanner.startFlow();
+                    global.setStatus("scanning");
+                    global.sendMultiScan(type, emailQr, participantQr).done(() => {
+                        //global.setStatus("ready");
+                        scanner.startFlow();
+                    }).fail((response) => {
+                        let resp = response.responseJSON;
+                        global.setStatus("error", `[${resp.status}] ${resp.message}`);
+
+                        $(".video-container").off('touch click').on('touch click', () => {
+                            scanner.startFlow();
+                        });
+                    });
                 })
             );
         } else {
-            scanner.onActive(() => {
+            scanner.beforeFlowSet(() => {
                 global.setStatus("ready");
+                clickContainerToContinue();
             });
 
             scanner.registerFlows(
                 new AsyncFlow("Scan", (content, flow) => {
                     global.setStatus("scanning");
                     global.sendScan(type, value, content).done(() => {
-                        global.setStatus("ready");
                         scanner.startFlow();
                     }).fail((response) => {
                         let resp = response.responseJSON;
                         global.setStatus("error", `[${resp.status}] ${resp.message}`);
+
+                        $(".video-container").off('touch click').on('touch click', () => {
+                            scanner.startFlow();
+                        });
                     });
                 })
             );
         }
 
         scanner.start(camera.getBackCamera());
-
-        $(".video-container").off('touch click').on('touch click', () => {
-            $('.video-container .status').hide();
-            global.setStatus("ready");
-            scanner.startFlow();
-        });
 
         // Cancel the operation when background is click
         $('.veil').off('touch click').on("touch click", () => {
