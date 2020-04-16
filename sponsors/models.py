@@ -63,8 +63,8 @@ class SponsorApplication(AbstractBaseUser):
     company_logo = models.ImageField(upload_to = 'sponsor_logos', null=True, blank=True)
 
 class Sponsor(models.Model):
-    company = models.CharField(max_length=255)
+    company = models.CharField(max_length=255, unique=True)
 
-    email_domain = models.CharField(max_length=255)
+    email_domain = models.CharField(max_length=255, unique=True)
 
     tier = models.CharField(max_length=255, choices=TIERS)

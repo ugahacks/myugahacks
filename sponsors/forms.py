@@ -14,7 +14,7 @@ class SponsorForm(forms.ModelForm):
         model = SponsorApplication
         fields = ['tshirt_size', 'diet', 'other_diet', 'company_logo']
 
-class AddSponsorForm(forms.ModelForm):
+class SponsorAddForm(forms.ModelForm):
     company = forms.CharField(max_length=255, label='Company Name')
 
     email_domain = forms.CharField(max_length=255, label='Email Domain', help_text='ex: ugahacks.com')

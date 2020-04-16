@@ -1,5 +1,6 @@
-from .forms import SponsorForm, AddSponsorForm
-from .tables import ApplicationsListSponsor
+from .forms import SponsorForm, SponsorAddForm
+from .tables import ApplicationsListSponsor, SponsorListTable, SponsorListFilter
+from .models import Sponsor
 from organizers.views import ApplicationDetailView
 from applications.models import Application
 
@@ -8,29 +9,51 @@ from django_tables2.export import ExportMixin
 from django_tables2 import SingleTableMixin
 
 from django.views.generic import ListView
-from django.views.generic.edit import FormView
-from django.urls import reverse
+from django.views.generic.edit import FormView, UpdateView
+from django_filters.views import FilterView
+from django.urls import reverse, reverse_lazy
 
-class SponsorApplication(FormView):
+from app.mixins import TabsViewMixin
+from django_tables2 import SingleTableMixin
+from user.mixins import IsOrganizerMixin, IsSponsorMixin
+
+
+class SponsorApplication(FormView, IsSponsorMixin):
     template_name = 'sponsor_application.html'
-    success_url = ''
+    success_url = reverse_lazy('sponsors:sponsor_home')
     form_class = SponsorForm
 
     def form_valid(self, form):
         sponsor_application = form.save()
         return super().form_valid(form)
 
-class AddSponsor(FormView):
-    template_name = 'add_sponsor.html'
-    success_url = ''
-    form_class = AddSponsorForm
+class SponsorAdd(FormView, IsOrganizerMixin):
+    template_name = 'sponsor_add.html'
+    success_url = reverse_lazy('sponsors:sponsor_list')
+    form_class = SponsorAddForm
 
     def form_valid(self, form):
         sponsor = form.save()
         return super().form_valid(form)
 
+class SponsorUpdate(IsOrganizerMixin, UpdateView):
+    model = Sponsor
+    success_url = reverse_lazy('sponsors:sponsor_list')
+    fields = ['company', 'email_domain', 'tier']
+    template_name = 'sponsor_update.html'
 
-class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, ListView):
+    def form_valid(self, form):
+        sponsor = form.save()
+        return super(SponsorUpdate, self).form_valid(form)
+
+
+class SponsorList(TabsViewMixin, SingleTableMixin, FilterView, IsOrganizerMixin):
+    template_name = 'sponsor_list.html'
+    table_class = SponsorListTable
+    filterset_class = SponsorListFilter
+    table_pagination = {'per_page': 100}
+
+class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, ListView, IsSponsorMixin):
     template_name = 'sponsor_home.html'
     table_class = ApplicationsListSponsor
     table_pagination = {'per_page': 50}
@@ -40,6 +63,6 @@ class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, ListView):
     def get_queryset(self):
         return Application.objects.all().filter(participant='Hacker')
 
-class ApplicationDetailViewSponsor(ApplicationDetailView):
+class ApplicationDetailViewSponsor(ApplicationDetailView, IsSponsorMixin):
     def get_back_url(self):
         return reverse('sponsor_home')

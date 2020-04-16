@@ -3,4 +3,9 @@
 {% block head_title %}Applications{% endblock %}
 
 {% block table_footer %}
+  {%  if user.is_organizer %}
+  <div class="panel-footer">
+    <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
+  </div>
+  {% endif %}
 {% endblock %}
