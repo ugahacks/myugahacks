@@ -158,6 +158,14 @@ class Scanner {
         this.beforeFlowSetFunc = callback;
     }
 
+    onFlowPause(callback) {
+        this.onFlowPauseFunc = callback;
+    }
+
+    onFlowStart(callback) {
+        this.onFlowPauseFunc = callback;
+    }
+
     /**
      * Event that fires before each flow occurs. Only gets called if mode='flows'
      * @param onActiveFunc callback
@@ -186,6 +194,10 @@ class Scanner {
      */
     startFlow() {
         this.canFlow = true;
+
+        if (this.lastFlow) {
+            this.reset();
+        }
     }
 
     /** PRIVATE METHODS **/
@@ -195,11 +207,19 @@ class Scanner {
      * @private
      */
     _playFlow() {
-        let flows = Array.from(this.flows);
-        let flowMap = new Map();
-        let flowNumber = 0;
+        let flows, flowMap, flowNumber;
 
-        this.beforeFlowSetFunc();
+        this.reset = () => {
+            flows = Array.from(this.flows);
+            flowMap = new Map();
+            flowNumber = 0;
+
+            this.lastFlow = false;
+            this.beforeFlowSetFunc();
+        };
+
+        this.reset();
+
         this.onScan((content) => {
             if (this.canFlow) {
                 let flow = flows.shift();
@@ -209,7 +229,7 @@ class Scanner {
                 this.beforeFlowFunc();
                 this.pauseFlow();
 
-                flow.getCallback().call(this, content, flowMap, flow);
+                let called = flow.getCallback().call(this, content, flowMap, flow);
 
                 if (!flow.async) {
                     this.startFlow();
@@ -220,10 +240,11 @@ class Scanner {
 
                 // reset at the end of a flow
                 if (flows.length == 0) {
-                    flows = Array.from(this.flows);
-                    flowMap = new Map();
-                    flowNumber = 0;
-                    this.beforeFlowSetFunc();
+                    if (!flow.async) {
+                        this.reset();
+                    } else {
+                        this.lastFlow = true;
+                    }
                 }
             }
         });

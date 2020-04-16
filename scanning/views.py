@@ -13,9 +13,7 @@ from points.models import Points
 from sponsors.models import C_TIER_1, C_TIER_2, C_TIER_3, C_COHOST
 
 
-
 class ScanningView(TemplateView):
-
     template_name = 'scanning.html'
 
     def get_context_data(self, **kwargs):
@@ -42,6 +40,7 @@ class ScanningView(TemplateView):
         elif type == 'sponsor':
             return sponsor_scan(request)
 
+
 def workshop_scan(request):
     id = request.POST.get('id', None)
     qr_code = request.POST.get('qrContent', None)
@@ -62,7 +61,7 @@ def workshop_scan(request):
         }, status=409)
     attendance = Attendance(workshop=workshop, user=hacker_user)
     attendance.save()
-    #Adding points to the hacker for attending the hackathon
+    # Adding points to the hacker for attending the hackathon
     points = Points.objects.filter(user=hacker_user).first()
     if not points:
         points = Points(user=hacker_user)
@@ -71,6 +70,7 @@ def workshop_scan(request):
         'status': 200,
         'message': 'Attendance logged!'
     })
+
 
 def meal_scan(request):
     id = request.POST.get('id', None)
@@ -96,12 +96,13 @@ def meal_scan(request):
         'status': 200,
         'message': 'Hacker successfully logged for this meal!'
     })
-    #CHECK IF RETURNING A MESSAGE FORO THE DIET IS IMPORTANT
+    # CHECK IF RETURNING A MESSAGE FORO THE DIET IS IMPORTANT
+
 
 def checkin_scan(request):
     participant_qr = request.POST.get('participantQR', None)
     badge_qr = request.POST.get('badgeQR', None)
-    if badge_qr is None or badge_qr =='':
+    if badge_qr is None or badge_qr == '':
         return JsonResponse({
             'status': 404,
             'message': 'The QR code is mandatory!'
@@ -125,10 +126,11 @@ def checkin_scan(request):
                    'you can move on :D'
     })
 
+
 def reissue_scan(request):
     participant_qr = request.POST.get('participantQR', None)
     badge_qr = request.POST.get('badgeQR', None)
-    if badge_qr is None or badge_qr =='':
+    if badge_qr is None or badge_qr == '':
         return JsonResponse({
             'status': 404,
             'message': 'The QR code is mandatory!'
@@ -149,9 +151,10 @@ def reissue_scan(request):
                    'you can move on :D'
     })
 
+
 def sponsor_scan(request):
     tier = request.user.get_tier()
-    #TODO: MOVE THIS DICTIONARY SOMEWHERE ELSE TO BE USED BY WHOLE PROJECT.
+    # TODO: MOVE THIS DICTIONARY SOMEWHERE ELSE TO BE USED BY WHOLE PROJECT.
     tier_point_values = {
         C_TIER_1: 3,
         C_TIER_2: 5,
@@ -175,6 +178,7 @@ def sponsor_scan(request):
         'message': 'Points successfully added to participant!'
     })
 
+
 def get_user_from_qr(qr_code):
     response = None
     hacker_user = None
@@ -197,5 +201,5 @@ def get_user_from_qr(qr_code):
             'status': 404,
             'message': 'No user found for this QR code!'
         }, status=404)
-    #response == None if hacker_user is found.
+    # response == None if hacker_user is found.
     return (response, hacker_user)
