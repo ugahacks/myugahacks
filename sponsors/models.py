@@ -50,7 +50,7 @@ TIERS = [
 ]
 
 
-class SponsorApplication(AbstractBaseUser):
+class SponsorApplication(models.Model):
     #String of user.User to prevent circular dependecies
     user = models.OneToOneField('user.User', on_delete=models.CASCADE)
 

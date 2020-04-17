@@ -1,6 +1,6 @@
 from .forms import SponsorForm, SponsorAddForm
 from .tables import ApplicationsListSponsor, SponsorListTable, SponsorListFilter
-from .models import Sponsor
+from .models import Sponsor, SponsorApplication
 from organizers.views import ApplicationDetailView
 from applications.models import Application
 
@@ -18,13 +18,15 @@ from django_tables2 import SingleTableMixin
 from user.mixins import IsOrganizerMixin, IsSponsorMixin
 
 
-class SponsorApplication(FormView, IsSponsorMixin):
+class SponsorApplicationView(FormView, IsSponsorMixin):
     template_name = 'sponsor_application.html'
     success_url = reverse_lazy('sponsors:sponsor_home')
     form_class = SponsorForm
 
     def form_valid(self, form):
-        sponsor_application = form.save()
+        sponsor_application = form.save(commit=False)
+        sponsor_application.user = self.request.user
+        sponsor_application.save()
         return super().form_valid(form)
 
 class SponsorAdd(FormView, IsOrganizerMixin):
@@ -59,6 +61,14 @@ class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, ListView, Is
     table_pagination = {'per_page': 50}
     exclude_columns = ('detail', 'status', 'vote_avg')
     export_name = 'applications'
+
+    def get_context_data(self, **kwargs):
+        context = super(SponsorHomePage, self).get_context_data(**kwargs)
+        has_application = SponsorApplication.objects.filter(user=self.request.user)
+        context.update({
+            'has_application': has_application,
+        })
+        return context
 
     def get_queryset(self):
         return Application.objects.all().filter(participant='Hacker')
