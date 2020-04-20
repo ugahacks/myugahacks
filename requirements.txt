@@ -10,6 +10,7 @@ django-crispy-forms==1.8.1
 django-environ==0.4.5
 django-filter==2.2.0
 django-form-utils==1.0.3
+django-froala-editor==3.1.0
 django-hosts==4.0
 django-jet==1.0.8
 django-storages==1.8
@@ -32,6 +33,8 @@ oauthlib==2.0.2
 odfpy==1.4.0
 openpyxl==3.0.0
 packaging==16.8
+Pillow==7.1.1
+pkg-resources==0.0.0
 psycopg2-binary==2.8.3
 pyasn1==0.1.9
 pyasn1-modules==0.0.8

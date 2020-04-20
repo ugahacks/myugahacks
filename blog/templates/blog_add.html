@@ -1,0 +1,10 @@
+
+{% load crispy_forms_tags %}
+<head>
+  {{ form.media }}
+</head>
+<form action="{% url 'blog:blog_add' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" value="Submit">
+</form>

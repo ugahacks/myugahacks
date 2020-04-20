@@ -38,13 +38,16 @@ ALLOWED_HOSTS = [
     'my.ugahacks.com',
     'ugahacks.com',
     '5.ugahacks.com',
+    'blog.ugahacks.com',
+    'blog.localhost',
     'localhost',
     '5.localhost',
     '127.0.0.1',
     '0.0.0.0',
     '165.227.125.129',
-    '192.168.0.12'
+    '192.168.0.12',
     ]
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -72,7 +75,9 @@ INSTALLED_APPS = [
     'workshops',
     'archives',
     'crispy_forms',
-    'django_hosts'
+    'django_hosts',
+    'froala_editor',
+    'blog',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
