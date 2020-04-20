@@ -48,6 +48,7 @@ ALLOWED_HOSTS = [
     '192.168.0.12',
     ]
 
+SESSION_COOKIE_DOMAIN=".ugahacks.com"
 
 # Application definition
 INSTALLED_APPS = [
