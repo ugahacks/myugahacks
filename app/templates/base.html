@@ -108,7 +108,7 @@
                         {% if request.user.email_verified and request.user.has_usable_password %}
                             {% if request.user.is_organizer %}
                                 <li class="{% if 'blog' in request.build_absolute_uri %}active{% endif %}"><a
-                                        href="{% url 'blog:blog_add' %}">Blog</a></li>
+                                        href="{% url 'blog:blog_list' %}">Blog</a></li>
                                 <li class="{% if 'stats' in request.build_absolute_uri %}active{% endif %}"><a
                                         href="{% url 'app_stats' %}">Stats</a></li>
                                 <li class="{% if 'applications' in request.build_absolute_uri %}active{% endif %}"><a

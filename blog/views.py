@@ -1,9 +1,14 @@
 from django.shortcuts import render
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.list import ListView
+from django_filters.views import FilterView
 from .forms import BlogAddForm
 from datetime import datetime
 from .models import Blog, Tag
+from user.mixins import IsOrganizerMixin
+from app.mixins import TabsViewMixin
+from django_tables2 import SingleTableMixin
+from blog.tables import BlogPostsListTable, BlogPostsListFilter
 
 class BlogAdd(FormView):
     template_name = 'blog_add.html'
@@ -18,7 +23,7 @@ class BlogAdd(FormView):
         blog.save()
         for tag in tags:
             tag = Tag(blog=blog, tag=tag.strip())
-            tag.save()    
+            tag.save()
         return super().form_valid(form)
 
 class BlogHome(ListView):
@@ -26,3 +31,9 @@ class BlogHome(ListView):
     model = Blog
     context_object_name = 'blogs'
     paginate_by = 10
+
+class BlogPostList(IsOrganizerMixin, TabsViewMixin, SingleTableMixin, FilterView):
+    template_name = 'blog_list.html'
+    table_class = BlogPostsListTable
+    filterset_class = BlogPostsListFilter
+    table_pagination = {'per_page': 20}

@@ -1,0 +1,13 @@
+{% extends "base_table.html" %}
+
+
+{% block head_title %}Blog Posts List{% endblock %}
+
+
+{% block table_footer %}
+    {%  if user.is_organizer %}
+    <div class="panel-footer">
+	    <a href="{% url 'blog:blog_add' %}" class="btn btn-success btn-block">Create new blog post</a>
+    </div>
+    {% endif %}
+{% endblock %}
