@@ -1,3 +1,24 @@
+{% load static %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/blog_home.css' %}">
+{% endblock %}
+
+<div class="hero-image">
+  <div class="hero-text">
+    <h1>BLOG</h1>
+  </div>
+</div>
+
 {% for blog in blogs %}
+<div class="blog-container">
+  <img src="{{ blog.thumbnail.url }}">
+</div>
+{% endfor %}
+
+{% for blog in blogs %}
+{% for tag in blog.tag_set.all %}
+{{ tag }}
+{% endfor %}
+<a href="{% url 'blog:blog_detail' blog.id %}">Link to blog</a>
 {{ blog.content| safe | escape }}
 {% endfor %}

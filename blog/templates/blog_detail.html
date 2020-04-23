@@ -1,0 +1,5 @@
+<h1>hi</h1>
+{% for tag in blog.tag_set.all %}
+<p>{{ tag }}</p>
+{% endfor %}
+<p>{{ blog.content | safe}}</p>

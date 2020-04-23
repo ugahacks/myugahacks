@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django_filters.views import FilterView
 from .forms import BlogAddForm
 from datetime import datetime
@@ -29,8 +30,12 @@ class BlogAdd(FormView):
 class BlogHome(ListView):
     template_name = 'blog_home.html'
     model = Blog
-    context_object_name = 'blogs'
     paginate_by = 10
+    context_object_name = 'blogs'
+
+class BlogDetail(DetailView):
+    model = Blog
+    template_name = 'blog_detail.html'
 
 class BlogPostList(IsOrganizerMixin, TabsViewMixin, SingleTableMixin, FilterView):
     template_name = 'blog_list.html'
