@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import TemplateView
 from applications.models import Application
+from blog.models import Blog
 from reimbursement.models import Reimbursement
 # from baggage.models import Bag
 from django.shortcuts import get_object_or_404
@@ -59,6 +60,10 @@ def protectedMedia(request, file_):
         if request.user.is_authenticated and (request.user.is_organizer or
                                                 (app and (app.user_id == request.user.id))):
             downloadable_path = app.resume.path
+    elif path == "blog_thumbnails":
+        blog = get_object_or_404(Blog, thumbnail=file_)
+        if request.user.is_authenticated and request.user.is_organizer:
+            downloadable_path = blog.thumbnail.path
     elif path == "receipt":
         app = get_object_or_404(Reimbursement, receipt=file_)
         if request.user.is_authenticated and (request.user.is_organizer or
