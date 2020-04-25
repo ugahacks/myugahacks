@@ -7,7 +7,7 @@ from datetime import datetime
 from .models import Blog, Tag
 from user.mixins import IsOrganizerMixin
 
-class BlogAdd(FormView):
+class BlogAdd(IsOrganizerMixin, FormView):
     template_name = 'blog_add.html'
     success_url = '/blog/'
     form_class = BlogAddForm
@@ -35,12 +35,14 @@ class BlogEdit(IsOrganizerMixin, UpdateView):
 
     def form_valid(self, form):
         blog = form.save(commit=False)
-        tags = form.cleaned_data['tags'].split(',')
+        tags = form.cleaned_data['tags'].strip().split(',')
         blog.publication_date = datetime.now()
         blog.save()
-        for tag in tags:
-            tag = Tag(blog=blog, tag=tag.strip())
-            tag.save()
+        if tags[0] != '':
+            for tag in tags:
+                if tag != '' and tag not in blog.get_tags():
+                    tag = Tag(blog=blog, tag=tag.strip())
+                    tag.save()
         return super(BlogEdit, self).form_valid(form)
 
 class BlogHome(ListView):
