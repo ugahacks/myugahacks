@@ -20,5 +20,6 @@
 {{ tag }}
 {% endfor %}
 <a href="{% url 'blog:blog_detail' blog.id %}">Link to blog</a>
+<a href="{% url 'blog:blog_edit' blog.id %}">Edit blog</a>
 {{ blog.content| safe | escape }}
 {% endfor %}

@@ -12,3 +12,6 @@ class BlogAddForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ['title', 'description', 'thumbnail', 'content',]
+
+class BlogEditForm(BlogAddForm):
+    tags = forms.CharField(help_text='Additional Tags still need to be separated by commas', label="Add Additional Tags", required=False)

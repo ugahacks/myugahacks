@@ -7,7 +7,7 @@
   {{ form.media }}
 </head>
 <h1 class="text-center">Create a New Blog Post</h1>
-<form action="{% url 'blog:blog_add' %}" method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
     <input class="btn btn-success" type="submit" value="Submit Blog Post">
