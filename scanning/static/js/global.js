@@ -39,7 +39,7 @@ const global = (() => {
             } else if (status == "error") {
                 $("#status-indicator span").removeClass('ready').addClass("error").text("Error");
                 $(".video-container .status").addClass('error').show()
-                    .html(message + " <br><br>Touch here to continue scanning.");
+                    .html(message + " <br><br>Touch here to continue..");
             } else if (status == "scanning") {
                 $(".video-container .status").removeClass('error').show().text("Submitting..");
             } else if (status == "message") {

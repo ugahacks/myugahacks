@@ -37,12 +37,13 @@ class Camera {
                 };
             }
             this.cameras = cameras;
+            this.error = false;
           } else {
-            global.setStatus("error", "No cameras found");
-            console.error('No cameras found.');
+              this.error = "No cameras found";
+              console.error('No cameras found.');
           }
         }).catch(function (e) {
-            global.setStatus("error", e.message);
+            this.error = e.message;
             console.error(e);
         });
     }
@@ -53,6 +54,15 @@ class Camera {
         }
         // The back camera is located in different locations for iOS and Android
         const cameraIndex = IS_IOS ? 0 : this.cameras.length - 1;
+        console.log("CAMER", this.cameras[cameraIndex]);
         return this.cameras[cameraIndex];
+    }
+
+    errored() {
+        return this.error != false;
+    }
+
+    getError() {
+        return this.error;
     }
 }
