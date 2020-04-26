@@ -100,3 +100,10 @@
     background-color: rgba(30,30,30,0.9);
     cursor: pointer;
 }
+
+#testerCollapse {
+    border: 1px solid #0c1e36;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 2px;
+}

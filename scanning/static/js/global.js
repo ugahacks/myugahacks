@@ -31,7 +31,7 @@ const global = (() => {
     });
 
     return {
-        setStatus: function setStatus(status, message) {
+        setStatus: (status, message) => {
             $("#error-message, .video-container .status").hide();
 
             if (status == "ready") {
@@ -49,7 +49,7 @@ const global = (() => {
             }
         },
 
-        getSelectedInformation: function getSelectedInformation() {
+        getSelectedInformation: () => {
             let selected = $('#check-in-selector :selected');
             return {
                 text: selected.text(),
@@ -59,18 +59,23 @@ const global = (() => {
             }
         },
 
-        sendScan: function sendScan(type, id, qrContent) {
+        sendScan: (type, id, qrContent) => {
             return $.ajax({
                 type: "post",
                 data: { type, id, qrContent }
             });
         },
 
-        sendMultiScan: function sendMultiScan(type, participantQR, badgeQR) {
+        sendMultiScan: (type, participantQR, badgeQR) => {
             return $.ajax({
                 type: "post",
                 data: { type, participantQR, badgeQR }
             });
         },
+
+        generateQrCodes: () => {
+            console.log("GET");
+            return $.get("/scan/generate");
+        }
     }
 })();

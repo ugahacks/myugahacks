@@ -1,9 +1,13 @@
+import uuid
+from random import randint
+
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
 
 from django.http import JsonResponse
 
+from user.models import UserManager, User
 from workshops.models import Workshop, Attendance
 from checkin.models import CheckIn
 from meals.models import Meal, Eaten, MEAL_TYPE
@@ -39,6 +43,32 @@ class ScanningView(TemplateView):
             return reissue_scan(request)
         elif type == 'sponsor':
             return sponsor_scan(request)
+
+
+def scanning_generate_view(request):
+    if request.method == 'GET':
+        user = User(
+            email='tester' + str(randint(999,9999999999)) + '@ugahacks.com',
+            name='Tester Account'
+        )
+        user.set_password('password1')
+        user.save()
+
+        application = Application(
+            user=user,
+            origin='test',
+            first_timer=True,
+            first_ugahacks=True,
+            description="I'm a tester account",
+            university="University of Georgia",
+            degree="Computational Testing"
+        )
+        application.save()
+
+        return JsonResponse({
+            'userQr': application.uuid,
+            'badgeQr': uuid.uuid4()
+        }, status=200)
 
 
 def workshop_scan(request):

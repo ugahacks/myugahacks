@@ -32,7 +32,7 @@ const scanningQr = (() => {
               </div>
             </div>`);
 
-        // Initialize a scanner and attach to the above video tag
+        // Initialize a scanner and attach to the above video tag which is dynamically added
         const scanner = new Scanner('flows', document.getElementById("scan"));
 
         function clickContainerToContinue() {
@@ -119,6 +119,27 @@ const scanningQr = (() => {
         });
         $("#check-in-selector").on('change', () => {
             $("#check-in-selector").parent().removeClass('has-error');
+        });
+
+        $("#testerCollapser").on('click', () => {
+            $("#testerCollapser").prop('disabled', true).text("Generating..");
+
+            if (!$("#testerCollapse").attr('aria-expanded') ||
+                $("#testerCollapse").attr('aria-expanded') === 'false') {
+                global.generateQrCodes().then((res) => {
+                    const { userQr, badgeQr } = res;
+
+                    new QRCode(document.getElementById("userQr"), userQr);
+                    new QRCode(document.getElementById("badgeQr"), badgeQr);
+                    document.getElementById("userQrText").textContent = userQr;
+                    document.getElementById("badgeQrText").textContent = badgeQr;
+
+                    $('#testerCollapse').collapse('show');
+                    $("#testerCollapser").prop('disabled', false).text("Generate Testing Credentials");
+                });
+            } else {
+                $('#testerCollapse').collapse('hide');
+            }
         });
     });
 })();

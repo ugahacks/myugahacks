@@ -6,6 +6,7 @@
 {% block extra_head %}
     <link rel="stylesheet" href="{% static 'css/scanning.css' %}">
     <script src="{% static 'lib/instascan.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/qrcode_generator.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/camera.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/scanner.js' %}"></script>
@@ -15,7 +16,7 @@
 {% block head_title %}Scan{% endblock %}
 
 {% block panel %}
-    <div id="scanning-container">
+    <div class="mb-2" id="scanning-container">
         <div class="input-qr form-group">
             <select class="form-control" data-mode="organizer" id="check-in-selector">
               <option value="" selected disabled>Select an event..</option>
@@ -52,4 +53,42 @@
         </div>
         <button id="qr_code-qr" class="button-qr fa fa-camera fa-2x"></button>
     </div>
+
+    {% if request.user.is_organizer %}
+      <br>
+      <button id="testerCollapser" class="btn btn-primary" type="button" aria-expanded="false" aria-controls="collapseExample">
+        Generate Testing Credentials
+      </button>
+      <div class="collapse" id="testerCollapse">
+        <div class="card card-body">
+           You have just generated testing credentials for scanning throughout the system. This includes the <strong>user
+          QR</strong> and the <strong>badge QR</strong>. The user QR is the QR code that would be in attendee's email.
+          The badge QR is the QR code that would be assigned to the attendee for the rest of the event.
+          <br>
+          <br>
+          <strong>What do I do?</strong>
+          <ul>
+            <li><strong>1. Make codes accessible.</strong> Print out the codes so that you can scan them. You can also
+            save them into your phone and use your computer as the scanner instead.</li>
+            <li><strong>2. Check-in.</strong> You will need to associate the user QR with the given badge QR before
+            the badge QR becomes usable. This process is what checking in does. Use the two codes with the "check-in"
+            scanner to complete this action. After you do this, the user QR will no longer be necessary.</li>
+            <li><strong>3. Meal Check-in.</strong> Create a meal. Check in your current test user (using the badge QR)</li>
+          </ul>
+          <br>
+          <div class="row">
+            <div class="col col-xs-6 col-sm-6 col-md-6 text-center">
+              <h3>User QR</h3>
+              <div id="userQr"></div>
+              <span id="userQrText"></span>
+            </div>
+            <div class="col col-xs-6 col-sm-6 col-md-6 text-center">
+              <h3>Badge QR</h3>
+              <div id="badgeQr"></div>
+              <span id="badgeQrText"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
 {% endblock %}
