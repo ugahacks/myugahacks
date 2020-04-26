@@ -120,7 +120,7 @@ def meal_scan(request):
             'status': 409,
             'message': f'Warning! Hacker already ate {times_hacker_ate} out of {meal.times} available times!'
         }, status=409)
-    eaten = Eaten(meal=current_meal, user=hacker_application.user)
+    eaten = Eaten(meal=meal, user=hacker_user)
     eaten.save()
     return JsonResponse({
         'status': 200,
@@ -143,7 +143,7 @@ def checkin_scan(request):
             'status': 404,
             'message': 'Hacker\'s application is not found'
         }, status=404)
-    user_application.checkin()
+    user_application.check_in()
     checkin = CheckIn()
     checkin.user = request.user
     checkin.application = user_application
@@ -217,14 +217,14 @@ def get_user_from_qr(qr_code):
             'status': 404,
             'message': 'The QR code is not available.'
         }, status=404)
-        return (response, hacker_user)
-    hacker_checkin = CheckIn.objects.filter(qr_identifier=id).first()
+        return response, hacker_user
+    hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_code).first()
     if not hacker_checkin:
         response = JsonResponse({
             'status': 404,
             'message': 'Invalid QR code!'
         }, status=404)
-        return (response, hacker_user)
+        return response, hacker_user
     hacker_user = hacker_checkin.application.user
     if not hacker_user:
         response = JsonResponse({
@@ -232,4 +232,4 @@ def get_user_from_qr(qr_code):
             'message': 'No user found for this QR code!'
         }, status=404)
     # response == None if hacker_user is found.
-    return (response, hacker_user)
+    return response, hacker_user
