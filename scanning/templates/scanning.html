@@ -38,7 +38,7 @@
                   </optgroup>
                   <optgroup label="Workshops">
                     {% for workshop in workshops %}
-                        <option data-type="workshop" value="{{ workshop.id }}">{{ workshop.name }}</option>
+                        <option data-type="workshop" value="{{ workshop.id }}">{{ workshop.title }}</option>
                     {% empty %}
                         <option value="" disabled>No workshops</option>
                     {% endfor %}
