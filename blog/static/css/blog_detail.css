@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,400,600&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+body {
+    font-family: "Poppins";
+    font-weight: 400;
+    background: linear-gradient(#17182f,#0d0f12);
+}
+
+.post-image {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  height: 70%;
+  width: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.post-title {
+  text-align: center;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.7em;
+}
+
+.post-subtitle {
+  margin-top: 25px;
+  font-size: 0.9em;
+  font-weight: 200;
+}
+
+.post-content {
+  margin: 25px auto;
+  padding: 10px 20px;
+  max-width: 70%;
+  border-radius: 6px;
+  background: white;
+}
+
+#post-tags {
+  text-align: center;
+  font-weight: 200;
+  margin-top: 20px;
+  word-spacing: 25px;
+  color: #b2b3ad;
+}
+
+.editbtn {
+  background: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border: 2px solid #eb4f49;
+  color: white;
+  font-weight: 200;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none;
+}
+
+.editbtn:hover {
+  background: #eb4f49;
+}
+
+@media (max-width:900px)
+{
+  .post-content {
+    max-width: 80%;
+  }
+}
