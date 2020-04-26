@@ -1,6 +1,5 @@
 const scanningQr = (() => {
     const camera = new Camera();
-
     /**
      * Opens a popup with a QRScanner Enabled Camera.
      * @param inputElem element that the qr code value is set to
@@ -31,6 +30,11 @@ const scanningQr = (() => {
                   </div>
               </div>
             </div>`);
+
+        if (camera.errored()) {
+            global.setStatus("error", camera.getError());
+            return;
+        }
 
         // Initialize a scanner and attach to the above video tag which is dynamically added
         const scanner = new Scanner('flows', document.getElementById("scan"));
@@ -122,10 +126,10 @@ const scanningQr = (() => {
         });
 
         $("#testerCollapser").on('click', () => {
-            $("#testerCollapser").prop('disabled', true).text("Generating..");
-
             if (!$("#testerCollapse").attr('aria-expanded') ||
                 $("#testerCollapse").attr('aria-expanded') === 'false') {
+                $("#testerCollapser").prop('disabled', true).text("Generating..");
+
                 global.generateQrCodes().then((res) => {
                     const { userQr, badgeQr } = res;
 
