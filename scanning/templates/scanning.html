@@ -67,29 +67,30 @@
       </button>
       <div class="collapse" id="testerCollapse">
         <div class="card card-body">
-           You have just generated testing credentials for scanning throughout the system. This includes the <strong>user
-          QR</strong> and the <strong>badge QR</strong>. The user QR is the QR code that would be in attendee's email.
-          The badge QR is the QR code that would be assigned to the attendee for the rest of the event.
+           You have just generated testing credentials for scanning throughout the system. This includes the <strong>UserQR</strong> and the <strong>BadgeQR</strong>. The UserQR is the QR code that would be in attendee's email.
+          The BadgeQR is the QR code that would be assigned to the attendee for the rest of the event.
           <br>
           <br>
           <strong>What do I do?</strong>
           <ul>
             <li><strong>1. Make codes accessible.</strong> Print out the codes so that you can scan them. You can also
             save them into your phone and use your computer as the scanner instead.</li>
-            <li><strong>2. Check-in.</strong> You will need to associate the user QR with the given badge QR before
-            the badge QR becomes usable. This process is what checking in does. Use the two codes with the "check-in"
-            scanner to complete this action. After you do this, the user QR will no longer be necessary.</li>
-            <li><strong>3. Meal Check-in.</strong> Create a meal. Check in your current test user (using the badge QR)</li>
+            <li><strong>2. Check-in.</strong> You will need to associate the UserQR with the given BadgeQR before
+            the BadgeQR becomes usable. Use the two codes with the "check-in" event above to complete this action.
+            After you do this, the UserQR will no longer be necessary.
+            <strong>Note: The UserQR would actually be found in the participants email, thus, the check-in process will
+            label it as "the QRCode from Participant's email"</strong></li>
+            <li><strong>3. Meal Check-in.</strong> Create a meal. Check in your current test user (using the BadgeQR)</li>
           </ul>
           <br>
           <div class="row">
             <div class="col col-xs-12 col-sm-12 col-md-6 text-center">
-              <h3>User QR</h3>
+              <h3>UserQR</h3>
               <div id="userQr"></div>
               <span id="userQrText"></span>
             </div>
             <div class="col col-xs-12 col-sm-12 col-md-6 text-center">
-              <h3>Badge QR</h3>
+              <h3>BadgeQR</h3>
               <div id="badgeQr"></div>
               <span id="badgeQrText"></span>
             </div>
