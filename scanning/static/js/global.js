@@ -73,8 +73,7 @@ const global = (() => {
             });
         },
 
-        generateQrCodes: () => {
-            console.log("GET");
+        generateTestCredentials: () => {
             return $.get("/scan/generate");
         }
     }

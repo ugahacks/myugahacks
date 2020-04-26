@@ -1,5 +1,6 @@
 const scanningQr = (() => {
     const camera = new Camera();
+    const TESTER_CREDENTIAL_LOCALSTORAGE_KEY = "tester_collapser_credentials";
     /**
      * Opens a popup with a QRScanner Enabled Camera.
      * @param inputElem element that the qr code value is set to
@@ -113,6 +114,35 @@ const scanningQr = (() => {
         });
     }
 
+    function openCollapser(userQr, badgeQr) {
+        document.getElementById("userQr").innerHTML="";
+        document.getElementById("badgeQr").innerHTML="";
+
+        new QRCode(document.getElementById("userQr"), userQr);
+        new QRCode(document.getElementById("badgeQr"), badgeQr);
+        document.getElementById("userQrText").textContent = userQr;
+        document.getElementById("badgeQrText").textContent = badgeQr;
+
+        localStorage.setItem(TESTER_CREDENTIAL_LOCALSTORAGE_KEY, `${userQr}:${badgeQr}`);
+
+        $('#testerCollapse').collapse('show');
+        $("#previousTesterCollapser, #testerCollapser").hide();
+        $("#testerCollapser").prop('disabled', false).text("Generate Testing Credentials");
+        $("#closeTesterCollapser").show();
+    }
+
+    function ifGeneratedOpenCollapser() {
+        if ((qrs = localStorage.getItem(TESTER_CREDENTIAL_LOCALSTORAGE_KEY)) != null) {
+            $("#previousTesterCollapser").show();
+
+            $("#previousTesterCollapser").on('click', () => {
+                const [userQr, badgeQr] = qrs.split(":");
+
+                openCollapser(userQr, badgeQr);
+            });
+        }
+    }
+
     $(document).ready(() => {
         $("#qr_code-qr").on("click", () => {
             if (global.getSelectedInformation().value == "") {
@@ -121,30 +151,34 @@ const scanningQr = (() => {
             }
             openScanner();
         });
+
         $("#check-in-selector").on('change', () => {
             $("#check-in-selector").parent().removeClass('has-error');
         });
 
         $("#testerCollapser").on('click', () => {
-            if (!$("#testerCollapse").attr('aria-expanded') ||
-                $("#testerCollapse").attr('aria-expanded') === 'false') {
-                $("#testerCollapser").prop('disabled', true).text("Generating..");
+            $("#testerCollapser").prop('disabled', true).text("Generating..");
+            $("#previousTesterCollapser").hide().off('click');
 
-                global.generateQrCodes().then((res) => {
-                    const { userQr, badgeQr } = res;
+            global.generateTestCredentials().then((res) => {
+                const { userQr, badgeQr } = res;
 
-                    new QRCode(document.getElementById("userQr"), userQr);
-                    new QRCode(document.getElementById("badgeQr"), badgeQr);
-                    document.getElementById("userQrText").textContent = userQr;
-                    document.getElementById("badgeQrText").textContent = badgeQr;
-
-                    $('#testerCollapse').collapse('show');
-                    $("#testerCollapser").prop('disabled', false).text("Generate Testing Credentials");
-                });
-            } else {
-                $('#testerCollapse').collapse('hide');
-            }
+                openCollapser(userQr, badgeQr);
+            });
         });
+
+        $("#closeTesterCollapser").on('click', () => {
+            $('#testerCollapse').collapse('hide');
+        });
+
+        $("#testerCollapse").on('hidden.bs.collapse', () => {
+            $("#closeTesterCollapser").hide();
+            $("#testerCollapser").show();
+
+            ifGeneratedOpenCollapser();
+        });
+
+        ifGeneratedOpenCollapser();
     });
 })();
 
