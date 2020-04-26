@@ -1,6 +1,11 @@
 const scanningQr = (() => {
-    const camera = new Camera();
     const TESTER_CREDENTIAL_LOCALSTORAGE_KEY = "tester_collapser_credentials";
+    const camera = new Camera((msg) => {
+        $('.alert').show().html(`
+            ${msg}<br><br>
+            Please make sure that you allow camera access and/or that you are using a secure (HTTPS) connection.`);
+    });
+
     /**
      * Opens a popup with a QRScanner Enabled Camera.
      * @param inputElem element that the qr code value is set to
@@ -31,11 +36,6 @@ const scanningQr = (() => {
                   </div>
               </div>
             </div>`);
-
-        if (camera.errored()) {
-            global.setStatus("error", camera.getError());
-            return;
-        }
 
         // Initialize a scanner and attach to the above video tag which is dynamically added
         const scanner = new Scanner('flows', document.getElementById("scan"));
@@ -105,13 +105,18 @@ const scanningQr = (() => {
             );
         }
 
-        scanner.start(camera.getBackCamera());
-
         // Cancel the operation when background is click
         $('.veil').off('touch click').on("touch click", () => {
             $("#popup-container").remove();
             scanner.stop();
         });
+
+        if (camera.errored()) {
+            global.setStatus("error", camera.getError());
+            return;
+        }
+
+        scanner.start(camera.getBackCamera());
     }
 
     function openCollapser(userQr, badgeQr) {
