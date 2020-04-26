@@ -126,7 +126,7 @@
                                     <a href="{% url 'scanning' %}">Scan</a></li>
                             {% endif %}
                             {% if request.user.is_organizer or request.user.is_volunteer %}
-                                <li class="{% if 'chech_in' in request.build_absolute_uri and 'reissue' not in request.build_absolute_uri%}active{% endif %}">
+                                <li class="{% if 'check_in' in request.build_absolute_uri and 'reissue' not in request.build_absolute_uri%}active{% endif %}">
                                     <a href="{% url 'check_in_list' %}">Check-in</a></li>
                             {% endif %}
                             {% if request.user.is_organizer %}
@@ -138,6 +138,10 @@
                                   <a href="{% url 'workshop_list' %}">Workshops</a></li>
                             {% endif %}
                             {% include 'include/meals_tab.html' %}
+                            {% if request.user.is_organizer or request.user.is_volunteer or request.user.is_sponsor%}
+                                <li class="{% if 'sponsors' in request.build_absolute_uri and 'stats' not in request.build_absolute_uri%}active{% endif %}">
+                                  <a href="{% url 'sponsors:sponsor_home' %}">Sponsors</a></li>
+                            {% endif %}
                         {% endif %}
                         <li><a href="{% url 'account_logout' %}">Logout</a></li>
                     {% else %}
