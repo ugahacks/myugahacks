@@ -16,7 +16,8 @@
 {% block head_title %}Scan{% endblock %}
 
 {% block panel %}
-    <div class="mb-2" id="scanning-container">
+    <div class="alert alert-danger" role="alert" style="display:none"></div>
+    <div id="scanning-container">
         <div class="input-qr form-group">
             <select class="form-control" data-mode="organizer" id="check-in-selector">
               <option value="" selected disabled>Select an event..</option>

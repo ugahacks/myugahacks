@@ -5,7 +5,7 @@ const IS_IOS = /iPad|iPhone/.test(navigator.userAgent);
  * implementation by providing back camera access to iOS.
  */
 class Camera {
-    constructor () {
+    constructor (onError) {
         this.cameras = [];
 
         // Get available cameras
@@ -40,10 +40,12 @@ class Camera {
             this.error = false;
           } else {
               this.error = "No cameras found";
+              onError(this.error);
               console.error('No cameras found.');
           }
-        }).catch(function (e) {
+        }).catch((e) => {
             this.error = e.message;
+            onError(this.error);
             console.error(e);
         });
     }
@@ -54,7 +56,6 @@ class Camera {
         }
         // The back camera is located in different locations for iOS and Android
         const cameraIndex = IS_IOS ? 0 : this.cameras.length - 1;
-        console.log("CAMER", this.cameras[cameraIndex]);
         return this.cameras[cameraIndex];
     }
 
