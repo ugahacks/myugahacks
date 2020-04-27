@@ -1,25 +1,42 @@
 {% load static %}
 {% block extra_head %}
+    <title>Blog Home | UGAHacks </title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
     <link rel="stylesheet" href="{% static 'css/blog_home.css' %}">
 {% endblock %}
 
-<div class="hero-image">
-  <div class="hero-text">
+<div class="main-banner">
+  <div class="banner-header">
     <h1>BLOG</h1>
   </div>
 </div>
-
-{% for blog in blogs %}
-<div class="blog-container">
-  <img src="{{ blog.thumbnail.url }}">
+<div class="row row-cols-1 row-cols-md-3" id="posts">
+  {% for blog in blogs %}
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{{ blog.thumbnail.url }}" class="card-img-top" alt="Blog post thumbnail">
+      <div class="card-body">
+        <p id="pub_date">{{ blog.publication_date| date }}</p>
+        <h4 class="card-title">{{ blog.title }}</h4>
+        <p class="card-text">By {{ blog.author.name }}</p>
+        <p>{{ blog.description| safe | escape }} </p>
+        <a href="{% url 'blog:blog_detail' blog.id %}" class="readbtn">Read More <i class="material-icons">chevron_right</i></a>
+        {% if request.user.is_organizer %}
+        <a href="{% url 'blog:blog_edit' blog.id %}" class="editbtn"><i class="material-icons">edit</i></a>
+        {% endif %}
+        <br>
+        {% for tag in blog.tag_set.all %}
+        <span id="blogtags" class="badge badge-pill badge-danger"> {{ tag }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
 </div>
-{% endfor %}
-
-{% for blog in blogs %}
-{% for tag in blog.tag_set.all %}
-{{ tag }}
-{% endfor %}
-<a href="{% url 'blog:blog_detail' blog.id %}">Link to blog</a>
-<a href="{% url 'blog:blog_edit' blog.id %}">Edit blog</a>
-{{ blog.content| safe | escape }}
-{% endfor %}
+<div class="creatediv">
+  {% if request.user.is_organizer %}
+  <a href="{% url 'blog:blog_add' %}" class="addbtn">Create new post +</a>
+  {% endif %}
+</div>
