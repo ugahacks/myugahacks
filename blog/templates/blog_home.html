@@ -40,3 +40,20 @@
   <a href="{% url 'blog:blog_add' %}" class="addbtn">Create new post +</a>
   {% endif %}
 </div>
+{% if page_obj.paginator.num_pages > 1 %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="jumpbtn"><i class="material-icons">first_page</i></a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="pagebtn">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+
+        <span class="currentpagebtn">{{ page_obj.number }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="pagebtn">{{ page_obj.next_page_number }}</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="jumpbtn"><i class="material-icons">last_page</i></a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}

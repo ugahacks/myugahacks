@@ -87,6 +87,60 @@ body, html {
   background: #88bfac;
 }
 
+.step-links {
+  display: table;
+  margin: 15px auto 35px;
+}
+
+.jumpbtn {
+  background: none;
+  padding: 10px 10px;
+  border-radius: 50%;
+  margin-left: 10px;
+  border: 2px solid #eb4f49;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none !important;
+  color: black;
+}
+
+.jumpbtn i {
+  vertical-align: bottom;
+}
+
+.jumpbtn:hover {
+  color: white;
+  background: #eb4f49;
+}
+
+.currentpagebtn {
+  background: #eb4f49;
+  padding: 10px 10px;
+  font-size: 1em;
+  margin-left: 10px;
+  border: 2px solid #eb4f49;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none !important;
+  color: white;
+}
+
+.pagebtn:hover {
+  color: white;
+  background: #eb4f49;
+}
+
+.pagebtn {
+  background: none;
+  padding: 10px 10px;
+  margin-left: 10px;
+  border: 2px solid #eb4f49;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none !important;
+  color: black;
+}
+
 #blogtags {
   margin-top: 25px;
 }
