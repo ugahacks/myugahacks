@@ -43,14 +43,13 @@ body {
 .post-content {
   margin: 25px auto;
   padding: 10px 20px;
-  max-width: 70%;
+  max-width: 40%;
   border-radius: 6px;
   background: white;
 }
 
 #post-tags {
   text-align: center;
-  font-weight: 200;
   margin-top: 20px;
   word-spacing: 25px;
   color: #b2b3ad;
