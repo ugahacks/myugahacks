@@ -106,3 +106,7 @@
     margin-top: 5px;
     border-radius: 2px;
 }
+
+#testerCollapse .row {
+    margin-bottom: 50px;
+}

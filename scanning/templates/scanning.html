@@ -57,15 +57,18 @@
 
     {% if request.user.is_organizer %}
       <br>
-      <button id="testerCollapser" class="btn btn-primary" type="button">
-        Generate Testing Credentials
-      </button>
-      <button id="previousTesterCollapser" class="btn btn-primary" type="button" style="display:none">
-        Restore Previous Testing Credentials
-      </button>
-      <button id="closeTesterCollapser" class="btn btn-primary" type="button" style="display:none">
-        Close
-      </button>
+      <form class="form-inline">
+        <input class="form-control" id="qrCount" style="display: inline;width: 60px;" type="number" min="1" max="10" value="1" />
+        <button id="testerCollapser" class="btn btn-primary" type="button">
+          Generate Testing Credentials
+        </button>
+        <button id="previousTesterCollapser" class="btn btn-primary" type="button" style="display:none">
+          Restore Previous Testing Credentials
+        </button>
+        <button id="closeTesterCollapser" class="btn btn-primary" type="button" style="display:none">
+          Close
+        </button>
+      </form>
       <div class="collapse" id="testerCollapse">
         <div class="card card-body">
            You have just generated testing credentials for scanning throughout the system. This includes the <strong>UserQR</strong> and the <strong>BadgeQR</strong>. The UserQR is the QR code that would be in attendee's email.
@@ -87,13 +90,11 @@
           <div class="row">
             <div class="col col-xs-12 col-sm-12 col-md-6 text-center">
               <h3>UserQR</h3>
-              <div id="userQr"></div>
-              <span id="userQrText"></span>
+              <div id="user-qr"></div>
             </div>
             <div class="col col-xs-12 col-sm-12 col-md-6 text-center">
               <h3>BadgeQR</h3>
-              <div id="badgeQr"></div>
-              <span id="badgeQrText"></span>
+              <div id="badge-qr"></div>
             </div>
           </div>
         </div>

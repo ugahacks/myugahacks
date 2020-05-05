@@ -77,8 +77,8 @@ const global = (() => {
             });
         },
 
-        generateTestCredentials: () => {
-            return $.get("/scan/generate");
+        generateTestCredentials: (count = 1) => {
+            return $.get("/scan/generate?count=" + count);
         }
     }
 })();

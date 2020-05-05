@@ -47,27 +47,41 @@ class ScanningView(TemplateView):
 
 def scanning_generate_view(request):
     if request.method == 'GET':
-        user = User(
-            email='tester' + str(randint(999,9999999999)) + '@ugahacks.com',
-            name='Tester Account'
-        )
-        user.set_password('password1')
-        user.save()
+        credentials = []
+        count = int(request.GET.get('count', 1))
 
-        application = Application(
-            user=user,
-            origin='test',
-            first_timer=True,
-            first_ugahacks=True,
-            description="I'm a tester account",
-            university="University of Georgia",
-            degree="Computational Testing"
-        )
-        application.save()
+        if count > 10:
+            return JsonResponse({
+                'status': 500,
+                'message': 'The count in this request is not included or too high. Max. 10'
+            }, status=500)
+
+        for x in range(count):
+            user = User(
+                email='tester' + str(randint(999, 9999999999)) + '@ugahacks.com',
+                name='Tester Account'
+            )
+            user.set_password('password1')
+            user.save()
+
+            application = Application(
+                user=user,
+                origin='test',
+                first_timer=True,
+                first_ugahacks=True,
+                description="I'm a tester account",
+                university="University of Georgia",
+                degree="Computational Testing"
+            )
+            application.save()
+            credentials.append({
+                'userQr': application.uuid,
+                'badgeQr': uuid.uuid4()
+            })
 
         return JsonResponse({
-            'userQr': application.uuid,
-            'badgeQr': uuid.uuid4()
+            'status': 200,
+            'message': credentials,
         }, status=200)
 
 

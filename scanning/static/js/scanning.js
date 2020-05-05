@@ -126,16 +126,24 @@ const scanningQr = (() => {
         scanner.start(camera.getBackCamera());
     }
 
-    function openCollapser(userQr, badgeQr) {
-        document.getElementById("userQr").innerHTML="";
-        document.getElementById("badgeQr").innerHTML="";
+    function openCollapser(credentials) {
+        let localStorageString = "";
+        let counter = 0;
 
-        new QRCode(document.getElementById("userQr"), userQr);
-        new QRCode(document.getElementById("badgeQr"), badgeQr);
-        document.getElementById("userQrText").textContent = userQr;
-        document.getElementById("badgeQrText").textContent = badgeQr;
+        $("#user-qr, #badge-qr").empty();
+        for (let credential of credentials) {
+            const { userQr, badgeQr } = credential;
+            $("#user-qr").append(`<div class="row"><div id="user-qr-${counter}"></div><span>${userQr}</span></div>`);
+            $("#badge-qr").append(`<div class="row"><div id="badge-qr-${counter}"></div><span>${badgeQr}</span></div>`);
 
-        localStorage.setItem(TESTER_CREDENTIAL_LOCALSTORAGE_KEY, `${userQr}:${badgeQr}`);
+            new QRCode(document.getElementById("user-qr-" + counter), userQr);
+            new QRCode(document.getElementById("badge-qr-" + counter), badgeQr);
+
+            localStorageString += `${userQr}:${badgeQr};`;
+            counter++;
+        }
+        // save the localStorageString removing the last semi-colon
+        localStorage.setItem(TESTER_CREDENTIAL_LOCALSTORAGE_KEY, localStorageString.slice(0, -1));
 
         $('#testerCollapse').collapse('show');
         $("#previousTesterCollapser, #testerCollapser").hide();
@@ -148,9 +156,12 @@ const scanningQr = (() => {
             $("#previousTesterCollapser").show();
 
             $("#previousTesterCollapser").on('click', () => {
-                const [userQr, badgeQr] = qrs.split(":");
+                const credentials = qrs.split(";").map((credential) => {
+                    const [userQr, badgeQr] = credential.split(":");
+                    return { userQr, badgeQr };
+                });
 
-                openCollapser(userQr, badgeQr);
+                openCollapser(credentials);
             });
         }
     }
@@ -172,10 +183,9 @@ const scanningQr = (() => {
             $("#testerCollapser").prop('disabled', true).text("Generating..");
             $("#previousTesterCollapser").hide().off('click');
 
-            global.generateTestCredentials().then((res) => {
-                const { userQr, badgeQr } = res;
-
-                openCollapser(userQr, badgeQr);
+            const count = $("#qrCount").val();
+            global.generateTestCredentials(count).then((res) => {
+                openCollapser(res.message);
             });
         });
 
