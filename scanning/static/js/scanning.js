@@ -51,7 +51,7 @@ const scanningQr = (() => {
         if (category == "Check-in") {
             scanner.beforeFlowSet(() => {
                 scanner.pauseFlow();
-                global.setStatus("message", "Scan the QRCode from Participant's email.");
+                global.setStatus("message", "<strong>Step 1.</strong> Scan ParticipantQR");
                 clickContainerToContinue();
             });
 
@@ -62,7 +62,7 @@ const scanningQr = (() => {
             scanner.registerFlows(
                 new Flow("Scan Email QR", (content, data) => {
                     data.set("emailQr", content);
-                    global.setStatus("message", "Scan the QRCode of a new badge.");
+                    global.setStatus("message", "<strong>Step 2.</strong> Scan BadgeQR");
                 }),
                 new AsyncFlow("Scan Participant QR", (content, data) => {
                     let emailQr = data.get("emailQr");
@@ -70,8 +70,11 @@ const scanningQr = (() => {
 
                     global.setStatus("scanning");
                     global.sendMultiScan(type, emailQr, participantQr).done(() => {
-                        //global.setStatus("ready");
-                        scanner.startFlow();
+                        global.setStatus("success", "Check-in Success!");
+
+                        setTimeout(function () {
+                            scanner.startFlow();
+                        }, 1500);
                     }).fail((response) => {
                         let resp = response.responseJSON;
                         global.setStatus("error", `[${resp.status}] ${resp.message}`);
@@ -92,7 +95,11 @@ const scanningQr = (() => {
                 new AsyncFlow("Scan", (content, flow) => {
                     global.setStatus("scanning");
                     global.sendScan(type, value, content).done(() => {
-                        scanner.startFlow();
+                        global.setStatus("success", "Success!");
+
+                        setTimeout(function () {
+                            scanner.startFlow();
+                        }, 1000);
                     }).fail((response) => {
                         let resp = response.responseJSON;
                         global.setStatus("error", `[${resp.status}] ${resp.message}`);

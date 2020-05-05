@@ -36,15 +36,19 @@ const global = (() => {
 
             if (status == "ready") {
                 $("#status-indicator span").removeClass('error').addClass("ready").text("Ready");
+            } else if (status == "success") {
+                $("#status-indicator span").removeClass('error').addClass("ready").text("Success!");
+                $(".video-container .status").removeClass('error').addClass('ready').show()
+                    .html(message);
             } else if (status == "error") {
                 $("#status-indicator span").removeClass('ready').addClass("error").text("Error");
-                $(".video-container .status").addClass('error').show()
+                $(".video-container .status").removeClass('ready').addClass('error').show()
                     .html(message + " <br><br>Touch here to continue..");
             } else if (status == "scanning") {
                 $(".video-container .status").removeClass('error').show().text("Submitting..");
             } else if (status == "message") {
                 $("#status-indicator span").removeClass('error ready').text("Waiting..");
-                $(".video-container .status").removeClass('error').show()
+                $(".video-container .status").removeClass('error ready').show()
                     .html(message + " <br><br>Touch here to continue scanning.");
             }
         },
