@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap');
 * {
     padding: 0;
     margin: 0;
@@ -5,31 +6,165 @@
 }
 
 body, html {
-    height: 100%;
+    font-family: "Poppins";
+    font-weight: 400;
+    /* background: linear-gradient(#17182f,#0d0f12); */
 }
 
-.hero-image {
+#posts {
+  max-width: 1500px;
+  margin: 25px auto;
+}
+#pub_date, .card-text {
+  color: #989993;
+}
+
+.card-body{
+    box-shadow: 0px 10px 1px #ddd, 0 10px 20px #ccc;
+}
+
+.editbtn {
+  background: none;
+  padding: 10px 10px;
+  border-radius: 50%;
+  font-size: 1em;
+  margin-left: 10px;
+  border: 2px solid #eb4f49;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none !important;
+  color: black;
+}
+
+.editbtn i {
+  vertical-align: bottom;
+}
+
+.editbtn:hover {
+  color: white;
+  background: #eb4f49;
+}
+
+.readbtn {
+  background: none;
+  padding: 10px 10px;
+  font-size: 1em;
+  border: 2px solid #3474a9;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none !important;
+  color: black;
+}
+
+.readbtn i {
+  vertical-align: bottom;
+}
+
+.readbtn:hover {
+  color: white;
+  background: #3474a9;
+}
+
+.creatediv {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.addbtn {
+  background: none;
+  padding: 10px 20px;
+  margin-bottom: 10px !important;
+  font-size: 1em;
+  border: 2px solid #88bfac;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none !important;
+  color: black;
+}
+
+.addbtn:hover {
+  color: white;
+  background: #88bfac;
+}
+
+.step-links {
+  display: table;
+  margin: 15px auto 35px;
+}
+
+.jumpbtn {
+  background: none;
+  padding: 10px 10px;
+  border-radius: 50%;
+  margin-left: 10px;
+  border: 2px solid #eb4f49;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none !important;
+  color: black;
+}
+
+.jumpbtn i {
+  vertical-align: bottom;
+}
+
+.jumpbtn:hover {
+  color: white;
+  background: #eb4f49;
+}
+
+.currentpagebtn {
+  background: #eb4f49;
+  padding: 10px 10px;
+  font-size: 1em;
+  margin-left: 10px;
+  border: 2px solid #eb4f49;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none !important;
+  color: white;
+}
+
+.pagebtn:hover {
+  color: white;
+  background: #eb4f49;
+}
+
+.pagebtn {
+  background: none;
+  padding: 10px 10px;
+  margin-left: 10px;
+  border: 2px solid #eb4f49;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none !important;
+  color: black;
+}
+
+#blogtags {
+  margin-top: 25px;
+}
+
+.main-banner {
   /*place holder image. please change accordingly*/
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/wallpaper.jpeg");
-
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 100%;
   height: 50%;
-
+  font-size: 1.7em;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
+  background-attachment: fixed;
 }
 
-.hero-text {
+.banner-header {
   text-align: center;
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-}
-
-.blog-container {
-justify-content: center;
-
 }

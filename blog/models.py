@@ -10,6 +10,10 @@ class Blog(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = FroalaField()
 
+    def get_tags(self):
+        tags = Tag.objects.filter(blog=self)
+        return [tag.__str__() for tag in tags]
+
 class Tag(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     tag = models.CharField(max_length=32)
