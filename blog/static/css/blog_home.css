@@ -30,6 +30,6 @@ body, html {
 }
 
 .blog-container {
-  display: inline-block;
+justify-content: center;
 
 }
