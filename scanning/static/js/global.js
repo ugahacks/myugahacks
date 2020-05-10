@@ -35,19 +35,28 @@ const global = (() => {
             $("#error-message, .video-container .status").hide();
 
             if (status == "ready") {
-                $("#status-indicator span").removeClass('error').addClass("ready").text("Ready");
+                $("#status-indicator div").removeClass('error').addClass("ready").text("Ready");
             } else if (status == "success") {
-                $("#status-indicator span").removeClass('error').addClass("ready").text("Success!");
+                $("#status-indicator div").removeClass('error').addClass("ready").text("Success!");
                 $(".video-container .status").removeClass('error').addClass('ready').show()
                     .html(message);
+            } else if (status == "success-checkmark") {
+                global.setStatus("success", `<div id="committing-loader" class="circle-loader" style="margin-top: 20px;">
+                    <div class="checkmark draw"></div>
+                </div>`);
+
+                setTimeout(() => {
+                    $('#committing-loader').toggleClass('load-complete');
+                    $('#committing-loader .checkmark').toggle();
+                }, 100);
             } else if (status == "error") {
-                $("#status-indicator span").removeClass('ready').addClass("error").text("Error");
+                $("#status-indicator div").removeClass('ready').addClass("error").text("Error");
                 $(".video-container .status").removeClass('ready').addClass('error').show()
                     .html(message + " <br><br>Touch here to continue..");
             } else if (status == "scanning") {
-                $(".video-container .status").removeClass('error').show().text("Submitting..");
+                $(".video-container .status").removeClass('error ready').show().text("Submitting..");
             } else if (status == "message") {
-                $("#status-indicator span").removeClass('error ready').text("Waiting..");
+                $("#status-indicator div").removeClass('error ready').text("Waiting..");
                 $(".video-container .status").removeClass('error ready').show()
                     .html(message + " <br><br>Touch here to continue scanning.");
             }

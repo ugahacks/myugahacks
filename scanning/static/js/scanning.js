@@ -1,5 +1,4 @@
 const scanningQr = (() => {
-    const TESTER_CREDENTIAL_LOCALSTORAGE_KEY = "tester_collapser_credentials";
     const camera = new Camera((msg) => {
         $('.alert').show().html(`
             ${msg}<br><br>
@@ -15,7 +14,7 @@ const scanningQr = (() => {
     function openScanner() {
         const {type, text, value, category} = global.getSelectedInformation();
 
-        // open the HTML for the popup
+        // add the html popup to the page
         $("body").append(`
             <div id="popup-container">
               <div class="veil"></div>
@@ -26,7 +25,7 @@ const scanningQr = (() => {
                               <strong>${category}:</strong> <span>${text}</span>
                           </div>
                           <div class="col col-xs-5 col-sm-6 col-md-6 text-right" id="status-indicator">
-                              <strong>Status:</strong> <span>Initializing..</span>
+                              <strong>Status:</strong> <div>Initializing..</div>
                           </div>
                       </div>
                   </div>
@@ -40,44 +39,53 @@ const scanningQr = (() => {
         // Initialize a scanner and attach to the above video tag which is dynamically added
         const scanner = new Scanner('flows', document.getElementById("scan"));
 
-        function clickContainerToContinue() {
-            $(".video-container").off('touch click').on('touch click', () => {
-                $('.video-container .status').hide();
-                global.setStatus("ready");
-                scanner.startFlow();
-            });
-        }
-
         if (category == "Check-in") {
+            // Adds a click handler to the video-container so that when it is clicked..it continues the flow
+            function clickContainerToContinue() {
+                $(".video-container").off('touch click').on('touch click', () => {
+                    $('.video-container .status').hide();
+                    global.setStatus("ready");
+                    scanner.startFlow();
+                });
+            }
+
+            // Before every flow set, we should pause the flow and show the correct message. Clicking the container
+            // should continue the flow
             scanner.beforeFlowSet(() => {
                 scanner.pauseFlow();
                 global.setStatus("message", "<strong>Step 1.</strong> Scan ParticipantQR");
                 clickContainerToContinue();
             });
 
+            // after each flow pause
             scanner.afterFlow(() => {
                 scanner.pauseFlow();
             });
 
             scanner.registerFlows(
                 new Flow("Scan Email QR", (content, data) => {
+                    // pass on the emailQr
                     data.set("emailQr", content);
+                    // set up the next step
                     global.setStatus("message", "<strong>Step 2.</strong> Scan BadgeQR");
                 }),
-                new AsyncFlow("Scan Participant QR", (content, data) => {
+                new AsyncFlow("Scan Participant QR & Send Request", (content, data) => {
+                    // fetch the the emailQr from the previous flow
                     let emailQr = data.get("emailQr");
                     let participantQr = content;
 
                     global.setStatus("scanning");
-                    global.sendMultiScan(type, emailQr, participantQr).done(() => {
-                        global.setStatus("success", "Check-in Success!");
 
+                    // send off scan to the server
+                    global.sendMultiScan(type, emailQr, participantQr).done(() => {
+                        global.setStatus("success-checkmark");
+                        // after success wait 1.5 seconds before starting (which will restart) the flow
                         setTimeout(function () {
                             scanner.startFlow();
                         }, 1500);
-                    }).fail((response) => {
-                        let resp = response.responseJSON;
-                        global.setStatus("error", `[${resp.status}] ${resp.message}`);
+                    }).fail((response) => { // else error with a message and require a click to start flow
+                        const { status, message } = response.responseJSON;
+                        global.setStatus("error", `[${status}] ${message}`);
 
                         $(".video-container").off('touch click').on('touch click', () => {
                             scanner.startFlow();
@@ -86,23 +94,23 @@ const scanningQr = (() => {
                 })
             );
         } else {
+            // before flow set we will need to become ready
             scanner.beforeFlowSet(() => {
                 global.setStatus("ready");
-                clickContainerToContinue();
             });
 
             scanner.registerFlows(
                 new AsyncFlow("Scan", (content, flow) => {
                     global.setStatus("scanning");
                     global.sendScan(type, value, content).done(() => {
-                        global.setStatus("success", "Success!");
-
+                        global.setStatus("success-checkmark");
+                        // after success wait 1 second before starting (which will restart) the flow
                         setTimeout(function () {
                             scanner.startFlow();
-                        }, 1000);
-                    }).fail((response) => {
-                        let resp = response.responseJSON;
-                        global.setStatus("error", `[${resp.status}] ${resp.message}`);
+                        }, 750);
+                    }).fail((response) => { // else error with a message and require a click to start flow
+                        const { status, message } = response.responseJSON;
+                        global.setStatus("error", `[${status}] ${message}`);
 
                         $(".video-container").off('touch click').on('touch click', () => {
                             scanner.startFlow();
@@ -118,55 +126,18 @@ const scanningQr = (() => {
             scanner.stop();
         });
 
+        // if there was a camera error then we should be notified instantly
         if (camera.errored()) {
             global.setStatus("error", camera.getError());
             return;
         }
 
+        // if successful, now that we setup the camera, it's flow, and there was no error..we can start the camera
         scanner.start(camera.getBackCamera());
     }
 
-    function openCollapser(credentials) {
-        let localStorageString = "";
-        let counter = 0;
-
-        $("#user-qr, #badge-qr").empty();
-        for (let credential of credentials) {
-            const { userQr, badgeQr } = credential;
-            $("#user-qr").append(`<div class="row"><div id="user-qr-${counter}"></div><span>${userQr}</span></div>`);
-            $("#badge-qr").append(`<div class="row"><div id="badge-qr-${counter}"></div><span>${badgeQr}</span></div>`);
-
-            new QRCode(document.getElementById("user-qr-" + counter), userQr);
-            new QRCode(document.getElementById("badge-qr-" + counter), badgeQr);
-
-            localStorageString += `${userQr}:${badgeQr};`;
-            counter++;
-        }
-        // save the localStorageString removing the last semi-colon
-        localStorage.setItem(TESTER_CREDENTIAL_LOCALSTORAGE_KEY, localStorageString.slice(0, -1));
-
-        $('#testerCollapse').collapse('show');
-        $("#previousTesterCollapser, #testerCollapser").hide();
-        $("#testerCollapser").prop('disabled', false).text("Generate Testing Credentials");
-        $("#closeTesterCollapser").show();
-    }
-
-    function ifGeneratedOpenCollapser() {
-        if ((qrs = localStorage.getItem(TESTER_CREDENTIAL_LOCALSTORAGE_KEY)) != null) {
-            $("#previousTesterCollapser").show();
-
-            $("#previousTesterCollapser").on('click', () => {
-                const credentials = qrs.split(";").map((credential) => {
-                    const [userQr, badgeQr] = credential.split(":");
-                    return { userQr, badgeQr };
-                });
-
-                openCollapser(credentials);
-            });
-        }
-    }
-
     $(document).ready(() => {
+        // handler for the button click
         $("#qr_code-qr").on("click", () => {
             if (global.getSelectedInformation().value == "") {
                 $("#check-in-selector").parent().addClass('has-error');
@@ -178,29 +149,6 @@ const scanningQr = (() => {
         $("#check-in-selector").on('change', () => {
             $("#check-in-selector").parent().removeClass('has-error');
         });
-
-        $("#testerCollapser").on('click', () => {
-            $("#testerCollapser").prop('disabled', true).text("Generating..");
-            $("#previousTesterCollapser").hide().off('click');
-
-            const count = $("#qrCount").val();
-            global.generateTestCredentials(count).then((res) => {
-                openCollapser(res.message);
-            });
-        });
-
-        $("#closeTesterCollapser").on('click', () => {
-            $('#testerCollapse').collapse('hide');
-        });
-
-        $("#testerCollapse").on('hidden.bs.collapse', () => {
-            $("#closeTesterCollapser").hide();
-            $("#testerCollapser").show();
-
-            ifGeneratedOpenCollapser();
-        });
-
-        ifGeneratedOpenCollapser();
     });
 })();
 

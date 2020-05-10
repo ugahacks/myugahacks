@@ -45,7 +45,7 @@ ALLOWED_HOSTS = [
     '165.227.125.129',
     '192.168.0.12',
     '192.168.1.18', #kane
-    'd9dac23a.ngrok.io'
+    '68cc6816.ngrok.io'
     ]
 
 # Application definition

@@ -1,13 +1,12 @@
 import uuid
 from random import randint
 
-from django.shortcuts import render
-from django.views import View
+from django.db import IntegrityError
 from django.views.generic.base import TemplateView
 
 from django.http import JsonResponse
 
-from user.models import UserManager, User
+from user.models import User
 from workshops.models import Workshop, Attendance
 from checkin.models import CheckIn
 from meals.models import Meal, Eaten, MEAL_TYPE
@@ -75,7 +74,7 @@ def scanning_generate_view(request):
             )
             application.save()
             credentials.append({
-                'userQr': application.uuid,
+                'participantQr': application.uuid,
                 'badgeQr': uuid.uuid4()
             })
 
@@ -162,7 +161,14 @@ def checkin_scan(request):
     checkin.user = request.user
     checkin.application = user_application
     checkin.qr_identifier = badge_qr
-    checkin.save()
+
+    try:
+        checkin.save()
+    except IntegrityError:
+        return JsonResponse({
+            'status': 403,
+            'message': "User already checked-in!"
+        }, status=403)
     return JsonResponse({
         'status': 200,
         'message': 'Hacker checked-in! Good job! '

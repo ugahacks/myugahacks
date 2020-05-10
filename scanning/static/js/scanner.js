@@ -130,16 +130,18 @@ class Scanner {
      * @param a camera instance
      */
     start(camera) {
-        if (this.mode == 'flows') {
-            if (this.flows == undefined) {
-                throw new Error("Flows need to be defined under");
-                return;
-            } else {
-                this._playFlow();
-            }
-        }
-
         this.scanner.start(camera);
+
+        this.scanner.addListener('active', () => {
+            if (this.mode == 'flows') {
+                if (this.flows == undefined) {
+                    throw new Error("Flows need to be defined");
+                    return;
+                } else {
+                    this._playFlow();
+                }
+            }
+        });
     }
 
     /**
