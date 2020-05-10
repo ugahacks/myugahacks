@@ -15,8 +15,11 @@ from points.models import Points
 
 from sponsors.models import C_TIER_1, C_TIER_2, C_TIER_3, C_COHOST
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ScanningView(TemplateView):
+class ScanningView(LoginRequiredMixin, TemplateView):
+    login_url = '/user/login/'
     template_name = 'scanning.html'
 
     def get_context_data(self, **kwargs):
