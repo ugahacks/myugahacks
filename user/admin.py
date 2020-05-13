@@ -12,9 +12,9 @@ class UserAdmin(admin.ModelAdmin):
     form = UserChangeForm
     change_password_form = AdminPasswordChangeForm
 
-    display_fields = ['email', 'name', 'is_organizer', 'is_volunteer', 'is_director', 'is_sponsor']
-    filter_fields = ['is_sponsor','is_volunteer', 'is_director', 'is_organizer', 'is_admin','email_verified']
-    permission_fields = ['is_volunteer', 'is_director', 'is_organizer', 'is_admin','is_sponsor', 'email_verified']
+    display_fields = ['email', 'name', 'is_organizer', 'is_volunteer', 'is_director', 'is_sponsor', 'on_duty']
+    filter_fields = ['is_sponsor', 'is_volunteer', 'is_director', 'is_organizer', 'is_admin', 'email_verified']
+    permission_fields = ['is_volunteer', 'is_director', 'is_organizer', 'is_admin', 'is_sponsor', 'email_verified']
 
     if settings.HARDWARE_ENABLED:
         display_fields.append('is_hardware_admin')
@@ -33,6 +33,7 @@ class UserAdmin(admin.ModelAdmin):
         ('Personal info', {'fields': ('name',)}),
         ('Permissions', {'fields': permission_fields}),
         ('Important dates', {'fields': ('last_login',)}),
+        ('Other', {'fields': ('on_duty',)}),
     )
     add_fieldsets = (
         (None, {
