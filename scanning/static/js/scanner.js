@@ -202,6 +202,13 @@ class Scanner {
         }
     }
 
+    /**
+     * Check if the flow is going
+     */
+    isFlowing() {
+        return this.canFlow;
+    }
+
     /** PRIVATE METHODS **/
 
     /**
@@ -280,3 +287,4 @@ class AsyncFlow extends Flow {
         super(name, callback, true);
     }
 }
+
