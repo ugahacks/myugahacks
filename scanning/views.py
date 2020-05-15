@@ -135,9 +135,14 @@ def meal_scan(request):
         }, status=409)
     eaten = Eaten(meal=meal, user=hacker_user)
     eaten.save()
+    user_application = Application.objects.filter(user_id=hacker_user.id).first()
     return JsonResponse({
         'status': 200,
-        'message': 'Hacker successfully logged for this meal!'
+        'message': {
+            'message': 'Hacker successfully logged for this meal!',
+            'diet': user_application.diet,
+            'other_diet': user_application.other_diet
+        }
     })
     # CHECK IF RETURNING A MESSAGE FORO THE DIET IS IMPORTANT
 
