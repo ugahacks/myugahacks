@@ -28,6 +28,7 @@
                 {% if not vote %}
                     {% include 'include/field.html' with desc='Status' value=app.get_status_display %}
                     {% include 'include/field.html' with desc='Email' value=app.user.email %}
+                    {% include 'include/field.html' with desc='Emergency Phone Num.' value=app.phone_number %}
                     {% include 'include/field.html' with desc='Travel reimbursement?' value=app.reimb|yesno:'Yes,No,Maybe' %}
                     {% include 'include/field.html' with desc='Traveling From' value=app.origin|safe|urlize %}
                     {% include 'include/field.html' with desc='Money needed' value=app.reimb_amount %}

@@ -3,6 +3,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import RedirectView
+from django.urls import include, path
 
 from django.urls import path
 
@@ -28,7 +29,7 @@ urlpatterns = [
     url(r'^meals/', include('meals.urls')),
     url(r'^judging/', include('judging.urls')),
     url(r'^workshops/', include('workshops.urls')),
-    path('sponsors/', include('sponsors.urls')),
+    path('sponsorship-packet/', views.SponsorshipPacketView.as_view(), name='sponsorship-packet'),
 ]
 
 if settings.BAGGAGE_ENABLED:
