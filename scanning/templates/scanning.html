@@ -25,7 +25,12 @@
               {% if request.user.is_organizer %}
                   <optgroup label="Check-in">
                     <option data-type="checkin" value="Check-in">Check-in</option>
-                    <option data-type="reissue" value="Reissue-Badge">Reissue Badge</option>
+                  </optgroup>
+                  <optgroup label="Badge">
+                    <option data-type="view" value="View-Badge">View Information</option>
+                    <option data-type="reissue" value="Reissue-Badge">Reissue</option>
+                    <option data-type="disable" value="Disable-Badge">Disable</option>
+                    <option data-type="enable" value="Enable-Badge">Enable</option>
                   </optgroup>
                   <optgroup label="Meals">
                     {% for meal in meals %}
@@ -45,9 +50,9 @@
                         <option value="" disabled>No workshops</option>
                     {% endfor %}
                   </optgroup>
-              {% elif request.user.is_sponsor %}
+              {% elif request.user.is_sponsor or request.user.is_admin %}
                   <optgroup label="Sponsor">
-                    <option value="p">Give Points</option>
+                    <option data-type="award" value="Award-Points">Award Points</option>
                   </optgroup>
               {% endif %}
             </select>

@@ -363,6 +363,36 @@ class Application(models.Model):
     def can_confirm(self):
         return self.status in [APP_INVITED, APP_LAST_REMIDER]
 
+    def serialize(self):
+        return {
+            'user': {
+                'name': self.user.name,
+                'email': self.user.email,
+                'is': {
+                    'active': self.user.is_active,
+                    'volunteer': self.user.is_volunteer,
+                    'organizer': self.user.is_organizer,
+                    'director': self.user.is_director,
+                    'sponsor': self.user.is_sponsor,
+                    'admin': self.user.is_admin,
+                    'hardwareAdmin': self.user.is_hardware_admin,
+                },
+                'application': {
+                    # University
+                    'graduationYear': self.graduation_year,
+                    'classStatus': self.class_status,
+                    'university': self.university,
+                    'degree': self.degree,
+                    # Info for swag and food
+                    'diet': self.diet,
+                    'otherDiet': self.other_diet,
+                    'tshirtSize': self.tshirt_size,
+                    # Info for hardware
+                    'hardware': self.hardware,
+                }
+            }
+        }
+
 
 class DraftApplication(models.Model):
     content = models.CharField(max_length=7000)

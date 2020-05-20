@@ -62,6 +62,28 @@ class SponsorApplication(models.Model):
 
     company_logo = models.ImageField(upload_to = 'sponsor_logos', null=True, blank=True)
 
+    def serialize(self):
+        return {
+            'user': {
+                'name': self.user.name,
+                'email': self.user.email,
+                'is': {
+                    'active': self.user.is_active,
+                    'volunteer': self.user.is_volunteer,
+                    'organizer': self.user.is_organizer,
+                    'director': self.user.is_director,
+                    'sponsor': self.user.is_sponsor,
+                    'admin': self.user.is_admin,
+                    'hardwareAdmin': self.user.is_hardware_admin,
+                },
+                'application': {
+                    'diet': self.diet,
+                    'otherDiet': self.other_diet,
+                    'tshirtSize': self.tshirt_size,
+                }
+            }
+        }
+
 class Sponsor(models.Model):
     company = models.CharField(max_length=255, unique=True)
 

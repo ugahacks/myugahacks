@@ -7,36 +7,36 @@ const scanningQr = (() => {
     });
 
     function setStatus (status, message = "") {
-            $("#error-message, .video-container .status").hide();
+        $("#error-message, .video-container .status").hide();
 
-            if (status === "ready") {
-                $("#status-indicator div").removeClass('error').addClass("ready").text("Ready");
-            } else if (status === "success") {
-                $("#status-indicator div").removeClass('error').addClass("ready").text("Success!");
-                $(".video-container .status").removeClass('error').addClass('ready').show().html(message);
-            } else if (status === "success-checkmark") {
-                setStatus("success", `
-                    <div style='color: black'>${message}</div>
-                    <div id="committing-loader" class="circle-loader" style="margin-top: 20px;">
-                        <div class="checkmark draw"></div>
-                    </div>`);
+        if (status === "ready") {
+            $("#status-indicator div").removeClass('error').addClass("ready").text("Ready");
+        } else if (status === "success") {
+            $("#status-indicator div").removeClass('error').addClass("ready").text("Success!");
+            $(".video-container .status").removeClass('error').addClass('ready').show().html(message);
+        } else if (status === "success-checkmark") {
+            setStatus("success", `
+                <div style='color: black'>${message}</div>
+                <div id="committing-loader" class="circle-loader" style="margin-top: 20px;">
+                    <div class="checkmark draw"></div>
+                </div>`);
 
-                setTimeout(() => {
-                    $('#committing-loader').toggleClass('load-complete');
-                    $('#committing-loader .checkmark').toggle();
-                }, 100);
-            } else if (status === "error") {
-                $("#status-indicator div").removeClass('ready').addClass("error").text("Error");
-                $(".video-container .status").removeClass('ready').addClass('error').show()
-                    .html(message + " <br><br>Touch here to continue..");
-            } else if (status === "scanning") {
-                $(".video-container .status").removeClass('error ready').show().text("Submitting..");
-            } else if (status === "message") {
-                $("#status-indicator div").removeClass('error ready').text("Waiting..");
-                $(".video-container .status").removeClass('error ready').show()
-                    .html(message + " <br><br>Touch here to continue scanning.");
-            }
+            setTimeout(() => {
+                $('#committing-loader').toggleClass('load-complete');
+                $('#committing-loader .checkmark').toggle();
+            }, 100);
+        } else if (status === "error") {
+            $("#status-indicator div").removeClass('ready').addClass("error").text("Error");
+            $(".video-container .status").removeClass('ready').addClass('error').show()
+                .html(message + " <br><br>Touch here to continue..");
+        } else if (status === "scanning") {
+            $(".video-container .status").removeClass('error ready').show().text("Submitting..");
+        } else if (status === "message") {
+            $("#status-indicator div").removeClass('error ready').text("Waiting..");
+            $(".video-container .status").removeClass('error ready').show()
+                .html(message + " <br><br>Touch here to continue scanning.");
         }
+    }
 
     function appendScannerHtml(category, text) {
         $("body").append(`
@@ -61,8 +61,165 @@ const scanningQr = (() => {
             </div>`);
     }
 
+    function createInformationView(user) {
+        function unCamelCase(value) {
+            return value.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
+        }
+
+        function createPermissionBlock(name, value) {
+            const permission = value ? 'granted' : 'denied';
+            return `
+                <div class="row">
+                    <div class="col"><strong>${unCamelCase(name)}</strong> <span class="permission-circle ${permission}"></span></div>
+                </div>
+            `
+        }
+
+        function createDataBlock(name, value) {
+            return `
+                <div class="row">
+                    <div class="col"><strong>${unCamelCase(name)}</strong>: ${value || 'None'}</div>
+                </div>
+            `
+        }
+
+        let permissions = '';
+        for (let permission in user.is) {
+            permissions += createPermissionBlock(permission, user.is[permission]);
+        }
+
+        let application = '';
+        for (let dataPoint in user.application) {
+            application += createDataBlock(dataPoint, user.application[dataPoint]);
+        }
+
+        return `<div class="row" style="font-size: 12px;padding: 0 10px; margin-top: -40px;">
+            <div class="col col-xs-7 col-sm-7 col-md-7 text-left">
+                <div class="row">
+                    <div class="col"><strong>Name</strong>: ${user.name}</div>
+                </div>
+                <div class="row">
+                    <div class="col"><strong>Email</strong>: ${user.email}</div>
+                </div>
+                <div class="row">
+                    <div class="col"><strong>Points</strong>: ${user.points || 0}</div>
+                </div>
+                ${application}
+            </div>
+            <div class="col col-xs-5 col-sm-5 col-md-5 text-right">
+                ${permissions}
+            </div>
+        </div>`
+    }
+
     function createNewScanner() {
         return new Scanner('flows', document.getElementById("scan"));
+    }
+
+    /**
+     * Handle AJAX response
+     * @param response
+     */
+    function handleError(response, scanner) {
+        const { status, message } = response.responseJSON;
+        setStatus("error", `[${status}] ${message}`);
+
+        $(".video-container").off('touch click').on('touch click', () => {
+            scanner.startFlow();
+        });
+    }
+
+    /**
+     * Make the video container continue the scanning flow on click
+     * @param scanner the current scanner object
+     */
+    function clickVideoContainerToContinue(scanner) {
+        $(".video-container").off('touch click').on('touch click', () => {
+            $('.video-container .status').hide();
+            setStatus("ready");
+            scanner.startFlow();
+        });
+    }
+
+    function registerCheckInFlow(scanner, type) {
+        // Before every flow set, we should pause the flow and show the correct message. Clicking the container
+        // should continue the flow
+        scanner.beforeFlowSet(() => {
+            scanner.pauseFlow();
+            setStatus("message", "<strong>Step 1.</strong> Scan ParticipantQR");
+            clickVideoContainerToContinue(scanner);
+        });
+
+        // after each flow pause
+        scanner.afterFlow(() => {
+            scanner.pauseFlow();
+        });
+
+        scanner.registerFlows(
+            new Flow("Scan Email QR", (content, data) => {
+                // pass on the emailQr
+                data.set("emailQr", content);
+                // set up the next step
+                setStatus("message", "<strong>Step 2.</strong> Scan BadgeQR");
+            }),
+            new AsyncFlow("Scan Participant QR & Send Request", (content, data) => {
+                // fetch the the emailQr from the previous flow
+                let emailQr = data.get("emailQr");
+                let participantQr = content;
+
+                setStatus("scanning");
+
+                // send off scan to the server
+                global.sendMultiScan(type, emailQr, participantQr).done(() => {
+                    setStatus("success-checkmark");
+                    // after success wait 1.5 seconds before starting (which will restart) the flow
+                    setTimeout(() => {
+                        scanner.startFlow();
+                    }, 1500);
+                }).fail((response) => handleError(response, scanner)); // else error with a message and require a click to start flow
+            })
+        );
+    }
+
+    function registerSingleScanFlow(scanner, type, value) {
+        let timer;
+        // before flow set we will need to become ready
+        scanner.beforeFlowSet(() => {
+            setStatus("ready");
+        });
+
+        scanner.registerFlows(
+            new AsyncFlow("Scan", (content, flow) => {
+                setStatus("scanning");
+                global.sendScan(type, value, content).done((response) => {
+                    let waitTime = 750;
+
+                    if (type === "meal") {
+                        let { diet, other_diet } = response.message;
+                        if (diet === "Others") {
+                            diet = other_diet;
+                        }
+                        waitTime = 2000;
+                        setStatus("success-checkmark", `Diet: ${diet}`);
+                    } else if (type === "view") {
+                        setStatus("message", createInformationView(response.message.user));
+                        waitTime = 3600000; // set wait time to an hour to prevent the scanner from automatically going
+                    } else {
+                        setStatus("success-checkmark");
+                    }
+
+                    // after success wait a few second before starting (which will restart) the flow
+                    timer = setTimeout(() => {
+                        scanner.startFlow();
+                    }, waitTime);
+                }).fail((response) => handleError(response, scanner)); // else error with a message and require a click to start flow
+            })
+        );
+
+        clickVideoContainerToContinue(scanner);
+        $(".video-container").on('touch click', () => {
+            clearTimeout(timer);
+        });
     }
 
     /**
@@ -78,97 +235,10 @@ const scanningQr = (() => {
 
         const scanner = createNewScanner();
 
-        /**
-         * Handle AJAX response
-         * @param response
-         */
-        function handleError(response) {
-            const { status, message } = response.responseJSON;
-            setStatus("error", `[${status}] ${message}`);
-
-            $(".video-container").off('touch click').on('touch click', () => {
-                scanner.startFlow();
-            });
-        }
-
         if (type === "checkin" || type === "reissue") {
-            // Before every flow set, we should pause the flow and show the correct message. Clicking the container
-            // should continue the flow
-            scanner.beforeFlowSet(() => {
-                scanner.pauseFlow();
-                setStatus("message", "<strong>Step 1.</strong> Scan ParticipantQR");
-                $(".video-container").off('touch click').on('touch click', () => {
-                    $('.video-container .status').hide();
-                    setStatus("ready");
-                    scanner.startFlow();
-                });
-            });
-
-            // after each flow pause
-            scanner.afterFlow(() => {
-                scanner.pauseFlow();
-            });
-
-            scanner.registerFlows(
-                new Flow("Scan Email QR", (content, data) => {
-                    // pass on the emailQr
-                    data.set("emailQr", content);
-                    // set up the next step
-                    setStatus("message", "<strong>Step 2.</strong> Scan BadgeQR");
-                }),
-                new AsyncFlow("Scan Participant QR & Send Request", (content, data) => {
-                    // fetch the the emailQr from the previous flow
-                    let emailQr = data.get("emailQr");
-                    let participantQr = content;
-
-                    setStatus("scanning");
-
-                    // send off scan to the server
-                    global.sendMultiScan(type, emailQr, participantQr).done(() => {
-                        setStatus("success-checkmark");
-                        // after success wait 1.5 seconds before starting (which will restart) the flow
-                        setTimeout(() => {
-                            scanner.startFlow();
-                        }, 1500);
-                    }).fail(handleError); // else error with a message and require a click to start flow
-                })
-            );
+            registerCheckInFlow(scanner, type);
         } else {
-            let timer;
-            // before flow set we will need to become ready
-            scanner.beforeFlowSet(() => {
-                setStatus("ready");
-            });
-
-            scanner.registerFlows(
-                new AsyncFlow("Scan", (content, flow) => {
-                    setStatus("scanning");
-                    global.sendScan(type, value, content).done((response) => {
-                        const waitTime = (type === "meal" ? 2000 : 750);
-                        if (type === "meal") {
-                            let { diet, other_diet } = response.message;
-                            if (diet === "Others") {
-                                diet = other_diet;
-                            }
-                            setStatus("success-checkmark", `Diet: ${diet}`);
-                        } else {
-                            setStatus("success-checkmark");
-                        }
-
-                        // after success wait a few second before starting (which will restart) the flow
-                        timer = setTimeout(() => {
-                            scanner.startFlow();
-                        }, waitTime);
-                    }).fail(handleError); // else error with a message and require a click to start flow
-                })
-            );
-
-            $(".video-container").off('touch click').on('touch click', () => {
-                $('.video-container .status').hide();
-                setStatus("ready");
-                scanner.startFlow();
-                clearTimeout(timer);
-            });
+            registerSingleScanFlow(scanner, type, value);
         }
 
         // Cancel the operation when background is click

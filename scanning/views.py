@@ -40,7 +40,13 @@ class ScanningView(TemplateView):
             return checkin_scan(request)
         elif type == 'reissue':
             return reissue_scan(request)
-        elif type == 'sponsor':
+        elif type == 'view':
+            return view_badge_scan(request)
+        elif type == 'disable':
+            return change_user_active(request, False)
+        elif type == 'enable':
+            return change_user_active(request, True)
+        elif type == 'award':
             return sponsor_scan(request)
 
 
@@ -87,15 +93,16 @@ def scanning_generate_view(request):
 def workshop_scan(request):
     id = request.POST.get('id', None)
     qr_code = request.POST.get('qrContent', None)
+    response, hacker_user = get_user_from_qr(qr_code)
+    if response is not None:
+        return response
+
     workshop = Workshop.objects.filter(id=id).first()
     if not workshop.open and not request.user.is_organizer:
         return JsonResponse({
             'status': 403,
             'message': 'This workshop is not open yet or it has ended.'
         }, status=403)
-    response, hacker_user = get_user_from_qr(qr_code)
-    if response != None:
-        return response
     hacker_attended = workshop.attendance_set.filter(user=hacker_user).first()
     if hacker_attended:
         return JsonResponse({
@@ -118,20 +125,21 @@ def workshop_scan(request):
 def meal_scan(request):
     id = request.POST.get('id', None)
     qr_code = request.POST.get('qrContent', None)
+    response, hacker_user = get_user_from_qr(qr_code)
+    if response is not None:
+        return response
+
     meal = Meal.objects.filter(id=id).first()
     if not meal.opened and not request.user.is_organizer:
         return JsonResponse({
             'status': 403,
             'message': 'This meal is not open yet or it has ended. Reach out to an organizer to activate it again'
         }, status=403)
-    response, hacker_user = get_user_from_qr(qr_code)
-    if response != None:
-        return response
     times_hacker_ate = Eaten.objects.filter(meal=meal, user=hacker_user).count()
-    if times_hacker_ate >= meal.times:
+    if times_hacker_ate == meal.times:
         return JsonResponse({
             'status': 409,
-            'message': f'Warning! Hacker already ate {times_hacker_ate} out of {meal.times} available times!'
+            'message': f'Warning! Hacker already ate the max number of available times ({times_hacker_ate})!'
         }, status=409)
     eaten = Eaten(meal=meal, user=hacker_user)
     eaten.save()
@@ -148,24 +156,15 @@ def meal_scan(request):
 
 
 def checkin_scan(request):
-    participant_qr = request.POST.get('participantQR', None)
-    badge_qr = request.POST.get('badgeQR', None)
-    if badge_qr is None or badge_qr == '':
-        return JsonResponse({
-            'status': 404,
-            'message': 'The QR code is mandatory!'
-        }, status=404)
-    user_application = Application.objects.filter(uuid=participant_qr).first()
-    if not user_application:
-        return JsonResponse({
-            'status': 404,
-            'message': 'Hacker\'s application is not found'
-        }, status=404)
+    response, user_application = get_application_from_request(request)
+    if response is not None:
+        return response
+
     user_application.check_in()
     checkin = CheckIn()
     checkin.user = request.user
     checkin.application = user_application
-    checkin.qr_identifier = badge_qr
+    checkin.qr_identifier = request.POST.get('badgeQR', None)
 
     try:
         checkin.save()
@@ -183,21 +182,12 @@ def checkin_scan(request):
 
 
 def reissue_scan(request):
-    participant_qr = request.POST.get('participantQR', None)
-    badge_qr = request.POST.get('badgeQR', None)
-    if badge_qr is None or badge_qr == '':
-        return JsonResponse({
-            'status': 404,
-            'message': 'The QR code is mandatory!'
-        }, status=404)
-    user_application = Application.objects.filter(uuid=participant_qr).first()
-    if not user_application:
-        return JsonResponse({
-            'status': 404,
-            'message': 'Hacker\'s application is not found'
-        }, status=404)
+    response, user_application = get_application_from_request(request)
+    if response is not None:
+        return response
+
     checkin = CheckIn.objects.get(application=user_application)
-    checkin.qr_identifier = badge_qr
+    checkin.qr_identifier = request.POST.get('badgeQR', None)
     checkin.save()
     return JsonResponse({
         'status': 200,
@@ -208,7 +198,7 @@ def reissue_scan(request):
 
 
 def sponsor_scan(request):
-    tier = request.user.get_tier()
+    badge_qr = request.POST.get('badgeQR', None)
     # TODO: MOVE THIS DICTIONARY SOMEWHERE ELSE TO BE USED BY WHOLE PROJECT.
     tier_point_values = {
         C_TIER_1: 3,
@@ -216,13 +206,15 @@ def sponsor_scan(request):
         C_TIER_3: 7,
         C_COHOST: 10,
     }
+    # is_staff added for testing purposes.. staff will get tier 1 privelege
+    tier = C_TIER_1 if request.user.is_staff else request.user.get_tier()
     if not tier:
         return JsonResponse({
             'status': 401,
             'message': 'We cannot verify you as a sponsor. Please contact an organizer.'
         }, status=401)
-    response, hacker_user = get_user_from_qr(qr_code)
-    if response != None:
+    response, hacker_user = get_user_from_qr(badge_qr)
+    if response is not None:
         return response
     points = Points.objects.filter(user=hacker_user).first()
     if not points:
@@ -234,23 +226,40 @@ def sponsor_scan(request):
     })
 
 
+def view_badge_scan(request):
+    qr_code = request.POST.get('qrContent', None)
+    response, hacker_checkin = get_checkin_from_qr(qr_code)
+    if response is not None:
+        return response
+    user_application = hacker_checkin.application
+    user_application_serialized = user_application.serialize()
+    user_application_serialized['user']['points'] = Points.objects.filter(user=user_application.user).first()
+    return JsonResponse({
+        'status': 200,
+        'message': user_application_serialized
+    })
+
+
+def change_user_active(request, active):
+    qr_code = request.POST.get('qrContent', None)
+    response, hacker_checkin = get_checkin_from_qr(qr_code, True)
+    if response is not None:
+        return response
+
+    hacker_checkin.is_active = active
+    hacker_checkin.save()
+
+    return JsonResponse({
+        'status': 200,
+        'message': 'Badge has been ' + ('enabled' if active is True else 'disabled')
+    })
+
+
 def get_user_from_qr(qr_code):
-    response = None
-    hacker_user = None
-    if not qr_code:
-        response = JsonResponse({
-            'status': 404,
-            'message': 'The QR code is not available.'
-        }, status=404)
-        return response, hacker_user
-    hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_code).first()
-    if not hacker_checkin:
-        response = JsonResponse({
-            'status': 404,
-            'message': 'Invalid QR code!'
-        }, status=404)
-        return response, hacker_user
-    hacker_user = hacker_checkin.application.user
+    response, hacker_checkin = get_checkin_from_qr(qr_code)
+    if response is not None:
+        return response, hacker_checkin
+    hacker_user = hacker_checkin.user
     if not hacker_user:
         response = JsonResponse({
             'status': 404,
@@ -258,3 +267,46 @@ def get_user_from_qr(qr_code):
         }, status=404)
     # response == None if hacker_user is found.
     return response, hacker_user
+
+
+def get_application_from_request(request):
+    response = None
+    participant_qr = request.POST.get('participantQR', None)
+    badge_qr = request.POST.get('badgeQR', None)
+    if badge_qr is None or badge_qr == '':
+        response = JsonResponse({
+            'status': 404,
+            'message': 'The QR code is mandatory!'
+        }, status=404)
+    user_application = Application.objects.filter(uuid=participant_qr).first()
+    if not user_application:
+        response = JsonResponse({
+            'status': 404,
+            'message': 'Hacker\'s application is not found'
+        }, status=404)
+    return response, user_application
+
+
+def get_checkin_from_qr(qr_code, ignore_disabled_badge=False):
+    hacker_checkin = None
+    response = None
+    if not qr_code:
+        response = JsonResponse({
+            'status': 404,
+            'message': 'The QR code is not available.'
+        }, status=404)
+        return response, hacker_checkin
+
+    hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_code).first()
+    if not hacker_checkin:
+        response = JsonResponse({
+            'status': 404,
+            'message': 'Invalid QR code!'
+        }, status=404)
+        return response, hacker_checkin
+    if not hacker_checkin.is_active and not ignore_disabled_badge:
+        response = JsonResponse({
+            'status': 403,
+            'message': 'Badge is disabled.'
+        }, status=403)
+    return response, hacker_checkin
