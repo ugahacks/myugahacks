@@ -146,13 +146,12 @@ def meal_scan(request):
     user_application = Application.objects.filter(user_id=hacker_user.id).first()
     return JsonResponse({
         'status': 200,
-        'message': {
-            'message': 'Hacker successfully logged for this meal!',
+        'message': 'Hacker successfully logged for this meal!',
+        'data': {
             'diet': user_application.diet,
             'other_diet': user_application.other_diet
         }
     })
-    # CHECK IF RETURNING A MESSAGE FORO THE DIET IS IMPORTANT
 
 
 def checkin_scan(request):
@@ -175,9 +174,7 @@ def checkin_scan(request):
         }, status=403)
     return JsonResponse({
         'status': 200,
-        'message': 'Hacker checked-in! Good job! '
-                   'Nothing else to see here, '
-                   'you can move on :D'
+        'message': 'Hacker checked-in! Good job! Nothing else to see here, you can move on :D'
     })
 
 
@@ -191,9 +188,7 @@ def reissue_scan(request):
     checkin.save()
     return JsonResponse({
         'status': 200,
-        'message': 'Hacker re-issued! Good job! '
-                   'Nothing else to see here, '
-                   'you can move on :D'
+        'message': 'Hacker re-issued! Good job! Nothing else to see here, you can move on :D'
     })
 
 

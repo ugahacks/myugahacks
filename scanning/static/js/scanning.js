@@ -195,7 +195,7 @@ const scanningQr = (() => {
                     let waitTime = 750;
 
                     if (type === "meal") {
-                        let { diet, other_diet } = response.message;
+                        let { diet, other_diet } = response.data;
                         if (diet === "Others") {
                             diet = other_diet;
                         }

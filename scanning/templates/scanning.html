@@ -61,7 +61,7 @@
         <button id="qr_code-qr" class="button-qr fa fa-camera fa-2x"></button>
     </div>
 
-    {% if request.user.is_organizer %}
+    {% if request.user.is_admins %}
       <br>
       <form class="form-inline">
         <input class="form-control" id="qrCount" style="display: inline;width: 60px;" type="number" min="1" max="10" value="1" />
