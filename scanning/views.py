@@ -13,8 +13,6 @@ from meals.models import Meal, Eaten, MEAL_TYPE
 from applications.models import Application
 from points.models import Points
 
-from sponsors.models import C_TIER_1, C_TIER_2, C_TIER_3, C_COHOST
-
 
 class ScanningView(TemplateView):
     template_name = 'scanning.html'
@@ -92,7 +90,7 @@ def scanning_generate_view(request):
 
 def workshop_scan(request):
     id = request.POST.get('id', None)
-    qr_code = request.POST.get('qrContent', None)
+    qr_code = request.POST.get('badgeQR', None)
     response, hacker_user = get_user_from_qr(qr_code)
     if response is not None:
         return response
@@ -124,7 +122,7 @@ def workshop_scan(request):
 
 def meal_scan(request):
     id = request.POST.get('id', None)
-    qr_code = request.POST.get('qrContent', None)
+    qr_code = request.POST.get('badgeQR', None)
     response, hacker_user = get_user_from_qr(qr_code)
     if response is not None:
         return response
@@ -193,28 +191,21 @@ def reissue_scan(request):
 
 
 def sponsor_scan(request):
-    badge_qr = request.POST.get('badgeQR', None)
-    # TODO: MOVE THIS DICTIONARY SOMEWHERE ELSE TO BE USED BY WHOLE PROJECT.
-    tier_point_values = {
-        C_TIER_1: 3,
-        C_TIER_2: 5,
-        C_TIER_3: 7,
-        C_COHOST: 10,
-    }
-    # is_staff added for testing purposes.. staff will get tier 1 privelege
-    tier = C_TIER_1 if request.user.is_staff else request.user.get_tier()
-    if not tier:
+    tier_points = request.user.get_tier_value()
+    if not tier_points:
         return JsonResponse({
             'status': 401,
             'message': 'We cannot verify you as a sponsor. Please contact an organizer.'
         }, status=401)
+    badge_qr = request.POST.get('badgeQR', None)
     response, hacker_user = get_user_from_qr(badge_qr)
     if response is not None:
         return response
     points = Points.objects.filter(user=hacker_user).first()
     if not points:
         points = Points(user=hacker_user)
-    points.add_points(tier_point_values[tier])
+    points.add_points(tier_points)
+    points.save()
     return JsonResponse({
         'status': 200,
         'message': 'Points successfully added to participant!'
@@ -222,13 +213,20 @@ def sponsor_scan(request):
 
 
 def view_badge_scan(request):
-    qr_code = request.POST.get('qrContent', None)
+    qr_code = request.POST.get('badgeQR', None)
     response, hacker_checkin = get_checkin_from_qr(qr_code)
     if response is not None:
         return response
     user_application = hacker_checkin.application
     user_application_serialized = user_application.serialize()
-    user_application_serialized['user']['points'] = Points.objects.filter(user=user_application.user).first()
+
+    # TODO: Move this logic into the user model as a "get_points" method
+    points = Points.objects.filter(user=user_application.user).first()
+    if not points:
+        points = 0
+    else:
+        points = points.points
+    user_application_serialized['user']['points'] = points
     return JsonResponse({
         'status': 200,
         'message': user_application_serialized
@@ -236,7 +234,7 @@ def view_badge_scan(request):
 
 
 def change_user_active(request, active):
-    qr_code = request.POST.get('qrContent', None)
+    qr_code = request.POST.get('badgeQR', None)
     response, hacker_checkin = get_checkin_from_qr(qr_code, True)
     if response is not None:
         return response
@@ -254,7 +252,7 @@ def get_user_from_qr(qr_code):
     response, hacker_checkin = get_checkin_from_qr(qr_code)
     if response is not None:
         return response, hacker_checkin
-    hacker_user = hacker_checkin.user
+    hacker_user = hacker_checkin.application.user
     if not hacker_user:
         response = JsonResponse({
             'status': 404,
