@@ -50,7 +50,8 @@
                         <option value="" disabled>No workshops</option>
                     {% endfor %}
                   </optgroup>
-              {% elif request.user.is_sponsor or request.user.is_admin %}
+              {% endif %}
+              {% if request.user.is_sponsor or request.user.is_admin %}
                   <optgroup label="Sponsor">
                     <option data-type="award" value="Award-Points">Award Points</option>
                   </optgroup>

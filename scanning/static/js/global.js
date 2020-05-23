@@ -41,10 +41,10 @@ const global = (() => {
             }
         },
 
-        sendScan: (type, id, qrContent) => {
+        sendScan: (type, id, badgeQR) => {
             return $.ajax({
                 type: "post",
-                data: { type, id, qrContent }
+                data: { type, id, badgeQR }
             });
         },
 

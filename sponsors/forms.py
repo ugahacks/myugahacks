@@ -1,5 +1,5 @@
 from django import forms
-from .models import SponsorApplication, Sponsor, TSHIRT_SIZES, DIETS, TIERS
+from .models import SponsorApplication, Sponsor, TSHIRT_SIZES, DIETS
 
 class SponsorForm(forms.ModelForm):
     tshirt_size = forms.TypedChoiceField(choices=TSHIRT_SIZES)
@@ -19,7 +19,7 @@ class SponsorAddForm(forms.ModelForm):
 
     email_domain = forms.CharField(max_length=255, label='Email Domain', help_text='ex: ugahacks.com')
 
-    tier = forms.TypedChoiceField(choices=TIERS, label='Tier')
+    tier = forms.TypedChoiceField(choices=Sponsor.TIERS, label='Tier')
 
     class Meta:
         model = Sponsor

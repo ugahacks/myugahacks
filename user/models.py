@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
 from django.utils import timezone
 from sponsors.models import Sponsor
+from django.conf import settings
 
 
 class UserManager(BaseUserManager):
@@ -99,12 +100,15 @@ class User(AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
 
-    def get_tier(self):
+    def get_tier_value(self):
+        # Admin's will default to TIER_1 if debug is on
+        if self.is_admin and settings.DEBUG:
+            return Sponsor.C_TIER_1_POINTS
         if not self.is_sponsor:
             return None
         domain = self.email.split('@')[1]
         sponsor = Sponsor.objects.filter(email_domain=domain)
-        return sponsor.tier
+        return sponsor.get_tier_value()
 
     @property
     def is_superuser(self):

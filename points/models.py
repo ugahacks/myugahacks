@@ -7,5 +7,6 @@ class Points(models.Model):
 
     points = models.IntegerField(default=0)
 
+    # TODO: Add self.save()
     def add_points(self, value):
         self.points += value

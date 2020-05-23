@@ -2,7 +2,7 @@ import django_tables2 as tables
 import django_filters
 from django.db.models import Q
 from applications.models import Application
-from sponsors.models import Sponsor, TIERS
+from sponsors.models import Sponsor
 
 class ApplicationsListSponsor(tables.Table):
     detail = tables.TemplateColumn(
@@ -37,7 +37,7 @@ class SponsorListTable(tables.Table):
 
 class SponsorListFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method='search_filter', label='Search')
-    tier = django_filters.ChoiceFilter(choices=TIERS, empty_label='Any')
+    tier = django_filters.ChoiceFilter(choices=Sponsor.TIERS, empty_label='Any')
 
     def search_filter(self, queryset, name, value):
         return queryset.filter((Q(company__icontains=value) | Q( email_domain__icontains=value) | Q(tier__icontains=value)))

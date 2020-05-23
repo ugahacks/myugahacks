@@ -35,23 +35,9 @@ TSHIRT_SIZES = [
     (T_XXL, "Unisex - XXL"),
 ]
 
-#List as Tier rather than the Tier name so it is easy to change in the future.
-C_TIER_1 = 'Tier 1'
-C_TIER_2 = 'Tier 2'
-C_TIER_3 = 'Tier 3'
-C_COHOST = 'Co-Host'
-
-#Change the Tier names here.
-TIERS = [
-    (C_TIER_1, 'Doghouse'),
-    (C_TIER_2, 'Apartment'),
-    (C_TIER_3, 'Penthouse'),
-    (C_COHOST, 'Mansion'),
-]
-
 
 class SponsorApplication(models.Model):
-    #String of user.User to prevent circular dependecies
+    # String of user.User to prevent circular dependecies
     user = models.OneToOneField('user.User', on_delete=models.CASCADE)
 
     tshirt_size = models.CharField(max_length=5, choices=TSHIRT_SIZES)
@@ -60,7 +46,7 @@ class SponsorApplication(models.Model):
 
     other_diet = models.CharField(max_length=600, blank=True, null=True)
 
-    company_logo = models.ImageField(upload_to = 'sponsor_logos', null=True, blank=True)
+    company_logo = models.ImageField(upload_to='sponsor_logos', null=True, blank=True)
 
     def serialize(self):
         return {
@@ -84,9 +70,40 @@ class SponsorApplication(models.Model):
             }
         }
 
+
 class Sponsor(models.Model):
+    # Sponsor Tiers
+    C_TIER_1 = 'Tier1'
+    C_TIER_2 = 'Tier2'
+    C_TIER_3 = 'Tier3'
+    C_COHOST = 'Co-Host'
+
+    # Tier choices used for the database. Right hand of tuple is just for semantics.
+    TIERS = [
+        (C_TIER_1, 'Doghouse'),
+        (C_TIER_2, 'Apartment'),
+        (C_TIER_3, 'Penthouse'),
+        (C_COHOST, 'Mansion'),
+    ]
+
+    C_TIER_1_POINTS = 3
+    C_TIER_2_POINTS = 5
+    C_TIER_3_POINTS = 7
+    C_COHOST_POINTS = 10
+
     company = models.CharField(max_length=255, unique=True)
 
     email_domain = models.CharField(max_length=255, unique=True)
 
     tier = models.CharField(max_length=255, choices=TIERS)
+
+    def get_tier_value(self):
+        if self.tier == self.C_TIER_1:
+            return self.C_TIER_1_POINTS
+        elif self.tier == self.C_TIER_2:
+            return self.C_TIER_2_POINTS
+        elif self.tier == self.C_TIER_3:
+            return self.C_TIER_3_POINTS
+        elif self.tier == Sponsor.C_COHOST:
+            return self.C_COHOST_POINTS
+
