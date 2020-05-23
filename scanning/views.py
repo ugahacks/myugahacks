@@ -13,8 +13,11 @@ from meals.models import Meal, Eaten, MEAL_TYPE
 from applications.models import Application
 from points.models import Points
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ScanningView(TemplateView):
+
+class ScanningView(LoginRequiredMixin, TemplateView):
+    login_url = '/user/login/'
     template_name = 'scanning.html'
 
     def get_context_data(self, **kwargs):
