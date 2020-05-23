@@ -72,6 +72,7 @@ class User(AbstractBaseUser):
     is_hardware_admin = models.BooleanField(default=False)
     created_time = models.DateTimeField(default=timezone.now)
     mlh_id = models.IntegerField(blank=True, null=True, unique=True)
+    on_duty = models.BooleanField(default=False)
 
     objects = UserManager()
 

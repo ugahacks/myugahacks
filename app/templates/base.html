@@ -142,6 +142,10 @@
                                 <li class="{% if 'sponsors' in request.build_absolute_uri and 'stats' not in request.build_absolute_uri%}active{% endif %}">
                                   <a href="{% url 'sponsors:sponsor_home' %}">Sponsors</a></li>
                             {% endif %}
+                            {% if request.user.is_organizer or request.user.is_volunteer%}
+                                <li class="{% if 'user' in request.build_absolute_uri and 'duty_status' not in request.build_absolute_uri%}active{% endif %}">
+                                  <a href="{% url 'duty_status' %}">Duty</a></li>
+                            {% endif %}
                         {% endif %}
                         <li><a href="{% url 'account_logout' %}">Logout</a></li>
                     {% else %}
