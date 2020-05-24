@@ -121,7 +121,7 @@ class Scanner {
      * Register 1 or more flows. See the Flow class below for more detail.
      * @param arguments a variable number of flows
      */
-    registerFlows () {
+    registerFlows() {
         this.flows = Array.from(arguments);
     }
 
@@ -136,7 +136,7 @@ class Scanner {
             if (this.mode == 'flows') {
                 if (this.flows == undefined) {
                     throw new Error("Flows need to be defined");
-                    return;
+
                 } else {
                     this._playFlow();
                 }
@@ -274,7 +274,7 @@ class Flow {
         return this.name;
     }
 
-    getCallback () {
+    getCallback() {
         return this.callback;
     }
 }

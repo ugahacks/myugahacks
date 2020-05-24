@@ -5,44 +5,44 @@ const IS_IOS = /iPad|iPhone/.test(navigator.userAgent);
  * implementation by providing back camera access to iOS.
  */
 class Camera {
-    constructor (onError) {
+    constructor(onError) {
         this.cameras = [];
 
         // Get available cameras
         Instascan.Camera.getCameras().then((cameras) => {
-          if (cameras.length > 0) {
-            if(IS_IOS){
-                // Overrides the InstaScan.Camera start method
-                // This is because the default constraints that
-                // Instascan.Camera uses are not valid for iOS
-                // devices as they try to use width and height
-                // parameters which are not valid for the system.
-                cameras[0].start = async function start() {
-                    let constraints = {
-                      audio: false,
-                      video: {
-                        facingMode: 'environment',
-                        mandatory: {
-                          sourceId: this.id,
-                          minAspectRatio: 1.6
-                        },
-                      }
+            if (cameras.length > 0) {
+                if (IS_IOS) {
+                    // Overrides the InstaScan.Camera start method
+                    // This is because the default constraints that
+                    // Instascan.Camera uses are not valid for iOS
+                    // devices as they try to use width and height
+                    // parameters which are not valid for the system.
+                    cameras[0].start = async function start() {
+                        let constraints = {
+                            audio: false,
+                            video: {
+                                facingMode: 'environment',
+                                mandatory: {
+                                    sourceId: this.id,
+                                    minAspectRatio: 1.6
+                                },
+                            }
+                        };
+
+                        this._stream = await Instascan.Camera._wrapErrors(async () => {
+                            return await navigator.mediaDevices.getUserMedia(constraints);
+                        });
+
+                        return this._stream;
                     };
-
-                    this._stream = await Instascan.Camera._wrapErrors(async () => {
-                      return await navigator.mediaDevices.getUserMedia(constraints);
-                    });
-
-                    return this._stream;
-                };
+                }
+                this.cameras = cameras;
+                this.error = false;
+            } else {
+                this.error = "No cameras found";
+                onError(this.error);
+                console.error('No cameras found.');
             }
-            this.cameras = cameras;
-            this.error = false;
-          } else {
-              this.error = "No cameras found";
-              onError(this.error);
-              console.error('No cameras found.');
-          }
         }).catch((e) => {
             this.error = e.message;
             onError(this.error);
@@ -51,7 +51,7 @@ class Camera {
     }
 
     getBackCamera() {
-        if(!this.cameras) {
+        if (!this.cameras) {
             throw new Error("No cameras found.");
         }
         // The back camera is located in different locations for iOS and Android

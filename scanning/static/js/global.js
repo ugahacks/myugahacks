@@ -23,7 +23,7 @@ const global = (() => {
 
     const csrftoken = getCookie('csrftoken');
     $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
+        beforeSend: function (xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
@@ -44,14 +44,14 @@ const global = (() => {
         sendScan: (type, id, badgeQR) => {
             return $.ajax({
                 type: "post",
-                data: { type, id, badgeQR }
+                data: {type, id, badgeQR}
             });
         },
 
         sendMultiScan: (type, participantQR, badgeQR) => {
             return $.ajax({
                 type: "post",
-                data: { type, participantQR, badgeQR }
+                data: {type, participantQR, badgeQR}
             });
         },
 

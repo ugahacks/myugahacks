@@ -8,8 +8,8 @@ from django_tables2 import SingleTableMixin
 from app.mixins import TabsViewMixin
 from app.utils import reverse, hacker_tabs
 from app.views import TabsView
-from applications.models import Application
 from applications.emails import send_batch_emails
+from applications.models import Application
 from reimbursement import forms, emails
 from reimbursement.models import Reimbursement
 from reimbursement.tables import ReimbursementTable, ReimbursementFilter, SendReimbursementTable, \

@@ -12,7 +12,7 @@ const TestGenerator = (() => {
 
         $("#participant-qr, #badge-qr").empty(); // clear current badges
         for (let credential of credentials) {
-            const { participantQr, badgeQr } = credential; // destruct credentials
+            const {participantQr, badgeQr} = credential; // destruct credentials
 
             // append the two qrs
             $("#participant-qr").append(`<div class="row"><div id="participant-qr-${counter}"></div><span>${participantQr}</span></div>`);
@@ -35,7 +35,7 @@ const TestGenerator = (() => {
         $("#closeCollapser").show();
     }
 
-    function showPreviousTesterButtonIfGenerated () {
+    function showPreviousTesterButtonIfGenerated() {
         // check to see if previous test credentials exists
         if ((qrs = localStorage.getItem(TESTER_CREDENTIAL_LOCALSTORAGE_KEY)) != null) {
             $("#restoreCredentials").show().on('click', () => {
@@ -43,7 +43,7 @@ const TestGenerator = (() => {
                 // [{ participantQr: 'word1', badgeQr: 'word2' }, { participantQr: 'word3', badgeQr: 'word4' }]
                 const credentials = qrs.split(";").map((credential) => {
                     const [participantQr, badgeQr] = credential.split(":");
-                    return { participantQr, badgeQr };
+                    return {participantQr, badgeQr};
                 });
 
                 openCollapser(credentials);
@@ -73,9 +73,9 @@ const TestGenerator = (() => {
             $("#closeCollapser").hide();
             $("#generateCredentials").show();
 
-            showPreviousTesterButtonIfGenerated ();
+            showPreviousTesterButtonIfGenerated();
         });
 
-        showPreviousTesterButtonIfGenerated ();
+        showPreviousTesterButtonIfGenerated();
     });
 })();

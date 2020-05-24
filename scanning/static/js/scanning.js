@@ -6,7 +6,7 @@ const scanningQr = (() => {
         });
     });
 
-    function setStatus (status, message = "") {
+    function setStatus(status, message = "") {
         $("#error-message, .video-container .status").hide();
 
         if (status === "ready") {
@@ -63,7 +63,9 @@ const scanningQr = (() => {
 
     function createInformationView(user) {
         function unCamelCase(value) {
-            return value.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
+            return value.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
+                return str.toUpperCase();
+            });
         }
 
         function createPermissionBlock(name, value) {
@@ -121,7 +123,7 @@ const scanningQr = (() => {
      * @param response
      */
     function handleError(response, scanner) {
-        const { status, message } = response.responseJSON;
+        const {status, message} = response.responseJSON;
         setStatus("error", `[${status}] ${message}`);
 
         $(".video-container").off('touch click').on('touch click', () => {
@@ -195,7 +197,7 @@ const scanningQr = (() => {
                     let waitTime = 750;
 
                     if (type === "meal") {
-                        let { diet, other_diet } = response.data;
+                        let {diet, other_diet} = response.data;
                         if (diet === "Others") {
                             diet = other_diet;
                         }
