@@ -205,5 +205,3 @@ def export_resume(request):
         return response
     except:
         raise Http404
-
-

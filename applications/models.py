@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
 import json
-import uuid as uuid
 
+import uuid as uuid
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MinValueValidator
 from django.db import models
@@ -139,9 +139,11 @@ class Application(models.Model):
     # META
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
-    invited_by = models.ForeignKey(User, related_name='invited_applications', blank=True, null=True, on_delete=models.CASCADE)
+    invited_by = models.ForeignKey(User, related_name='invited_applications', blank=True, null=True,
+                                   on_delete=models.CASCADE)
     contacted = models.BooleanField(default=False)  # If a dubious application has been contacted yet
-    contacted_by = models.ForeignKey(User, related_name='contacted_by', blank=True, null=True, on_delete=models.CASCADE)
+    contacted_by = models.ForeignKey(User, related_name='contacted_by', blank=True, null=True,
+                                     on_delete=models.CASCADE)
 
     # When was the application submitted
     submission_date = models.DateTimeField(default=timezone.now)
@@ -184,13 +186,11 @@ class Application(models.Model):
     reimb_amount = models.FloatField(blank=True, null=True, validators=[
         MinValueValidator(0, "Negative? Really? Please put a positive value")])
 
-
     # Participant
     participant = models.CharField(max_length=300, choices=PARTICIPANTS, default=P_HACKER)
     volunteer_time = models.CharField(max_length=600, blank=True, null=True)
     mentor_topic = models.CharField(max_length=600, blank=True, null=True)
     mentor_workshop = models.CharField(max_length=600, blank=True, null=True)
-
 
     # Giv me a resume here!
     resume = models.FileField(upload_to='resumes', null=True, blank=True)
