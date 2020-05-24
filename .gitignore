@@ -27,7 +27,6 @@ cache/
 *.sh
 
 bin/
-lib/
 share/
 ./#.env#
 pyvenv.cfg
