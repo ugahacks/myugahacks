@@ -240,38 +240,30 @@ class Application(models.Model):
         super(Application, self).save(**kwargs)
 
     def invite(self, user):
-        # We can re-invite someone invited
+        # We can't re-invite someone invited
         if self.status in [self.CONFIRMED, self.ATTENDED]:
             raise ValidationError('Application has already answered invite. '
                                   'Current status: %s' % self.status)
-        self.status = self.INVITED
         if not self.invited_by:
             self.invited_by = user
         self.last_invite = timezone.now()
         self.last_reminder = None
-        self.status_update_date = timezone.now()
-        self.save()
+        self.__set_status(self.INVITED)
 
     def last_reminder(self):
         if self.status != self.INVITED:
             raise ValidationError('Reminder can\'t be sent to non-pending '
                                   'applications')
-        self.status_update_date = timezone.now()
-        self.status = self.LAST_REMINDER
-        self.save()
+        self.__set_status(self.LAST_REMINDER)
 
     def expire(self):
-        self.status_update_date = timezone.now()
-        self.status = self.EXPIRED
-        self.save()
+        self.__set_status(self.EXPIRED)
 
     def reject(self, request):
         if self.status == self.ATTENDED:
             raise ValidationError('Application has already attended. '
                                   'Current status: %s' % self.status)
-        self.status = self.REJECTED
-        self.status_update_date = timezone.now()
-        self.save()
+        self.__set_status(self.REJECTED)
 
     def confirm(self):
         if self.status == self.CANCELLED:
@@ -279,9 +271,7 @@ class Application(models.Model):
         elif self.status == self.EXPIRED:
             raise ValidationError('Unfortunately your invite has expired.')
         elif self.status in [self.INVITED, self.LAST_REMINDER]:
-            self.status = self.CONFIRMED
-            self.status_update_date = timezone.now()
-            self.save()
+            self.__set_status(self.CONFIRMED)
         elif self.status in [self.CONFIRMED, self.ATTENDED]:
             return None
         else:
@@ -293,33 +283,31 @@ class Application(models.Model):
             raise ValidationError('Application can\'t be cancelled. Current '
                                   'status: %s' % self.status)
         if self.status != self.CANCELLED:
-            self.status = self.CANCELLED
-            self.status_update_date = timezone.now()
-            self.save()
+            self.__set_status(self.CANCELLED)
             reimb = getattr(self.user, 'reimbursement', None)
             if reimb:
                 reimb.delete()
 
     def check_in(self):
-        self.status = self.ATTENDED
-        self.status_update_date = timezone.now()
-        self.save()
+        self.__set_status(self.ATTENDED)
 
     def set_dubious(self):
-        self.status = self.DUBIOUS
+        self.__set_status(self.DUBIOUS)
         self.contacted = False
-        #  self.contacted_by = None
-        self.save()
 
     def unset_dubious(self):
-        self.status = self.PENDING
-        self.save()
+        self.__set_status(self.PENDING)
 
     def set_contacted(self, user):
         if not self.contacted:
             self.contacted = True
             self.contacted_by = user
             self.save()
+
+    # Private
+    def __set_status(self, status):
+        self.status = status
+        self.save()
 
     def is_confirmed(self):
         return self.status == self.CONFIRMED
@@ -358,7 +346,7 @@ class Application(models.Model):
         return self.status == self.DUBIOUS
 
     def can_be_cancelled(self):
-        return self.status == self.CONFIRMED or self.status == self.INVITED or self.status == self.LAST_REMINDER
+        return self.status in [self.CONFIRMED, self.INVITED, self.LAST_REMINDER]
 
     def can_confirm(self):
         return self.status in [self.INVITED, self.LAST_REMINDER]
