@@ -111,10 +111,12 @@ class User(AbstractBaseUser):
         sponsor = Sponsor.objects.filter(email_domain=domain)
         return sponsor.get_tier_value()
 
+    # Used by django auth. Please do not remove.
     @property
     def is_superuser(self):
         return self.is_admin
 
+    # Use this one throughout the app for semantic clarity
     @property
     def is_staff(self):
         "Is the user a member of staff?"
