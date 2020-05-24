@@ -10,7 +10,8 @@ from app.utils import reverse, hacker_tabs
 from app.views import TabsView
 from applications.models import Application
 from applications.emails import send_batch_emails
-from reimbursement import forms, models, emails
+from reimbursement import forms, emails
+from reimbursement.models import Reimbursement
 from reimbursement.tables import ReimbursementTable, ReimbursementFilter, SendReimbursementTable, \
     SendReimbursementFilter
 from user.mixins import IsOrganizerMixin, IsDirectorMixin, IsHackerMixin
@@ -18,8 +19,8 @@ from user.mixins import IsOrganizerMixin, IsDirectorMixin, IsHackerMixin
 
 def organizer_tabs(user):
     t = [('Reimbursements', reverse('reimbursement_list'), False),
-         ('Receipts', reverse('receipt_review'), 'new' if models.Reimbursement.objects.filter(
-             status=models.RE_PEND_APPROVAL).count() else False), ]
+         ('Receipts', reverse('receipt_review'), 'new' if Reimbursement.objects.filter(
+             status=Reimbursement.PEND_APPROVAL).count() else False), ]
     if user.is_director:
         t.append(('Send', reverse('send_reimbursement'), False))
     return t
@@ -73,13 +74,13 @@ class ReimbursementDetail(IsOrganizerMixin, TabsView):
         id_ = kwargs.get('id', None)
         if not id_:
             return c
-        reimb = get_object_or_404(models.Reimbursement, pk=id_)
+        reimb = get_object_or_404(Reimbursement, pk=id_)
         c.update({'reimb': reimb, 'edit_form': forms.EditReimbursementForm(instance=reimb)})
         return c
 
     def post(self, request, *args, **kwargs):
         id_ = kwargs.get('id', None)
-        reimb = models.Reimbursement.objects.get(pk=id_)
+        reimb = Reimbursement.objects.get(pk=id_)
         form = forms.EditReimbursementForm(request.POST, instance=reimb)
 
         if form.is_valid():
@@ -100,14 +101,14 @@ class ReceiptReview(ReimbursementDetail):
 
     def get_context_data(self, **kwargs):
         c = super(ReceiptReview, self).get_context_data(**kwargs)
-        reimb = models.Reimbursement.objects.filter(status=models.RE_PEND_APPROVAL).order_by('-update_time').first()
+        reimb = Reimbursement.objects.filter(status=Reimbursement.PEND_APPROVAL).order_by('-update_time').first()
         c.update({'reimb': reimb, 'reject_form': forms.RejectReceiptForm(instance=reimb), 'review': True,
                   'accept_form': forms.AcceptReceiptForm(instance=reimb)})
         return c
 
     def post(self, request, *args, **kwargs):
         id_ = request.POST.get('id', None)
-        reimb = models.Reimbursement.objects.get(pk=id_)
+        reimb = Reimbursement.objects.get(pk=id_)
         a_form = forms.AcceptReceiptForm(instance=reimb)
         r_form = forms.RejectReceiptForm(instance=reimb)
 
@@ -150,7 +151,7 @@ class ReimbursementListView(IsOrganizerMixin, TabsViewMixin, SingleTableMixin, F
         return organizer_tabs(self.request.user)
 
     def get_queryset(self):
-        return models.Reimbursement.objects.all()
+        return Reimbursement.objects.all()
 
 
 class SendReimbursementListView(IsDirectorMixin, TabsViewMixin, SingleTableMixin, FilterView):
@@ -164,13 +165,13 @@ class SendReimbursementListView(IsDirectorMixin, TabsViewMixin, SingleTableMixin
 
     def get_queryset(self):
         status = [Application.INVITED, Application.LAST_REMIDER, Application.CONFIRMED, Application.ATTENDED]
-        return models.Reimbursement.objects.filter(status=models.RE_DRAFT) \
+        return Reimbursement.objects.filter(status=Reimbursement.DRAFT) \
             .filter(hacker__application__status__in=status).all()
 
     def post(self, request, *args, **kwargs):
         ids = request.POST.getlist('selected')
         no_reimb = request.POST.get('no_reimb', False)
-        reimbs = models.Reimbursement.objects.filter(pk__in=ids).all()
+        reimbs = Reimbursement.objects.filter(pk__in=ids).all()
         mails = []
         errors = 0
         for reimb in reimbs:

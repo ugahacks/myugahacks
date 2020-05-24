@@ -23,8 +23,8 @@ def stats_tabs():
 
 @is_organizer
 def reimb_stats_api(request):
-    from reimbursement.models import Reimbursement, RE_STATUS, RE_DRAFT
-    RE_STATUS_DICT = dict(RE_STATUS)
+    from reimbursement.models import Reimbursement
+    RE_STATUS_DICT = dict(Reimbursement.STATUS)
     # Status analysis
     status_count = Reimbursement.objects.all().values('status') \
         .annotate(reimbursements=Count('status'))
@@ -33,7 +33,7 @@ def reimb_stats_api(request):
     total_apps = Application.objects.count()
     reimb_count = Reimbursement.objects.count()
 
-    amounts = Reimbursement.objects.all().exclude(status=RE_DRAFT).values('status') \
+    amounts = Reimbursement.objects.all().exclude(status=Reimbursement.DRAFT).values('status') \
         .annotate(final_amount=Sum('reimbursement_money'), max_amount=Sum('assigned_money'))
     amounts = map(lambda x: dict(status_name=RE_STATUS_DICT[x['status']], **x), amounts)
 
