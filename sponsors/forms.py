@@ -1,10 +1,11 @@
 from django import forms
-from .models import SponsorApplication, Sponsor, TSHIRT_SIZES, DIETS
+from .models import SponsorApplication, Sponsor
+from applications.models import Application
 
 class SponsorForm(forms.ModelForm):
-    tshirt_size = forms.TypedChoiceField(choices=TSHIRT_SIZES)
+    tshirt_size = forms.TypedChoiceField(choices=Application.TSHIRT_SIZES)
 
-    diet = forms.TypedChoiceField(choices=DIETS)
+    diet = forms.TypedChoiceField(choices=Application.DIETS)
 
     other_diet = forms.CharField(max_length=255,required=False,help_text='If you selected "Others" above, please describe your dietary restrictions in this field.')
 

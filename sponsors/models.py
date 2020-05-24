@@ -1,48 +1,15 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
-
-D_NONE = 'None'
-D_VEGETERIAN = 'Vegeterian'
-D_VEGAN = 'Vegan'
-D_NO_PORK = 'No pork'
-D_GLUTEN_FREE = 'Gluten-free'
-D_OTHER = 'Others'
-
-DIETS = [
-    (D_NONE, 'No requirements'),
-    (D_VEGETERIAN, 'Vegeterian'),
-    (D_VEGAN, 'Vegan'),
-    (D_NO_PORK, 'No pork'),
-    (D_GLUTEN_FREE, 'Gluten-free'),
-    (D_OTHER, 'Others')
-]
-
-T_XXS = 'XXS'
-T_XS = 'XS'
-T_S = 'S'
-T_M = 'M'
-T_L = 'L'
-T_XL = 'XL'
-T_XXL = 'XXL'
-
-TSHIRT_SIZES = [
-    (T_XXS, "Unisex - XXS"),
-    (T_XS, "Unisex - XS"),
-    (T_S, "Unisex - S"),
-    (T_M, "Unisex - M"),
-    (T_L, "Unisex - L"),
-    (T_XL, "Unisex - XL"),
-    (T_XXL, "Unisex - XXL"),
-]
+from applications.models import Application
 
 
 class SponsorApplication(models.Model):
     # String of user.User to prevent circular dependecies
     user = models.OneToOneField('user.User', on_delete=models.CASCADE)
 
-    tshirt_size = models.CharField(max_length=5, choices=TSHIRT_SIZES)
+    tshirt_size = models.CharField(max_length=5, choices=Application.TSHIRT_SIZES)
 
-    diet = models.CharField(max_length=300, choices=DIETS, default=D_NONE)
+    diet = models.CharField(max_length=300, choices=Application.DIETS, default=Application.D_NONE)
 
     other_diet = models.CharField(max_length=600, blank=True, null=True)
 
