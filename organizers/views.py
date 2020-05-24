@@ -47,7 +47,7 @@ def add_comment(application, user, text):
 def organizer_tabs(user):
     t = [('Applications', reverse('app_list'), False),
          ('Review', reverse('review'),
-          'new' if models.Application.objects.exclude(vote__user_id=user.id).filter(status=Application.APP_PENDING) else ''),
+          'new' if models.Application.objects.exclude(vote__user_id=user.id).filter(status=Application.PENDING) else ''),
          ('Ranking', reverse('ranking'), False)]
     if user.is_director:
         t.append(('Invite', reverse('invite_list'), False))
@@ -93,7 +93,7 @@ class InviteListView(TabsViewMixin, IsDirectorMixin, SingleTableMixin, FilterVie
         return organizer_tabs(self.request.user)
 
     def get_queryset(self):
-        return models.Application.annotate_vote(models.Application.objects.filter(status=Application.APP_PENDING))
+        return models.Application.annotate_vote(models.Application.objects.filter(status=Application.PENDING))
 
     def post(self, request, *args, **kwargs):
         ids = request.POST.getlist('selected')
@@ -241,7 +241,7 @@ class ReviewApplicationView(ApplicationDetailView):
         """
         return models.Application.objects \
             .exclude(vote__user_id=self.request.user.id) \
-            .filter(status=Application.APP_PENDING) \
+            .filter(status=Application.PENDING) \
             .annotate(count=Count('vote__calculated_vote')) \
             .order_by('count', 'submission_date') \
             .first()
@@ -286,7 +286,7 @@ class InviteTeamListView(TabsViewMixin, IsDirectorMixin, SingleTableMixin, Templ
         return organizer_tabs(self.request.user)
 
     def get_queryset(self):
-        return models.Application.objects.filter(status=Application.APP_PENDING).exclude(user__team__team_code__isnull=True) \
+        return models.Application.objects.filter(status=Application.PENDING).exclude(user__team__team_code__isnull=True) \
             .values('user__team__team_code').order_by().annotate(vote_avg=Avg('vote__calculated_vote'),
                                                                  team=F('user__team__team_code'),
                                                                  members=Count('user', distinct=True))
@@ -332,7 +332,7 @@ class DubiousApplicationsListView(TabsViewMixin, IsOrganizerMixin, ExportMixin, 
         return organizer_tabs(self.request.user)
 
     def get_queryset(self):
-        return models.Application.objects.filter(status=Application.APP_DUBIOUS)
+        return models.Application.objects.filter(status=Application.DUBIOUS)
 
     def post(self, request, *args, **kwargs):
         application = models.Application.objects.get(uuid=request.POST.get('id'))

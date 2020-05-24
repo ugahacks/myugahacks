@@ -23,9 +23,9 @@ class CheckIn(models.Model):
         self.update_time = datetime.now()
         super(CheckIn, self).save(force_insert, force_update, using,
                                   update_fields)
-        self.application.status = Application.APP_ATTENDED
+        self.application.status = Application.ATTENDED
 
     def delete(self, using=None, keep_parents=False):
-        self.application.status = Application.APP_CONFIRMED
+        self.application.status = Application.CONFIRMED
         self.application.save()
         super(CheckIn, self).delete(using, keep_parents)

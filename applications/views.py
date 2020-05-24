@@ -72,11 +72,11 @@ class CancelApplication(IsHackerMixin, UserPassesTestMixin, TabsView):
 
         application = Application.objects.get(user=self.request.user)
         context.update({'application': application, })
-        if application.status == Application.APP_CANCELLED:
+        if application.status == Application.CANCELLED:
             context.update({'error': "Thank you for responding. We're sorry you won't be able to make it."
                                      " Hope to see you next edition!"
                             })
-        elif application.status == Application.APP_EXPIRED:
+        elif application.status == Application.EXPIRED:
             context.update({'error': "Unfortunately your invite has expired."})
         elif not application.can_be_cancelled():
             context.update({
@@ -97,7 +97,7 @@ class CancelApplication(IsHackerMixin, UserPassesTestMixin, TabsView):
 
 def get_deadline(application):
     last_updated = application.status_update_date
-    if application.status == Application.APP_INVITED:
+    if application.status == Application.INVITED:
         deadline = last_updated + timedelta(days=5)
     else:
         deadline = last_updated + timedelta(days=1)

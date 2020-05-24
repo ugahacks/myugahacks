@@ -13,26 +13,26 @@ from app import utils
 from user.models import User
 
 class Application(models.Model):
-    APP_PENDING = 'P'
-    APP_REJECTED = 'R'
-    APP_INVITED = 'I'
-    APP_LAST_REMIDER = 'LR'
-    APP_CONFIRMED = 'C'
-    APP_CANCELLED = 'X'
-    APP_ATTENDED = 'A'
-    APP_EXPIRED = 'E'
-    APP_DUBIOUS = 'D'
+    PENDING = 'P'
+    REJECTED = 'R'
+    INVITED = 'I'
+    LAST_REMIDER = 'LR'
+    CONFIRMED = 'C'
+    CANCELLED = 'X'
+    ATTENDED = 'A'
+    EXPIRED = 'E'
+    DUBIOUS = 'D'
 
     STATUS = [
-        (APP_PENDING, 'Under review'),
-        (APP_REJECTED, 'Wait listed'),
-        (APP_INVITED, 'Invited'),
-        (APP_LAST_REMIDER, 'Last reminder'),
-        (APP_CONFIRMED, 'Confirmed'),
-        (APP_CANCELLED, 'Cancelled'),
-        (APP_ATTENDED, 'Attended'),
-        (APP_EXPIRED, 'Expired'),
-        (APP_DUBIOUS, 'Dubious')
+        (PENDING, 'Under review'),
+        (REJECTED, 'Wait listed'),
+        (INVITED, 'Invited'),
+        (LAST_REMIDER, 'Last reminder'),
+        (CONFIRMED, 'Confirmed'),
+        (CANCELLED, 'Cancelled'),
+        (ATTENDED, 'Attended'),
+        (EXPIRED, 'Expired'),
+        (DUBIOUS, 'Dubious')
     ]
 
     NO_ANSWER = 'NA'
@@ -147,7 +147,7 @@ class Application(models.Model):
     # When was the last status update
     status_update_date = models.DateTimeField(blank=True, null=True)
     # Application status
-    status = models.CharField(choices=STATUS, default=APP_PENDING,
+    status = models.CharField(choices=STATUS, default=PENDING,
                               max_length=2)
 
     # ABOUT YOU
@@ -240,10 +240,10 @@ class Application(models.Model):
 
     def invite(self, user):
         # We can re-invite someone invited
-        if self.status in [self.APP_CONFIRMED, self.APP_ATTENDED]:
+        if self.status in [self.CONFIRMED, self.ATTENDED]:
             raise ValidationError('Application has already answered invite. '
                                   'Current status: %s' % self.status)
-        self.status = self.APP_INVITED
+        self.status = self.INVITED
         if not self.invited_by:
             self.invited_by = user
         self.last_invite = timezone.now()
@@ -252,36 +252,36 @@ class Application(models.Model):
         self.save()
 
     def last_reminder(self):
-        if self.status != self.APP_INVITED:
+        if self.status != self.INVITED:
             raise ValidationError('Reminder can\'t be sent to non-pending '
                                   'applications')
         self.status_update_date = timezone.now()
-        self.status = self.APP_LAST_REMIDER
+        self.status = self.LAST_REMIDER
         self.save()
 
     def expire(self):
         self.status_update_date = timezone.now()
-        self.status = self.APP_EXPIRED
+        self.status = self.EXPIRED
         self.save()
 
     def reject(self, request):
-        if self.status == self.APP_ATTENDED:
+        if self.status == self.ATTENDED:
             raise ValidationError('Application has already attended. '
                                   'Current status: %s' % self.status)
-        self.status = self.APP_REJECTED
+        self.status = self.REJECTED
         self.status_update_date = timezone.now()
         self.save()
 
     def confirm(self):
-        if self.status == self.APP_CANCELLED:
+        if self.status == self.CANCELLED:
             raise ValidationError('This invite has been cancelled.')
-        elif self.status == self.APP_EXPIRED:
+        elif self.status == self.EXPIRED:
             raise ValidationError('Unfortunately your invite has expired.')
-        elif self.status in [self.APP_INVITED, self.APP_LAST_REMIDER]:
-            self.status = self.APP_CONFIRMED
+        elif self.status in [self.INVITED, self.LAST_REMIDER]:
+            self.status = self.CONFIRMED
             self.status_update_date = timezone.now()
             self.save()
-        elif self.status in [self.APP_CONFIRMED, self.APP_ATTENDED]:
+        elif self.status in [self.CONFIRMED, self.ATTENDED]:
             return None
         else:
             raise ValidationError('Unfortunately his application hasn\'t been '
@@ -291,8 +291,8 @@ class Application(models.Model):
         if not self.can_be_cancelled():
             raise ValidationError('Application can\'t be cancelled. Current '
                                   'status: %s' % self.status)
-        if self.status != self.APP_CANCELLED:
-            self.status = self.APP_CANCELLED
+        if self.status != self.CANCELLED:
+            self.status = self.CANCELLED
             self.status_update_date = timezone.now()
             self.save()
             reimb = getattr(self.user, 'reimbursement', None)
@@ -300,18 +300,18 @@ class Application(models.Model):
                 reimb.delete()
 
     def check_in(self):
-        self.status = self.APP_ATTENDED
+        self.status = self.ATTENDED
         self.status_update_date = timezone.now()
         self.save()
 
     def set_dubious(self):
-        self.status = self.APP_DUBIOUS
+        self.status = self.DUBIOUS
         self.contacted = False
         #  self.contacted_by = None
         self.save()
 
     def unset_dubious(self):
-        self.status = self.APP_PENDING
+        self.status = self.PENDING
         self.save()
 
     def set_contacted(self, user):
@@ -321,46 +321,46 @@ class Application(models.Model):
             self.save()
 
     def is_confirmed(self):
-        return self.status == self.APP_CONFIRMED
+        return self.status == self.CONFIRMED
 
     def is_cancelled(self):
-        return self.status == self.APP_CANCELLED
+        return self.status == self.CANCELLED
 
     def answered_invite(self):
-        return self.status in [self.APP_CONFIRMED, self.APP_CANCELLED, self.APP_ATTENDED]
+        return self.status in [self.CONFIRMED, self.CANCELLED, self.ATTENDED]
 
     def needs_action(self):
-        return self.status == self.APP_INVITED
+        return self.status == self.INVITED
 
     def is_pending(self):
-        return self.status == self.APP_PENDING
+        return self.status == self.PENDING
 
     def can_be_edit(self):
-        return self.status == self.APP_PENDING and not self.vote_set.exists() and not utils.is_app_closed()
+        return self.status == self.PENDING and not self.vote_set.exists() and not utils.is_app_closed()
 
     def is_invited(self):
-        return self.status == self.APP_INVITED
+        return self.status == self.INVITED
 
     def is_expired(self):
-        return self.status == self.APP_EXPIRED
+        return self.status == self.EXPIRED
 
     def is_rejected(self):
-        return self.status == self.APP_REJECTED
+        return self.status == self.REJECTED
 
     def is_attended(self):
-        return self.status == self.APP_ATTENDED
+        return self.status == self.ATTENDED
 
     def is_last_reminder(self):
-        return self.status == self.APP_LAST_REMIDER
+        return self.status == self.LAST_REMIDER
 
     def is_dubious(self):
-        return self.status == self.APP_DUBIOUS
+        return self.status == self.DUBIOUS
 
     def can_be_cancelled(self):
-        return self.status == self.APP_CONFIRMED or self.status == self.APP_INVITED or self.status == self.APP_LAST_REMIDER
+        return self.status == self.CONFIRMED or self.status == self.INVITED or self.status == self.LAST_REMIDER
 
     def can_confirm(self):
-        return self.status in [self.APP_INVITED, self.APP_LAST_REMIDER]
+        return self.status in [self.INVITED, self.LAST_REMIDER]
 
     def serialize(self):
         return {

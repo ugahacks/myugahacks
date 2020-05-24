@@ -32,7 +32,7 @@ class CheckInList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView)
         return user_tabs(self.request.user)
 
     def get_queryset(self):
-        return Application.objects.exclude(status=Application.APP_ATTENDED)
+        return Application.objects.exclude(status=Application.ATTENDED)
 
 
 class CheckInHackerView(IsVolunteerMixin, TabsView):
@@ -49,7 +49,7 @@ class CheckInHackerView(IsVolunteerMixin, TabsView):
             raise Http404
         context.update({
             'app': app,
-            'checkedin': app.status == Application.APP_ATTENDED
+            'checkedin': app.status == Application.ATTENDED
         })
         try:
             context.update({'checkin': CheckIn.objects.filter(application=app).first()})
@@ -98,7 +98,7 @@ class ReIssueList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView)
         return user_tabs(self.request.user)
 
     def get_queryset(self):
-        return Application.objects.filter(status=Application.APP_ATTENDED)
+        return Application.objects.filter(status=Application.ATTENDED)
 
 
 class ReIssueHackerView(IsVolunteerMixin, TabsView):
@@ -116,7 +116,7 @@ class ReIssueHackerView(IsVolunteerMixin, TabsView):
             raise Http404
         context.update({
             'app': app,
-            'checkedin': app.status == Application.APP_ATTENDED,
+            'checkedin': app.status == Application.ATTENDED,
             'ci': ci
         })
         try:

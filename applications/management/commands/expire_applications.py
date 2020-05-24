@@ -16,7 +16,7 @@ class Command(BaseCommand):
         fourdaysago = timezone.now() - timedelta(days=4)
         self.stdout.write('Checking reminders...')
         reminders = Application.objects.filter(
-            status_update_date__lte=fourdaysago, status=Application.APP_INVITED)
+            status_update_date__lte=fourdaysago, status=Application.INVITED)
         self.stdout.write('Checking reminders...%s found' % reminders.count())
         self.stdout.write('Sending reminders...')
         msgs = []
@@ -32,7 +32,7 @@ class Command(BaseCommand):
         onedayago = timezone.now() - timedelta(days=1)
         self.stdout.write('Checking expired...')
         expired = Application.objects.filter(
-            status_update_date__lte=onedayago, status=Application.APP_LAST_REMIDER)
+            status_update_date__lte=onedayago, status=Application.LAST_REMIDER)
         self.stdout.write('Checking expired...%s found' % expired.count())
         self.stdout.write('Setting expired...')
         count = len([app.expire() for app in expired])

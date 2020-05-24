@@ -59,20 +59,20 @@ def app_stats_api(request):
         .annotate(applications=Count('gender'))
     gender_count = map(lambda x: dict(gender_name=GENDER_DICT[x['gender']], **x), gender_count)
 
-    gender_count_attended = Application.objects.filter(status=Application.APP_ATTENDED).values('gender').annotate(applications=Count('gender'))
+    gender_count_attended = Application.objects.filter(status=Application.ATTENDED).values('gender').annotate(applications=Count('gender'))
     gender_count_attended= map(lambda x: dict(gender_name=GENDER_DICT[x['gender']], **x), gender_count_attended)
 
     class_count = Application.objects.all().exclude(participant=Application.P_MENTOR).values('class_status').annotate(applications=Count('class_status'))
     class_count = map(lambda x: dict(class_name=CLASSSTATUS_DICT[x['class_status']], **x), class_count)
 
-    class_count_attended = Application.objects.filter(status=Application.APP_ATTENDED).exclude(participant=Application.P_MENTOR).values('class_status').annotate(applications=Count('class_status'))
+    class_count_attended = Application.objects.filter(status=Application.ATTENDED).exclude(participant=Application.P_MENTOR).values('class_status').annotate(applications=Count('class_status'))
     class_count_attended = map(lambda x: dict(class_name=CLASSSTATUS_DICT[x['class_status']], **x), class_count_attended)
 
     major_count = Application.objects.all().values('degree').annotate(applications=Count('degree'))
     major_count = map(lambda x: dict(**x), major_count)
     major_count = [major for major in major_count if major['applications'] > 5]
 
-    major_count_attended = Application.objects.filter(status=Application.APP_ATTENDED).values('degree').annotate(applications=Count('degree'))
+    major_count_attended = Application.objects.filter(status=Application.ATTENDED).values('degree').annotate(applications=Count('degree'))
     major_count_attended = map(lambda x: dict(**x), major_count_attended)
     major_count_attended = [major for major in major_count_attended if major['applications'] > 5]
 
@@ -82,7 +82,7 @@ def app_stats_api(request):
     first_timer_count = Application.objects.all().values('first_timer').annotate(applications=Count('first_timer'))
     first_timer_count = map(lambda x: dict(**x), first_timer_count)
 
-    first_timer_count_attended = Application.objects.filter(status=Application.APP_ATTENDED).values('first_timer').annotate(applications=Count('first_timer'))
+    first_timer_count_attended = Application.objects.filter(status=Application.ATTENDED).values('first_timer').annotate(applications=Count('first_timer'))
     first_timer_count_attended = map(lambda x: dict(**x), first_timer_count_attended)
 
     tshirt_dict = dict(Application.TSHIRT_SIZES)
@@ -93,15 +93,15 @@ def app_stats_api(request):
 
     shirt_count_confirmed = map(
         lambda x: {'tshirt_size': tshirt_dict.get(x['tshirt_size'], 'Unknown'), 'applications': x['applications']},
-        Application.objects.filter(status=Application.APP_CONFIRMED).values('tshirt_size')
+        Application.objects.filter(status=Application.CONFIRMED).values('tshirt_size')
         .annotate(applications=Count('tshirt_size'))
     )
 
     diet_count = Application.objects.values('diet') \
         .annotate(applications=Count('diet'))
-    diet_count_confirmed = Application.objects.filter(status=Application.APP_CONFIRMED).values('diet') \
+    diet_count_confirmed = Application.objects.filter(status=Application.CONFIRMED).values('diet') \
         .annotate(applications=Count('diet'))
-    other_diets = Application.objects.filter(status=Application.APP_CONFIRMED).values('other_diet')
+    other_diets = Application.objects.filter(status=Application.CONFIRMED).values('other_diet')
 
     hardware_count = Application.objects.filter(hardware__isnull=False).exclude(hardware__icontains="N/A").exclude(hardware__icontains="na") \
         .exclude(hardware__icontains="NA").exclude(hardware__icontains="n/a").exclude(hardware__icontains="None").exclude(hardware__icontains="Nothing").values('hardware')
