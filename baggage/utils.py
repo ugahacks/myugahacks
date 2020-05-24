@@ -1,5 +1,6 @@
-import math
 import itertools
+import math
+
 from baggage.models import Room, Bag
 
 

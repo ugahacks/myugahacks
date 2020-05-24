@@ -1,12 +1,14 @@
+from datetime import datetime, timedelta
+
 import django_filters
 import django_tables2 as tables
+from django import forms
+from django.db.models import CharField
+from django.db.models import Q
+from django.db.models.functions import Concat
+
 from baggage.models import Bag, Room
 from checkin.models import CheckIn
-from django.db.models import Q
-from django import forms
-from datetime import datetime, timedelta
-from django.db.models import CharField
-from django.db.models.functions import Concat
 
 
 class BaggageListFilter(django_filters.FilterSet):

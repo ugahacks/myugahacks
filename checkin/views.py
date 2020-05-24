@@ -10,11 +10,10 @@ from app.utils import reverse
 from app.views import TabsView
 from applications.models import Application
 from checkin.models import CheckIn
-from checkin.tables import ApplicationsCheckInTable, ApplicationCheckinFilter, RankingListTable, ApplicationsReIssueTable
+from checkin.tables import ApplicationsCheckInTable, ApplicationCheckinFilter, RankingListTable, \
+    ApplicationsReIssueTable
 from user.mixins import IsVolunteerMixin, IsOrganizerMixin
 from user.models import User
-from django.conf import settings
-from app.slack import send_slack_message
 
 
 def user_tabs(user):

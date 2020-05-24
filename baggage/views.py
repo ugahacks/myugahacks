@@ -1,23 +1,25 @@
-from django.core.urlresolvers import reverse
-from app.mixins import TabsViewMixin
-from baggage.tables import BaggageListTable, BaggageListFilter, BaggageUsersTable
-from baggage.tables import BaggageUsersFilter, BaggageCurrentHackerTable
-from baggage.models import Bag, Room
-from user.models import User
-from checkin.models import CheckIn
-from django_tables2 import SingleTableMixin
-from django_filters.views import FilterView
-from app.views import TabsView
+import base64
+import time
+
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.base import ContentFile
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import redirect
-from baggage import utils
-import base64
-from django.core.files.base import ContentFile
-import time
-from user.mixins import IsVolunteerMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django_filters.views import FilterView
+from django_tables2 import SingleTableMixin
+
+from app.mixins import TabsViewMixin
 from app.slack import send_slack_message
+from app.views import TabsView
+from baggage import utils
+from baggage.models import Bag, Room
+from baggage.tables import BaggageListTable, BaggageListFilter, BaggageUsersTable
+from baggage.tables import BaggageUsersFilter, BaggageCurrentHackerTable
+from checkin.models import CheckIn
+from user.mixins import IsVolunteerMixin
+from user.models import User
 
 
 def organizer_tabs(user):
@@ -142,10 +144,11 @@ class BaggageAdd(IsVolunteerMixin, TabsView):
             bag.save()
             messages.success(self.request, 'Bag checked-in!')
             send_slack_message(bag.owner.email, '*Baggage check-in* :handbag:\nYou\'ve just '
-                               'registered :memo: a bag with ID `' + str(bag.bid) + '` located '
-                               ':world_map: at `' + position[1] + '-' + position[2] + str(position[3]) +
+                                                'registered :memo: a bag with ID `' + str(bag.bid) + '` located '
+                                                                                                     ':world_map: at `' +
+                               position[1] + '-' + position[2] + str(position[3]) +
                                '`!\n_Remember to take it before leaving :woman-running::skin-tone-3:!_')
-            return redirect('baggage_detail', id=(str(bag.bid,)), first='first/')
+            return redirect('baggage_detail', id=(str(bag.bid, )), first='first/')
         messages.success(self.request, 'Error! Couldn\'t add the bag!')
         return redirect('baggage_list')
 
