@@ -1,5 +1,5 @@
 
-body{
+body {
     height: 100vh;
     width: 100%;
     margin-bottom: 0px !important;
@@ -28,9 +28,11 @@ select {
 .full-screen {
     height: 100%;
 }
+
 .col {
     padding: 0;
 }
-@media(max-width:992px){
+
+@media (max-width: 992px) {
 
 }
