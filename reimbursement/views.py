@@ -164,7 +164,7 @@ class SendReimbursementListView(IsDirectorMixin, TabsViewMixin, SingleTableMixin
         return organizer_tabs(self.request.user)
 
     def get_queryset(self):
-        status = [Application.INVITED, Application.LAST_REMIDER, Application.CONFIRMED, Application.ATTENDED]
+        status = [Application.INVITED, Application.LAST_REMINDER, Application.CONFIRMED, Application.ATTENDED]
         return Reimbursement.objects.filter(status=Reimbursement.DRAFT) \
             .filter(hacker__application__status__in=status).all()
 

@@ -12,11 +12,12 @@ from django.utils import timezone
 from app import utils
 from user.models import User
 
+
 class Application(models.Model):
     PENDING = 'P'
     REJECTED = 'R'
     INVITED = 'I'
-    LAST_REMIDER = 'LR'
+    LAST_REMINDER = 'LR'
     CONFIRMED = 'C'
     CANCELLED = 'X'
     ATTENDED = 'A'
@@ -27,7 +28,7 @@ class Application(models.Model):
         (PENDING, 'Under review'),
         (REJECTED, 'Wait listed'),
         (INVITED, 'Invited'),
-        (LAST_REMIDER, 'Last reminder'),
+        (LAST_REMINDER, 'Last reminder'),
         (CONFIRMED, 'Confirmed'),
         (CANCELLED, 'Cancelled'),
         (ATTENDED, 'Attended'),
@@ -256,7 +257,7 @@ class Application(models.Model):
             raise ValidationError('Reminder can\'t be sent to non-pending '
                                   'applications')
         self.status_update_date = timezone.now()
-        self.status = self.LAST_REMIDER
+        self.status = self.LAST_REMINDER
         self.save()
 
     def expire(self):
@@ -277,7 +278,7 @@ class Application(models.Model):
             raise ValidationError('This invite has been cancelled.')
         elif self.status == self.EXPIRED:
             raise ValidationError('Unfortunately your invite has expired.')
-        elif self.status in [self.INVITED, self.LAST_REMIDER]:
+        elif self.status in [self.INVITED, self.LAST_REMINDER]:
             self.status = self.CONFIRMED
             self.status_update_date = timezone.now()
             self.save()
@@ -351,16 +352,16 @@ class Application(models.Model):
         return self.status == self.ATTENDED
 
     def is_last_reminder(self):
-        return self.status == self.LAST_REMIDER
+        return self.status == self.LAST_REMINDER
 
     def is_dubious(self):
         return self.status == self.DUBIOUS
 
     def can_be_cancelled(self):
-        return self.status == self.CONFIRMED or self.status == self.INVITED or self.status == self.LAST_REMIDER
+        return self.status == self.CONFIRMED or self.status == self.INVITED or self.status == self.LAST_REMINDER
 
     def can_confirm(self):
-        return self.status in [self.INVITED, self.LAST_REMIDER]
+        return self.status in [self.INVITED, self.LAST_REMINDER]
 
     def serialize(self):
         return {

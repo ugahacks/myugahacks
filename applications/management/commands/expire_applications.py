@@ -32,7 +32,7 @@ class Command(BaseCommand):
         onedayago = timezone.now() - timedelta(days=1)
         self.stdout.write('Checking expired...')
         expired = Application.objects.filter(
-            status_update_date__lte=onedayago, status=Application.LAST_REMIDER)
+            status_update_date__lte=onedayago, status=Application.LAST_REMINDER)
         self.stdout.write('Checking expired...%s found' % expired.count())
         self.stdout.write('Setting expired...')
         count = len([app.expire() for app in expired])
