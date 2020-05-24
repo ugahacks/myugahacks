@@ -103,6 +103,34 @@ a:hover, a:active, a:focus {
 
 }
 
+.social-btn {
+  display: block;
+  width: 185px;
+  padding: 10px;
+  margin: auto;
+}
+
+.social-btn i{
+  margin-right: 10px;
+}
+
+#github-btn {
+  background-color: #24292e;
+}
+
+#github-btn:hover, #github-btn:focus {
+  background-color: #4b5661 !important;
+}
+
+#google-btn {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+#google-btn:hover, #google-btn:focus {
+  opacity: 0.7;
+}
+
 footer p, footer small {
     color: #b4b4b4;
 }
