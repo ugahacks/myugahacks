@@ -106,22 +106,21 @@ class Presentation(models.Model):
             .annotate(score_avg=avg_)
 
 
-JUDGE_ALIASES = [
-    ('A', 'A'),
-    ('B', 'B'),
-    ('C', 'C')
-]
-
-VOTES = (
-    (1, '1'),
-    (2, '2'),
-    (3, '3'),
-    (4, '4'),
-    (5, '5')
-)
-
-
 class PresentationEvaluation(models.Model):
+    JUDGE_ALIASES = [
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C')
+    ]
+
+    VOTES = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5')
+    )
+
     presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
     judge_alias = models.CharField(choices=JUDGE_ALIASES, max_length=1)
     tech = models.IntegerField(choices=VOTES)
