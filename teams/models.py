@@ -9,8 +9,8 @@ TEAM_ID_LENGTH = 13
 
 def generate_team_id():
     s = "abcdefghijklmnopqrstuvwxyz01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    passlen = TEAM_ID_LENGTH
-    return "".join(random.sample(s, passlen))
+    pass_len = TEAM_ID_LENGTH
+    return "".join(random.sample(s, pass_len))
 
 
 class Team(models.Model):
