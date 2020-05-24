@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from user.models import User
 from workshops.models import Workshop, Attendance
 from checkin.models import CheckIn
-from meals.models import Meal, Eaten, MEAL_TYPE
+from meals.models import Meal, Eaten
 from applications.models import Application
 from points.models import Points
 
@@ -27,7 +27,7 @@ class ScanningView(LoginRequiredMixin, TemplateView):
         context.update({
             'workshops': workshops,
             'meals': meals,
-            'types': MEAL_TYPE
+            'types': Meal.TYPES
         })
         return context
 

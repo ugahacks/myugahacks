@@ -21,7 +21,7 @@ from app.views import TabsView
 from applications import models as models_app
 from applications.models import Application
 from checkin.models import CheckIn
-from meals.models import Meal, Eaten, MEAL_TYPE
+from meals.models import Meal, Eaten
 from meals.tables import MealsListTable, MealsListFilter, MealsUsersTable, MealsUsersFilter
 from user.mixins import IsOrganizerMixin, IsVolunteerMixin
 
@@ -75,7 +75,7 @@ class MealDetail(IsOrganizerMixin, TabsView):
             raise Http404
         context.update({
             'meal': meal,
-            'types': MEAL_TYPE,
+            'types': Meal.TYPES,
             'starts': meal.starts.strftime("%Y-%m-%d %H:%M:%S"),
             'ends': meal.ends.strftime("%Y-%m-%d %H:%M:%S"),
             'eaten': meal.eaten()
@@ -116,7 +116,7 @@ class MealAdd(IsOrganizerMixin, TabsView):
     def get_context_data(self, **kwargs):
         context = super(MealAdd, self).get_context_data(**kwargs)
         context.update({
-            'types': MEAL_TYPE,
+            'types': Meal.TYPES,
             'time1': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             'time2': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         })
