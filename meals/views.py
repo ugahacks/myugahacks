@@ -4,12 +4,11 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
-from django.urls import reverse
 from django.core.serializers.python import Serializer
 from django.http import Http404
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
-from django.views import View
+from django.urls import reverse
 from django.views.generic import TemplateView
 from django_filters.views import FilterView
 from django_tables2 import SingleTableMixin
@@ -185,7 +184,8 @@ class MealsCheckin(IsVolunteerMixin, TemplateView):
         current_meal = Meal.objects.filter(id=meal_id).first()
 
         if not current_meal.opened and not self.request.user.is_organizer:
-            messages.error(self.request, 'This meal is not open yet or it has ended. Reach out to an organizer to activate it again')
+            messages.error(self.request,
+                           'This meal is not open yet or it has ended. Reach out to an organizer to activate it again')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         hacker_checkin = CheckIn.objects.filter(qr_identifier=qr_id).first()
@@ -267,7 +267,8 @@ class MealsApi(APIView):
             var_user = request.GET.get('user')
             obj_checkin = CheckIn.objects.filter(qr_identifier=var_user).first()
             if obj_checkin is None:
-                return HttpResponse(json.dumps({'code': 1, 'message': 'Invalid user'}), content_type='application/json')
+                return HttpResponse(json.dumps({'code': 1, 'message': 'Invalid user'}),
+                                    content_type='application/json')
             obj_user = obj_checkin.application_user
             obj_application = Application.objects.filter(user=obj_user).first()
             if obj_user.diet:

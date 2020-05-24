@@ -1,7 +1,8 @@
 import django_filters
 import django_tables2 as tables
-from meals.models import Meal
 from django.db.models import Q
+
+from meals.models import Meal
 
 
 class MealsListFilter(django_filters.FilterSet):
