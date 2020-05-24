@@ -1,6 +1,6 @@
 import django_filters
 import django_tables2 as tables
-from baggage.models import Bag, BAG_BUILDINGS
+from baggage.models import Bag, Room
 from checkin.models import CheckIn
 from django.db.models import Q
 from django import forms
@@ -11,7 +11,7 @@ from django.db.models.functions import Concat
 
 class BaggageListFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method='search_filter', label='Search')
-    room = django_filters.ChoiceFilter(label='Room', choices=BAG_BUILDINGS, empty_label='Any')
+    room = django_filters.ChoiceFilter(label='Room', choices=Room.BUILDINGS, empty_label='Any')
     time_from = django_filters.DateTimeFilter(method='search_time', label='Time from',
                                               widget=forms.DateTimeInput(attrs={'class': 'field-left'}),
                                               initial=datetime.now() - timedelta(1))

@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from app.mixins import TabsViewMixin
 from baggage.tables import BaggageListTable, BaggageListFilter, BaggageUsersTable
 from baggage.tables import BaggageUsersFilter, BaggageCurrentHackerTable
-from baggage.models import Bag, BAG_ADDED, BAG_REMOVED, Room
+from baggage.models import Bag, Room
 from user.models import User
 from checkin.models import CheckIn
 from django_tables2 import SingleTableMixin
@@ -46,8 +46,8 @@ class BaggageList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView)
         if 'user_id' in self.kwargs:
             id_ = self.kwargs['user_id']
             user = User.objects.filter(id=id_)
-            return Bag.objects.filter(status=BAG_ADDED, owner=user)
-        return Bag.objects.filter(status=BAG_ADDED)
+            return Bag.objects.filter(status=Bag.ADDED, owner=user)
+        return Bag.objects.filter(status=Bag.ADDED)
 
 
 class BaggageHacker(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView):
@@ -62,7 +62,7 @@ class BaggageHacker(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterVie
     def get_queryset(self):
         id_ = self.kwargs['user_id']
         user = User.objects.filter(id=id_)
-        return Bag.objects.filter(status=BAG_ADDED, owner=user)
+        return Bag.objects.filter(status=Bag.ADDED, owner=user)
 
 
 class BaggageUsers(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView):
@@ -128,7 +128,7 @@ class BaggageAdd(IsVolunteerMixin, TabsView):
         position = ()
         if posmanual == 'manual' and bagspe != 'special' and bagroom and bagrow and bagcol:
             position = (3, bagroom, bagrow, bagcol)
-            posempty = Bag.objects.filter(status=BAG_ADDED, room=bagroom, row=bagrow, col=bagcol).count()
+            posempty = Bag.objects.filter(status=Bag.ADDED, room=bagroom, row=bagrow, col=bagcol).count()
             if posempty > 0:
                 messages.success(self.request, 'Error! Position is already taken!')
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -167,7 +167,7 @@ class BaggageDetail(IsVolunteerMixin, TabsView):
         context.update({
             'bag': bag,
             'position': bag.position(),
-            'checkedout': bag.status == BAG_REMOVED,
+            'checkedout': bag.status == Bag.REMOVED,
             'first': bagfirst
         })
         return context
@@ -175,7 +175,7 @@ class BaggageDetail(IsVolunteerMixin, TabsView):
     def post(self, request, *args, **kwargs):
         bagid = request.POST.get('bag_id')
         bag = Bag.objects.filter(bid=bagid).first()
-        bag.status = BAG_REMOVED
+        bag.status = Bag.REMOVED
         bag.outby = request.user
         bag.save()
         messages.success(self.request, 'Bag checked-out!')
@@ -193,7 +193,7 @@ class BaggageMap(IsVolunteerMixin, TabsView):
     def get_context_data(self, **kwargs):
         context = super(BaggageMap, self).get_context_data(**kwargs)
         rooms = Room.objects.all()
-        bags = Bag.objects.filter(status=BAG_ADDED)
+        bags = Bag.objects.filter(status=Bag.ADDED)
         context.update({
             'rooms': rooms,
             'bags': bags
@@ -227,4 +227,4 @@ class BaggageCurrentHacker(LoginRequiredMixin, TabsViewMixin, SingleTableMixin, 
 
     def get_queryset(self):
         user = self.request.user
-        return Bag.objects.filter(status=BAG_ADDED, owner=user)
+        return Bag.objects.filter(status=Bag.ADDED, owner=user)
