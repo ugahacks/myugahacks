@@ -8,7 +8,7 @@ from django_tables2 import SingleTableMixin
 from app.mixins import TabsViewMixin
 from app.utils import reverse, hacker_tabs
 from app.views import TabsView
-from applications import models as app_mod
+from applications.models import Application
 from applications.emails import send_batch_emails
 from reimbursement import forms, models, emails
 from reimbursement.tables import ReimbursementTable, ReimbursementFilter, SendReimbursementTable, \
@@ -163,7 +163,7 @@ class SendReimbursementListView(IsDirectorMixin, TabsViewMixin, SingleTableMixin
         return organizer_tabs(self.request.user)
 
     def get_queryset(self):
-        status = [app_mod.APP_INVITED, app_mod.APP_LAST_REMIDER, app_mod.APP_CONFIRMED, app_mod.APP_ATTENDED]
+        status = [Application.APP_INVITED, Application.APP_LAST_REMIDER, Application.APP_CONFIRMED, Application.APP_ATTENDED]
         return models.Reimbursement.objects.filter(status=models.RE_DRAFT) \
             .filter(hacker__application__status__in=status).all()
 

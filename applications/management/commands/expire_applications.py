@@ -5,7 +5,8 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 
-from applications import models, emails
+from applications import emails
+from applications.models import Application
 
 
 class Command(BaseCommand):
@@ -14,8 +15,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         fourdaysago = timezone.now() - timedelta(days=4)
         self.stdout.write('Checking reminders...')
-        reminders = models.Application.objects.filter(
-            status_update_date__lte=fourdaysago, status=models.APP_INVITED)
+        reminders = Application.objects.filter(
+            status_update_date__lte=fourdaysago, status=Application.APP_INVITED)
         self.stdout.write('Checking reminders...%s found' % reminders.count())
         self.stdout.write('Sending reminders...')
         msgs = []
@@ -30,8 +31,8 @@ class Command(BaseCommand):
 
         onedayago = timezone.now() - timedelta(days=1)
         self.stdout.write('Checking expired...')
-        expired = models.Application.objects.filter(
-            status_update_date__lte=onedayago, status=models.APP_LAST_REMIDER)
+        expired = Application.objects.filter(
+            status_update_date__lte=onedayago, status=Application.APP_LAST_REMIDER)
         self.stdout.write('Checking expired...%s found' % expired.count())
         self.stdout.write('Setting expired...')
         count = len([app.expire() for app in expired])
