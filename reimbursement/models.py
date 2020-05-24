@@ -79,7 +79,8 @@ class Reimbursement(models.Model):
 
     # Meta
     hacker = models.OneToOneField('user.User', primary_key=True, on_delete=models.CASCADE)
-    reimbursed_by = models.ForeignKey(User, null=True, blank=True, related_name='reimbursements_made', on_delete=models.CASCADE)
+    reimbursed_by = models.ForeignKey(User, null=True, blank=True, related_name='reimbursements_made',
+                                      on_delete=models.CASCADE)
     expiration_time = models.DateTimeField(blank=True, null=True)
     update_time = models.DateTimeField(default=timezone.now)
     creation_time = models.DateTimeField(default=timezone.now)

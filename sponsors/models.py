@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.db import models
 
 
 class SponsorApplication(models.Model):
@@ -73,4 +73,3 @@ class Sponsor(models.Model):
             return self.C_TIER_3_POINTS
         elif self.tier == Sponsor.C_COHOST:
             return self.C_COHOST_POINTS
-
