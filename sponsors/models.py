@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
-from applications.models import Application
 
 
 class SponsorApplication(models.Model):
+    from applications.models import Application
     # String of user.User to prevent circular dependecies
     user = models.OneToOneField('user.User', on_delete=models.CASCADE)
 

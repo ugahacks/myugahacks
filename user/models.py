@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
 from django.utils import timezone
-from sponsors.models import Sponsor
 from django.conf import settings
 
 
@@ -102,6 +101,7 @@ class User(AbstractBaseUser):
         return True
 
     def get_tier_value(self):
+        from sponsors.models import Sponsor
         # Admin's will default to TIER_1 if debug is on
         if self.is_admin and settings.DEBUG:
             return Sponsor.C_TIER_1_POINTS
