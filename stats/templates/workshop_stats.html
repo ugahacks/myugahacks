@@ -2,40 +2,40 @@
 
 {% block head_title %}Workshop stats{% endblock %}
 {% block panel %}
-    <h1>Workshop Popularity</h1>
-    <small class="pull-right"><b>Last updated:</b> <span id="update_date"></span></small>
-    <div class="row">
-        <div class="col-md-12">
-            <div id="workshop_stats"></div>
-        </div>
+  <h1>Workshop Popularity</h1>
+  <small class="pull-right"><b>Last updated:</b> <span id="update_date"></span></small>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="workshop_stats"></div>
     </div>
+  </div>
 {% endblock %}
 {% block c3script %}
-    <script>
-        $.getJSON('{% url 'api_workshop_stats' %}', function (data) {
-            c3.generate({
-                bindto: '#workshop_stats',
-                data: {
-                    json: data['workshops'],
-                    keys: {
-                        x: 'title',
-                        value: ['attendance']
-                    },
-                    type: 'bar'
+  <script>
+    $.getJSON('{% url 'api_workshop_stats' %}', function (data) {
+      c3.generate({
+        bindto: '#workshop_stats',
+        data: {
+          json: data['workshops'],
+          keys: {
+            x: 'title',
+            value: ['attendance']
+          },
+          type: 'bar'
 
-                },
-                legend: {
-                  show: false
-                },
-                axis: {
-                    x: {
-                        type: 'category'
-                    }
-                }
-            });
-            $('#update_date').html(data['update_time']);
-        })
-        ;
+        },
+        legend: {
+          show: false
+        },
+        axis: {
+          x: {
+            type: 'category'
+          }
+        }
+      });
+      $('#update_date').html(data['update_time']);
+    })
+    ;
 
-    </script>
+  </script>
 {% endblock %}

@@ -1,7 +1,8 @@
-from django.db import models
-from user.models import User
-from django.template import defaultfilters
 from datetime import timedelta
+
+from django.db import models
+
+from user.models import User
 
 
 class Workshop(models.Model):
@@ -34,6 +35,7 @@ class Workshop(models.Model):
         if not timeslot:
             timeslot = Timeslot.objects.filter(workshop_two=self).first()
         return timeslot
+
 
 # Attended model not implemented yet. Ignore this for now.
 # def attended(self):

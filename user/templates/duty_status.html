@@ -4,10 +4,12 @@
 {% block head_title %}{% trans "Check In/ Check Out" %}{% endblock %}
 
 {% block content %}
-    <h1>Check In/ Check Out</h1>
-    <p>Hi {{request.user.get_full_name}}, you are currently {% if not request.user.on_duty %}not {% endif %}checked in</p>
-    <p>Use the button below to Check In / Out</p>
-    <a href="{% url 'change_duty_status' %}" class="btn btn-success">{% if request.user.on_duty %}Check Out{% else %}Check
+  <h1>Check In/ Check Out</h1>
+  <p>Hi {{ request.user.get_full_name }}, you are currently {% if not request.user.on_duty %}not {% endif %}checked
+    in</p>
+  <p>Use the button below to Check In / Out</p>
+  <a href="{% url 'change_duty_status' %}" class="btn btn-success">{% if request.user.on_duty %}Check Out{% else %}Check
     In{% endif %}</a>
-    {% if request.user.is_organizer %}<a href="{% url 'duty_status_list' %}" class="btn">Check Volunteers/Organizers On-duty</a>{% endif %}
+  {% if request.user.is_organizer %}
+    <a href="{% url 'duty_status_list' %}" class="btn">Check Volunteers/Organizers On-duty</a>{% endif %}
 {% endblock %}

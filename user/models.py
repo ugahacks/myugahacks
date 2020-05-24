@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
 from django.utils import timezone
-from django.conf import settings
 
 
 class UserManager(BaseUserManager):

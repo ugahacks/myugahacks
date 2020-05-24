@@ -8,17 +8,17 @@ from django.template.response import TemplateResponse
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.views.generic import ListView
+from django_tables2 import SingleTableMixin
+
 from app.mixins import TabsViewMixin
 from app.utils import reverse
 from applications.models import Application, DraftApplication
+from sponsors.models import Sponsor
 from user import forms, models, tokens, providers
 from user.forms import SetPasswordForm, PasswordResetForm
 from user.mixins import IsOrganizerMixin
 from user.models import User
 from user.tokens import account_activation_token, password_reset_token
-from sponsors.models import Sponsor
-
-from django_tables2 import SingleTableMixin
 from .tables import OnDutyListTable
 
 
