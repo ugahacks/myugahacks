@@ -80,8 +80,8 @@ class Vote(models.Model):
         #
         # See this: http://www.dataminingblog.com/standardization-vs-
         # normalization/
-        personal = PERSONAL_WEIGHT * (F('personal') - p_avg) / p_sd
-        tech = TECH_WEIGHT * (F('tech') - t_avg) / t_sd
+        personal = self.PERSONAL_WEIGHT * (F('personal') - p_avg) / p_sd
+        tech = self.TECH_WEIGHT * (F('tech') - t_avg) / t_sd
         Vote.objects.filter(user=self.user).update(calculated_vote=personal + tech)
 
     class Meta:
