@@ -4,15 +4,17 @@ from django.db.models.functions import TruncDate
 from django.http import JsonResponse
 from django.urls import reverse
 from django.utils import timezone
-from workshops.models import  Workshop, Attendance
+from workshops.models import Workshop, Attendance
 from app.views import TabsView
 from applications.models import Application
+from reimbursement.models import Reimbursement
 from user.mixins import is_organizer, IsOrganizerMixin
 
 STATUS_DICT = dict(Application.STATUS)
 GENDER_DICT = dict(Application.GENDERS)
 CLASSSTATUS_DICT = dict(Application.CLASSSTATUS)
 HEARABOUT_DICT = dict(Application.HEARABOUT)
+RE_STATUS_DICT = dict(Reimbursement.STATUS)
 
 def stats_tabs():
     tabs = [('Applications', reverse('app_stats'), False),('Workshops', reverse('workshop_stats'), False) ]
@@ -23,8 +25,6 @@ def stats_tabs():
 
 @is_organizer
 def reimb_stats_api(request):
-    from reimbursement.models import Reimbursement
-    RE_STATUS_DICT = dict(Reimbursement.STATUS)
     # Status analysis
     status_count = Reimbursement.objects.all().values('status') \
         .annotate(reimbursements=Count('status'))
@@ -132,6 +132,7 @@ def app_stats_api(request):
         }
     )
 
+
 @is_organizer
 def workshop_stats_api(request):
     workshops = Workshop.objects.all()
@@ -142,6 +143,7 @@ def workshop_stats_api(request):
             'workshops': workshop_attendance
         }
     )
+
 
 class AppStats(IsOrganizerMixin, TabsView):
     template_name = 'application_stats.html'
@@ -155,6 +157,7 @@ class ReimbStats(IsOrganizerMixin, TabsView):
 
     def get_current_tabs(self):
         return stats_tabs()
+
 
 class WorkshopStats(IsOrganizerMixin, TabsView):
     template_name = 'workshop_stats.html'
