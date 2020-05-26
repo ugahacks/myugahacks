@@ -69,6 +69,7 @@ class User(AbstractBaseUser):
     is_director = models.BooleanField(default=False)
     is_sponsor = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_mentor = models.BooleanField(default=False)
     is_hardware_admin = models.BooleanField(default=False)
     created_time = models.DateTimeField(default=timezone.now)
     mlh_id = models.IntegerField(blank=True, null=True, unique=True)
