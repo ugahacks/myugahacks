@@ -48,7 +48,9 @@
 
 .scanning-popup-scan video {
     width: 100%;
-    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    border-radius: 4px;
 }
 
 .scanning-popup-scan .container-fluid {
@@ -79,14 +81,79 @@
 
 .video-container .status {
     position: absolute;
-    background: rgba(255, 255, 255, 0.7);;
+    background: rgba(255, 255, 255, 0.7);
     width: 100%;
     height: 100%;
     text-align: center;
     line-height: 25px;
-    padding: 50px 15px 10px;
+    padding: 10px 10px 10px;
     font-size: 24px;
-    display:none;
+    display: none;
+    flex-direction: row;
+    align-items: center;
+}
+
+.video-container .s-content {
+    margin: 0 auto;
+    width: 100%;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.video-container .continue {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -104px;
+    background: #ff0000c9;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    animation: blinker 2s linear infinite;
+}
+
+.video-container .view-badge-info {
+    padding: 0 15px;
+    font-size: 16px;
+}
+
+.permission-circle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.permission-circle.denied {
+    background: red;
+    box-shadow: 0 0 1px red;
+}
+
+.permission-circle.granted {
+    background: green;
+    box-shadow: 0 0 1px green;
+}
+
+@media (max-width : 450px) {
+    .video-container .view-badge-info {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .video-container .continue {
+        font-size: 13px;
+        margin-left: -55px;
+        padding: 0 5px;
+    }
+
+    .permission-circle {
+        width: 8px;
+        height: 8px;
+    }
 }
 
 .veil {
@@ -111,26 +178,7 @@
     margin-bottom: 50px;
 }
 
-.permission-circle {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-}
-
-.permission-circle.denied {
-    background: red;
-    box-shadow: 0 0 1px red;
-}
-
-.permission-circle.granted {
-    background: green;
-    box-shadow: 0 0 1px green;
-}
-
-
 /* commit checkout */
-
 .circle-loader {
   margin-bottom: 3.5em;
   border: 1px solid rgba(0, 0, 0, 0.2);
