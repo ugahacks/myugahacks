@@ -215,18 +215,19 @@ def sponsor_scan(request):
 
 def view_badge_scan(request):
     qr_code = request.POST.get('badgeQR', None)
-    response, hacker_checkin = get_checkin_from_qr(qr_code)
+    response, hacker_checkin = get_checkin_from_qr(qr_code, True)
     if response is not None:
         return response
     user_application = hacker_checkin.application
     user_application_serialized = user_application.serialize()
 
-    # TODO: Move this logic into the user model as a "get_points" method
+    # TODO: Move this logic into the user model as a "get_points" method OR more points with user
     points = Points.objects.filter(user=user_application.user).first()
     if not points:
         points = 0
     else:
         points = points.points
+    user_application_serialized['isActive'] = hacker_checkin.is_active
     user_application_serialized['user']['points'] = points
     return JsonResponse({
         'status': 200,
@@ -272,6 +273,11 @@ def get_application_from_request(request):
             'status': 404,
             'message': 'The QR code is mandatory!'
         }, status=404)
+    if participant_qr == badge_qr:
+        response = JsonResponse({
+            'status': 403,
+            'message': 'ParticipantQR and BadgeQr should not equal.'
+        }, status=403)
     user_application = Application.objects.filter(uuid=participant_qr).first()
     if not user_application:
         response = JsonResponse({

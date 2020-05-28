@@ -27,6 +27,7 @@ class SponsorApplication(models.Model):
                     'director': self.user.is_director,
                     'sponsor': self.user.is_sponsor,
                     'admin': self.user.is_admin,
+                    'mentor': self.user.is_mentor,
                     'hardwareAdmin': self.user.is_hardware_admin,
                 },
                 'application': {

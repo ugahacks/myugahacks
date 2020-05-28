@@ -6,17 +6,49 @@ const scanningQr = (() => {
         });
     });
 
-    function setStatus(status, message = "") {
+    /**
+     * Low level controller of the status of a scan
+     * @param status {'ready'|'error'|null} the status of the scan
+     * @param text {string} status text to be displayed text to the indicator above the video
+     * @param message {string|boolean} the message that is displayed in the container. If false, no message.
+     * @param continuer {boolean} whether the "touch to continue" button shows
+     */
+    function setIndicatorAndMessage(status, text, message = false, continuer = false) {
+        $("#status-indicator div").removeClass('error ready').addClass(status).text(text);
+
+        if (message) {
+            if (continuer) {
+                message += "<div class='continue'>Touch to continue</div>";
+            }
+            $(".video-container .status").removeClass('ready error').addClass(status)
+                .css('display', 'flex').html(`<div class='s-content'>${message}</div>`);
+        }
+    }
+
+    /**
+     * High level controller of the status
+     * @param status {'ready','success','success-checkmark','error','scanning','message'} which each represent the status of the scanner
+     * @param message {string|boolean} message to display.
+     */
+    function setStatus (status, message = false) {
         $("#error-message, .video-container .status").hide();
 
-        if (status === "ready") {
-            $("#status-indicator div").removeClass('error').addClass("ready").text("Ready");
+        if (status === "ready") { //
+            setIndicatorAndMessage("ready", "Ready");
         } else if (status === "success") {
-            $("#status-indicator div").removeClass('error').addClass("ready").text("Success!");
-            $(".video-container .status").removeClass('error').addClass('ready').show().html(message);
+            setIndicatorAndMessage("ready", "Success!", message);
+        } else if (status === "error") {
+            setIndicatorAndMessage("error", "Error", message, true);
+        } else if (status === "scanning") {
+            setIndicatorAndMessage(null, "Submitting..", "Submitting..");
+        } else if (status === "message") {
+            setIndicatorAndMessage(null, "Waiting..", message, true);
+        } else if (status === "page") {
+            setIndicatorAndMessage(null, "Found!", message, true);
+            $(".video-container .status").css('align-items', 'normal');
         } else if (status === "success-checkmark") {
-            setStatus("success", `
-                <div style='color: black'>${message}</div>
+            setIndicatorAndMessage("ready", "Success!",`
+                <div style='color: black'>${message||''}</div>
                 <div id="committing-loader" class="circle-loader" style="margin-top: 20px;">
                     <div class="checkmark draw"></div>
                 </div>`);
@@ -25,16 +57,6 @@ const scanningQr = (() => {
                 $('#committing-loader').toggleClass('load-complete');
                 $('#committing-loader .checkmark').toggle();
             }, 100);
-        } else if (status === "error") {
-            $("#status-indicator div").removeClass('ready').addClass("error").text("Error");
-            $(".video-container .status").removeClass('ready').addClass('error').show()
-                .html(message + " <br><br>Touch here to continue..");
-        } else if (status === "scanning") {
-            $(".video-container .status").removeClass('error ready').show().text("Submitting..");
-        } else if (status === "message") {
-            $("#status-indicator div").removeClass('error ready').text("Waiting..");
-            $(".video-container .status").removeClass('error ready').show()
-                .html(message + " <br><br>Touch here to continue scanning.");
         }
     }
 
@@ -61,11 +83,11 @@ const scanningQr = (() => {
             </div>`);
     }
 
-    function createInformationView(user) {
+    function createInformationView(badge) {
+        const user = badge.user;
+
         function unCamelCase(value) {
-            return value.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
-                return str.toUpperCase();
-            });
+            return value.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
         }
 
         function createPermissionBlock(name, value) {
@@ -95,7 +117,12 @@ const scanningQr = (() => {
             application += createDataBlock(dataPoint, user.application[dataPoint]);
         }
 
-        return `<div class="row" style="font-size: 12px;padding: 0 10px; margin-top: -40px;">
+        let inActiveNotice = !badge.isActive ? `<div class="row text-center inactive-badge">Disabled Badge</div>` : '';
+
+        return `
+
+        <div class="row view-badge-info">
+            ${inActiveNotice}
             <div class="col col-xs-7 col-sm-7 col-md-7 text-left">
                 <div class="row">
                     <div class="col"><strong>Name</strong>: ${user.name}</div>
@@ -114,6 +141,14 @@ const scanningQr = (() => {
         </div>`
     }
 
+    // expose these messages for debugging purposes
+    window.setStatus = setStatus;
+    window.createInformationView = createInformationView;
+
+    /**
+     * Create the scanner object that links to the scan video lement
+     * @returns {Scanner}
+     */
     function createNewScanner() {
         return new Scanner('flows', document.getElementById("scan"));
     }
@@ -123,7 +158,7 @@ const scanningQr = (() => {
      * @param response
      */
     function handleError(response, scanner) {
-        const {status, message} = response.responseJSON;
+        const { status, message } = response.responseJSON;
         setStatus("error", `[${status}] ${message}`);
 
         $(".video-container").off('touch click').on('touch click', () => {
@@ -143,6 +178,11 @@ const scanningQr = (() => {
         });
     }
 
+    /**
+     * Register the flow the links the scanner to the check in sequence
+     * @param scanner scanner object
+     * @param type the type of check in whether regular or reissue
+     */
     function registerCheckInFlow(scanner, type) {
         // Before every flow set, we should pause the flow and show the correct message. Clicking the container
         // should continue the flow
@@ -183,6 +223,12 @@ const scanningQr = (() => {
         );
     }
 
+    /**
+     * Registers a single scan flow.
+     * @param scanner the scanner
+     * @param type the type of scan (meal, workshop etc.)
+     * @param value a value associated with the scan type (meal id, workshop id, etc.)
+     */
     function registerSingleScanFlow(scanner, type, value) {
         let timer;
         // before flow set we will need to become ready
@@ -197,14 +243,14 @@ const scanningQr = (() => {
                     let waitTime = 750;
 
                     if (type === "meal") {
-                        let {diet, other_diet} = response.data;
+                        let { diet, other_diet } = response.data;
                         if (diet === "Others") {
                             diet = other_diet;
                         }
                         waitTime = 2000;
                         setStatus("success-checkmark", `Diet: ${diet}`);
                     } else if (type === "view") {
-                        setStatus("message", createInformationView(response.message.user));
+                        setStatus("page", createInformationView(response.message));
                         waitTime = 3600000; // set wait time to an hour to prevent the scanner from automatically going
                     } else {
                         setStatus("success-checkmark");
@@ -274,4 +320,3 @@ const scanningQr = (() => {
         });
     });
 })();
-
