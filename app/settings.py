@@ -43,7 +43,9 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '0.0.0.0',
     '165.227.125.129',
-    '192.168.0.12'
+    '192.168.0.12',
+    '192.168.1.18', #kane
+    'acc3e81f.ngrok.io'
     ]
 
 # Application definition
@@ -57,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'form_utils',
     'bootstrap3',
     'django_tables2',
@@ -72,7 +75,10 @@ INSTALLED_APPS = [
     'workshops',
     'archives',
     'crispy_forms',
-    'django_hosts'
+    'sponsors',
+    'points',
+    'scanning',
+    'django_hosts',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

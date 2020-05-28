@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
 from django.utils import timezone
+from sponsors.models import Sponsor
+from django.conf import settings
 
 
 class UserManager(BaseUserManager):
@@ -65,10 +67,13 @@ class User(AbstractBaseUser):
     is_volunteer = models.BooleanField(default=False)
     is_organizer = models.BooleanField(default=False)
     is_director = models.BooleanField(default=False)
+    is_sponsor = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_mentor = models.BooleanField(default=False)
     is_hardware_admin = models.BooleanField(default=False)
     created_time = models.DateTimeField(default=timezone.now)
     mlh_id = models.IntegerField(blank=True, null=True, unique=True)
+    on_duty = models.BooleanField(default=False)
 
     objects = UserManager()
 
@@ -96,6 +101,16 @@ class User(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+
+    def get_tier_value(self):
+        # Admin's will default to TIER_1 if debug is on
+        if self.is_admin and settings.DEBUG:
+            return Sponsor.C_TIER_1_POINTS
+        if not self.is_sponsor:
+            return None
+        domain = self.email.split('@')[1]
+        sponsor = Sponsor.objects.filter(email_domain=domain)
+        return sponsor.get_tier_value()
 
     @property
     def is_superuser(self):

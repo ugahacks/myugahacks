@@ -28,6 +28,8 @@ def root_view(request):
         return HttpResponseRedirect(reverse('review'))
     elif request.user.is_volunteer:
         return HttpResponseRedirect(reverse('check_in_list'))
+    elif request.user.is_sponsor:
+        return HttpResponseRedirect(reverse('sponsors:sponsor_application'))
     return HttpResponseRedirect(reverse('dashboard'))
 
 

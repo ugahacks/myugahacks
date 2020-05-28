@@ -16,6 +16,8 @@ class CheckIn(models.Model):
     # QR identifier for wristband identification
     qr_identifier = models.CharField(max_length=255, null=True)
 
+    is_active = models.BooleanField(default=True)
+
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         self.update_time = datetime.now()

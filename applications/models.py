@@ -159,7 +159,8 @@ class Application(models.Model):
     phone_number = models.CharField(max_length=14,
                                     validators=[RegexValidator(regex=r'^\(\d{3}\)\s\d{3}-\d{4}',
                                                                message="Phone number must be entered in the following format: \
-                                                                (999) 999-9999")])
+                                                                (999) 999-9999")],
+                                    default='(999) 999-9999')
 
     """
         # Personal data (asking here because we don't want to ask birthday)
@@ -361,6 +362,32 @@ class Application(models.Model):
 
     def can_confirm(self):
         return self.status in [APP_INVITED, APP_LAST_REMIDER]
+
+    def serialize(self):
+        return {
+            'user': {
+                'name': self.user.name,
+                'email': self.user.email,
+                'is': {
+                    'active': self.user.is_active,
+                    'volunteer': self.user.is_volunteer,
+                    'organizer': self.user.is_organizer,
+                    'director': self.user.is_director,
+                    'sponsor': self.user.is_sponsor,
+                    'admin': self.user.is_admin,
+                    'mentor': self.user.is_mentor,
+                    'hardwareAdmin': self.user.is_hardware_admin,
+                },
+                'application': {
+                    # Info for swag and food
+                    'diet': self.diet,
+                    'otherDiet': self.other_diet,
+                    'tshirtSize': self.tshirt_size,
+                    # Info for hardware
+                    'hardware': self.hardware,
+                }
+            }
+        }
 
 
 class DraftApplication(models.Model):
