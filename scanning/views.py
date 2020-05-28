@@ -274,6 +274,11 @@ def get_application_from_request(request):
             'status': 404,
             'message': 'The QR code is mandatory!'
         }, status=404)
+    if participant_qr == badge_qr:
+        response = JsonResponse({
+            'status': 403,
+            'message': 'ParticipantQR and BadgeQr should not equal.'
+        }, status=403)
     user_application = Application.objects.filter(uuid=participant_qr).first()
     if not user_application:
         response = JsonResponse({
