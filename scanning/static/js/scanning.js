@@ -48,7 +48,7 @@ const scanningQr = (() => {
             $(".video-container .status").css('align-items', 'normal');
         } else if (status === "success-checkmark") {
             setIndicatorAndMessage("ready", "Success!",`
-                <div style='color: black'>${message}</div>
+                <div style='color: black'>${message||''}</div>
                 <div id="committing-loader" class="circle-loader" style="margin-top: 20px;">
                     <div class="checkmark draw"></div>
                 </div>`);
