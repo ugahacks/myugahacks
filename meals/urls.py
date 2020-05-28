@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from meals import views
 
+from meals import views
 
 urlpatterns = [
     url(r'^list/$', views.MealsList.as_view(), name='meals_list'),

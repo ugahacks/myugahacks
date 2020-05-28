@@ -7,13 +7,13 @@
 
 {% block content %}
 
-    <h1>Sign in</h1>
+  <h1>Sign in</h1>
 
-    <form action="" method="post" class="form ">
-        {% csrf_token %}
-        {% bootstrap_form form %}
+  <form action="" method="post" class="form ">
+    {% csrf_token %}
+    {% bootstrap_form form %}
 
-        <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+    <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
 
         <button class="btn btn-primary btn-block" type="submit">{% trans "Log In" %}</button>
         <hr>
@@ -28,6 +28,6 @@
         </div>
         <a class="btn social-btn" id="github-btn" href="{% url 'social:begin' 'github' %}"><i aria-hidden="true" class="fa fa-github fa-lg"></i>Sign in with GitHub</a>
 
-    </form>
+  </form>
 
 {% endblock %}

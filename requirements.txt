@@ -22,7 +22,7 @@ google-api-python-client==1.7.9
 google-auth==1.10.0
 google-auth-httplib2==0.0.3
 gunicorn==19.6.0
-httplib2==0.9.2
+httplib2==0.18.0
 idna==2.7
 jdcal==1.4.1
 Markdown==2.6.7
@@ -32,6 +32,7 @@ oauthlib==2.0.2
 odfpy==1.4.0
 openpyxl==3.0.0
 packaging==16.8
+Pillow==7.0.0
 psycopg2-binary==2.8.3
 pyasn1==0.1.9
 pyasn1-modules==0.0.8

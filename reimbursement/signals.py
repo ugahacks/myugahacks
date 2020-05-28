@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 from applications.models import Application
-from reimbursement.models import Reimbursement, RE_EXPIRED, RE_PEND_TICKET
+from reimbursement.models import Reimbursement
 
 
 @receiver(post_save, sender=Application)
@@ -23,6 +23,6 @@ def reimbursement_create(sender, instance, created, *args, **kwargs):
 
 @receiver(post_save, sender=Reimbursement)
 def reimbursement_unexpire(sender, instance, created, *args, **kwargs):
-    if instance.status == RE_EXPIRED and instance.expiration_time and instance.expiration_time > timezone.now():
-        instance.status = RE_PEND_TICKET
+    if instance.status == Reimbursement.EXPIRED and instance.expiration_time and instance.expiration_time > timezone.now():
+        instance.status = Reimbursement.PEND_TICKET
         instance.save()

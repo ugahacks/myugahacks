@@ -1,22 +1,28 @@
 from django.db import models
-from user.models import User
 
-MEAL_TYPE = (
-    ('B', 'Breakfast'),
-    ('L', 'Lunch'),
-    ('D', 'Dinner'),
-    ('S', 'Snack'),
-    ('O', 'Other')
-)
+from user.models import User
 
 
 class Meal(models.Model):
     """Represents a meal that the hacker can eat"""
+    BREAKFAST = 'B'
+    LUNCH = 'L'
+    DINNER = 'D'
+    SNACK = 'S'
+    OTHER = 'O'
+
+    TYPES = (
+        (BREAKFAST, 'Breakfast'),
+        (LUNCH, 'Lunch'),
+        (DINNER, 'Dinner'),
+        (SNACK, 'Snack'),
+        (OTHER, 'Other')
+    )
 
     # Meal name
     name = models.CharField(max_length=63, null=False)
     # Meal type
-    kind = models.CharField(max_length=63, null=False, choices=MEAL_TYPE)
+    kind = models.CharField(max_length=63, null=False, choices=TYPES)
     # Starting time
     starts = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
     # Ending time

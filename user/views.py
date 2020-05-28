@@ -1,17 +1,25 @@
 from django.conf import settings
 from django.contrib import auth, messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Case, Value, When
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
+from django.views.generic import ListView
+from django_tables2 import SingleTableMixin
+
+from app.mixins import TabsViewMixin
 from app.utils import reverse
-from applications import models as a_models
+from applications.models import Application, DraftApplication
+from sponsors.models import Sponsor
 from user import forms, models, tokens, providers
 from user.forms import SetPasswordForm, PasswordResetForm
+from user.mixins import IsOrganizerMixin
 from user.models import User
 from user.tokens import account_activation_token, password_reset_token
+from .tables import OnDutyListTable
 
 
 def login(request):
@@ -98,8 +106,13 @@ def activate(request, uid, token, backend="django.contrib.auth.backends.ModelBac
 
     if account_activation_token.check_token(user, token):
         messages.success(request, "Email verified!")
-
         user.email_verified = True
+
+        # CHECKING IF THE USER IS A SPONSOR
+        user_email_domain = user.email.split('@')[1]  # Getting the domain of the user's email i.e @ugahacks.com
+        if Sponsor.objects.filter(email_domain=user_email_domain):
+            user.is_sponsor = True
+
         user.save()
         auth.login(request, user, backend="django.contrib.auth.backends.ModelBackend")
     else:
@@ -226,7 +239,7 @@ def callback(request, provider=None):
         auth.login(request, user, backend="django.contrib.auth.backends.ModelBackend")
 
         # Save extra info
-        draft = a_models.DraftApplication()
+        draft = DraftApplication()
         draft.user = user
         mlhdiet = mlhuser.get('dietary_restrictions', '')
         diet = mlhdiet if mlhdiet in dict(a_models.DIETS).keys() else 'Others'
@@ -253,3 +266,32 @@ def callback(request, provider=None):
         })
         draft.save()
     return HttpResponseRedirect(reverse('root'))
+
+
+def is_volunteer_or_organizer(user):
+    return user.is_volunteer or user.is_organizer
+
+
+@login_required()
+@user_passes_test(is_volunteer_or_organizer)
+def duty_status(request):
+    return render(request, 'duty_status.html')
+
+
+@login_required()
+@user_passes_test(is_volunteer_or_organizer)
+def change_duty_status(request):
+    User.objects.filter(pk=request.user.id).update(on_duty=Case(
+        When(on_duty=True, then=Value(False)),
+        default=Value(True)
+    ))
+    return redirect('duty_status')
+
+
+class OnDutyListView(TabsViewMixin, SingleTableMixin, ListView, IsOrganizerMixin):
+    template_name = 'duty_list.html'
+    table_class = OnDutyListTable
+    table_pagination = {'per_page': 50}
+
+    def get_queryset(self):
+        return User.objects.all().filter(on_duty=True)

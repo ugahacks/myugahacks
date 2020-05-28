@@ -17,14 +17,15 @@ from app import slack
 from app.slack import SlackInvitationException
 from app.utils import reverse, hacker_tabs
 from app.views import TabsView
-from applications import models, emails, forms
+from applications import emails, forms
+from applications.models import Application, DraftApplication
 from user.mixins import IsHackerMixin, is_hacker
 
 
 def check_application_exists(user, uuid):
     try:
-        application = models.Application.objects.get(user=user)
-    except models.Application.DoesNotExist:
+        application = Application.objects.get(user=user)
+    except Application.DoesNotExist:
         raise Http404
     if not application or uuid != application.uuid_str:
         raise Http404
@@ -36,7 +37,7 @@ class ConfirmApplication(IsHackerMixin, UserPassesTestMixin, View):
         return True
 
     def get(self, request, *args, **kwargs):
-        application = models.Application.objects.get(user=request.user)
+        application = Application.objects.get(user=request.user)
         msg = None
         if application.can_confirm():
             msg = emails.create_confirmation_email(application, self.request)
@@ -69,13 +70,13 @@ class CancelApplication(IsHackerMixin, UserPassesTestMixin, TabsView):
     def get_context_data(self, **kwargs):
         context = super(CancelApplication, self).get_context_data(**kwargs)
 
-        application = models.Application.objects.get(user=self.request.user)
+        application = Application.objects.get(user=self.request.user)
         context.update({'application': application, })
-        if application.status == models.APP_CANCELLED:
+        if application.status == Application.CANCELLED:
             context.update({'error': "Thank you for responding. We're sorry you won't be able to make it."
                                      " Hope to see you next edition!"
                             })
-        elif application.status == models.APP_EXPIRED:
+        elif application.status == Application.EXPIRED:
             context.update({'error': "Unfortunately your invite has expired."})
         elif not application.can_be_cancelled():
             context.update({
@@ -85,7 +86,7 @@ class CancelApplication(IsHackerMixin, UserPassesTestMixin, TabsView):
         return context
 
     def post(self, request, *args, **kwargs):
-        application = models.Application.objects.get(user=self.request.user)
+        application = Application.objects.get(user=self.request.user)
         try:
             application.cancel()
         except ValidationError:
@@ -96,7 +97,7 @@ class CancelApplication(IsHackerMixin, UserPassesTestMixin, TabsView):
 
 def get_deadline(application):
     last_updated = application.status_update_date
-    if application.status == models.APP_INVITED:
+    if application.status == Application.INVITED:
         deadline = last_updated + timedelta(days=5)
     else:
         deadline = last_updated + timedelta(days=1)
@@ -112,13 +113,13 @@ class HackerDashboard(IsHackerMixin, TabsView):
     def get_context_data(self, **kwargs):
         context = super(HackerDashboard, self).get_context_data(**kwargs)
         try:
-            draft = models.DraftApplication.objects.get(user=self.request.user)
-            form = forms.ApplicationForm(instance=models.Application(**draft.get_dict()))
+            draft = DraftApplication.objects.get(user=self.request.user)
+            form = forms.ApplicationForm(instance=Application(**draft.get_dict()))
         except:
             form = forms.ApplicationForm()
         context.update({'form': form})
         try:
-            application = models.Application.objects.get(user=self.request.user)
+            application = Application.objects.get(user=self.request.user)
             deadline = get_deadline(application)
             context.update({'invite_timeleft': deadline - timezone.now()})
         except:
@@ -160,7 +161,7 @@ class HackerApplication(IsHackerMixin, TabsView):
 
     def get_context_data(self, **kwargs):
         context = super(HackerApplication, self).get_context_data(**kwargs)
-        application = get_object_or_404(models.Application, user=self.request.user)
+        application = get_object_or_404(Application, user=self.request.user)
         deadline = get_deadline(application)
         context.update(
             {'invite_timeleft': deadline - timezone.now(), 'form': forms.ApplicationForm(instance=application)})
@@ -187,10 +188,10 @@ class HackerApplication(IsHackerMixin, TabsView):
 
 @is_hacker
 def save_draft(request):
-    d = models.DraftApplication()
+    d = DraftApplication()
     d.user = request.user
     form_keys = set(dict(forms.ApplicationForm().fields).keys())
-    valid_keys = set([field.name for field in models.Application()._meta.get_fields()])
+    valid_keys = set([field.name for field in Application()._meta.get_fields()])
     d.save_dict(dict((k, v) for k, v in request.POST.items() if k in valid_keys.intersection(form_keys) and v))
     d.save()
     return JsonResponse({'saved': True})
@@ -204,5 +205,3 @@ def export_resume(request):
         return response
     except:
         raise Http404
-
-

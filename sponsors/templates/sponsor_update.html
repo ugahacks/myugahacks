@@ -1,0 +1,13 @@
+{% extends "base_tabs.html" %}
+{% load crispy_forms_tags %}
+{% block head_title %}Update Sponsor{% endblock %}
+{% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
+{% block out_panel %}
+
+  <h1 class="text-center">Update Sponsor</h1>
+  <form id="sponsor-form" action="" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class="btn btn-success" type="submit" value="Update Sponsor">
+  </form>
+{% endblock %}

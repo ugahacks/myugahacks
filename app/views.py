@@ -1,21 +1,21 @@
+import os
+from urllib.parse import quote
+
 from django.conf import settings
 from django.http import HttpResponseRedirect
+from django.http import StreamingHttpResponse
+# from baggage.models import Bag
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import TemplateView
+
+from app import mixins
 from applications.models import Application
 from reimbursement.models import Reimbursement
-# from baggage.models import Bag
-from django.shortcuts import get_object_or_404
-from urllib.parse import quote
-from django.http import StreamingHttpResponse
-import os
-
-from app import utils, mixins
 
 
 def root_view(request):
-
     if not request.user.is_authenticated:
         return render(request, 'ugahacks6/UGAHacks6-teaser.html')
     if not request.user.is_authenticated:
@@ -28,8 +28,9 @@ def root_view(request):
         return HttpResponseRedirect(reverse('review'))
     elif request.user.is_volunteer:
         return HttpResponseRedirect(reverse('check_in_list'))
+    elif request.user.is_sponsor:
+        return HttpResponseRedirect(reverse('sponsors:sponsor_application'))
     return HttpResponseRedirect(reverse('dashboard'))
-
 
 
 def code_conduct(request):
@@ -57,12 +58,12 @@ def protectedMedia(request, file_):
     if path == "resumes":
         app = get_object_or_404(Application, resume=file_)
         if request.user.is_authenticated and (request.user.is_organizer or
-                                                (app and (app.user_id == request.user.id))):
+                                              (app and (app.user_id == request.user.id))):
             downloadable_path = app.resume.path
     elif path == "receipt":
         app = get_object_or_404(Reimbursement, receipt=file_)
         if request.user.is_authenticated and (request.user.is_organizer or
-                                                (app and (app.hacker_id == request.user.id))):
+                                              (app and (app.hacker_id == request.user.id))):
             downloadable_path = app.receipt.path
     elif path == "baggage":
         bag = get_object_or_404(Bag, image=file_)
@@ -82,6 +83,7 @@ def protectedMedia(request, file_):
 
 class TabsView(mixins.TabsViewMixin, TemplateView):
     pass
+
 
 class SponsorshipPacketView(TemplateView):
     template_name = 'sponsorship_deck.html'

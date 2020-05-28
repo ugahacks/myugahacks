@@ -1,0 +1,112 @@
+{% extends "base_plain.html" %}
+
+{% load static %}
+{% load bootstrap3 %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/scanning.css' %}">
+  <script src="{% static 'lib/instascan.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'lib/qrcode_generator.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/camera.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/scanner.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/scanning.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/test_generator.js' %}"></script>
+{% endblock %}
+
+{% block head_title %}Scan{% endblock %}
+
+{% block panel %}
+  <div class="alert alert-danger" role="alert" style="display:none"></div>
+  <div id="scanning-container">
+    <div class="input-qr form-group">
+      <select class="form-control" data-mode="organizer" id="check-in-selector">
+        <option value="" selected disabled>Select an event..</option>
+        {% if request.user.is_organizer %}
+          <optgroup label="Check-in">
+            <option data-type="checkin" value="Check-in">Check-in</option>
+          </optgroup>
+          <optgroup label="Badge">
+            <option data-type="view" value="View-Badge">View Information</option>
+            <option data-type="reissue" value="Reissue-Badge">Reissue</option>
+            <option data-type="disable" value="Disable-Badge">Disable</option>
+            <option data-type="enable" value="Enable-Badge">Enable</option>
+          </optgroup>
+          <optgroup label="Meals">
+            {% for meal in meals %}
+              {% for type in types %}
+                {% if type.0 == meal.kind %}
+                  <option data-type="meal" value="{{ meal.id }}">{{ meal.name }} - {{ type.1 }}</option>
+                {% endif %}
+              {% endfor %}
+              {% empty %}
+              <option value="" disabled>No meals</option>
+            {% endfor %}
+          </optgroup>
+          <optgroup label="Workshops">
+            {% for workshop in workshops %}
+              <option data-type="workshop" value="{{ workshop.id }}">{{ workshop.title }}</option>
+              {% empty %}
+              <option value="" disabled>No workshops</option>
+            {% endfor %}
+          </optgroup>
+        {% endif %}
+        {% if request.user.is_sponsor or request.user.is_admin %}
+          <optgroup label="Sponsor">
+            <option data-type="award" value="Award-Points">Award Points</option>
+          </optgroup>
+        {% endif %}
+      </select>
+      <span class="help-block">Please select an event before opening the scanner.</span>
+    </div>
+    <button id="qr_code-qr" class="button-qr fa fa-camera fa-2x"></button>
+  </div>
+
+  {% if request.user.is_admin %}
+    <br>
+    <form class="form-inline">
+      <input class="form-control" id="qrCount" style="display: inline;width: 60px;" type="number" min="1" max="10"
+             value="1"/>
+      <button id="generateCredentials" class="btn btn-primary" type="button">
+        Generate Testing Credentials
+      </button>
+      <button id="restoreCredentials" class="btn btn-primary" type="button" style="display:none">
+        Restore Previous Testing Credentials
+      </button>
+      <button id="closeCollapser" class="btn btn-primary" type="button" style="display:none">
+        Close
+      </button>
+    </form>
+    <div class="collapse" id="credentialsCollapse">
+      <div class="card card-body">
+        You have just generated testing credentials for scanning throughout the system. This includes the <strong>ParticipantQR</strong>
+        and the <strong>BadgeQR</strong>. The UserQR is the QR code that would be in attendee's email.
+        The BadgeQR is the QR code that would be assigned to the attendee for the rest of the event.
+        <br>
+        <br>
+        <strong>What do I do?</strong>
+        <ul>
+          <li><strong>1. Make codes accessible.</strong> Print out the codes so that you can scan them. You can also
+            save them into your phone and use your computer as the scanner instead.
+          </li>
+          <li><strong>2. Check-in.</strong> You will need to associate the ParticipantQR with the given BadgeQR before
+            the BadgeQR becomes usable. Use the two codes with the "check-in" event above to complete this action.
+            After you do this, the UserQR will no longer be necessary.
+            <strong>Note: The ParticipantQR would actually be found in the participants email.</strong></li>
+          <li><strong>3. Meal Check-in.</strong> Create a meal. Check in your current test user (using the BadgeQR)</li>
+        </ul>
+        <br>
+        <div class="row">
+          <div class="col col-xs-12 col-sm-12 col-md-6 text-center">
+            <h3>ParticipantQR</h3>
+            <div id="participant-qr"></div>
+          </div>
+          <div class="col col-xs-12 col-sm-12 col-md-6 text-center">
+            <h3>BadgeQR</h3>
+            <div id="badge-qr"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

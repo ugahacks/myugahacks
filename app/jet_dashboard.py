@@ -1,7 +1,8 @@
-from app import dashboard_modules
 from django.utils.translation import ugettext_lazy as _
 from jet.dashboard import modules
 from jet.dashboard.dashboard import Dashboard
+
+from app import dashboard_modules
 
 
 class CustomIndexDashboard(Dashboard):

@@ -1,0 +1,13 @@
+{% extends "base_table.html" %}
+
+
+{% block head_title %}Sponsor List{% endblock %}
+
+
+{% block table_footer %}
+  {% if user.is_organizer %}
+    <div class="panel-footer">
+      <a href="{% url 'sponsors:sponsor_add' %}" class="btn btn-success btn-block">Whitelist a Sponsor</a>
+    </div>
+  {% endif %}
+{% endblock %}

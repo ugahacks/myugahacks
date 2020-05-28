@@ -8,7 +8,8 @@ from app.mixins import OverwriteOnlyModelFormMixin
 from app.utils import validate_url
 from applications import models
 
-YEARS= [x for x in range(1930,2021)]
+YEARS = [x for x in range(1930, 2021)]
+
 
 class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     github = forms.CharField(required=False, widget=forms.TextInput(
@@ -22,8 +23,10 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                'placeholder': 'https://www.linkedin.com/in/byte'}))
     site = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'https://byte.space'}))
-    phone_number = forms.CharField(required=True, label='What phone number should we contact in case of an emergency?',help_text='We will use this number solely for emergency purposes.',
-     widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '(###) ###-####'}))
+    phone_number = forms.CharField(required=True, label='What phone number should we contact in case of an emergency?',
+                                   help_text='We will use this number solely for emergency purposes.',
+                                   widget=forms.TextInput(
+                                       attrs={'class': 'form-control', 'placeholder': '(###) ###-####'}))
     university = forms.CharField(required=True,
                                  label='What university do you study at?',
                                  help_text='Current or most recent school you attended.',
@@ -63,7 +66,9 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     ethnicity = forms.TypedChoiceField(
         required=False,
         label='What race/ethnicity do you identify with?',
-        choices=(('amIndian', 'American Indian or Alaskan Native'), ('asian', 'Asian/Pacific Islander'), ('aAm', 'Black or African American'), ('hispanic', 'Hispanic'), ('white', 'White or Caucasian'), ('multiple', 'Multiple ethnicities/Other'), ('noAnswer', 'Prefer not to answer')),
+        choices=(('amIndian', 'American Indian or Alaskan Native'), ('asian', 'Asian/Pacific Islander'),
+                 ('aAm', 'Black or African American'), ('hispanic', 'Hispanic'), ('white', 'White or Caucasian'),
+                 ('multiple', 'Multiple ethnicities/Other'), ('noAnswer', 'Prefer not to answer')),
         initial=False,
         widget=forms.RadioSelect
     )
@@ -76,13 +81,13 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             label='What is your birth date?',
         )
     """
-    #MLH Code of Conduct
+    # MLH Code of Conduct
     code_of_conduct = forms.BooleanField(
         required=True,
         label='I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
-    #MLH Terms and Conditions
+    # MLH Terms and Conditions
     terms_and_conditions = forms.BooleanField(
         required=True,
         label='I authorize you to share my application/registration information for event administration, ranking, MLH administration, pre- and post- event informational e-mails, and occasional messages about hackathons with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.  I further agree to the terms of both the MLH Contest Terms and Conditions and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
@@ -193,7 +198,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         data = self.cleaned_data['mentor_workshop']
         return data
 
-
     def clean_other_diet(self):
         data = self.cleaned_data['other_diet']
         diet = self.cleaned_data['diet']
@@ -205,13 +209,12 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         data = self.cleaned_data['uniemail']
         return data
 
-
-#    def clean_other_gender(self):
-#        data = self.cleaned_data['other_gender']
-#        gender = self.cleaned_data['gender']
-#        if gender == models.GENDER_OTHER and not data:
-#            raise forms.ValidationError("Please enter this field or select 'Prefer not to answer'")
-#        return data
+    #    def clean_other_gender(self):
+    #        data = self.cleaned_data['other_gender']
+    #        gender = self.cleaned_data['gender']
+    #        if gender == models.GENDER_OTHER and not data:
+    #            raise forms.ValidationError("Please enter this field or select 'Prefer not to answer'")
+    #        return data
 
     def clean(self):
         cleaned_data = super().clean()
@@ -248,15 +251,16 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fieldsets ordered and with description
         self._fieldsets = [
             ('Personal Info',
-             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree','class_status', 'graduation_year', 'uniemail', 'gender', 'other_gender','ethnicity',
-                          'phone_number','tshirt_size', 'diet', 'other_diet',
-                           'hardware'),
+             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree',
+                         'class_status', 'graduation_year', 'uniemail', 'gender', 'other_gender', 'ethnicity',
+                         'phone_number', 'tshirt_size', 'diet', 'other_diet',
+                         'hardware'),
               'description': 'Hey there, before we begin we would like to know a little more about you.', }),
             ('Hackathons?', {'fields': ('description', 'first_timer', 'first_ugahacks', 'hearabout', 'projects'), }),
             ('Show us what you\'ve built',
              {'fields': ('github', 'devpost', 'linkedin', 'site', 'resume'),
               'description': 'Some of our sponsors may use this information for recruitment purposes,'
-              ' so please include as much as you can.'}),
+                             ' so please include as much as you can.'}),
         ]
         deadline = getattr(settings, 'REIMBURSEMENT_DEADLINE', False)
         r_enabled = getattr(settings, 'REIMBURSEMENT_ENABLED', False)
@@ -283,31 +287,31 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fields that we only need the first time the hacker fills the application
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
 
-        #this if statement gave a bug when the user tried to update their application
-        #if not self.instance.pk:
+        # this if statement gave a bug when the user tried to update their application
+        # if not self.instance.pk:
         self._fieldsets.append(('UGAHacks Policies', {
             'fields': ('cvs_edition', 'terms_and_conditions', 'code_of_conduct', 'diet_notice'),
             'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
-                            'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
-                            'will be processing your information with the aim of giving you and others the best possible experience. '
-                            'Your data will mainly be used for admissions and promotional purposes. '
-                            'By submitting an application, you are authorizing us to share your resume with our Sponsors. This '
-                            'will also include the use of any images and videos of yourself during the event. '
-                            'You are also agreeing to the terms in the "Liability Release, Covenant Not to Sue, and Ownership Agreement" linked <a href="url legal_notice" target="_blank">here</a> '
-                            'in order to participant in the event. We may also reach '
-                            'out to you (sending you an e-mail) about other events that we are '
-                            'organizing and that are of a similar nature to those previously '
-                            'requested/attended by you. </p>'
+                           'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
+                           'will be processing your information with the aim of giving you and others the best possible experience. '
+                           'Your data will mainly be used for admissions and promotional purposes. '
+                           'By submitting an application, you are authorizing us to share your resume with our Sponsors. This '
+                           'will also include the use of any images and videos of yourself during the event. '
+                           'You are also agreeing to the terms in the "Liability Release, Covenant Not to Sue, and Ownership Agreement" linked <a href="url legal_notice" target="_blank">here</a> '
+                           'in order to participant in the event. We may also reach '
+                           'out to you (sending you an e-mail) about other events that we are '
+                           'organizing and that are of a similar nature to those previously '
+                           'requested/attended by you. </p>'
         }))
         return super(ApplicationForm, self).fieldsets
 
     class Meta:
         model = models.Application
         help_texts = {
-            'participant' : 'Volunteers will still be able to participate in the hackathon and submit projects',
-            'volunteer_time' : 'What time(s) can you volunteer? (Please give date and time ranges if possible)',
-            'mentor_topic' : 'What topics are you confortable in mentoring?',
-            'mentor_workshop' : 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',
+            'participant': 'Volunteers will still be able to participate in the hackathon and submit projects',
+            'volunteer_time': 'What time(s) can you volunteer? (Please give date and time ranges if possible)',
+            'mentor_topic': 'What topics are you confortable in mentoring?',
+            'mentor_workshop': 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',
             'gender': 'This is for demographic purposes. You can skip this question if you want.',
             'hearabout': "This is for marketing purposes. You can skip this question if you want.",
             'class_status': 'Base your response on the number of years of college you have completed not credit hours.',
@@ -330,7 +334,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         }
 
         labels = {
-            'participant' : 'What type of participant are you?',
+            'participant': 'What type of participant are you?',
             'gender': 'What gender do you identify as?',
             'other_gender': 'Self-describe',
             'class_status': 'What is your class status?',
