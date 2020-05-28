@@ -83,7 +83,9 @@ const scanningQr = (() => {
             </div>`);
     }
 
-    function createInformationView(user) {
+    function createInformationView(badge) {
+        const user = badge.user;
+
         function unCamelCase(value) {
             return value.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
         }
@@ -115,7 +117,12 @@ const scanningQr = (() => {
             application += createDataBlock(dataPoint, user.application[dataPoint]);
         }
 
-        return `<div class="row view-badge-info">
+        let inActiveNotice = !badge.isActive ? `<div class="row text-center inactive-badge">Disabled Badge</div>` : '';
+
+        return `
+
+        <div class="row view-badge-info">
+            ${inActiveNotice}
             <div class="col col-xs-7 col-sm-7 col-md-7 text-left">
                 <div class="row">
                     <div class="col"><strong>Name</strong>: ${user.name}</div>
@@ -243,7 +250,7 @@ const scanningQr = (() => {
                         waitTime = 2000;
                         setStatus("success-checkmark", `Diet: ${diet}`);
                     } else if (type === "view") {
-                        setStatus("page", createInformationView(response.message.user));
+                        setStatus("page", createInformationView(response.message));
                         waitTime = 3600000; // set wait time to an hour to prevent the scanner from automatically going
                     } else {
                         setStatus("success-checkmark");

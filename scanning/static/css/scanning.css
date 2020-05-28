@@ -121,6 +121,11 @@
     font-size: 16px;
 }
 
+.video-container .inactive-badge {
+    color: #a60000;
+    font-weight: bold;
+}
+
 .permission-circle {
     display: inline-block;
     width: 12px;
@@ -129,8 +134,8 @@
 }
 
 .permission-circle.denied {
-    background: red;
-    box-shadow: 0 0 1px red;
+    background: #a60000;
+    box-shadow: 0 0 1px #a60000;
 }
 
 .permission-circle.granted {
