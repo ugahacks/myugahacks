@@ -1,10 +1,9 @@
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
 from django.utils import timezone
-from sponsors.models import Sponsor
-from django.conf import settings
 
 
 class UserManager(BaseUserManager):
@@ -103,6 +102,7 @@ class User(AbstractBaseUser):
         return True
 
     def get_tier_value(self):
+        from sponsors.models import Sponsor
         # Admin's will default to TIER_1 if debug is on
         if self.is_admin and settings.DEBUG:
             return Sponsor.C_TIER_1_POINTS
@@ -112,10 +112,12 @@ class User(AbstractBaseUser):
         sponsor = Sponsor.objects.filter(email_domain=domain)
         return sponsor.get_tier_value()
 
+    # Used by django auth. Please do not remove.
     @property
     def is_superuser(self):
         return self.is_admin
 
+    # Use this one throughout the app for semantic clarity
     @property
     def is_staff(self):
         "Is the user a member of staff?"

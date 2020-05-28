@@ -5,38 +5,38 @@
 {% load static %}
 {% block panel %}
 
-    {% if filter %}
-        <style>
-            #id_status > div {
-                display: inline-block;
-                padding-right: 20px;
-                margin-bottom: 0;
-                margin-top: 0;
-                font-weight: 400;
-                vertical-align: middle;
-                cursor: pointer;
-            }
-        </style>
-        <form action="" method="get" class="form text-left filter">
-            {% bootstrap_form filter.form %}
-            <button type="submit" class="btn btn-info">Filter</button>
-        </form>
-    {% endif %}
-    {% block extra_panel %}
-    {% endblock %}
+  {% if filter %}
+    <style>
+      #id_status > div {
+        display: inline-block;
+        padding-right: 20px;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-weight: 400;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+    </style>
+    <form action="" method="get" class="form text-left filter">
+      {% bootstrap_form filter.form %}
+      <button type="submit" class="btn btn-info">Filter</button>
+    </form>
+  {% endif %}
+  {% block extra_panel %}
+  {% endblock %}
 {% endblock %}
 {% block out_panel %}
-    <form action="{{ form_action }}" method="{{ form_method }}">
-        {% csrf_token %}
-        {% render_table table 'django_tables2/bootstrap-responsive.html' %}
-        {% block table_footer %}
-        {% endblock %}
-    </form>
+  <form action="{{ form_action }}" method="{{ form_method }}">
+    {% csrf_token %}
+    {% render_table table 'django_tables2/bootstrap-responsive.html' %}
+    {% block table_footer %}
+    {% endblock %}
+  </form>
 {% endblock %}
 {% block extra_scripts %}
-    <script>
-        $('thead input[type=checkbox]').on('click', function () {
-            $('tbody input[type=checkbox]').prop('checked', this.checked)
-        });
-    </script>
+  <script>
+    $('thead input[type=checkbox]').on('click', function () {
+      $('tbody input[type=checkbox]').prop('checked', this.checked)
+    });
+  </script>
 {% endblock %}

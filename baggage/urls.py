@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from baggage import views
 
+from baggage import views
 
 urlpatterns = [
     url(r'^search/$', views.BaggageUsers.as_view(), name='baggage_search'),

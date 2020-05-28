@@ -1,7 +1,7 @@
 const checkinQr = (() => {
     let cams = [];
     let canScan = true;
-    const IS_IOS  =  /iPad|iPhone/.test(navigator.userAgent);
+    const IS_IOS = /iPad|iPhone/.test(navigator.userAgent);
 
     function setStatus(status, message) {
         $("#error-message, .video-container .status").hide();
@@ -18,51 +18,51 @@ const checkinQr = (() => {
     }
 
     function getBackCamera() {
-        if(!cams) {
+        if (!cams) {
             throw new Error("I can't scan without a camera");
         }
         // The back camera is located in different locations for iOS and Android
-        const cameraIndex = IS_IOS ? 0 : cams.length-1;
+        const cameraIndex = IS_IOS ? 0 : cams.length - 1;
         return cams[cameraIndex];
     }
 
     const obj = {
         initCamera: () => {
             Instascan.Camera.getCameras().then(function (cameras) {
-              if (cameras.length > 0) {
-                //Start the scanner with the stored value
-                if(IS_IOS){
-                    // Overrides the InstaScan.Camera start method
-                    // This is because the default constraints that it uses
-                    // are not valid for iOS devices as they true to use
-                    // width and height parameters not valid for the
-                    // system
-                    cameras[0].start = async function start() {
-                        let constraints = {
-                          audio: false,
-                          video: {
-                            facingMode: 'environment',
-                            mandatory: {
-                              sourceId: this.id,
-                              minAspectRatio: 1.6
-                            },
-                          }
+                if (cameras.length > 0) {
+                    //Start the scanner with the stored value
+                    if (IS_IOS) {
+                        // Overrides the InstaScan.Camera start method
+                        // This is because the default constraints that it uses
+                        // are not valid for iOS devices as they true to use
+                        // width and height parameters not valid for the
+                        // system
+                        cameras[0].start = async function start() {
+                            let constraints = {
+                                audio: false,
+                                video: {
+                                    facingMode: 'environment',
+                                    mandatory: {
+                                        sourceId: this.id,
+                                        minAspectRatio: 1.6
+                                    },
+                                }
+                            };
+
+                            this._stream = await Instascan.Camera._wrapErrors(async () => {
+                                return await navigator.mediaDevices.getUserMedia(constraints);
+                            });
+
+                            return this._stream;
                         };
-
-                        this._stream = await Instascan.Camera._wrapErrors(async () => {
-                          return await navigator.mediaDevices.getUserMedia(constraints);
-                        });
-
-                        return this._stream;
-                    };
+                    }
+                    cams = cameras;
+                } else {
+                    console.error('No cameras found.');
                 }
-                cams = cameras;
-              } else {
-                console.error('No cameras found.');
-              }
             }).catch(function (e) {
                 setStatus("error", e.message);
-              console.error(e);
+                console.error(e);
             });
         },
 

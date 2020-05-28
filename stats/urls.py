@@ -12,6 +12,5 @@ urlpatterns = [
     url(r'^workshops/$', views.WorkshopStats.as_view(), name='workshop_stats'),
 ]
 
-
 if getattr(settings, 'REIMBURSEMENT_ENABLED', False):
     urlpatterns.append(url(r'^reimb/$', views.ReimbStats.as_view(), name='reimb_stats'))

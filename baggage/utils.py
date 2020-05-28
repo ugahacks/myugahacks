@@ -1,6 +1,7 @@
-import math
 import itertools
-from baggage.models import Room, Bag, BAG_ADDED
+import math
+
+from baggage.models import Room, Bag
 
 
 def calculate_distance(name, ini_x, ini_y, end_x, end_y):
@@ -31,14 +32,14 @@ def get_position(special):
         for i in range(0, len(positions_sort)):
             # I am not responsible for what will happen if you add more than 26 rows ;)
             row_char = chr(positions_sort[i][0][1] + 65)
-            num_bags = Bag.objects.filter(status=BAG_ADDED, room=positions_sort[i][0][0],
+            num_bags = Bag.objects.filter(status=Bag.ADDED, room=positions_sort[i][0][0],
                                           row=row_char, col=positions_sort[i][0][2]).count()
             if num_bags == 0:
                 return (1, positions_sort[i][0][0], row_char, positions_sort[i][0][2])
         extra = 'EXTRA'
     i = 0
     while i < 10000:
-        num_bags = Bag.objects.filter(status=BAG_ADDED, room=extra, row=0, col=i).count()
+        num_bags = Bag.objects.filter(status=Bag.ADDED, room=extra, row=0, col=i).count()
         if num_bags == 0:
             return (2, extra, 'EXTRA', i)
         i += 1

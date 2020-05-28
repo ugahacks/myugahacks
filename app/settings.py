@@ -22,14 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 import environ
+
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, True)
 )
 
 environ.Env.read_env()
-
-
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
@@ -44,9 +43,9 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     '165.227.125.129',
     '192.168.0.12',
-    '192.168.1.18', #kane
+    '192.168.1.18',  # kane
     'acc3e81f.ngrok.io'
-    ]
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -97,7 +96,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 MIDDLEWARE = [
-    'django_hosts.middleware.HostsRequestMiddleware', #This MUST be first
+    'django_hosts.middleware.HostsRequestMiddleware',  # This MUST be first
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -107,7 +106,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'django_hosts.middleware.HostsResponseMiddleware' #This MUST be last
+    'django_hosts.middleware.HostsResponseMiddleware'  # This MUST be last
 ]
 
 ROOT_HOSTCONF = 'app.hosts'
@@ -140,7 +139,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 
-
 if DEBUG == True:
     DATABASES = {
         'default': {
@@ -155,9 +153,6 @@ if DEBUG == True:
     }
 
 else:
-
-
-
 
     if os.environ.get('DATABASE_URL', None):
         DATABASES['default'] = dj_database_url.config(
@@ -176,10 +171,6 @@ else:
                 'PORT': '5432',
             }
         }
-
-
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -244,10 +235,6 @@ if os.environ.get('DROPBOX_OAUTH2_TOKEN', False):
     DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_OAUTH2_TOKEN', False)
     DROPBOX_ROOT_PATH = HACKATHON_DOMAIN.replace('.', '_')
 
-
-
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
@@ -256,7 +243,6 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'UGAHacks Team <no-reply@ugahacks.com>'
-
 
 # Jet configs
 JET_SIDE_MENU_COMPACT = True

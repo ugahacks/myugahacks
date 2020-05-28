@@ -4,22 +4,27 @@
 {% block cols-panel %}col-md-12{% endblock %}
 {% block panel %}
 
-<h1 class="text-center">Sponsor Attendance Form</h1>
-<div class="col-md-12">
-  <h4>From the whole UGAHacks team, thank you so much for sponsoring {{h_name}} and your continued support of our team's goal to create an inclusive, collaborative environment for hackers of
- all experience levels to learn, code, and dream. We're proud to be working with you and are excited to put on an amazing hackathon with your help.</h4>
- <h4>As a token of our appreciation, you will receive:</h4>
- <h4 style="margin-left:15px;">
-   <li>A badge for entering the venue and sponsor room</li>
-   <li>Food - Including Dinner on Friday, Breakfast, Lunch, and Dinner on Saturday, and Breakfast on Sunday</li>
-   <li>A {{h_name}} T-shirt</li>
-   <li> Access to interactive portal to engage hackers throughout the event and view their applications upon submission of this form </li>
-</h4>
-<h4>In order to best accomodate you and rest of your team, we ask that you please fill out the following form and <b>ask the rest of the attending team to do so as well.</b></h4>
-</div>
-    <form id="sponsor-application-form" action="" method="post">
-	     {% csrf_token %}
-	      {{ form|crispy }}
-        <input class="btn btn-success" type="submit" value="Submit Form">
-    </form>
+  <h1 class="text-center">Sponsor Attendance Form</h1>
+  <div class="col-md-12">
+    <h4>From the whole UGAHacks team, thank you so much for sponsoring {{ h_name }} and your continued support of our
+      team's goal to create an inclusive, collaborative environment for hackers of
+      all experience levels to learn, code, and dream. We're proud to be working with you and are excited to put on an
+      amazing hackathon with your help.</h4>
+    <h4>As a token of our appreciation, you will receive:</h4>
+    <h4 style="margin-left:15px;">
+      <li>A badge for entering the venue and sponsor room</li>
+      <li>Food - Including Dinner on Friday, Breakfast, Lunch, and Dinner on Saturday, and Breakfast on Sunday</li>
+      <li>A {{ h_name }} T-shirt</li>
+      <li> Access to interactive portal to engage hackers throughout the event and view their applications upon
+        submission of this form
+      </li>
+    </h4>
+    <h4>In order to best accomodate you and rest of your team, we ask that you please fill out the following form and
+      <b>ask the rest of the attending team to do so as well.</b></h4>
+  </div>
+  <form id="sponsor-application-form" action="" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class="btn btn-success" type="submit" value="Submit Form">
+  </form>
 {% endblock %}

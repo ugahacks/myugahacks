@@ -3,54 +3,54 @@
 {% block head_title %}Update workshop{% endblock %}
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
-<h1 class="text-center">Update Workshop</h1>
-    <form method="post">
-	     {% csrf_token %}
-	      {{ form|crispy }}
-        <div class="form-group">
-      	    <label class="control-label" for="workshop_timeslot">Timeslot</label>
-      	    <select class="form-control" name="workshop_timeslot">
-              <option value="{{ workshop.get_time_slot.id }}" selected>{{ workshop.get_time_slot }}</option>
-        	    {% for timeslot in timeslot_list %}
-                  {% if workshop.get_time_slot.id == timeslot.id %}
-                  {% else %}
-        	        <option value="{{ timeslot.id }}">{{ timeslot }}</option>
-                  {% endif %}
-        	    {% endfor %}
-      	    </select>
-      	</div>
-        <input class="btn btn-success" type="submit" value="Update Workshop">
-    </form>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-    <script>
-        $(document).ready(function () {
-                var exp_time = $('input[name="workshop_starts"]');
-                exp_time.daterangepicker({
-                    timePicker: true,
-                    singleDatePicker: true,
-                    timePicker24Hour: true,
-                    timePickerIncrement: 5,
-                    startDate: moment(exp_time.val()),
-                    locale: {
-                        firstDay: 1,
-                        format: 'YYYY-MM-DD H:mm:ss'
-                    }
-                });
-                var exp_time2 = $('input[name="workshop_ends"]');
-                exp_time2.daterangepicker({
-                    timePicker: true,
-                    singleDatePicker: true,
-                    timePicker24Hour: true,
-                    timePickerIncrement: 5,
-                    startDate: moment(exp_time2.val()),
-                    locale: {
-                        firstDay: 1,
-                        format: 'YYYY-MM-DD H:mm:ss'
-                    }
-                });
+  <h1 class="text-center">Update Workshop</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="form-group">
+      <label class="control-label" for="workshop_timeslot">Timeslot</label>
+      <select class="form-control" name="workshop_timeslot">
+        <option value="{{ workshop.get_time_slot.id }}" selected>{{ workshop.get_time_slot }}</option>
+        {% for timeslot in timeslot_list %}
+          {% if workshop.get_time_slot.id == timeslot.id %}
+          {% else %}
+            <option value="{{ timeslot.id }}">{{ timeslot }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <input class="btn btn-success" type="submit" value="Update Workshop">
+  </form>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
+  <script>
+    $(document).ready(function () {
+              var exp_time = $('input[name="workshop_starts"]');
+              exp_time.daterangepicker({
+                timePicker: true,
+                singleDatePicker: true,
+                timePicker24Hour: true,
+                timePickerIncrement: 5,
+                startDate: moment(exp_time.val()),
+                locale: {
+                  firstDay: 1,
+                  format: 'YYYY-MM-DD H:mm:ss'
+                }
+              });
+              var exp_time2 = $('input[name="workshop_ends"]');
+              exp_time2.daterangepicker({
+                timePicker: true,
+                singleDatePicker: true,
+                timePicker24Hour: true,
+                timePickerIncrement: 5,
+                startDate: moment(exp_time2.val()),
+                locale: {
+                  firstDay: 1,
+                  format: 'YYYY-MM-DD H:mm:ss'
+                }
+              });
             }
-        );
-    </script>
+    );
+  </script>
 {% endblock %}

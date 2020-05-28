@@ -1,19 +1,17 @@
-import uuid
 from random import randint
 
+import uuid
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
+from django.http import JsonResponse
 from django.views.generic.base import TemplateView
 
-from django.http import JsonResponse
-
+from applications.models import Application
+from checkin.models import CheckIn
+from meals.models import Meal, Eaten
+from points.models import Points
 from user.models import User
 from workshops.models import Workshop, Attendance
-from checkin.models import CheckIn
-from meals.models import Meal, Eaten, MEAL_TYPE
-from applications.models import Application
-from points.models import Points
-
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class ScanningView(LoginRequiredMixin, TemplateView):
@@ -27,7 +25,7 @@ class ScanningView(LoginRequiredMixin, TemplateView):
         context.update({
             'workshops': workshops,
             'meals': meals,
-            'types': MEAL_TYPE
+            'types': Meal.TYPES
         })
         return context
 

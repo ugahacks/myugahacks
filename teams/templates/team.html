@@ -4,67 +4,73 @@
 {% block head_title %}Team{% endblock %}
 
 {% block panel %}
-    {% if team %}
-        <h3>Team code</h3>
-        <p class="lead">{{ team.team_code }}</p>
-        <p>Send this to whoever you want to join this team. Remember that teams have a maximum size of {{ h_max_team }}
-            hackers</p>
-        <i class="fa fa-exclamation-triangle"></i>
-        <b>Note:</b> Team management is <b>solely</b> to help our organizer team manage your applications and leave no one from the team behind when inviting you to
-        the event. Hence, we highly recommend finalizing as soon as possible for the highest chance that everyone on your team will be invited to the event.
-        <b>This does not mean you cannot add/change your team members later on or at the event as long as they have also been invited at the event.</b>
-        <hr>
-        <h3>Teammates ({{ teammates|length }}/{{ h_max_team }})</h3>
-        <div class="table-responsive">
+  {% if team %}
+    <h3>Team code</h3>
+    <p class="lead">{{ team.team_code }}</p>
+    <p>Send this to whoever you want to join this team. Remember that teams have a maximum size of {{ h_max_team }}
+      hackers</p>
+    <i class="fa fa-exclamation-triangle"></i>
+    <b>Note:</b> Team management is <b>solely</b> to help our organizer team manage your applications and leave no one
+    from the team behind when inviting you to
+    the event. Hence, we highly recommend finalizing as soon as possible for the highest chance that everyone on your
+    team will be invited to the event.
+    <b>This does not mean you cannot add/change your team members later on or at the event as long as they have also
+      been invited at the event.</b>
+    <hr>
+    <h3>Teammates ({{ teammates|length }}/{{ h_max_team }})</h3>
+    <div class="table-responsive">
 
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th><b>Name</b></th>
-                    <th><b>Email</b></th>
-                    <th><b>Finished application?</b></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for hacker in teammates %}
-                    <tr>
-                        <td>{{ hacker.name }} </td>
-                        <td>{{ hacker.email }} </td>
-                        <td><i class="fa {% if hacker.app %}fa-check text-success{% else %}fa-times text-danger{% endif %}"
-                               aria-hidden="true"></i>
-                        </td>
-                    </tr>
-                {% endfor %}
-                <tbody>
-            </table>
-        </div>
-        <hr>
-        <form action="" method="post" class="form">
-            {% csrf_token %}
-            <button class="btn btn-danger btn-block" name="leave" value="leave" type="submit">Leave team
-            </button>
-        </form>
-    {% elif application.answered_invite or application.is_invited %}
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th><b>Name</b></th>
+          <th><b>Email</b></th>
+          <th><b>Finished application?</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for hacker in teammates %}
+          <tr>
+            <td>{{ hacker.name }} </td>
+            <td>{{ hacker.email }} </td>
+            <td><i class="fa {% if hacker.app %}fa-check text-success{% else %}fa-times text-danger{% endif %}"
+                   aria-hidden="true"></i>
+            </td>
+          </tr>
+        {% endfor %}
+        <tbody>
+      </table>
+    </div>
+    <hr>
+    <form action="" method="post" class="form">
+      {% csrf_token %}
+      <button class="btn btn-danger btn-block" name="leave" value="leave" type="submit">Leave team
+      </button>
+    </form>
+  {% elif application.answered_invite or application.is_invited %}
 
 
-    {% elif not h_app_closed and not team %}
-        <p>Do you have a team already? Join it below. Otherwise you can create a new team. </p>
-        <i class="fa fa-exclamation-triangle"></i>
-        <b>Note:</b> Team management is <b>solely</b> to help our organizer team manage your applications and leave no one from the team behind when inviting you to
-        the event. Hence, we highly recommend finalizing as soon as possible for the highest chance that everyone on your team will be invited to the event.
-        <b>This does not mean you cannot add/change your team members later on or at the event as long as they have also been invited at the event.</b>
-        <br>
-        <br>
-        <form action="" method="post" class="form">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <div class="col-md-5 no-padding">
-                <button class="btn btn-success btn-block" type="submit">Join team</button>
-            </div>
-            <div class="col-md-5 col-md-offset-2 no-padding">
-                <button class="btn btn-primary btn-block" name="create" value="create" type="submit" formnovalidate>Create team
-                </button>
-            </div>
-        </form>
-    {% endif %}
+  {% elif not h_app_closed and not team %}
+    <p>Do you have a team already? Join it below. Otherwise you can create a new team. </p>
+    <i class="fa fa-exclamation-triangle"></i>
+    <b>Note:</b> Team management is <b>solely</b> to help our organizer team manage your applications and leave no one
+    from the team behind when inviting you to
+    the event. Hence, we highly recommend finalizing as soon as possible for the highest chance that everyone on your
+    team will be invited to the event.
+    <b>This does not mean you cannot add/change your team members later on or at the event as long as they have also
+      been invited at the event.</b>
+    <br>
+    <br>
+    <form action="" method="post" class="form">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <div class="col-md-5 no-padding">
+        <button class="btn btn-success btn-block" type="submit">Join team</button>
+      </div>
+      <div class="col-md-5 col-md-offset-2 no-padding">
+        <button class="btn btn-primary btn-block" name="create" value="create" type="submit" formnovalidate>Create team
+        </button>
+      </div>
+    </form>
+  {% endif %}
 {% endblock %}

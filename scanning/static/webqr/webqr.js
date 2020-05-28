@@ -32,18 +32,16 @@ function captureToCanvas() {
             gCtx.drawImage(v, 0, 0);
             try {
                 qrcode.decode();
-            }
-            catch (e) {
+            } catch (e) {
                 console.log(e);
                 setTimeout(captureToCanvas, 500);
             }
-            ;
-        }
-        catch (e) {
+
+        } catch (e) {
             console.log(e);
             setTimeout(captureToCanvas, 500);
         }
-        ;
+
     }
 }
 
@@ -59,14 +57,14 @@ function isCanvasSupported() {
     var elem = document.createElement('canvas');
     return !!(elem.getContext && elem.getContext('2d'));
 }
+
 function success(stream) {
     if (webkit)
         v.src = window.URL.createObjectURL(stream);
     else if (moz) {
         v.mozSrcObject = stream;
         v.play();
-    }
-    else
+    } else
         v.src = stream;
     gUM = true;
     setTimeout(captureToCanvas, 500);
@@ -74,7 +72,7 @@ function success(stream) {
 
 function error(error) {
     gUM = false;
-    return;
+
 }
 
 function load() {
@@ -82,8 +80,7 @@ function load() {
         initCanvas(800, 600);
         qrcode.callback = read;
         setwebcam();
-    }
-    else {
+    } else {
         document.getElementById("error").style.display = "inline";
         document.getElementById("error").innerHTML = '<p id="mp1">QR code scanner for HTML5 capable browsers</p><br>' +
             '<br><p id="mp2">sorry your browser is not supported</p><br><br>' +
@@ -107,12 +104,10 @@ function setwebcam() {
                     });
                     setwebcam2(options);
                 });
-        }
-        catch (e) {
+        } catch (e) {
             console.log(e);
         }
-    }
-    else {
+    } else {
         console.log("no navigator.mediaDevices.enumerateDevices");
         setwebcam2(options);
     }
@@ -133,12 +128,10 @@ function setwebcam2(options) {
     if (n.getUserMedia) {
         webkit = true;
         n.getUserMedia({video: options, audio: false}, success, error);
-    }
-    else if (n.webkitGetUserMedia) {
+    } else if (n.webkitGetUserMedia) {
         webkit = true;
         n.webkitGetUserMedia({video: options, audio: false}, success, error);
-    }
-    else if (n.mozGetUserMedia) {
+    } else if (n.mozGetUserMedia) {
         moz = true;
         n.mozGetUserMedia({video: options, audio: false}, success, error);
     }

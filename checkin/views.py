@@ -8,13 +8,12 @@ from django_tables2 import SingleTableMixin
 from app.mixins import TabsViewMixin
 from app.utils import reverse
 from app.views import TabsView
-from applications import models
+from applications.models import Application
 from checkin.models import CheckIn
-from checkin.tables import ApplicationsCheckInTable, ApplicationCheckinFilter, RankingListTable, ApplicationsReIssueTable
+from checkin.tables import ApplicationsCheckInTable, ApplicationCheckinFilter, RankingListTable, \
+    ApplicationsReIssueTable
 from user.mixins import IsVolunteerMixin, IsOrganizerMixin
 from user.models import User
-from django.conf import settings
-from app.slack import send_slack_message
 
 
 def user_tabs(user):
@@ -32,7 +31,7 @@ class CheckInList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView)
         return user_tabs(self.request.user)
 
     def get_queryset(self):
-        return models.Application.objects.exclude(status=models.APP_ATTENDED)
+        return Application.objects.exclude(status=Application.ATTENDED)
 
 
 class CheckInHackerView(IsVolunteerMixin, TabsView):
@@ -44,12 +43,12 @@ class CheckInHackerView(IsVolunteerMixin, TabsView):
     def get_context_data(self, **kwargs):
         context = super(CheckInHackerView, self).get_context_data(**kwargs)
         appid = kwargs['id']
-        app = models.Application.objects.filter(uuid=appid).first()
+        app = Application.objects.filter(uuid=appid).first()
         if not app:
             raise Http404
         context.update({
             'app': app,
-            'checkedin': app.status == models.APP_ATTENDED
+            'checkedin': app.status == Application.ATTENDED
         })
         try:
             context.update({'checkin': CheckIn.objects.filter(application=app).first()})
@@ -63,7 +62,7 @@ class CheckInHackerView(IsVolunteerMixin, TabsView):
         if qrcode is None or qrcode == '':
             messages.success(self.request, 'The QR code is mandatory!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        app = models.Application.objects.filter(uuid=appid).first()
+        app = Application.objects.filter(uuid=appid).first()
         app.check_in()
         ci = CheckIn()
         ci.user = request.user
@@ -98,7 +97,7 @@ class ReIssueList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView)
         return user_tabs(self.request.user)
 
     def get_queryset(self):
-        return models.Application.objects.filter(status=models.APP_ATTENDED)
+        return Application.objects.filter(status=Application.ATTENDED)
 
 
 class ReIssueHackerView(IsVolunteerMixin, TabsView):
@@ -110,13 +109,13 @@ class ReIssueHackerView(IsVolunteerMixin, TabsView):
     def get_context_data(self, **kwargs):
         context = super(ReIssueHackerView, self).get_context_data(**kwargs)
         appid = kwargs['id']
-        app = models.Application.objects.filter(uuid=appid).first()
+        app = Application.objects.filter(uuid=appid).first()
         ci = CheckIn.objects.get(application=app)
         if not app:
             raise Http404
         context.update({
             'app': app,
-            'checkedin': app.status == models.APP_ATTENDED,
+            'checkedin': app.status == Application.ATTENDED,
             'ci': ci
         })
         try:
@@ -131,8 +130,8 @@ class ReIssueHackerView(IsVolunteerMixin, TabsView):
         if qrcode is None or qrcode == '':
             messages.success(self.request, 'The QR code is mandatory!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        app = models.Application.objects.filter(uuid=appid).first()
-        
+        app = Application.objects.filter(uuid=appid).first()
+
         ci = CheckIn.objects.get(application=app)
         ci.qr_identifier = qrcode
         ci.save()

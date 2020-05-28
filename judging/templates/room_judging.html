@@ -6,14 +6,14 @@
 {% load form_utils %}
 {% block head_title %}Judge projects{% endblock %}
 {% block extra_head %}
-      <link rel="stylesheet" href="{% static 'css/judging.css' %}">
+  <link rel="stylesheet" href="{% static 'css/judging.css' %}">
 {% endblock %}
 {% block panel %}
 
   {% if room %}
     <h3> Judging at Room {{ room.name }} </h3>
     {% if project %}
-         <h2>{{ project.title }}</h2>
+      <h2>{{ project.title }}</h2>
       <dl class="dl-horizontal">
         <dt>Devpost link</dt>
         <dd><a href="{{ project.url }}">{{ project.url }}</a></dd>
@@ -38,22 +38,25 @@
         <input type="hidden" name="presentation_id" value="{{ presentation.pk }}"/>
         <h4 class="text-center">Score</h4>
         <div class="row criteria">
-            <div class="col-md-2 col-md-offset-4">Technology</div>
-            <div class="col-md-2">Design</div>
-            <div class="col-md-2">Completion</div>
-            <div class="col-md-2">Learning</div>
+          <div class="col-md-2 col-md-offset-4">Technology</div>
+          <div class="col-md-2">Design</div>
+          <div class="col-md-2">Completion</div>
+          <div class="col-md-2">Learning</div>
         </div>
 
         {% for judge in "ABC" %}
-        <dl class="dl-horizontal">
-          <div class="row">
-            <div class="col-md-2"><dt>Judge {{ judge }}</dt><dd></dd></div>
-            <div class="col-md-2 col-md-offset-2">{% include 'include/number10.html' with name="tech_score_"|add:judge %}</div>
-            <div class="col-md-2">{% include 'include/number5.html' with name="design_score_"|add:judge %}</div>
-            <div class="col-md-2">{% include 'include/number5.html' with name="completion_score_"|add:judge %}</div>
-            <div class="col-md-2">{% include 'include/number5.html' with name="learning_score_"|add:judge %}</div>
-          </div>
-        </dl>
+          <dl class="dl-horizontal">
+            <div class="row">
+              <div class="col-md-2">
+                <dt>Judge {{ judge }}</dt>
+                <dd></dd>
+              </div>
+              <div class="col-md-2 col-md-offset-2">{% include 'include/number10.html' with name="tech_score_"|add:judge %}</div>
+              <div class="col-md-2">{% include 'include/number5.html' with name="design_score_"|add:judge %}</div>
+              <div class="col-md-2">{% include 'include/number5.html' with name="completion_score_"|add:judge %}</div>
+              <div class="col-md-2">{% include 'include/number5.html' with name="learning_score_"|add:judge %}</div>
+            </div>
+          </dl>
         {% endfor %}
 
         <button name="send" class="btn btn-success btn-block" value="send">Send vote</button>
