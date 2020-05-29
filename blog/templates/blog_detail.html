@@ -1,27 +1,19 @@
+{% extends "blog_base.html" %}
 {% load static %}
 {% block extra_head %}
-  <title>{{ blog.title }} | UGAHacks </title>
-  <link rel="apple-touch-icon" sizes="180x180" href="{% static "UGAHacks6/favicons/apple-touch-icon.png" %}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{% static "UGAHacks6/favicons/favicon-32x32.png" %}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{% static "UGAHacks6/favicons/favicon-16x16.png" %}">
-  <link rel="mask-icon" href="{% static "UGAHacks6/favicons/safari-pinned-tab.svg" %}" color="#203c9c">
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
 {% endblock %}
+{% block content %}
 <div class="post-image" style="background-image: radial-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url('{{ blog.thumbnail.url }}');">
   <div class="post-title">
+    <p> {{ blog.format_publication_date }} </p>
     <h1>{{ blog.title }}</h1>
     <div class="post-subtitle">
       <p>By {{ blog.author.name }} </p>
-      <p> {{ blog.publication_date }} </p>
-      {% if request.user.is_organizer %}
-        <br>
-        <a class="editbtn" href="{% url 'blog:blog_edit' blog.id %}">Edit Post</a>
-      {% endif %}
     </div>
   </div>
 </div>
 <div class="post-content">
   <p>{{ blog.content | safe }}</p>
-  <p id="post-tags"><i>{% for tag in blog.tag_set.all %} {{ tag }} {% endfor %}</i></p>
 </div>
+{% endblock %}

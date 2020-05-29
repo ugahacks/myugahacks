@@ -1,18 +1,26 @@
-{% extends "base_tabs.html" %}
+{% extends "blog_base.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
-{% block head_title %} Edit {{ blog.title }} {% endblock %}
-{% block cols-panel %}col-md-12{% endblock %}
-{% block out_panel %}
-<head>
-  {{ form.media }}
-</head>
-<h1 class="text-center">Editing {{ blog.title }}</h1>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <div style="margin-bottom:25px;">
-      <small class="text-muted">Current tags: {{ blog.get_tags }}</small>
-    </div>
-    <input class="btn btn-success" type="submit" value="Update Blog Post">
-</form>
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/blog_add.css' %}">
+  <script src="https://cdn.tiny.cloud/1/c1od3gfttxgd9izhlb2nkxe56wxlnslf8l4s8juhfwozvbes/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+      tinymce.init({
+        selector: 'textarea',
+        plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinymcespellchecker',
+        toolbar: 'casechange checklist code pageembed',
+        toolbar_mode: 'floating',
+      });
+  </script>
+{% endblock %}
+{% block content %}
+<div id="noScroll" class="mt-5">
+  <div class="add-form">
+    <form action="{% url 'blog_edit' blog.id %}" method="post" enctype='multipart/form-data'>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input type="submit" value="Publish Post" class="addbtn">
+    </form>
+  </div>
+</div>
 {% endblock %}

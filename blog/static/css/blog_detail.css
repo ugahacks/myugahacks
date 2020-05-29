@@ -8,7 +8,6 @@
 body {
     font-family: "Poppins";
     font-weight: 400;
-    background: linear-gradient(#17182f,#0d0f12);
 }
 
 .post-image {
@@ -25,13 +24,19 @@ body {
 }
 
 .post-title {
-  text-align: center;
+  line-height: 1;
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-size: 1.7em;
+  font-size: 40px;
+  max-width: 40%;
+}
+
+.post-title p{
+  font-size: 25px;
+  margin-bottom: 15px;
 }
 
 .post-subtitle {
@@ -41,11 +46,12 @@ body {
 }
 
 .post-content {
-  margin: 25px auto;
-  padding: 10px 20px;
-  max-width: 40%;
-  border-radius: 6px;
-  background: white;
+  overflow-wrap: break-word;
+  padding-top: 100px;
+  max-width: 35%;
+  margin: auto;
+  font-size: 18px;
+  margin-bottom: 100px;
 }
 
 #post-tags {

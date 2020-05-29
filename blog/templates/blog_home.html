@@ -1,59 +1,71 @@
+{% extends "blog_base.html" %}
 {% load static %}
+{% load hosts %}
 {% block extra_head %}
-    <title>Blog Home | UGAHacks </title>
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
-    <link rel="stylesheet" href="{% static 'css/blog_home.css' %}">
+  <link rel="stylesheet" href="{% static 'css/blog_home.css' %}">
 {% endblock %}
-
-<div class="main-banner">
-  <div class="banner-header">
-    <h1>BLOG</h1>
-  </div>
-</div>
-<div class="row row-cols-1 row-cols-md-3" id="posts">
-  {% for blog in blogs %}
-  <div class="col mb-4">
-    <div class="card">
-      <img src="{{ blog.thumbnail.url }}" class="card-img-top" alt="Blog post thumbnail">
-      <div class="card-body">
-        <p id="pub_date">{{ blog.publication_date| date }}</p>
-        <h4 class="card-title">{{ blog.title }}</h4>
-        <p class="card-text">By {{ blog.author.name }}</p>
-        <p>{{ blog.description| safe | escape }} </p>
-        <a href="{% url 'blog:blog_detail' blog.id %}" class="readbtn">Read More <i class="material-icons">chevron_right</i></a>
-        {% if request.user.is_organizer %}
-        <a href="{% url 'blog:blog_edit' blog.id %}" class="editbtn"><i class="material-icons">edit</i></a>
-        {% endif %}
-        <br>
-        {% for tag in blog.tag_set.all %}
-        <span id="blogtags" class="badge badge-pill badge-danger"> {{ tag }}</span>
-        {% endfor %}
+    <!-- also copied pasted from Neal. For the life of me i cant get this to work when i put it in blog_home.css. Take a look later -->
+{% block content %}
+    <!-- First Parallax Image with Logo Text -->
+    <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+      <div class="w3-display-middle" style="white-space:nowrap;">
+        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">BLOG <span class="w3-hide-small"></span></span>
       </div>
     </div>
-  </div>
-  {% endfor %}
-</div>
-<div class="creatediv">
-  {% if request.user.is_organizer %}
-  <a href="{% url 'blog:blog_add' %}" class="addbtn">Create new post +</a>
-  {% endif %}
-</div>
-{% if page_obj.paginator.num_pages > 1 %}
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1" class="jumpbtn"><i class="material-icons">first_page</i></a>
-            <a href="?page={{ page_obj.previous_page_number }}" class="pagebtn">{{ page_obj.previous_page_number }}</a>
-        {% endif %}
 
-        <span class="currentpagebtn">{{ page_obj.number }}</span>
+    <div class="text-center mt-5">
+      <div class="container">
+        <form class="" action="{% url 'blog_home' %}" method="get">
+          {% csrf_token %}
+          <input id="blog-search" class="search-bar" type="text" placeholder="Search" name="blog-search">
+        </form>
+      </div>
+    </div>
+    <div class="creatediv mt-5">
+      {% if request.user.is_organizer %}
+      <a href="{% url 'blog_add' %}" class="addbtn">Create new post +</a>
+      {% endif %}
+    </div>
+    <div class="page-container">
+      {% for blog in blogs %}
+        <hr class="divider">
+          <div class="blog-container">
+            <a class='' href="{% url 'blog_detail' blog.id %}">
+              <img src="{{ blog.thumbnail.url }}" class="blog-thumbnail">
+              <div class="blog-details">
+                <div class="">
+                  <p class="blog-date">{{ blog.format_publication_date }}</p>
+                  <h1 class="blog-title">{{ blog.title }}</h1>
+                  <p class="blog-description"> {{ blog.description }}</p>
+                  {% if request.user.is_organizer %}
+                  <a href="{% url 'blog_edit' blog.id %}" class="editbtn">Edit Post</a>
+                  {% endif %}
+                  {% for tag in blog.tags.all %}
+                    <a class="tag"> {{ tag }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+            </a>
+          </div>
+      {% endfor %}
+    </div>
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" class="pagebtn">{{ page_obj.next_page_number }}</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}" class="jumpbtn"><i class="material-icons">last_page</i></a>
-        {% endif %}
-    </span>
-</div>
-{% endif %}
+    <!-- pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="jumpbtn"><i class="material-icons">first_page</i></a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagebtn">{{ page_obj.previous_page_number }}</a>
+            {% endif %}
+
+            <span class="currentpagebtn">{{ page_obj.number }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="pagebtn">{{ page_obj.next_page_number }}</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="jumpbtn"><i class="material-icons">last_page</i></a>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+    {% endblock %}

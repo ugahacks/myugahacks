@@ -62,8 +62,7 @@ def protectedMedia(request, file_):
             downloadable_path = app.resume.path
     elif path == "blog_thumbnails":
         blog = get_object_or_404(Blog, thumbnail=file_)
-        if request.user.is_authenticated and request.user.is_organizer:
-            downloadable_path = blog.thumbnail.path
+        downloadable_path = blog.thumbnail.path
     elif path == "receipt":
         app = get_object_or_404(Reimbursement, receipt=file_)
         if request.user.is_authenticated and (request.user.is_organizer or

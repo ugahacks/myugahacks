@@ -9,5 +9,3 @@ class BlogAdmin(admin.ModelAdmin):
     search_fields = ('title','author__name')
 
 admin.site.register(models.Blog, admin_class=BlogAdmin)
-
-admin.site.register(models.Tag)

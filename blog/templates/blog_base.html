@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <link rel="stylesheet" href="{% static 'css/blog_base.css' %}">
+
+
+
+
+
+    <script type="text/javascript" src="{% static 'js/blog_nav.js' %}"></script>
+
+    {% block extra_head %}
+
+    {% endblock extra_head %}
+  </head>
+  <body>
+    
+    <!-- Copy pasted and modified from MyUGAHacks-Frontend. -->
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+      <div class="w3-bar" id="myNavbar">
+        <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+          <i class="fa fa-bars"></i>
+        </a>
+        <a href="/" class="w3-bar-item w3-button" style="color: #fff;">UGAHACKS</a>
+        <a href="timeline.html" class="w3-bar-item w3-button w3-hide-small" style="color: #fff;"><i class="fa fa-th"></i> EVENTS</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small" style="color: #fff;"><i class="fa fa-newspaper-o"></i> BLOG</a>
+        <a href="contact.html" class="w3-bar-item w3-button w3-hide-small" style="color: #fff;"><i class="fa fa-envelope"></i> CONTACT</a>
+      </div>
+
+      <!-- Navbar on small screens -->
+      <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+        <a href="timeline.html" class="w3-bar-item w3-button" onclick="toggleFunction()">EVENTS</a>
+        <a href="contact.html" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
+      </div>
+    </div>
+    {% block content %}
+    {% endblock content %}
+  </body>
+</html>

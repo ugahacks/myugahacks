@@ -38,8 +38,12 @@ ALLOWED_HOSTS = [
     'my.ugahacks.com',
     'ugahacks.com',
     '5.ugahacks.com',
+    '6.ugahacks.com',
+    '6.localhost',
     'blog.ugahacks.com',
     'blog.localhost',
+    'blog.kanedutesting.com',
+    '6.kanedutesting.com',
     'localhost',
     '5.localhost',
     '127.0.0.1',
@@ -48,7 +52,7 @@ ALLOWED_HOSTS = [
     '192.168.0.12',
     ]
 
-SESSION_COOKIE_DOMAIN=".ugahacks.com"
+SESSION_COOKIE_DOMAIN=".kanedutesting.com:8000"
 
 # Application definition
 INSTALLED_APPS = [
@@ -77,8 +81,8 @@ INSTALLED_APPS = [
     'archives',
     'crispy_forms',
     'django_hosts',
-    'froala_editor',
     'blog',
+    'taggit',
 ]
 
 
@@ -112,7 +116,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_HOSTCONF = 'app.hosts'
-DEFAULT_HOST = 'my'
+DEFAULT_HOST = '6'
 
 ROOT_URLCONF = 'app.urls'
 

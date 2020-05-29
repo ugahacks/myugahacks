@@ -28,8 +28,6 @@ urlpatterns = [
     url(r'^judging/', include('judging.urls')),
     url(r'^workshops/', include('workshops.urls')),
     path('sponsorship-packet/', views.SponsorshipPacketView.as_view(), name='sponsorship-packet'),
-    path('froala_editor/', include('froala_editor.urls')),
-    path('blog/', include('blog.urls')),
 ]
 
 if settings.BAGGAGE_ENABLED:

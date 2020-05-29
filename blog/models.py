@@ -1,6 +1,6 @@
 from django.db import models
-from froala_editor.fields import FroalaField
 from user.models import User
+from taggit.managers import TaggableManager
 
 class Blog(models.Model):
     title = models.CharField(max_length=256, unique=True)
@@ -8,15 +8,11 @@ class Blog(models.Model):
     thumbnail = models.ImageField(upload_to='blog_thumbnails')
     publication_date = models.DateTimeField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = FroalaField()
+    content = models.CharField(max_length=2048)
+    tags = TaggableManager()
 
-    def get_tags(self):
-        tags = Tag.objects.filter(blog=self)
-        return [tag.__str__() for tag in tags]
+    def __lt__(self, other):
+        return self.publication_date > other.publication_date
 
-class Tag(models.Model):
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    tag = models.CharField(max_length=32)
-
-    def __str__(self):
-        return self.tag
+    def format_publication_date(self):
+        return self.publication_date.strftime("%m • %d • %y")
