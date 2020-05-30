@@ -42,6 +42,7 @@ ALLOWED_HOSTS = [
     '6.localhost',
     'blog.ugahacks.com',
     'blog.localhost',
+    #'kanedutesting.com',
     'blog.kanedutesting.com',
     '6.kanedutesting.com',
     'localhost',
