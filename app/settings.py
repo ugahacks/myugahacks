@@ -116,6 +116,8 @@ MIDDLEWARE = [
     'django_hosts.middleware.HostsResponseMiddleware' #This MUST be last
 ]
 
+PARENT_HOST = 'ugahacks.com'
+
 ROOT_HOSTCONF = 'app.hosts'
 DEFAULT_HOST = '6'
 
@@ -144,8 +146,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-
 
 if DEBUG == True:
     DATABASES = {

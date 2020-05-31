@@ -1,3 +1,5 @@
+
+
 // Modal Image Gallery
 function onClick(element) {
   document.getElementById("img01").src = element.src;
@@ -10,11 +12,7 @@ function onClick(element) {
 window.onscroll = function() {myFunction()};
 function myFunction() {
     var navbar = document.getElementById("myNavbar");
-    var scroll = document.getElementById("noScroll");
-    scroll = scroll == null;
-    if(!scroll) {
-        navbar.className = "w3-bar" + " w3-card" + " uga-red";
-    }
+
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
         navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " uga-red";
     } else {
@@ -30,4 +28,18 @@ function toggleFunction() {
     } else {
         x.className = x.className.replace(" w3-show", "");
     }
+}
+
+//Used to change navbar to red if there is no scrolling on the page.
+window.onload = function() {
+  var navbar = document.getElementById("myNavbar");
+  var scroll = document.getElementById("noScroll");
+  console.log(navbar)
+  console.log(scroll)
+  scroll = scroll == null;
+  console.log(scroll)
+  if(!scroll) {
+      console.log("TRUE")
+      navbar.className = "w3-bar" + " w3-card" + " uga-red";
+  }
 }

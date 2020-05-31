@@ -1,6 +1,5 @@
 from django import forms
 from .models import Blog
-from froala_editor.widgets import FroalaEditor
 
 class BlogAddForm(forms.ModelForm):
     title = forms.CharField(max_length=256)

@@ -10,11 +10,11 @@ from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 import queue
 from collections import OrderedDict
 
-class BlogAdd(IsOrganizerMixin, CreateView):
+
+class BlogAdd(IsOrganizerMixin, FormView):
     template_name = 'blog_add.html'
     success_url = '/'
     form_class = BlogAddForm
-    model = Blog
 
     def form_valid(self, form):
         blog = form.save(commit=False)
@@ -22,22 +22,8 @@ class BlogAdd(IsOrganizerMixin, CreateView):
         blog.author = self.request.user
         blog.save()
         form.save_m2m()
-        return super(BlogAdd, self).form_valid(form)
+        return super().form_valid(form)
 
-'''
-class BlogAdd(IsOrganizerMixin, FormView):
-    template_name = 'blog_add.html'
-    success_url = ''
-    form_class = BlogAddForm
-
-    def form_valid(self, form):
-        blog = form.save(commit=False)
-        blog.publication_date = datetime.now()
-        blog.author = self.request.user
-        blog.save()
-        form.save_m2m()
-        return super(BlogAdd, self).form_valid(form)
-'''
 
 class BlogEdit(IsOrganizerMixin, UpdateView):
     model = Blog
@@ -54,7 +40,7 @@ class BlogEdit(IsOrganizerMixin, UpdateView):
         blog.publication_date = datetime.now()
         blog.save()
         form.save_m2m()
-        return super(BlogEdit, self).form_valid(form)
+        return super().form_valid(form)
 
 class BlogHome(ListView):
     template_name = 'blog_home.html'
