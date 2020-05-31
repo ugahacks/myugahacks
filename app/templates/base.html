@@ -131,10 +131,6 @@
                 <li class="{% if 'scanning' in request.build_absolute_uri and 'reissue' not in request.build_absolute_uri %}active{% endif %}">
                   <a href="{% url 'scanning' %}">Scan</a></li>
               {% endif %}
-              {% if request.user.is_organizer or request.user.is_volunteer %}
-                <li class="{% if 'check_in' in request.build_absolute_uri and 'reissue' not in request.build_absolute_uri %}active{% endif %}">
-                  <a href="{% url 'check_in_list' %}">Check-in</a></li>
-              {% endif %}
               {% if request.user.is_organizer %}
                 <li class="{% if 'reissue' in request.build_absolute_uri %}active{% endif %}">
                   <a href="{% url 're_issue_list' %}">Reissue Badge</a></li>

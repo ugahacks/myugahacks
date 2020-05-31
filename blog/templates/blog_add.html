@@ -8,8 +8,8 @@
   <script>
       tinymce.init({
         selector: 'textarea',
-        plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinymcespellchecker',
-        toolbar: 'casechange checklist code pageembed',
+        plugins: 'advcode advlist table advtable anchor autolink link autosave charmap lists checklist code codesample emoticons media mediaembed fullscreen hr image imagetools pageembed powerpaste preview searchandreplace spellchecker wordcount',
+        menubar: 'file edit view insert format table',
         toolbar_mode: 'floating',
       });
   </script>
@@ -24,4 +24,9 @@
     </form>
   </div>
 </div>
+<!-- Submit does not work without this. Do no remove. -->
+<script>
+  var elem = document.getElementById("id_content");
+  elem.removeAttribute("required");
+</script>
 {% endblock %}

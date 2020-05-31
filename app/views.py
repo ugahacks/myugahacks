@@ -18,7 +18,7 @@ from reimbursement.models import Reimbursement
 
 def root_view(request):
     if not request.user.is_authenticated:
-        return render(request, 'ugahacks6/UGAHacks6-teaser.html')
+        return render(request, 'ugahacks6/mainpage.html')
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('account_login'))
     if not request.user.has_usable_password():
