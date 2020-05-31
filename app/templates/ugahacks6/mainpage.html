@@ -1,0 +1,814 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>UGAHacks 6</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static "/UGAHacks6/favicons/apple-touch-icon.png" %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static "/UGAHacks6/favicons/favicon-32x32.png" %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static "/UGAHacks6/favicons/favicon-16x16.png" %}">
+  <link rel="manifest" href="{% static "ugahacks5/images/favicon/site.webmanifest" %}">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="{% static "/UGAHacks6/css/mainpage.css" %}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+      h._hjSettings = { hjid: 1566634, hjsv: 6 };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script'); r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+</head>
+
+<body>
+  <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000" 
+  href="https://mlh.io/seasons/na-2020/events?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2020-season&utm_content=white" 
+  target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2020/mlh-trust-badge-2020-white.svg" alt="Major League Hacking 2020 Hackathon Season" 
+  style="width:100%"></a>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark navbar-custom">
+    <a class="navbar-brand" href="#"><img src="{% static "/UGAHacks6/images/bytesix.svg" %}" alt="UGAHacks 5"
+        id="navbarlogo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse navbar-nav" id="navbarNavAltMarkup">
+      <a class="nav-item nav-link" href="#HOF" hidden>Hall of Fame</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownhead" data-toggle="dropdown">
+          Event Info
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownhead">
+          <a class="dropdown-item" href="#About">About</a>
+          <a class="dropdown-item" href="#FAQ">FAQ</a>
+        </div>
+      </li>
+      <a class="nav-item nav-link" href="#Schedule">Schedule</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownhead" data-toggle="dropdown" hidden>
+          UGAHacks Team
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownhead">
+          <a class="dropdown-item" id="Organizernav" href="#Organizers">Organizers</a>
+          <a class="dropdown-item" href="#Pasthack">Past Events</a>
+          <a class="dropdown-item" href="mailto:hello@ugahacks.com">Contact Us</a>
+        </div>
+      </li>
+      <a class="nav-item nav-link" href="#Sponsors">Sponsors</a>
+    </div>
+  </nav>
+  <div id="mainheader">
+    <br>
+    <img src="{% static "/UGAHacks6/images/splash.svg" %}" alt="" id="mainbannerlogo">
+    <div class="sectionhead" hidden>
+      <h3 id="mainsubtitle" hidden><b>February 7 - 9, 2020 at Zell B. Miller Learning Center</b></h3>
+      
+    </div>
+  </div>
+  <div id="Registration" hidden>
+    <div class="section" data-aos="fade-up">
+      <div class="sectionhead">
+        <br>
+        <h1 id="regcountdown">UGAHacks 5 starts in . . .</h1>
+      </div>
+      <div class="sectiontext">
+        <div class="keydatestext" data-aos="fade-up">
+          <div class="timecol">
+            <h1 id="countdownd"></h1>
+            <h2> Days </h2>
+          </div>
+          <div class="timecol">
+            <h1 id="countdownh"></h1>
+            <h2> Hours </h2>
+          </div>
+          <div class="timecol">
+            <h1 id="countdownm"></h1>
+            <h2> Minutes </h2>
+          </div>
+          <div class="timecol">
+            <h1 id="countdowns"></h1>
+            <h2> Seconds </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="About">
+    <div class="section" data-aos="fade-up">
+      <div class="sectionhead">
+        <br>
+        <h1>About</h1>
+      </div>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div class="abouttext">
+          <p>This year at UGAHacks, we are all about helping your ideas blast off. Hackathons are all about exploring
+            the
+            galaxies filled with ideas and claiming one for yourself. You might even explore multiple planets before
+            settling on one or use one as a base station to reach other ones. Log on and join us for this epic 36 hour
+            programming sleepover, hosted at UGA's <a href="https://goo.gl/maps/rMa5f99XiaW39a8e6" class="textlink">Zell
+              B. Miller Learning Center.</a></p>
+          <p>Houston -- we got a problem! Fret not, we have mentors, workshops, and volunteers to help you get those
+            critical resources so you can venture forth. Two resources you'll not need to worry about is food and water
+            as plenty of shipments will be sent out throughout the event. We also got fun events such as karaoke
+            and video game tournaments when you just want to unwind and float around in space. Just remember not to get
+            sucked up into the black hole of procrastination!</p>
+          <p class="subheader"> We can't wait to see your otherworldly ideas!</p>
+        </div>
+        <figure id="bytehello">
+          <img id= "sittingbyte" src="{% static "/UGAHacks6/images/sittingbyte.svg" %}" alt="Byte (UGAHacks's mascot) winking">
+          <figcaption> Byte the Builder!</figcaption>
+        </figure>
+      </div>
+    </div> 
+  </div>
+  <div id="Schedule">
+    <div class="section" data-aos="fade-up">
+      <div class="sectionhead">
+        <br>
+        <h1>Schedule</h1>
+      </div>
+      <h2 id="keydates">Key Dates</h2>
+      <div class="keydatestext">
+        <div class="datecol" data-aos="fade-up-right">
+          <h3>Registration Opens:</h3>
+          <h2><b>December 1<sup>st</sup></b></h2>
+        </div>
+        <div class="datecol" data-aos="fade-up">
+          <h3>Registration Closes:</h3>
+          <h2><b>January 24<sup>th</sup></b></h2>
+        </div>
+        <div class="datecol" data-aos="fade-up-left">
+          <h3>Decision Response:</h3>
+          <h2><b>January 30<sup>th</sup></b></h2>
+        </div>
+      </div>
+      <img id="bytecal" src="{% static "/UGAHacks6/images/laptopbyte.svg" %}" alt="Byte with a laptop"
+        data-aos="fade-up">
+      <div class="scheduletext">
+        <div class="schedulecol" data-aos="fade-up-right">
+          <h3>Friday - Feb. 7th</h3>
+          <div class="sectiontext">
+            <table>
+              <tbody>
+                <tr>
+                  <td><b>5:00 PM</b></td>
+                  <td>Check-in Opens (MLC 4th Floor)</td>
+                </tr>
+                <tr>
+                  <td><b>6:00 PM</b></td>
+                  <td>Tate Free Parking Decks Open</td>
+                </tr>
+                <tr>
+                  <td><b>6:30 PM</b></td>
+                  <td>Opening Ceremony (Room 101)</td>
+                </tr>
+                <tr>
+                  <td><b>7:15 PM</b></td>
+                  <td>Dinner/Check-In Closes</td>
+                </tr>
+                <tr>
+                  <td><b>8:15 PM</b></td>
+                  <td>Art Contest Briefing (Room 348)</td>
+                </tr>
+		             <tr>
+		               <td><b>8:15 PM</b></td>
+                  <td>First Time Hackers/Team Building - Jennifer Ly (Room 102)</td>
+                </tr>
+                <tr>
+                  <td><b>9:00 PM</b></td>
+                  <td>Web Architecture - Paul Hansa (Room 350)</td>
+                </tr>
+                <tr>
+                  <td><b>9:15 PM</b></td>
+                  <td>BlackRock API Challenge and the Power of UX/UI (Room 101)</td>
+                </tr>
+                <tr>
+                  <td><b>10:00 PM</b></td>
+                  <td>Web Dev 101: Hosting, Domains, and Analytics - Andy Troung (Room 348)</td>
+                </tr>
+                <tr>
+                  <td><b>11:00 PM</b></td>
+                  <td> GitHub Sites for Sore IO's - Zane Blalock and Madison Hanberry (Room 350)</td>
+		            </tr>
+                <tr>
+                  <td><b>12:00 AM</b></td>
+                  <td>Sleeping Room Opens (Room 348)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="schedulecol" data-aos="fade-up">
+          <h3>Saturday - Feb. 8th</h3>
+          <div class="sectiontext">
+            <table>
+              <tbody>
+                <tr>
+                  <td><b>9:00 AM</b></td>
+                  <td>Breakfast</td>
+                </tr>
+                <tr>
+                  <td><b>10:00 AM</b></td>
+                  <td>Future of Financial Products with Technology and Sustainability - BlackRock (Room 101)</td>
+                </tr>
+                <tr>
+                  <td><b>10:00 AM</b></td>
+                  <td>Google maps app integration - Leo Chen (Room 350)</td>
+                </tr>
+                <tr>
+                  <td><b>11:00 AM</b></td>
+                  <td>Pitch Perfect - Penn Hansa (Room 348)</td>
+                </tr>
+		              <tr>
+                  <td><b>11:00 AM</b></td>
+                  <td>Indoor Football Toss - State Farm (Room 102)</td>
+                </tr>
+                <tr>
+                  <td><b>12:15 PM</b></td>
+                  <td>Capture the Flag - MLH (Room 350)</td>
+                </tr>
+                <tr>
+                  <td><b>12:30 PM</b></td>
+                  <td>How to Solve a Cyber Crime - PwC (Room 101)</td>
+                </tr>
+                <tr>
+                  <td><b>2:00 PM</b></td>
+                  <td>Lunch</td>
+                </tr>
+                <tr>
+                  <td><b>3:00 PM</b></td>
+                  <td>HPCC Systems Big Data Analytics Workshop (Room 101)</td>
+                </tr>
+                <tr>
+                  <td><b>3:00 PM</b></td>
+                  <td>Delivering Your Idea: Pitching with Purpose - BlackRock (Room 348)</td>
+                </tr>
+		             <tr>
+                  <td><b>4:15 PM</b></td>
+                  <td>Pathways - Statefarm (Room 102)</td>
+                </tr>
+		<tr>
+                  <td><b>4:15 PM</b></td>
+                  <td>Resume Workshop (Room 350)</td>
+                </tr>
+                <tr>
+                  <td><b>5:30 PM</b></td>
+                  <td>MLH Werewolf (Room 348)</td>
+                </tr>
+                <tr>
+                  <td><b>6:45 PM</b></td>
+                  <td>Realtime cloud messaging mobile app with Ionic and Firebase - Dr Cengiz Gunay (Room 350)</td>
+                </tr>
+                <tr>
+                  <td><b>8:00 PM</b></td>
+                  <td>Dinner</td>
+                </tr>
+                <tr>
+                  <td><b>9:15 PM</b></td>
+                  <td>Join the UGAHacks Team! (Room 350)</td>
+                </tr>
+                <tr>
+                  <td><b>9:30 PM</b></td>
+                  <td>Computer Hacking 101 with the Metasploit Framework - Jackson Reid (Room 348)</td>
+                </tr>
+                <tr>
+                  <td><b>11:00 PM</b></td>
+                  <td>Smash Ultimate Tourney (Room 350)</td>
+                </tr>
+                <tr>
+                  <td><b>12:00 AM</b></td>
+                  <td>Sleeping Room Opens (Room 348)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="schedulecol" data-aos="fade-up-left">
+          <h3>Sunday - Feb. 9th</h3>
+          <div class="sectiontext">
+            <table>
+              <tbody>
+                <tr>
+                  <td><b>9:00 AM</b></td>
+                  <td>Submissions Due on DevPost</td>
+                </tr>
+                <tr>
+                  <td><b>9:00 AM</b></td>
+                  <td>Breakfast</td>
+                </tr>
+                <tr>
+                  <td><b>10:00 AM</b></td>
+                  <td>Expo/Judging (4th Floor Hallway)</td>
+                </tr>
+                <tr>
+                  <td><b>1:00 PM</b></td>
+                  <td>Closing Ceremony (Room 101)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="FAQ">
+    <div class="section" data-aos="fade-up">
+      <div class="sectionhead">
+        <br>
+        <h1>FAQ</h1>
+      </div>
+      <div class="questionrow">
+        <div class="questioncol" data-aos="fade-up-right">
+          <h4><i>Where will it be held at this year?</i></h4>
+          <p>At the <a href="https://goo.gl/maps/rMa5f99XiaW39a8e6" class="textlink">Zell B. Miller Learning Center</a>,
+            University of Georgia, Athens, GA.</p>
+          <h4><i>How much will it cost to sign up?</i></h4>
+          <p>Nothing! The entire event and its amazing perks are free for all participants, including meals and snacks
+            to keep you powered throughout the weekend, as well as workshops to help you get started and sharpen your
+            hacking skills.</p>
+          <h4><i>Can I start working on my project before the event?</i></h4>
+          <p>No. All UGAHacks projects must begin at the hackathon. You are not permitted to begin a hackathon project
+            before this event. Feel free to bring ideas, but no code!</p>
+        </div>
+        <div class="questioncol" data-aos="fade-up-left">
+          <h4><i>Who can sign up?</i></h4>
+          <p>All university students! We welcome all undergraduates and graduate students of all skill levels to attend.
+            Professionals and other guests are welcome to attend as mentors or volunteers.</p>
+          <h4><i>What should I bring?</i></h4>
+          <p>Enthusiasm! Laptops, phones, chargers, and other tools you might need for your project are also important!
+            If you're staying overnight, be sure to bring the necessary toiletries and a sleeping bag. Additionally,
+            please bring your official student ID or government ID (no photocopies allowed).</p>
+        </div>
+      </div>
+      <div class="questionrow invis" id="moreinfo">
+        <div class="questioncol" data-aos="fade-up-right">
+          <h4><i>What if I don't have a team or idea?</i></h4>
+          <p>Don't sweat it! You're free to join any existing team or form a new one when you get there. We'll also
+            provide ample opportunities for hackers to meet each other and brainstorm some amazing ideas.</p>
+          <h4><i>Will you be offering travel reimbursements?</i></h4>
+          <p>Yes, we will be offering travel reimbursements! Please make sure to note it on your registration and we
+            will reach out to you upon acceptance. University of Georgia students are not eligible to receive travel
+            reimbursements.</p>
+          <h4><i>Can I volunteer/mentor at UGAHacks?</i></h4>
+          <p>We love your enthusiasm! Volunteers and mentors can apply via the registration form above! If you have any
+            questions regarding the position, please contact us at <a href="mailto:hello@ugahacks.com"
+              class="textlink">hello@ugahacks.com</a> - Be sure to mention the specific position in the subject of the
+            email. See you at the event!</p>
+        </div>
+        <div class="questioncol" data-aos="fade-up-left">
+          <h4><i>How many people can I have on my team?</i></h4>
+          <p>There is no hard limit, but we recommend teams be at most 4 people, as we only have prizes for 4 people per
+            team.</p>
+          <h4><i>Where will I sleep?</i></h4>
+          <p>We'll have designated sleeping areas for hackers, but they will be on a first-come-first-serve basis.
+            You're welcome and even encouraged to bring a sleeping bag!</p>
+          <h4><i>What are the rules all attendees must abide by?</i></h4>
+          <p>UGAHacks will be following the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
+              class="textlink"> MLH Code of Conduct</a>. By participating in UGAHacks, you are agreeing to follow the
+            Code of Conduct throughout the duration of the event.</p>
+          <h4><i>Who do I reach out to if I have more questions?</i></h4>
+          <p>Reach out to <a href="mailto:hello@ugahacks.com" class="textlink">hello@ugahacks.com</a> and we'll be happy
+            to answer it!</p>
+        </div>
+      </div>
+      <div class="questionrow">
+        <div class="questioncol" id="buttoncol">
+          <a id='collapsebtn'>Show More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="Sponsors">
+    <div class="section" data-aos="fade-up">
+      <div class="sectionhead">
+        <h1>Sponsors</h1>
+      </div>
+      <div class="sponsorlogos">
+        <div class="sponimgsec">
+          <a href="https://www.pwc.com/gx/en/about.html">
+            <img src="../../static/ugahacks5/images/sponsorpics/pwcready.png" alt="pwc">
+          </a>
+        </div>
+        <div class="sponimgsec">
+          <a href="https://macyscollege.com/Internships/Technology/">
+            <img src="../../static/ugahacks5/images/sponsorpics/Macyslogo.svg" alt="macy's tech">
+          </a>
+        </div>
+        <div class="sponimgsec">
+          <a href="https://www.blackrock.com/corporate/about-us">
+            <img src="../../static/ugahacks5/images/sponsorpics/blackrock.svg" alt="blackRock">
+          </a>
+        </div>
+        <div class="sponimgsec">
+          <a href="https://www.statefarm.com/about-us/">
+            <img src="../../static/ugahacks5/images/sponsorpics/statefarm.png" alt="statefarm">
+          </a>
+        </div>
+        <div class="sponimgsec">
+          <a href="https://hpccsystems.com/">
+            <img src="../../static/ugahacks5/images/sponsorpics/HPCCSystems.png" alt="hpcc systems">
+          </a>
+        </div>
+        <div class="sponimgsec">
+          <a href="https://www.equifax.com/personal/">
+            <img src="../../static/ugahacks5/images/sponsorpics/equifax.png" alt="equifax">
+          </a>
+        </div>
+        <div class="sponimgsec">
+          <a href="https://www.digitalocean.com/">
+            <img src="../../static/ugahacks5/images/sponsorpics/DigitalOcean_Logo.svg" alt="digital ocean">
+          </a>
+        </div>
+        <div class="sponimgsec">
+          <a href="https://www.kontrolfreek.com/">
+            <img src="../../static/ugahacks5/images/sponsorpics/KF.png" alt="kontrolfreek">
+          </a>
+        </div>
+        <div class="sponimgsec">
+          <a href="https://www.cs.uga.edu/">
+            <img src="../../static/ugahacks5/images/sponsorpics/uga.png" id="ugacombologo" alt="UGA CS Department, Student Govt Association, Resident Hall Association">
+          </a>
+        </div>
+        <div class="sponimgsec" id="acm">
+          <a href="https://www.ugaacm.com/#who-we-are">
+            <img src="../../static/ugahacks5/images/sponsorpics/acm.png" alt="UGA ACM">
+          </a>
+        </div>
+      </div>
+      <div class="sectiontext">
+        <h3 class="subheader">Partners</h3>
+      </div>
+      <div class="sponsorlogos">
+        <div class="sponimgsec">
+          <a href="http://hackp.ac/mlh-stickermule-hackathons">
+            <img src="../../static/ugahacks5/images/sponsorpics/sticker-mule-logo-light-bg.svg" alt="Sticker mule">
+          </a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="sectiontext">
+      <h3 class="subheader">Interested in sponsoring us?</h3>
+      <p>By sponsoring UGAHacks, your company will have the opportunity to inspire new programmers while also reaching
+        out to and recruiting the rising stars of the tech industry. Please look over the <a
+          href="{% static "ugahacks5/docs/UGAHacks-5-Sponsorship-Deck.pdf" %}" class="textlink">Sponsorship Packet</a> and <a
+          href="mailto:sponsor@ugahacks.com" class="textlink">reach out to our sponsorship team for more
+          information.</a></p>
+      <br>
+    </div>
+  </div>
+  </div>
+
+  <div id="Organizers" hidden>
+    <div class="section" data-aos="fade-up">
+      <div class="sectionhead">
+        <h1>Organizers</h1>
+      </div>
+      <h2 class="img-head">Directors</h2>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/mohdhasan10/">
+            <img src="../../static/ugahacks5/images/profilepic/mohdtanjimhasan.JPG" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Mohd Tanjim Hasan (TJ)<br><i>Lead Director</i></p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/amanda-yang-2020/">
+            <img src="../../static/ugahacks5/images/profilepic/amandayang.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Amanda Yang<br><i>Sponsorship Co-Director</i></p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/shivaninanda/">
+            <img src="../../static/ugahacks5/images/profilepic/Shivani_Nanda.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Shivani Nanda<br><i>Sponsorship Co-Director</i></p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/andrei-s/">
+            <img src="../../static/ugahacks5/images/profilepic/andreispatariu.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Andrei Spatariu<br><i>Web Director</i></p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/annie-lian/">
+            <img src="../../static/ugahacks5/images/profilepic/AnnieLian.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Annie Lian<br><i>Marketing Director</i></p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/amy-yang-2bba64102/">
+            <img src="../../static/ugahacks5/images/profilepic/amy.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Amy Yang<br><i>Finance Director</i></p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/glen-j-george/">
+            <img src="../../static/ugahacks5/images/profilepic/Glen.JPG" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Glen George<br><i>Logistics Director</i></p>
+          </a>
+        </div>
+      </div>
+      <h2 class="img-head">Advisors</h2>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/dannylee25/">
+            <img src="../../static/ugahacks5/images/profilepic/OGDanng.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Danny Lee</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/ngoc-jennifer-ly/">
+            <img src="../../static/ugahacks5/images/profilepic/jennifer.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Jennifer Ly</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/jin-jeong/">
+            <img src="../../static/ugahacks5/images/profilepic/JinJeong.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Jin Jeong</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/company/ugahacks/about/">
+            <img src="../../static/ugahacks5/images/profilepic/felise18.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Felise Wen</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://github.com/biggestcookie">
+            <img src="../../static/ugahacks5/images/profilepic/paulH.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Paul Hansa</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/meghana-menon">
+            <img src="../../static/ugahacks5/images/profilepic/meghana.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Meghana Menon</p>
+          </a>
+        </div>
+      </div>
+      <h2 class="img-head">Marketing</h2>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/annie-lian/">
+            <img src="../../static/ugahacks5/images/profilepic/AnnieLian.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Annie Lian</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/company/ugahacks/about/">
+            <img src="../../static/ugahacks5/images/profilepic/felise18.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Felise Wen</p>
+          </a>
+        </div>
+      </div>
+      <h2 class="img-head">Sponsorship</h2>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/hima-velaga/">
+            <img src="../../static/ugahacks5/images/profilepic/Hima.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Hima Velaga</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/connor-cummings-47905216b/">
+            <img src=".../../static/ugahacks5/images/profilepic/connor.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Connor Cummings</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/junnun-ali-592326157/">
+            <img src="../../static/ugahacks5/images/profilepic/JunnunAli.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Junnun Ali</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/jefferyjohn/">
+            <img src="../../static/ugahacks5/images/profilepic/jefferyjohn.JPG" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Jeffery John</p>
+          </a>
+        </div>
+      </div>
+      <h2 class="img-head">Logistics</h2>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/junnun-ali-592326157/">
+            <img src="../../static/ugahacks5/images/profilepic/JunnunAli.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Junnun Ali</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/sydney-nelms-1a1874191/">
+            <img src="../../static/ugahacks5/images/profilepic/SydneyNelms.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Sydney Nelms</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/stefanltobler/">
+            <img src="../../static/ugahacks5/images/profilepic/Stefan.JPG" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Stefan Tobler</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/allen-williams-ac/">
+            <img src="../../static/ugahacks5/images/profilepic/ac.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">A.C. Williams</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/thonnykoon/">
+            <img src="../../static/ugahacks5/images/profilepic/ThonnyKoon.JPG" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Thonny Koon</p>
+          </a>
+        </div>
+      </div>
+      <h2 class="img-head">Web</h2>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/noahbarnette/">
+            <img src="../../static/ugahacks5/images/profilepic/noahb.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Noah Barnette</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/courtney-hogan/">
+            <img src="../../static/ugahacks5/images/profilepic/courtney-hogan.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Courtney Hogan</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/dlopez1212/">
+            <img src="../../static/ugahacks5/images/profilepic/dannyl.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Danny Lopez</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/alexcostaluiz/">
+            <img src="../../static/ugahacks5/images/profilepic/AlexanderCosta.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Alex Costa</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/juliancamp/">
+            <img src="../../static/ugahacks5/images/profilepic/Julian.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Julian Camp</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.youkaneduit.com">
+            <img src="../../static/ugahacks5/images/profilepic/Kane.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Kane Du</p>
+          </a>
+        </div>
+        <div class="imgsec">
+          <a href="https://www.linkedin.com/in/kathleen-kim">
+            <img src="../../static/ugahacks5/images/profilepic/kathleen.jpg" alt="profile pic" class="imgstyle">
+            <p class="imgtext">Kathleen Kim</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="Pasthack">
+    <div class="section" data-aos="fade-up">
+      <div class="sectionhead">
+        <br>
+        <h1>Past Events</h1>
+      </div>
+      <div class="container" data-aos="fade-left">
+        <div id="phcarousel" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#phcarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#phcarousel" data-slide-to="1"></li>
+            <li data-target="#phcarousel" data-slide-to="2"></li>
+            <li data-target="#phcarousel" data-slide-to="3"></li>
+            <li data-target="#phcarousel" data-slide-to="4"></li>
+          </ol>
+          <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+              <a href="https://5.ugahacks.com/"> <img class="d-block w-100 "
+                  src="static/UGAHacks6/images/banner/five.svg " alt="First slide "></a>
+
+                  <div class=" carousel-caption d-none d-md-block ">
+                    <p id="carstext1">Click me to see more!</p>
+                  </div>
+                </div>
+                <div class="carousel-item ">
+                  <a href="https://4.ugahacks.com/"><img class="d-block w-100 "
+                      src="static/UGAHacks6/images/banner/four.svg " alt="Second slide "></a>
+
+              <div class=" carousel-caption d-none d-md-block ">
+                <p id="carstext1">Click me to see more!</p>
+              </div>
+            </div>
+            <div class="carousel-item ">
+              <a href="https://3.ugahacks.com/"><img class="d-block w-100 "
+                  src="static/UGAHacks6/images/banner/three.svg " alt="Third slide "></a>
+
+              <div class="carousel-caption d-none d-md-block ">
+                <p id="carstext2">Click me to see more!</p>
+              </div>
+            </div>
+            <div class="carousel-item ">
+              <a href="https://web.archive.org/web/20170514085830/http://www.ugahacks.com/"> <img class="d-block w-100 "
+                  src="static/UGAHacks6/images/banner/two.svg" alt="Fourth slide "></a>
+
+              <div class="carousel-caption d-none d-md-block ">
+                <p id="carstext3">Click me to see more!</p>
+              </div>
+            </div>
+            <div class="carousel-item ">
+              <a href="https://web.archive.org/web/20160305020755/https://ugahacks.com/"><img class="d-block w-100 "
+                  src="static/UGAHacks6/images/banner/one.svg " alt="Last slide "></a>
+
+              <div class="carousel-caption d-none d-md-block ">
+                <p id="carstext4">Click me to see more!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <a href="https://github.com/ugahacks/" class="footericons"><img src="static/UGAHacks6/images/icons/github.svg"
+        alt="ugahacks-github"></a>
+    <a href="https://www.facebook.com/ugahacks/" class="footericons"><img
+        src="static/UGAHacks6/images/icons/facebook.svg" alt="ugahacks-facebook"></a>
+    <a href="https://twitter.com/ugahacks" class="footericons"><img src="static/UGAHacks6/images/icons/twitter.svg"
+        alt="ugahacks-twitter"></a>
+    <a href="https://www.instagram.com/ugahacks/" class="footericons"><img
+        src="static/UGAHacks6/images/icons/insta.svg" alt="ugahacks-instagram"></a>
+  </footer>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script>
+    var regtime = new Date("Feb 7, 2020 18:30:00").getTime();
+    var x = setInterval(function () {
+      var currtime = new Date().getTime();
+      var timeleft = regtime - currtime;
+      var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 3600));
+      var mins = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+      var secs = Math.floor((timeleft % (1000 * 60)) / 1000);
+
+      if (timeleft > 0) {
+        document.getElementById("countdownd").innerHTML = days;
+        document.getElementById("countdownh").innerHTML = hours;
+        document.getElementById("countdownm").innerHTML = mins;
+        document.getElementById("countdowns").innerHTML = secs;
+      }
+      else {
+        clearInterval(x);
+        document.getElementById("regcountdown").innerHTML = "Submit your project to the Devpost by 9 am!";
+        document.getElementById("regcountdown").insertAdjacentHTML("afterend", "<br><a href='https://ugahacks5.devpost.com/' id='regbtn'>Devpost</a>");
+        $(".timecol").remove();
+      }
+    })
+  </script>
+  <script>
+    $(document).ready(function () {
+      $("#collapsebtn").click(function () {
+        if ($("#collapsebtn").text() === "Show More") {
+          $("#collapsebtn").text("Show Less");
+        }
+        else {
+          $("#collapsebtn").text("Show More");
+        }
+        $("#moreinfo").toggleClass("invis");
+      });
+      $("#collapsebtnaward").click(function () {
+        if ($("#collapsebtnaward").text() === "Show More") {
+          $("#collapsebtnaward").text("Show Less");
+        }
+        else {
+          $("#collapsebtnaward").text("Show More");
+        }
+        $(".moreawards").toggleClass("awardinvis");
+      });
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
