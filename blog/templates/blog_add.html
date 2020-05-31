@@ -17,7 +17,7 @@
 {% block content %}
 <div id="noScroll" class="mt-5">
   <div class="add-form">
-    <form method="post" enctype='multipart/form-data'>
+    <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form|crispy }}
       <input type="submit" value="Publish Post" class="addbtn">

@@ -13,24 +13,6 @@ from user.models import User
 
 DEFAULT_EXPIRY_DAYS = settings.REIMBURSEMENT_EXPIRY_DAYS
 
-RE_DRAFT = 'D'
-RE_WAITLISTED = 'W'
-RE_PEND_TICKET = 'PT'
-RE_PEND_APPROVAL = 'PA'
-RE_APPROVED = 'A'
-RE_EXPIRED = 'X'
-RE_FRIEND_SUBMISSION = 'FS'
-
-RE_STATUS = [
-    (RE_DRAFT, 'Pending review'),
-    (RE_WAITLISTED, 'Wait listed'),
-    (RE_PEND_TICKET, 'Pending receipt submission'),
-    (RE_PEND_APPROVAL, 'Pending receipt approval'),
-    (RE_APPROVED, 'Receipt approved'),
-    (RE_EXPIRED, 'Expired'),
-    (RE_FRIEND_SUBMISSION, 'Friend submission'),
-]
-
 
 def check_friend_emails(friend_emails, user_email):
     emails = friend_emails.replace(' ', '').split(',')
@@ -49,9 +31,9 @@ def check_friend_emails(friend_emails, user_email):
                 raise Exception('%s reimbursement is expired' % email)
             if user.reimbursement.is_draft():
                 raise Exception('%s reimbursement is still under revision' % email)
-            if user.reimbursement.status == RE_APPROVED:
+            if user.reimbursement.status == Reimbursement.APPROVED:
                 raise Exception('%s already has an accepted reimbursement' % email)
-            if user.reimbursement.status == RE_FRIEND_SUBMISSION:
+            if user.reimbursement.status == Reimbursement.FRIEND_SUBMISSION:
                 raise Exception('%s already has an accepted reimbursement' % email)
 
         except Reimbursement.DoesNotExist:
@@ -59,6 +41,24 @@ def check_friend_emails(friend_emails, user_email):
 
 
 class Reimbursement(models.Model):
+    DRAFT = 'D'
+    WAITLISTED = 'W'
+    PEND_TICKET = 'PT'
+    PEND_APPROVAL = 'PA'
+    APPROVED = 'A'
+    EXPIRED = 'X'
+    FRIEND_SUBMISSION = 'FS'
+
+    STATUS = [
+        (DRAFT, 'Pending review'),
+        (WAITLISTED, 'Wait listed'),
+        (PEND_TICKET, 'Pending receipt submission'),
+        (PEND_APPROVAL, 'Pending receipt approval'),
+        (APPROVED, 'Receipt approved'),
+        (EXPIRED, 'Expired'),
+        (FRIEND_SUBMISSION, 'Friend submission'),
+    ]
+
     # Admin controlled
     assigned_money = models.FloatField(null=True, blank=True)
     reimbursement_money = models.FloatField(null=True, blank=True)
@@ -79,12 +79,13 @@ class Reimbursement(models.Model):
 
     # Meta
     hacker = models.OneToOneField('user.User', primary_key=True, on_delete=models.CASCADE)
-    reimbursed_by = models.ForeignKey(User, null=True, blank=True, related_name='reimbursements_made', on_delete=models.CASCADE)
+    reimbursed_by = models.ForeignKey(User, null=True, blank=True, related_name='reimbursements_made',
+                                      on_delete=models.CASCADE)
     expiration_time = models.DateTimeField(blank=True, null=True)
     update_time = models.DateTimeField(default=timezone.now)
     creation_time = models.DateTimeField(default=timezone.now)
-    status = models.CharField(max_length=2, choices=RE_STATUS,
-                              default=RE_DRAFT)
+    status = models.CharField(max_length=2, choices=STATUS,
+                              default=DRAFT)
 
     @property
     def max_assignable_money(self):
@@ -108,10 +109,10 @@ class Reimbursement(models.Model):
 
     @property
     def expired(self):
-        return self.status == RE_EXPIRED
+        return self.status == self.EXPIRED
 
     def generate_draft(self, application):
-        if self.status != RE_DRAFT:
+        if self.status != self.DRAFT:
             return
         self.origin = application.origin
         self.assigned_money = application.reimb_amount
@@ -119,15 +120,15 @@ class Reimbursement(models.Model):
         self.save()
 
     def expire(self):
-        self.status = RE_EXPIRED
+        self.status = self.EXPIRED
         self.save()
 
     def send(self, user):
         if not self.assigned_money:
             raise ValidationError('Reimbursement can\'t be sent because '
                                   'there\'s no assigned money')
-        if self.status == RE_DRAFT:
-            self.status = RE_PEND_TICKET
+        if self.status == self.DRAFT:
+            self.status = self.PEND_TICKET
             self.status_update_date = timezone.now()
             self.reimbursed_by = user
             self.reimbursement_money = None
@@ -135,8 +136,8 @@ class Reimbursement(models.Model):
             self.save()
 
     def no_reimb(self, user):
-        if self.status == RE_DRAFT:
-            self.status = RE_WAITLISTED
+        if self.status == self.DRAFT:
+            self.status = self.WAITLISTED
             self.status_update_date = timezone.now()
             self.reimbursed_by = user
             self.reimbursement_money = 0
@@ -144,29 +145,29 @@ class Reimbursement(models.Model):
             self.save()
 
     def is_sent(self):
-        return self.status in [RE_PEND_APPROVAL, RE_PEND_TICKET, ]
+        return self.status in [self.PEND_APPROVAL, self.PEND_TICKET, ]
 
     def has_friend_submitted(self):
-        return self.status == RE_FRIEND_SUBMISSION
+        return self.status == self.FRIEND_SUBMISSION
 
     def is_draft(self):
-        return self.status == RE_DRAFT
+        return self.status == self.DRAFT
 
     def is_accepted(self):
-        return self.status in RE_APPROVED
+        return self.status in self.APPROVED
 
     def waitlisted(self):
-        return self.status == RE_WAITLISTED
+        return self.status == self.WAITLISTED
 
     def needs_action(self):
         return self.can_submit_receipt()
 
     def can_submit_receipt(self):
-        return self.status == RE_PEND_TICKET and not self.expired and not self.hacker.application.is_rejected()
+        return self.status == self.PEND_TICKET and not self.expired and not self.hacker.application.is_rejected()
 
     def reject_receipt(self, user, request):
         self.expiration_time = timezone.now() + timedelta(days=DEFAULT_EXPIRY_DAYS)
-        self.status = RE_PEND_TICKET
+        self.status = self.PEND_TICKET
         self.reimbursed_by = user
         self.reimbursement_money = None
         self.receipt.delete()
@@ -176,24 +177,24 @@ class Reimbursement(models.Model):
                 reimb.reimbursement_money = None
                 reimb.expiration_time = timezone.now() + timedelta(days=DEFAULT_EXPIRY_DAYS)
                 reimb.public_comment = 'Your friend %s submission has not been accepted' % self.hacker.get_full_name()
-                reimb.status = RE_PEND_TICKET
+                reimb.status = self.PEND_TICKET
                 reimb.save()
         return emails.create_reject_receipt_email(self, request)
 
     def accept_receipt(self, user):
-        self.status = RE_APPROVED
+        self.status = self.APPROVED
         self.reimbursed_by = user
         self.reimbursement_money = min(self.reimbursement_money, self.max_assignable_money)
 
     def submit_receipt(self):
-        self.status = RE_PEND_APPROVAL
+        self.status = self.PEND_APPROVAL
         self.public_comment = None
         self.friend_submission = None
         self.reimbursement_money = None
         if self.multiple_hackers:
             for reimb in Reimbursement.objects.filter(hacker__email__in=self.friend_emails_list):
                 reimb.friend_submission = self
-                reimb.status = RE_FRIEND_SUBMISSION
+                reimb.status = self.FRIEND_SUBMISSION
                 reimb.public_comment = None
                 reimb.save()
 

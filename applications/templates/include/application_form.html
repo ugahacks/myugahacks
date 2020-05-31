@@ -2,42 +2,44 @@
 {% load static %}
 {% load form_utils %}
 <style>
-    #id_under_age > div, #id_tshirt_size > div, #id_graduation_year > div, #id_team > div, #id_first_timer > div,
-    #id_scholarship > div, #id_reimb > div, #id_first_ugahacks > div {
-        display: inline-block;
-        padding-right: 20px;
-        margin-bottom: 0;
-        margin-top: 0;
-        font-weight: 400;
-        vertical-align: middle;
-        cursor: pointer;
-    }
+  #id_under_age > div, #id_tshirt_size > div, #id_graduation_year > div, #id_team > div, #id_first_timer > div,
+  #id_scholarship > div, #id_reimb > div, #id_first_ugahacks > div {
+    display: inline-block;
+    padding-right: 20px;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
+  }
 
 </style>
 <form class="signup " enctype="multipart/form-data" id="signup_form" method="post" action="">
-    {% csrf_token %}
-    {% bootstrap_form_errors form %}
-    {% for fieldset in form.fieldsets %}
-        <fieldset>
-            <h3>{{ fieldset.name }}<small style="color: darkgray; font-style: italic;" class="pull-right saved-string"></small><br>
-                {% if fieldset.description %}
-                    <small>{{ fieldset.description }}</small>
-                {% endif %}
-            </h3>
-            {% for field in fieldset %}
-                {% bootstrap_field field %}
-            {% endfor %}
-        </fieldset>
-    {% endfor %}
+  {% csrf_token %}
+  {% bootstrap_form_errors form %}
+  {% for fieldset in form.fieldsets %}
+    <fieldset>
+      <h3>{{ fieldset.name }}<small style="color: darkgray; font-style: italic;"
+                                    class="pull-right saved-string"></small><br>
+        {% if fieldset.description %}
+          <small>{{ fieldset.description }}</small>
+        {% endif %}
+      </h3>
+      {% for field in fieldset %}
+        {% bootstrap_field field %}
+      {% endfor %}
+    </fieldset>
+  {% endfor %}
 
-    <p class="team-info"><i class="fa fa-exclamation-triangle"></i> <strong>Remember!</strong> Your team members still have to apply separately.</p>
-    <small><span style="color: red">*</span>Indicates required field.</small>
+  <p class="team-info"><i class="fa fa-exclamation-triangle"></i> <strong>Remember!</strong> Your team members still
+    have to apply separately.</p>
+  <small><span style="color: red">*</span>Indicates required field.</small>
 
-    {% if not application or application.can_be_edit %}
-        <button class="btn btn-success btn-block" type="submit">{% if application %}Update application{% else %}
-            Submit application{% endif %}</button>
+  {% if not application or application.can_be_edit %}
+    <button class="btn btn-success btn-block" type="submit">{% if application %}Update application{% else %}
+      Submit application{% endif %}</button>
 
-    {% endif %}
+  {% endif %}
 </form>
 
 
@@ -46,20 +48,20 @@
 
 <script>
 
-    $(document).ready(function () {
+  $(document).ready(function () {
 
             make_field_typeahead('university', '{% static 'schools.json' %}');
             make_field_typeahead('degree', '{% static 'degrees.json' %}');
             $("#id_origin").typeahead({
-                minLength: 3,
-                source: function (query, process) {
-                    $.get('https://api.teleport.org/api/cities/', {search: query}, function (data) {
-                        var cities = jQuery.map(data._embedded["city:search-results"], function (c) {
-                            return c.matching_full_name;
-                        });
-                        return process(cities);
-                    });
-                }
+              minLength: 3,
+              source: function (query, process) {
+                $.get('https://api.teleport.org/api/cities/', {search: query}, function (data) {
+                  var cities = jQuery.map(data._embedded["city:search-results"], function (c) {
+                    return c.matching_full_name;
+                  });
+                  return process(cities);
+                });
+              }
             });
 
             // This variable is needed for next 3 functions
@@ -67,81 +69,81 @@
 
             var volunteer_time = $('#id_volunteer_time');
             conditional_field(volunteer_time, participant, () => {
-                return participant.val() === 'Volunteer';
-            })
+              return participant.val() === 'Volunteer';
+            });
             volunteer_time.parent().addClass('required');
 
             var mentor_topic = $('#id_mentor_topic');
             conditional_field(mentor_topic, participant, () => {
-                return participant.val() === 'Mentor';
-            })
+              return participant.val() === 'Mentor';
+            });
             mentor_topic.parent().addClass('required');
 
             var mentor_workshop = $('#id_mentor_workshop');
             conditional_field(mentor_workshop, participant, () => {
-                return participant.val() === 'Mentor';
-            })
+              return participant.val() === 'Mentor';
+            });
             mentor_workshop.parent().addClass('required');
 
             var hacker_or_volunteer_reimb = $('#id_reimb');
             conditional_field(hacker_or_volunteer_reimb, participant, () => {
-                
-                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
-            })
-            
+
+              return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            });
+
             var hacker_or_volunteer_class_status = $('#id_class_status');
             conditional_field(hacker_or_volunteer_class_status, participant, () => {
-                
-                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
-            })
+
+              return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            });
 
             var hacker_or_volunteer_graduation_year = $('#id_graduation_year');
             conditional_field(hacker_or_volunteer_graduation_year, participant, () => {
-              
-                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
-            })
+
+              return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            });
 
             var other_gender = $('#id_other_gender');
             var gender = $('#id_gender');
             gender.parent().removeClass('required');
             conditional_field(other_gender, gender, () => {
               return gender.val() === 'X';
-            })
+            });
 
             var universityemail = $('#id_uniemail');
             conditional_field(universityemail, participant, () => {
-                return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
-            })
+              return (participant.val() === 'Hacker' || participant.val() === "Volunteer");
+            });
             universityemail.parent().addClass('required');
             var other_diet = $('#id_other_diet');
             var diet = $('#id_diet');
             conditional_field(other_diet, diet, function () {
-                console.log(diet.val())
-                return diet.val() === 'Others';
+              console.log(diet.val());
+              return diet.val() === 'Others';
             }, 1);
             var diet_notice = $('#id_diet_notice');
             conditional_field(diet_notice, diet, function () {
-                return diet.val() !== 'None';
+              return diet.val() !== 'None';
             }, 2);
 
             var has_team = $('input[name="team"][value="True"]');
             var no_team = $('input[name="team"][value="False"]');
             var teammates = $('#id_teammates');
             conditional_field(teammates, has_team, function () {
-                return has_team.prop("checked");
+              return has_team.prop("checked");
             }, 1);
             conditional_field(teammates, no_team, function () {
-                return has_team.prop("checked");
+              return has_team.prop("checked");
             }, 1);
 
             var needs_reimb = $('input[name="reimb"][value="True"]');
             var no_reimb = $('input[name="reimb"][value="False"]');
             var reimb_amout = $('#id_reimb_amount');
             conditional_field(reimb_amout, needs_reimb, function () {
-                return needs_reimb.prop("checked");
+              return needs_reimb.prop("checked");
             }, 1);
             conditional_field(reimb_amout, no_reimb, function () {
-                return needs_reimb.prop("checked");
+              return needs_reimb.prop("checked");
             }, 1);
             $('#id_reimb').parent().addClass('required');
             reimb_amout.parent().addClass('required');
@@ -154,66 +156,66 @@
             //}, 1);
             //conditional_field(projects, experienced, function () {
             //    return experienced.prop("checked");
-           // }, 1);
+            // }, 1);
             // Making projects look like required
             projects.parent().addClass('required');
             var hearabout = $('#id_hearabout');
             hearabout.parent().removeClass('required');
 
             {% if not application %}
-                var timer;
-                var clear_timer;
-                var timeout = 5000; // Timout duration
-                $('input,textarea').keyup(function () {
-                    if (timer) {
-                        clearTimeout(timer);
-                    }
-                    timer = setTimeout(saveData, timeout);
-
-                });
-                $('input[type=radio],select').change(function () {
-                    if (timer) {
-                        clearTimeout(timer);
-                    }
-                    timer = setTimeout(saveData, timeout);
-
-                });
-
-                // Save data
-                function saveData() {
-                    if (clear_timer) {
-                        clearTimeout(clear_timer);
-                    }
-                    $('.saved-string').html('Saving...');
-                    var form_obj = {};
-                    var form_array = $('form').serializeArray();
-                    $.each(form_array, function () {
-                        if (form_obj[this.name]) {
-                            if (!form_obj[this.name].push) {
-                                form_obj[this.name] = [form_obj[this.name]];
-                            }
-                            form_obj[this.name].push(this.value || '');
-                        } else {
-                            form_obj[this.name] = this.value || '';
-                        }
-                    });
-
-
-                    // AJAX request
-                    $.ajax({
-                        url: '{% url 'save_draft' %}',
-                        type: 'post',
-                        data: form_obj,
-                        success: function (response) {
-                            $('.saved-string').html('Saved!');
-                            clear_timer = setTimeout(function () {
-                                $('.saved-string').html('');
-                            }, timeout)
-                        }
-                    });
+              var timer;
+              var clear_timer;
+              var timeout = 5000; // Timout duration
+              $('input,textarea').keyup(function () {
+                if (timer) {
+                  clearTimeout(timer);
                 }
+                timer = setTimeout(saveData, timeout);
+
+              });
+              $('input[type=radio],select').change(function () {
+                if (timer) {
+                  clearTimeout(timer);
+                }
+                timer = setTimeout(saveData, timeout);
+
+              });
+
+              // Save data
+              function saveData() {
+                if (clear_timer) {
+                  clearTimeout(clear_timer);
+                }
+                $('.saved-string').html('Saving...');
+                var form_obj = {};
+                var form_array = $('form').serializeArray();
+                $.each(form_array, function () {
+                  if (form_obj[this.name]) {
+                    if (!form_obj[this.name].push) {
+                      form_obj[this.name] = [form_obj[this.name]];
+                    }
+                    form_obj[this.name].push(this.value || '');
+                  } else {
+                    form_obj[this.name] = this.value || '';
+                  }
+                });
+
+
+                // AJAX request
+                $.ajax({
+                  url: '{% url 'save_draft' %}',
+                  type: 'post',
+                  data: form_obj,
+                  success: function (response) {
+                    $('.saved-string').html('Saved!');
+                    clear_timer = setTimeout(function () {
+                      $('.saved-string').html('');
+                    }, timeout)
+                  }
+                });
+              }
             {% endif %}
-        }
-    )
+          }
+  )
 
 </script>

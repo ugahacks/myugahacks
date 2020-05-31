@@ -1,12 +1,13 @@
 import django_filters
 import django_tables2 as tables
-from meals.models import Meal, MEAL_TYPE
 from django.db.models import Q
+
+from meals.models import Meal
 
 
 class MealsListFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method='search_filter', label='Search')
-    kind = django_filters.ChoiceFilter(label='Type', choices=MEAL_TYPE, empty_label='Any')
+    kind = django_filters.ChoiceFilter(label='Type', choices=Meal.TYPES, empty_label='Any')
 
     def search_filter(self, queryset, name, value):
         return queryset.filter((Q(name__icontains=value) | Q(type__icontains=value)))

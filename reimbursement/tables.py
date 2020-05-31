@@ -3,12 +3,12 @@ import django_tables2 as tables
 from django import forms
 from django.db.models import Q
 
-from reimbursement.models import Reimbursement, RE_STATUS
+from reimbursement.models import Reimbursement
 
 
 class ReimbursementFilter(django_filters.FilterSet):
     search = django_filters.CharFilter(method='search_filter', label='Search')
-    status = django_filters.MultipleChoiceFilter('status', label='Status', choices=RE_STATUS,
+    status = django_filters.MultipleChoiceFilter('status', label='Status', choices=Reimbursement.STATUS,
                                                  widget=forms.CheckboxSelectMultiple)
 
     def search_filter(self, queryset, name, value):

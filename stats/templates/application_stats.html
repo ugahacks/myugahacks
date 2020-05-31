@@ -2,418 +2,418 @@
 
 {% block head_title %}Application stats{% endblock %}
 {% block panel %}
-    <h1>Application Stats</h1>
-    <small class="pull-right"><b>Last updated:</b> <span id="update_date"></span></small>
-    <div class="row">
-        <div class="col-md-12">
-            <div id="timeseries">
-            </div>
-        </div>
+  <h1>Application Stats</h1>
+  <small class="pull-right"><b>Last updated:</b> <span id="update_date"></span></small>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="timeseries">
+      </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h3>Status</h3>
-            <div id="applications_stats"></div>
-        </div>
-        <div class="col-md-6">
-          <br>
-          <h3 style="text-align: center;"><b># of Applications:</b> <span id="app_count"></span></h3>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Status</h3>
+      <div id="applications_stats"></div>
     </div>
-    <h2>Gender</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <h3>All</h3>
-            <div id="gender_stats"></div>
-        </div>
-        <div class="col-md-6">
-            <h3>Attended</h3>
-            <div id="gender_stats_attended"></div>
-        </div>
+    <div class="col-md-6">
+      <br>
+      <h3 style="text-align: center;"><b># of Applications:</b> <span id="app_count"></span></h3>
     </div>
-    <h2>First Timer</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <h3>All</h3>
-            <div id="first_timer_stats"></div>
-        </div>
-        <div class="col-md-6">
-            <h3>Attended</h3>
-            <div id="first_timer_stats_attended"></div>
-        </div>
+  </div>
+  <h2>Gender</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>All</h3>
+      <div id="gender_stats"></div>
     </div>
-    <h3>Heard about us</h3>
-    <div class="row">
-        <div class="col-md-6">
-          <div id="hearabout_stats"></div>
-        </div>
+    <div class="col-md-6">
+      <h3>Attended</h3>
+      <div id="gender_stats_attended"></div>
     </div>
-    <h2>Major</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <h3>All</h3>
-            <div id="major_stats"></div>
-        </div>
-        <div class="col-md-6">
-            <h3>Attended</h3>
-            <div id="major_stats_attended"></div>
-        </div>
+  </div>
+  <h2>First Timer</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>All</h3>
+      <div id="first_timer_stats"></div>
     </div>
-    <h2>Class Status</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <h3>All</h3>
-            <div id="class_stats"></div>
-        </div>
-        <div class="col-md-6">
-            <h3>Attended</h3>
-            <div id="class_stats_attended"></div>
-        </div>
+    <div class="col-md-6">
+      <h3>Attended</h3>
+      <div id="first_timer_stats_attended"></div>
     </div>
-    <h2>T-Shirts sizes</h2>
+  </div>
+  <h3>Heard about us</h3>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="hearabout_stats"></div>
+    </div>
+  </div>
+  <h2>Major</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>All</h3>
+      <div id="major_stats"></div>
+    </div>
+    <div class="col-md-6">
+      <h3>Attended</h3>
+      <div id="major_stats_attended"></div>
+    </div>
+  </div>
+  <h2>Class Status</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>All</h3>
+      <div id="class_stats"></div>
+    </div>
+    <div class="col-md-6">
+      <h3>Attended</h3>
+      <div id="class_stats_attended"></div>
+    </div>
+  </div>
+  <h2>T-Shirts sizes</h2>
 
-    <div class="row">
-        <div class="col-md-6">
-            <h3>All</h3>
-            <div id="shirts_stats"></div>
-        </div>
-        <div class="col-md-6">
-            <h3>Confirmed only</h3>
-            <div id="shirts_stats_confirmed"></div>
-        </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>All</h3>
+      <div id="shirts_stats"></div>
     </div>
-    <h2>Dietary restrictions</h2>
+    <div class="col-md-6">
+      <h3>Confirmed only</h3>
+      <div id="shirts_stats_confirmed"></div>
+    </div>
+  </div>
+  <h2>Dietary restrictions</h2>
 
-    <div class="row">
-        <div class="col-md-6">
-            <h3>All</h3>
-            <div id="diet_stats"></div>
-        </div>
-        <div class="col-md-6">
-            <h3>Confirmed only</h3>
-            <div id="diet_stats_confirmed"></div>
-        </div>
-        <div class="col-md-6">
-            <h4><b>Confirmed extra diet requirements:</b><br> <span id="other_diet"></span></h4>
-        </div>
-        <div class="col-md-6">
-            <h4><b>Confirmed hardware requests:</b><br> <span id="hardware"></span></h4>
-        </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>All</h3>
+      <div id="diet_stats"></div>
     </div>
+    <div class="col-md-6">
+      <h3>Confirmed only</h3>
+      <div id="diet_stats_confirmed"></div>
+    </div>
+    <div class="col-md-6">
+      <h4><b>Confirmed extra diet requirements:</b><br> <span id="other_diet"></span></h4>
+    </div>
+    <div class="col-md-6">
+      <h4><b>Confirmed hardware requests:</b><br> <span id="hardware"></span></h4>
+    </div>
+  </div>
 
 
 {% endblock %}
 {% block c3script %}
-    <script>
-        $.getJSON('{% url 'api_app_stats' %}', function (data) {
-            c3.generate({
-                bindto: '#timeseries',
-                data: {
-                    json: data['timeseries'],
-                    keys: {
-                        x: 'date',
-                        value: ['applications']
-                    }
-                },
+  <script>
+    $.getJSON('{% url 'api_app_stats' %}', function (data) {
+      c3.generate({
+        bindto: '#timeseries',
+        data: {
+          json: data['timeseries'],
+          keys: {
+            x: 'date',
+            value: ['applications']
+          }
+        },
 
-                axis: {
-                    x: {
-                        type: 'timeseries',
-                        tick: {
-                            format: '%Y-%m-%d'
-                        }
-                    }
-                }
-            });
-            c3.generate({
-                bindto: '#shirts_stats_confirmed',
-                data: {
-                    json: data['shirt_count_confirmed'],
-                    keys: {
-                        x: 'tshirt_size',
-                        value: ['applications']
-                    },
-                    type: 'bar'
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              format: '%Y-%m-%d'
+            }
+          }
+        }
+      });
+      c3.generate({
+        bindto: '#shirts_stats_confirmed',
+        data: {
+          json: data['shirt_count_confirmed'],
+          keys: {
+            x: 'tshirt_size',
+            value: ['applications']
+          },
+          type: 'bar'
 
-                },
+        },
 
-                axis: {
-                    x: {
-                        type: 'category'
-                    }
-                }
-            });
+        axis: {
+          x: {
+            type: 'category'
+          }
+        }
+      });
 
-            var status_data = {};
-            var sites = [];
-            $(data['status']).each(function (c, e) {
-                sites.push(e.status_name);
-                status_data[e.status_name] = e.applications;
-            });
-            c3.generate({
-                bindto: '#applications_stats',
-                data: {
-                    json: status_data,
-                    type: 'donut'
+      var status_data = {};
+      var sites = [];
+      $(data['status']).each(function (c, e) {
+        sites.push(e.status_name);
+        status_data[e.status_name] = e.applications;
+      });
+      c3.generate({
+        bindto: '#applications_stats',
+        data: {
+          json: status_data,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            var gender_data = {};
-            var genders = [];
-            $(data['gender']).each(function (c, e) {
-                genders.push(e.gender_name);
-                gender_data[e.gender_name] = e.applications;
-            });
-            c3.generate({
-                bindto: '#gender_stats',
-                data: {
-                    json: gender_data,
-                    type: 'donut'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      var gender_data = {};
+      var genders = [];
+      $(data['gender']).each(function (c, e) {
+        genders.push(e.gender_name);
+        gender_data[e.gender_name] = e.applications;
+      });
+      c3.generate({
+        bindto: '#gender_stats',
+        data: {
+          json: gender_data,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            var gender_data_attended = {};
-            var genders = [];
-            $(data['gender_attended']).each(function (c, e) {
-                genders.push(e.gender_name);
-                gender_data_attended[e.gender_name] = e.applications;
-            });
-            c3.generate({
-                bindto: '#gender_stats_attended',
-                data: {
-                    json: gender_data_attended,
-                    type: 'donut'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      var gender_data_attended = {};
+      var genders = [];
+      $(data['gender_attended']).each(function (c, e) {
+        genders.push(e.gender_name);
+        gender_data_attended[e.gender_name] = e.applications;
+      });
+      c3.generate({
+        bindto: '#gender_stats_attended',
+        data: {
+          json: gender_data_attended,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            var major_data = {};
-            var choices = [];
-            $(data['major_count']).each(function (c, e) {
-                choices.push(e.degree);
-                major_data[e.degree] = e.applications;
-            });
-            c3.generate({
-                bindto: '#major_stats',
-                data: {
-                    json: major_data,
-                    type: 'donut'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      var major_data = {};
+      var choices = [];
+      $(data['major_count']).each(function (c, e) {
+        choices.push(e.degree);
+        major_data[e.degree] = e.applications;
+      });
+      c3.generate({
+        bindto: '#major_stats',
+        data: {
+          json: major_data,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            var major_data_attended = {};
-            var choices = [];
-            $(data['major_count_attended']).each(function (c, e) {
-                choices.push(e.degree);
-                major_data_attended[e.degree] = e.applications;
-            });
-            c3.generate({
-                bindto: '#major_stats_attended',
-                data: {
-                    json: major_data_attended,
-                    type: 'donut'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      var major_data_attended = {};
+      var choices = [];
+      $(data['major_count_attended']).each(function (c, e) {
+        choices.push(e.degree);
+        major_data_attended[e.degree] = e.applications;
+      });
+      c3.generate({
+        bindto: '#major_stats_attended',
+        data: {
+          json: major_data_attended,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            var first_timer_data = {};
-            var choices = [];
-            $(data['firsttimer_count']).each(function (c, e) {
-                choices.push(e.first_timer);
-                first_timer_data[e.first_timer] = e.applications;
-            });
-            c3.generate({
-                bindto: '#first_timer_stats',
-                data: {
-                    json: first_timer_data,
-                    type: 'donut'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      var first_timer_data = {};
+      var choices = [];
+      $(data['firsttimer_count']).each(function (c, e) {
+        choices.push(e.first_timer);
+        first_timer_data[e.first_timer] = e.applications;
+      });
+      c3.generate({
+        bindto: '#first_timer_stats',
+        data: {
+          json: first_timer_data,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            var first_timer_data_attended = {};
-            var choices = [];
-            $(data['firsttimer_count_attended']).each(function (c, e) {
-                choices.push(e.first_timer);
-                first_timer_data_attended[e.first_timer] = e.applications;
-            });
-            c3.generate({
-                bindto: '#first_timer_stats_attended',
-                data: {
-                    json: first_timer_data_attended,
-                    type: 'donut'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      var first_timer_data_attended = {};
+      var choices = [];
+      $(data['firsttimer_count_attended']).each(function (c, e) {
+        choices.push(e.first_timer);
+        first_timer_data_attended[e.first_timer] = e.applications;
+      });
+      c3.generate({
+        bindto: '#first_timer_stats_attended',
+        data: {
+          json: first_timer_data_attended,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            var hearabout_data = {};
-            var choices = [];
-            $(data['hearabout_count']).each(function (c, e) {
-                choices.push(e.hearabout);
-                hearabout_data[e.hearabout] = e.applications;
-            });
-            c3.generate({
-                bindto: '#hearabout_stats',
-                data: {
-                    json: hearabout_data,
-                    type: 'donut'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      var hearabout_data = {};
+      var choices = [];
+      $(data['hearabout_count']).each(function (c, e) {
+        choices.push(e.hearabout);
+        hearabout_data[e.hearabout] = e.applications;
+      });
+      c3.generate({
+        bindto: '#hearabout_stats',
+        data: {
+          json: hearabout_data,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            var class_data = {};
-            var classes = [];
-            $(data['class']).each(function (c, e) {
-                classes.push(e.class_name);
-                class_data[e.class_name] = e.applications;
-            });
-            c3.generate({
-                bindto: '#class_stats',
-                data: {
-                    json: class_data,
-                    type: 'donut'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      var class_data = {};
+      var classes = [];
+      $(data['class']).each(function (c, e) {
+        classes.push(e.class_name);
+        class_data[e.class_name] = e.applications;
+      });
+      c3.generate({
+        bindto: '#class_stats',
+        data: {
+          json: class_data,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            var class_data_attended = {};
-            var classes = [];
-            $(data['class_attended']).each(function (c, e) {
-                classes.push(e.class_name);
-                class_data_attended[e.class_name] = e.applications;
-            });
-            c3.generate({
-                bindto: '#class_stats_attended',
-                data: {
-                    json: class_data_attended,
-                    type: 'donut'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      var class_data_attended = {};
+      var classes = [];
+      $(data['class_attended']).each(function (c, e) {
+        classes.push(e.class_name);
+        class_data_attended[e.class_name] = e.applications;
+      });
+      c3.generate({
+        bindto: '#class_stats_attended',
+        data: {
+          json: class_data_attended,
+          type: 'donut'
 
-                },
-                donut: {
-                    label: {
-                        format: function (value, ratio, id) {
-                            return value;
-                        }
-                    }
-                }
-            });
-            c3.generate({
-                bindto: '#shirts_stats',
-                data: {
-                    json: data['shirt_count'],
-                    keys: {
-                        x: 'tshirt_size',
-                        value: ['applications']
-                    },
-                    type: 'bar'
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
+      c3.generate({
+        bindto: '#shirts_stats',
+        data: {
+          json: data['shirt_count'],
+          keys: {
+            x: 'tshirt_size',
+            value: ['applications']
+          },
+          type: 'bar'
 
-                },
+        },
 
-                axis: {
-                    x: {
-                        type: 'category'
-                    }
-                }
-            });
-            c3.generate({
-                bindto: '#diet_stats',
-                data: {
-                    json: data['diet'],
-                    keys: {
-                        x: 'diet',
-                        value: ['applications']
-                    },
-                    type: 'bar'
+        axis: {
+          x: {
+            type: 'category'
+          }
+        }
+      });
+      c3.generate({
+        bindto: '#diet_stats',
+        data: {
+          json: data['diet'],
+          keys: {
+            x: 'diet',
+            value: ['applications']
+          },
+          type: 'bar'
 
-                },
+        },
 
-                axis: {
-                    x: {
-                        type: 'category'
-                    }
-                }
-            });
-            c3.generate({
-                bindto: '#diet_stats_confirmed',
-                data: {
-                    json: data['diet_confirmed'],
-                    keys: {
-                        x: 'diet',
-                        value: ['applications']
-                    },
-                    type: 'bar'
+        axis: {
+          x: {
+            type: 'category'
+          }
+        }
+      });
+      c3.generate({
+        bindto: '#diet_stats_confirmed',
+        data: {
+          json: data['diet_confirmed'],
+          keys: {
+            x: 'diet',
+            value: ['applications']
+          },
+          type: 'bar'
 
-                },
+        },
 
-                axis: {
-                    x: {
-                        type: 'category'
-                    }
-                }
-            });
-            $('#other_diet').html(data['other_diet']);
-            $('#hardware').html(data['hardware']);
-            $('#update_date').html(data['update_time']);
-            $('#app_count').html(data['app_count']);
-        })
-        ;
+        axis: {
+          x: {
+            type: 'category'
+          }
+        }
+      });
+      $('#other_diet').html(data['other_diet']);
+      $('#hardware').html(data['hardware']);
+      $('#update_date').html(data['update_time']);
+      $('#app_count').html(data['app_count']);
+    })
+    ;
 
-    </script>
+  </script>
 {% endblock %}

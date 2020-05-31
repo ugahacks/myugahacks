@@ -27,9 +27,10 @@ cache/
 *.sh
 
 bin/
-lib/
 share/
 ./#.env#
 pyvenv.cfg
 app/.env
 *.db
+
+.vscode/

@@ -34,12 +34,8 @@ function toggleFunction() {
 window.onload = function() {
   var navbar = document.getElementById("myNavbar");
   var scroll = document.getElementById("noScroll");
-  console.log(navbar)
-  console.log(scroll)
   scroll = scroll == null;
-  console.log(scroll)
   if(!scroll) {
-      console.log("TRUE")
       navbar.className = "w3-bar" + " w3-card" + " uga-red";
   }
 }

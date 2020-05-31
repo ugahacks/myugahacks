@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
 from django.utils import timezone
@@ -65,10 +66,13 @@ class User(AbstractBaseUser):
     is_volunteer = models.BooleanField(default=False)
     is_organizer = models.BooleanField(default=False)
     is_director = models.BooleanField(default=False)
+    is_sponsor = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_mentor = models.BooleanField(default=False)
     is_hardware_admin = models.BooleanField(default=False)
     created_time = models.DateTimeField(default=timezone.now)
     mlh_id = models.IntegerField(blank=True, null=True, unique=True)
+    on_duty = models.BooleanField(default=False)
 
     objects = UserManager()
 
@@ -97,10 +101,23 @@ class User(AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
 
+    def get_tier_value(self):
+        from sponsors.models import Sponsor
+        # Admin's will default to TIER_1 if debug is on
+        if self.is_admin and settings.DEBUG:
+            return Sponsor.C_TIER_1_POINTS
+        if not self.is_sponsor:
+            return None
+        domain = self.email.split('@')[1]
+        sponsor = Sponsor.objects.filter(email_domain=domain)
+        return sponsor.get_tier_value()
+
+    # Used by django auth. Please do not remove.
     @property
     def is_superuser(self):
         return self.is_admin
 
+    # Use this one throughout the app for semantic clarity
     @property
     def is_staff(self):
         "Is the user a member of staff?"

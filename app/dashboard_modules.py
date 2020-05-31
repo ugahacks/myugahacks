@@ -2,7 +2,7 @@ from django import forms
 from django.db.models import Count
 from jet.dashboard.modules import DashboardModule
 
-from applications.models import Application, STATUS
+from applications.models import Application
 from user.models import User
 
 
@@ -31,7 +31,7 @@ class BestReviewers(DashboardModule):
 
 class AppsStatsForm(forms.Form):
     status = forms.ChoiceField(label='Status',
-                               choices=STATUS + [('__all__', 'All')])
+                               choices=Application.STATUS + [('__all__', 'All')])
 
 
 class AppsStats(DashboardModule):

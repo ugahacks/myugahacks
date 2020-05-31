@@ -3,7 +3,7 @@ from django.views.generic.edit import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .forms import BlogAddForm
-from datetime import datetime
+from django.utils import timezone
 from .models import Blog
 from user.mixins import IsOrganizerMixin
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
@@ -18,7 +18,7 @@ class BlogAdd(IsOrganizerMixin, FormView):
 
     def form_valid(self, form):
         blog = form.save(commit=False)
-        blog.publication_date = datetime.now()
+        blog.publication_date = timezone.now()
         blog.author = self.request.user
         blog.save()
         form.save_m2m()
@@ -37,7 +37,7 @@ class BlogEdit(IsOrganizerMixin, UpdateView):
 
     def form_valid(self, form):
         blog = form.save(commit=False)
-        blog.publication_date = datetime.now()
+        blog.publication_date = timezone.now()
         blog.save()
         form.save_m2m()
         return super().form_valid(form)

@@ -1,0 +1,15 @@
+{% extends "base_table.html" %}
+{% load django_tables2 %}
+{% block head_title %}Applications{% endblock %}
+{% block table_footer %}
+  {% if not has_application %}
+    <h1 class="text-center">You have not submitted an attendence form yet! We would greatly appreciate it if you filled
+      the form out!</h1>
+    <a href="{% url 'sponsors:sponsor_application' %}" class="btn btn-success btn-block">Attendance Form</a>
+  {% endif %}
+  {% if user.is_organizer %}
+    <div class="panel-footer">
+      <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,4 +1,4 @@
-let baggage_qr = (()=>{
+let baggage_qr = (() => {
     let obj = {};
     let cams = [];
 
@@ -17,7 +17,7 @@ let baggage_qr = (()=>{
     //-Updates the content
     //-Shows a toast if there's a message
     obj.processResponse = (data) => {
-        if(data.content){
+        if (data.content) {
             $('#baggage-container').fadeTo(200, 0, () => {
                 $('#baggage-container').html(data.content);
                 obj.initListeners();
@@ -39,8 +39,8 @@ let baggage_qr = (()=>{
     //Clicking the bg cancels the operation
     //pre: call initScanner
     obj.qrScan = (inputElem) => {
-        if(!cams) console.error("I can't scan without a camera");
-        if(!localStorage.getItem("selectedCam")) {
+        if (!cams) console.error("I can't scan without a camera");
+        if (!localStorage.getItem("selectedCam")) {
             localStorage.setItem("selectedCam", 0);
         }
 
@@ -50,16 +50,16 @@ let baggage_qr = (()=>{
         //Create element to darken the rest of the page
         let veil = document.createElement("div");
         //Init scanner with this element
-        let scanner = new Instascan.Scanner({ video: videoElem });
+        let scanner = new Instascan.Scanner({video: videoElem});
         //Once we scan a value, set the inputElem to this value and close the popup
         scanner.addListener('scan', function (content) {
-            console.info("Read QR content: "+content);
+            console.info("Read QR content: " + content);
             inputElem.value = content;
             scanner.stop();
             popup.parentNode.removeChild(popup);
             veil.parentNode.removeChild(veil);
             popup = "";
-	        document.getElementById("baggage-search").submit();
+            document.getElementById("baggage-search").submit();
         });
         //Creating the popup
         let popup = document.createElement("div");
@@ -67,17 +67,17 @@ let baggage_qr = (()=>{
 
         //Append camera selector
         let selectCam = document.createElement("select");
-        let optionsStr="";
-        for(let i = 0; i < cams.length; i++) {
+        let optionsStr = "";
+        for (let i = 0; i < cams.length; i++) {
             optionsStr += "<option value='" + i + "'>" + (cams[i].name || "Camera " + i) + "</option>";
         }
 
-        selectCam.innerHTML=optionsStr;
+        selectCam.innerHTML = optionsStr;
         popup.appendChild(selectCam);
         selectCam.value = "" + selectedCam;
         //On selector change, we stop the scanner preview and change the camera
         selectCam.addEventListener("change", () => {
-            let selectedCam = parseInt(this.value)
+            let selectedCam = parseInt(this.value);
             localStorage.setItem("selectedCam", selectedCam);
             scanner.stop();
             scanner.start(cams[selectedCam]);
@@ -91,7 +91,7 @@ let baggage_qr = (()=>{
         veil.classList.add('veil');
         //On click on the bg, cancel the operation
         veil.addEventListener("click", () => {
-            if(popup){
+            if (popup) {
                 scanner.stop();
                 popup.parentNode.removeChild(popup);
                 veil.parentNode.removeChild(veil);

@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
 import json
-import uuid as uuid
 
+import uuid as uuid
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, MinValueValidator
 from django.db import models
@@ -12,143 +12,145 @@ from django.utils import timezone
 from app import utils
 from user.models import User
 
-APP_PENDING = 'P'
-APP_REJECTED = 'R'
-APP_INVITED = 'I'
-APP_LAST_REMIDER = 'LR'
-APP_CONFIRMED = 'C'
-APP_CANCELLED = 'X'
-APP_ATTENDED = 'A'
-APP_EXPIRED = 'E'
-APP_DUBIOUS = 'D'
-
-STATUS = [
-    (APP_PENDING, 'Under review'),
-    (APP_REJECTED, 'Wait listed'),
-    (APP_INVITED, 'Invited'),
-    (APP_LAST_REMIDER, 'Last reminder'),
-    (APP_CONFIRMED, 'Confirmed'),
-    (APP_CANCELLED, 'Cancelled'),
-    (APP_ATTENDED, 'Attended'),
-    (APP_EXPIRED, 'Expired'),
-    (APP_DUBIOUS, 'Dubious')
-]
-
-NO_ANSWER = 'NA'
-MALE = 'M'
-FEMALE = 'F'
-NON_BINARY = 'NB'
-
-GENDERS = [
-    (NO_ANSWER, 'Prefer not to answer'),
-    (MALE, 'Male'),
-    (FEMALE, 'Female'),
-    (NON_BINARY, 'Non-binary'),
-]
-
-D_NONE = 'None'
-D_VEGETERIAN = 'Vegeterian'
-D_VEGAN = 'Vegan'
-D_NO_PORK = 'No pork'
-D_GLUTEN_FREE = 'Gluten-free'
-D_OTHER = 'Others'
-
-DIETS = [
-    (D_NONE, 'No requirements'),
-    (D_VEGETERIAN, 'Vegeterian'),
-    (D_VEGAN, 'Vegan'),
-    (D_NO_PORK, 'No pork'),
-    (D_GLUTEN_FREE, 'Gluten-free'),
-    (D_OTHER, 'Others')
-]
-
-P_HACKER = 'Hacker'
-P_VOLUNTEER = 'Volunteer'
-P_MENTOR = 'Mentor'
-
-PARTICIPANTS = [
-    (P_HACKER, 'Hacker'),
-    (P_VOLUNTEER, 'Volunteer'),
-    (P_MENTOR, 'Mentor'),
-]
-
-T_XXS = 'XXS'
-T_XS = 'XS'
-T_S = 'S'
-T_M = 'M'
-T_L = 'L'
-T_XL = 'XL'
-T_XXL = 'XXL'
-
-TSHIRT_SIZES = [
-    (T_XXS, "Unisex - XXS"),
-    (T_XS, "Unisex - XS"),
-    (T_S, "Unisex - S"),
-    (T_M, "Unisex - M"),
-    (T_L, "Unisex - L"),
-    (T_XL, "Unisex - XL"),
-    (T_XXL, "Unisex - XXL"),
-]
-DEFAULT_TSHIRT_SIZE = T_M
-
-YEARS = [(int(size), size) for size in ('2018 2019 2020 2021 2022 2023 2024'.split(' '))]
-DEFAULT_YEAR = 2019
-
-C_FRESHMAN = 'Freshman'
-C_SOPHOMORE = 'Sophomore'
-C_JUNIOR = 'Junior'
-C_SENIOR = 'Senior'
-C_GRAD = 'Graduate Student'
-C_GRADUATED = 'Graduated'
-
-CLASSSTATUS = [
-    (C_FRESHMAN, 'Freshman'),
-    (C_SOPHOMORE, 'Sophomore'),
-    (C_JUNIOR, 'Junior'),
-    (C_SENIOR, 'Senior'),
-    (C_GRAD, 'Graduate Student'),
-    (C_GRADUATED, 'Graduated')
-]
-
-H_NOANS = "N/A"
-H_SEARCH = 'Search Engine'
-H_TWITTER = 'Twitter'
-H_FACEBOOK = 'Facebook'
-H_INSTAGRAM = 'Instagram'
-H_GITHUB = 'GitHub'
-H_EMAIL = "Promotional Emails"
-H_FRIENDS = "Friends"
-H_PROF = "Professors/University-wide annoucement"
-H_MLH = "MLH Website"
-
-HEARABOUT = [
-    (H_NOANS, "N/A"),
-    (H_SEARCH, 'Search Engine'),
-    (H_TWITTER, 'Twitter'),
-    (H_FACEBOOK, 'Facebook'),
-    (H_INSTAGRAM, 'Instagram'),
-    (H_GITHUB, 'Github'),
-    (H_EMAIL, 'Promotional Emails'),
-    (H_FRIENDS, 'Friends'),
-    (H_PROF, 'Professors/University-wide annoucement'),
-    (H_MLH, 'MLH Website'),
-]
-
 
 class Application(models.Model):
+    PENDING = 'P'
+    REJECTED = 'R'
+    INVITED = 'I'
+    LAST_REMINDER = 'LR'
+    CONFIRMED = 'C'
+    CANCELLED = 'X'
+    ATTENDED = 'A'
+    EXPIRED = 'E'
+    DUBIOUS = 'D'
+
+    STATUS = [
+        (PENDING, 'Under review'),
+        (REJECTED, 'Wait listed'),
+        (INVITED, 'Invited'),
+        (LAST_REMINDER, 'Last reminder'),
+        (CONFIRMED, 'Confirmed'),
+        (CANCELLED, 'Cancelled'),
+        (ATTENDED, 'Attended'),
+        (EXPIRED, 'Expired'),
+        (DUBIOUS, 'Dubious')
+    ]
+
+    NO_ANSWER = 'NA'
+    MALE = 'M'
+    FEMALE = 'F'
+    NON_BINARY = 'NB'
+
+    GENDERS = [
+        (NO_ANSWER, 'Prefer not to answer'),
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+        (NON_BINARY, 'Non-binary'),
+    ]
+
+    D_NONE = 'None'
+    D_VEGETERIAN = 'Vegeterian'
+    D_VEGAN = 'Vegan'
+    D_NO_PORK = 'No pork'
+    D_GLUTEN_FREE = 'Gluten-free'
+    D_OTHER = 'Others'
+
+    DIETS = [
+        (D_NONE, 'No requirements'),
+        (D_VEGETERIAN, 'Vegeterian'),
+        (D_VEGAN, 'Vegan'),
+        (D_NO_PORK, 'No pork'),
+        (D_GLUTEN_FREE, 'Gluten-free'),
+        (D_OTHER, 'Others')
+    ]
+
+    P_HACKER = 'Hacker'
+    P_VOLUNTEER = 'Volunteer'
+    P_MENTOR = 'Mentor'
+
+    PARTICIPANTS = [
+        (P_HACKER, 'Hacker'),
+        (P_VOLUNTEER, 'Volunteer'),
+        (P_MENTOR, 'Mentor'),
+    ]
+
+    T_XXS = 'XXS'
+    T_XS = 'XS'
+    T_S = 'S'
+    T_M = 'M'
+    T_L = 'L'
+    T_XL = 'XL'
+    T_XXL = 'XXL'
+
+    TSHIRT_SIZES = [
+        (T_XXS, "Unisex - XXS"),
+        (T_XS, "Unisex - XS"),
+        (T_S, "Unisex - S"),
+        (T_M, "Unisex - M"),
+        (T_L, "Unisex - L"),
+        (T_XL, "Unisex - XL"),
+        (T_XXL, "Unisex - XXL"),
+    ]
+    DEFAULT_TSHIRT_SIZE = T_M
+
+    YEARS = [(int(size), size) for size in ('2018 2019 2020 2021 2022 2023 2024'.split(' '))]
+    DEFAULT_YEAR = 2019
+
+    C_FRESHMAN = 'Freshman'
+    C_SOPHOMORE = 'Sophomore'
+    C_JUNIOR = 'Junior'
+    C_SENIOR = 'Senior'
+    C_GRAD = 'Graduate Student'
+    C_GRADUATED = 'Graduated'
+
+    CLASSSTATUS = [
+        (C_FRESHMAN, 'Freshman'),
+        (C_SOPHOMORE, 'Sophomore'),
+        (C_JUNIOR, 'Junior'),
+        (C_SENIOR, 'Senior'),
+        (C_GRAD, 'Graduate Student'),
+        (C_GRADUATED, 'Graduated')
+    ]
+
+    H_NOANS = "N/A"
+    H_SEARCH = 'Search Engine'
+    H_TWITTER = 'Twitter'
+    H_FACEBOOK = 'Facebook'
+    H_INSTAGRAM = 'Instagram'
+    H_GITHUB = 'GitHub'
+    H_EMAIL = "Promotional Emails"
+    H_FRIENDS = "Friends"
+    H_PROF = "Professors/University-wide annoucement"
+    H_MLH = "MLH Website"
+
+    HEARABOUT = [
+        (H_NOANS, "N/A"),
+        (H_SEARCH, 'Search Engine'),
+        (H_TWITTER, 'Twitter'),
+        (H_FACEBOOK, 'Facebook'),
+        (H_INSTAGRAM, 'Instagram'),
+        (H_GITHUB, 'Github'),
+        (H_EMAIL, 'Promotional Emails'),
+        (H_FRIENDS, 'Friends'),
+        (H_PROF, 'Professors/University-wide annoucement'),
+        (H_MLH, 'MLH Website'),
+    ]
+
     # META
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
-    invited_by = models.ForeignKey(User, related_name='invited_applications', blank=True, null=True, on_delete=models.CASCADE)
+    invited_by = models.ForeignKey(User, related_name='invited_applications', blank=True, null=True,
+                                   on_delete=models.CASCADE)
     contacted = models.BooleanField(default=False)  # If a dubious application has been contacted yet
-    contacted_by = models.ForeignKey(User, related_name='contacted_by', blank=True, null=True, on_delete=models.CASCADE)
+    contacted_by = models.ForeignKey(User, related_name='contacted_by', blank=True, null=True,
+                                     on_delete=models.CASCADE)
 
     # When was the application submitted
     submission_date = models.DateTimeField(default=timezone.now)
     # When was the last status update
     status_update_date = models.DateTimeField(blank=True, null=True)
     # Application status
-    status = models.CharField(choices=STATUS, default=APP_PENDING,
+    status = models.CharField(choices=STATUS, default=PENDING,
                               max_length=2)
 
     # ABOUT YOU
@@ -159,7 +161,8 @@ class Application(models.Model):
     phone_number = models.CharField(max_length=14,
                                     validators=[RegexValidator(regex=r'^\(\d{3}\)\s\d{3}-\d{4}',
                                                                message="Phone number must be entered in the following format: \
-                                                                (999) 999-9999")])
+                                                                (999) 999-9999")],
+                                    default='(999) 999-9999')
 
     """
         # Personal data (asking here because we don't want to ask birthday)
@@ -183,13 +186,11 @@ class Application(models.Model):
     reimb_amount = models.FloatField(blank=True, null=True, validators=[
         MinValueValidator(0, "Negative? Really? Please put a positive value")])
 
-
     # Participant
     participant = models.CharField(max_length=300, choices=PARTICIPANTS, default=P_HACKER)
     volunteer_time = models.CharField(max_length=600, blank=True, null=True)
     mentor_topic = models.CharField(max_length=600, blank=True, null=True)
     mentor_workshop = models.CharField(max_length=600, blank=True, null=True)
-
 
     # Giv me a resume here!
     resume = models.FileField(upload_to='resumes', null=True, blank=True)
@@ -239,49 +240,39 @@ class Application(models.Model):
         super(Application, self).save(**kwargs)
 
     def invite(self, user):
-        # We can re-invite someone invited
-        if self.status in [APP_CONFIRMED, APP_ATTENDED]:
+        # We can't re-invite someone invited
+        if self.status in [self.CONFIRMED, self.ATTENDED]:
             raise ValidationError('Application has already answered invite. '
                                   'Current status: %s' % self.status)
-        self.status = APP_INVITED
         if not self.invited_by:
             self.invited_by = user
         self.last_invite = timezone.now()
         self.last_reminder = None
-        self.status_update_date = timezone.now()
-        self.save()
+        self.__set_status(self.INVITED)
 
     def last_reminder(self):
-        if self.status != APP_INVITED:
+        if self.status != self.INVITED:
             raise ValidationError('Reminder can\'t be sent to non-pending '
                                   'applications')
-        self.status_update_date = timezone.now()
-        self.status = APP_LAST_REMIDER
-        self.save()
+        self.__set_status(self.LAST_REMINDER)
 
     def expire(self):
-        self.status_update_date = timezone.now()
-        self.status = APP_EXPIRED
-        self.save()
+        self.__set_status(self.EXPIRED)
 
     def reject(self, request):
-        if self.status == APP_ATTENDED:
+        if self.status == self.ATTENDED:
             raise ValidationError('Application has already attended. '
                                   'Current status: %s' % self.status)
-        self.status = APP_REJECTED
-        self.status_update_date = timezone.now()
-        self.save()
+        self.__set_status(self.REJECTED)
 
     def confirm(self):
-        if self.status == APP_CANCELLED:
+        if self.status == self.CANCELLED:
             raise ValidationError('This invite has been cancelled.')
-        elif self.status == APP_EXPIRED:
+        elif self.status == self.EXPIRED:
             raise ValidationError('Unfortunately your invite has expired.')
-        elif self.status in [APP_INVITED, APP_LAST_REMIDER]:
-            self.status = APP_CONFIRMED
-            self.status_update_date = timezone.now()
-            self.save()
-        elif self.status in [APP_CONFIRMED, APP_ATTENDED]:
+        elif self.status in [self.INVITED, self.LAST_REMINDER]:
+            self.__set_status(self.CONFIRMED)
+        elif self.status in [self.CONFIRMED, self.ATTENDED]:
             return None
         else:
             raise ValidationError('Unfortunately his application hasn\'t been '
@@ -291,28 +282,21 @@ class Application(models.Model):
         if not self.can_be_cancelled():
             raise ValidationError('Application can\'t be cancelled. Current '
                                   'status: %s' % self.status)
-        if self.status != APP_CANCELLED:
-            self.status = APP_CANCELLED
-            self.status_update_date = timezone.now()
-            self.save()
+        if self.status != self.CANCELLED:
+            self.__set_status(self.CANCELLED)
             reimb = getattr(self.user, 'reimbursement', None)
             if reimb:
                 reimb.delete()
 
     def check_in(self):
-        self.status = APP_ATTENDED
-        self.status_update_date = timezone.now()
-        self.save()
+        self.__set_status(self.ATTENDED)
 
     def set_dubious(self):
-        self.status = APP_DUBIOUS
+        self.__set_status(self.DUBIOUS)
         self.contacted = False
-        #  self.contacted_by = None
-        self.save()
 
     def unset_dubious(self):
-        self.status = APP_PENDING
-        self.save()
+        self.__set_status(self.PENDING)
 
     def set_contacted(self, user):
         if not self.contacted:
@@ -320,47 +304,78 @@ class Application(models.Model):
             self.contacted_by = user
             self.save()
 
+    # Private
+    def __set_status(self, status):
+        self.status = status
+        self.save()
+
     def is_confirmed(self):
-        return self.status == APP_CONFIRMED
+        return self.status == self.CONFIRMED
 
     def is_cancelled(self):
-        return self.status == APP_CANCELLED
+        return self.status == self.CANCELLED
 
     def answered_invite(self):
-        return self.status in [APP_CONFIRMED, APP_CANCELLED, APP_ATTENDED]
+        return self.status in [self.CONFIRMED, self.CANCELLED, self.ATTENDED]
 
     def needs_action(self):
-        return self.status == APP_INVITED
+        return self.status == self.INVITED
 
     def is_pending(self):
-        return self.status == APP_PENDING
+        return self.status == self.PENDING
 
     def can_be_edit(self):
-        return self.status == APP_PENDING and not self.vote_set.exists() and not utils.is_app_closed()
+        return self.status == self.PENDING and not self.vote_set.exists() and not utils.is_app_closed()
 
     def is_invited(self):
-        return self.status == APP_INVITED
+        return self.status == self.INVITED
 
     def is_expired(self):
-        return self.status == APP_EXPIRED
+        return self.status == self.EXPIRED
 
     def is_rejected(self):
-        return self.status == APP_REJECTED
+        return self.status == self.REJECTED
 
     def is_attended(self):
-        return self.status == APP_ATTENDED
+        return self.status == self.ATTENDED
 
     def is_last_reminder(self):
-        return self.status == APP_LAST_REMIDER
+        return self.status == self.LAST_REMINDER
 
     def is_dubious(self):
-        return self.status == APP_DUBIOUS
+        return self.status == self.DUBIOUS
 
     def can_be_cancelled(self):
-        return self.status == APP_CONFIRMED or self.status == APP_INVITED or self.status == APP_LAST_REMIDER
+        return self.status in [self.CONFIRMED, self.INVITED, self.LAST_REMINDER]
 
     def can_confirm(self):
-        return self.status in [APP_INVITED, APP_LAST_REMIDER]
+        return self.status in [self.INVITED, self.LAST_REMINDER]
+
+    def serialize(self):
+        return {
+            'user': {
+                'name': self.user.name,
+                'email': self.user.email,
+                'is': {
+                    'active': self.user.is_active,
+                    'volunteer': self.user.is_volunteer,
+                    'organizer': self.user.is_organizer,
+                    'director': self.user.is_director,
+                    'sponsor': self.user.is_sponsor,
+                    'admin': self.user.is_admin,
+                    'mentor': self.user.is_mentor,
+                    'hardwareAdmin': self.user.is_hardware_admin,
+                },
+                'application': {
+                    # Info for swag and food
+                    'diet': self.diet,
+                    'otherDiet': self.other_diet,
+                    'tshirtSize': self.tshirt_size,
+                    # Info for hardware
+                    'hardware': self.hardware,
+                }
+            }
+        }
 
 
 class DraftApplication(models.Model):

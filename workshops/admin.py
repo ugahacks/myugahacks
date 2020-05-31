@@ -1,6 +1,6 @@
 from django.contrib import admin
-from workshops import models
 
+from workshops import models
 
 # Register your models here.
 

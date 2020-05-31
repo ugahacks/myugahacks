@@ -2,8 +2,8 @@ from django import forms
 from django.contrib.auth import password_validation
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.password_validation import validate_password, password_validators_help_texts
-from django.utils.safestring import mark_safe
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from user.models import User
 
@@ -46,7 +46,7 @@ class RegisterForm(LoginForm):
         label='I\'ve read, understand and accept <a href="/privacy_and_cookies" target="_blank">UGAHacks '
               'Privacy and Cookies Policy</a>.<span style="color: red; font-weight: bold;"> *</span>')
 
-    birth_year = forms.IntegerField(label="Birth Year",min_value=1920,max_value=2019)
+    birth_year = forms.IntegerField(label="Birth Year", min_value=1920, max_value=2019)
 
     field_order = ['name', 'email', 'password', 'password2', 'birth_year', 'terms_and_conditions']
 
@@ -72,17 +72,18 @@ class RegisterForm(LoginForm):
         return cc
 
     def clean_birth_year(self):
-         birth_year = self.cleaned_data.get('birth_year')
+        birth_year = self.cleaned_data.get('birth_year')
 
-         if (2019-birth_year) < 18:
+        if (2019 - birth_year) < 18:
             raise forms.ValidationError(
                 "In order to apply and attend you must be at least 18 years old."
             )
-         return birth_year
+        return birth_year
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
         return email.lower()
+
 
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=254)
@@ -92,9 +93,10 @@ class PasswordResetForm(forms.Form):
         emailcap = self.cleaned_data['email'].capitalize()
         if not User.objects.filter(email=email).exists() and not User.objects.filter(email=emailcap).exists():
             raise forms.ValidationError(
-                mark_safe(f"We couldn't find a user with that email address. <a href={reverse('account_signup')} style='color: inherit; text-decoration: underline;'>Why not register an account?</a>")
+                mark_safe(
+                    f"We couldn't find a user with that email address. <a href={reverse('account_signup')} style='color: inherit; text-decoration: underline;'>Why not register an account?</a>")
             )
-        elif  User.objects.filter(email=email).exists():
+        elif User.objects.filter(email=email).exists():
             return email
         else:
             return emailcap

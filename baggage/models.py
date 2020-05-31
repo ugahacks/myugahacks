@@ -1,25 +1,20 @@
 from django.db import models
+
 from user.models import User
-
-BAG_ADDED = 'A'
-BAG_REMOVED = 'R'
-
-BAG_STATUS = (
-    (BAG_ADDED, 'Added'),
-    (BAG_REMOVED, 'Removed')
-)
-
-BAG_BUILDINGS = (
-    ('E01', 'E01'),
-    ('E02', 'E02')
-)
 
 
 class Room(models.Model):
     """Represents a room where a position can be"""
+    B_1 = 'E01'
+    B_2 = 'E02'
+
+    BUILDINGS = (
+        (B_1, 'E01'),
+        (B_2, 'E02')
+    )
 
     # Room identifier
-    room = models.CharField(primary_key=True, max_length=63, null=False, choices=BAG_BUILDINGS)
+    room = models.CharField(primary_key=True, max_length=63, null=False, choices=BUILDINGS)
     # Number of rows
     row = models.PositiveIntegerField(null=False, default=0)
     # Number of columns
@@ -35,10 +30,12 @@ class Room(models.Model):
 
 class Bag(models.Model):
     """Represents a baggage item"""
+    ADDED = 'A'
+    REMOVED = 'R'
 
-    STATUS = (
-        (BAG_ADDED, 'Added'),
-        (BAG_REMOVED, 'Removed')
+    BAG_STATUS = (
+        (ADDED, 'Added'),
+        (REMOVED, 'Removed')
     )
 
     # Item identifier
@@ -50,7 +47,7 @@ class Bag(models.Model):
     # User that checked-out the baggage
     outby = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='%(class)s_requests_out')
     # Reflects the status of the item
-    status = models.CharField(max_length=1, null=False, default=BAG_ADDED, choices=BAG_STATUS)
+    status = models.CharField(max_length=1, null=False, default=ADDED, choices=BAG_STATUS)
     # Reflects the room where the item is/was
     room = models.ForeignKey(Room, null=True, on_delete=models.PROTECT)
     # Reflects the row where the item is/was

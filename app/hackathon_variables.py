@@ -38,7 +38,7 @@ HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/ugahacks5/'
 HACKATHON_APP_DEADLINE = timezone.datetime(2020, 2, 9, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
 # (OPTIONAL) When to arrive at the hackathon
 HACKATHON_ARRIVE = 'Check-in opens at 5:00PM and the opening ceremony will be at 6:30PM on February 7th at the Zell B. Miller Center. ' \
-                    'Further details about the schedule can be found at ugahacks.com. We hope to see you there!'
+                   'Further details about the schedule can be found at ugahacks.com. We hope to see you there!'
 
 # (OPTIONAL) When to arrive at the hackathon
 HACKATHON_LEAVE = 'Closing ceremony will be held on Sunday, February 9th at 1:00PM. ' \
@@ -62,7 +62,8 @@ DEFAULT_REIMBURSEMENT_AMOUNT = 100
 CURRENCY = '$'
 REIMBURSEMENT_EXPIRY_DAYS = 5
 REIMBURSEMENT_REQUIREMENTS = 'You have to submit a project and demo it during the event in order to get reimbursed'
-REIMBURSEMENT_DEADLINE = timezone.datetime(2020, 1, 28, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE)) # Need to confirm time
+REIMBURSEMENT_DEADLINE = timezone.datetime(2020, 1, 28, 23, 59,
+                                           tzinfo=timezone.pytz.timezone(TIME_ZONE))  # Need to confirm time
 
 # (OPTIONAL) Max team members. Defaults to 4
 TEAMS_ENABLED = True
@@ -89,13 +90,12 @@ HARDWARE_ENABLED = False
 # Hardware request time length (in minutes)
 HARDWARE_REQUEST_TIME = 15
 
-
 SLACK_BOT = {
-    'id' : os.environ.get('SL_BOT_ID', None),
-    'token' : os.environ.get('SL_BOT_TOKEN', None),
-    'channel' : os.environ.get('SL_BOT_CHANNEL', None),
-    'director1' : os.environ.get('SL_BOT_DIRECTOR1', None),
-    'director2' : os.environ.get('SL_BOT_DIRECTOR2', None)
+    'id': os.environ.get('SL_BOT_ID', None),
+    'token': os.environ.get('SL_BOT_TOKEN', None),
+    'channel': os.environ.get('SL_BOT_CHANNEL', None),
+    'director1': os.environ.get('SL_BOT_DIRECTOR1', None),
+    'director2': os.environ.get('SL_BOT_DIRECTOR2', None)
 }
 
 # Can Hackers start a request on the hardware lab?

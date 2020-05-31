@@ -1,11 +1,11 @@
-*{
+* {
     margin: auto;
     height: 100%;
     box-sizing: border-box;
     background-image: url(../images/vector.png);
 }
 
-body{
+body {
     text-align: center;
     overflow-x: hidden;
 }
@@ -22,21 +22,33 @@ body{
 }
 
 svg {
-  background: none;
-  display: block;
+    background: none;
+    display: block;
 }
 
 /* Inspo and animation credit: https://codepen.io/wintr/pen/mPLvVp */
-@-webkit-keyframes swinging{
-    0%{-webkit-transform: rotate(10deg);}
-    50%{-webkit-transform: rotate(-5deg)}
-    100%{-webkit-transform: rotate(10deg);}
+@-webkit-keyframes swinging {
+    0% {
+        -webkit-transform: rotate(10deg);
+    }
+    50% {
+        -webkit-transform: rotate(-5deg)
+    }
+    100% {
+        -webkit-transform: rotate(10deg);
+    }
 }
 
-@keyframes swinging{
-    0%{transform: rotate(10deg);}
-    50%{transform: rotate(-5deg)}
-    100%{transform: rotate(10deg);}
+@keyframes swinging {
+    0% {
+        transform: rotate(10deg);
+    }
+    50% {
+        transform: rotate(-5deg)
+    }
+    100% {
+        transform: rotate(10deg);
+    }
 }
 
 #layer9 {

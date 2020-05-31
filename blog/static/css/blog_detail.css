@@ -40,6 +40,10 @@ body {
   margin-bottom: 15px;
 }
 
+.post-title h1{
+  font-size: 75px;
+}
+
 .post-subtitle {
   margin-top: 25px;
   font-size: 0.9em;
