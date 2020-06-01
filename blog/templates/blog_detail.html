@@ -2,6 +2,7 @@
 {% load static %}
 {% block extra_head %}
     <link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
+    <title>{{ blog.title }} | UGAHacks </title>
 {% endblock %}
 {% block content %}
 <div class="post-image" style="background-image: radial-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url('{{ blog.thumbnail.url }}');">
