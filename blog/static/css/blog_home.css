@@ -288,7 +288,7 @@ a {
 
 .tag:hover {
   background-color: #eb4f49;
-  color: white;
+  color: white !important;
 }
 
 .tag:hover::after {

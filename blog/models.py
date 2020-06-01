@@ -15,4 +15,4 @@ class Blog(models.Model):
         return self.publication_date > other.publication_date
 
     def format_publication_date(self):
-        return self.publication_date.strftime("%m • %d • %y")
+        return self.publication_date.strftime("%m {0} %d {0} %y").format("\u2022")
