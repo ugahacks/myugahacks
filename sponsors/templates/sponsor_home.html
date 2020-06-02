@@ -26,13 +26,12 @@
       <h3 class="text-center">You have not submitted an attendence form yet! We would greatly appreciate it if you filled
         the form out!</h3>
     </div>
-
+      <div class="panel-footer">
       <a href="{% url 'sponsors:sponsor_application' %}" class="btn btn-success btn-block">Attendance Form</a>
       {% if user.is_organizer %}
-        <div class="panel-footer">
           <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
-        </div>
       {% endif %}
+      </div>
 
     {% else %}
     <form action="{{ form_action }}" method="{{ form_method }}">
