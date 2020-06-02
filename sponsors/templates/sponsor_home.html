@@ -1,15 +1,55 @@
-{% extends "base_table.html" %}
+{% extends "base_tabs.html" %}
+{% load humanize %}
 {% load django_tables2 %}
-{% block head_title %}Applications{% endblock %}
-{% block table_footer %}
-  {% if not has_application %}
-    <h1 class="text-center">You have not submitted an attendence form yet! We would greatly appreciate it if you filled
-      the form out!</h1>
-    <a href="{% url 'sponsors:sponsor_application' %}" class="btn btn-success btn-block">Attendance Form</a>
+{% load bootstrap3 %}
+{% load static %}
+  {% if filter %}
+    <style>
+      #id_status > div {
+        display: inline-block;
+        padding-right: 20px;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-weight: 400;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+    </style>
+    <form action="" method="get" class="form text-left filter">
+      {% bootstrap_form filter.form %}
+      <button type="submit" class="btn btn-info">Filter</button>
+    </form>
   {% endif %}
-  {% if user.is_organizer %}
-    <div class="panel-footer">
-      <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
+  {% block out_panel %}
+    {% if not has_application %}
+    <div class="mb-5 jumbotron">
+      <h3 class="text-center">You have not submitted an attendence form yet! We would greatly appreciate it if you filled
+        the form out!</h3>
     </div>
-  {% endif %}
-{% endblock %}
+
+      <a href="{% url 'sponsors:sponsor_application' %}" class="btn btn-success btn-block">Attendance Form</a>
+      {% if user.is_organizer %}
+        <div class="panel-footer">
+          <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
+        </div>
+      {% endif %}
+
+    {% else %}
+    <form action="{{ form_action }}" method="{{ form_method }}">
+      {% csrf_token %}
+      {% render_table table 'django_tables2/bootstrap-responsive.html' %}
+    </form>
+    {% if user.is_organizer %}
+      <div class="panel-footer">
+        <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
+      </div>
+    {% endif %}
+    {% endif %}
+  {% endblock %}
+  {% block extra_scripts %}
+    <script>
+      $('thead input[type=checkbox]').on('click', function () {
+        $('tbody input[type=checkbox]').prop('checked', this.checked)
+      });
+    </script>
+  {% endblock %}
