@@ -195,6 +195,7 @@ def reissue_scan(request):
 
 
 def sponsor_scan(request):
+    from sponsors.models import Sponsor
     tier_points = request.user.get_tier_value()
     if not tier_points:
         return JsonResponse({
@@ -210,7 +211,9 @@ def sponsor_scan(request):
         points = Points(user=hacker_user)
     points.add_points(tier_points)
     points.save()
-    request.user.scanned_hackers.add(hacker_user)
+    sponsor_domain = request.user.email.split('@')[1]
+    sponsor = Sponsor.objects.filter(email_domain=sponsor_domain).first()
+    sponsor.scanned_hackers.add(hacker_user)
     return JsonResponse({
         'status': 200,
         'message': 'Points successfully added to participant!'
