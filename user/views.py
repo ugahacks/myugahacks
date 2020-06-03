@@ -255,26 +255,6 @@ def callback(request, provider=None):
     return HttpResponseRedirect(reverse('root'))
 
 
-def is_volunteer_or_organizer(user):
-    return user.is_volunteer or user.is_organizer
-
-
-@login_required()
-@user_passes_test(is_volunteer_or_organizer)
-def duty_status(request):
-    return render(request, 'duty_status.html')
-
-
-@login_required()
-@user_passes_test(is_volunteer_or_organizer)
-def change_duty_status(request):
-    User.objects.filter(pk=request.user.id).update(on_duty=Case(
-        When(on_duty=True, then=Value(False)),
-        default=Value(True)
-    ))
-    return redirect('duty_status')
-
-
 class OnDutyListView(TabsViewMixin, SingleTableMixin, ListView, IsOrganizerMixin):
     template_name = 'duty_list.html'
     table_class = OnDutyListTable

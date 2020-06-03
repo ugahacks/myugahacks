@@ -38,11 +38,12 @@
       {% csrf_token %}
       {% render_table table 'django_tables2/bootstrap-responsive.html' %}
     </form>
-    {% if user.is_organizer %}
-      <div class="panel-footer">
+    <div class="panel-footer">
+      <a href="{% url 'sponsors:sponsor_scanned_list' %}" class="btn btn-success btn-block">View Scanned Hackers</a>
+      {% if user.is_organizer %}
         <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
-      </div>
-    {% endif %}
+      {% endif %}
+    </div>
     {% endif %}
   {% endblock %}
   {% block extra_scripts %}

@@ -3,6 +3,7 @@ from random import randint
 import uuid
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
+from django.db.models import Case, Value, When
 from django.http import JsonResponse
 from django.views.generic.base import TemplateView
 
@@ -47,6 +48,8 @@ class ScanningView(LoginRequiredMixin, TemplateView):
             return change_user_active(request, True)
         elif type == 'award':
             return sponsor_scan(request)
+        elif type == 'volunteer_checkin':
+            return volunteer_duty_change(request)
 
 
 def scanning_generate_view(request):
@@ -207,6 +210,7 @@ def sponsor_scan(request):
         points = Points(user=hacker_user)
     points.add_points(tier_points)
     points.save()
+    request.user.scanned_hackers.add(hacker_user)
     return JsonResponse({
         'status': 200,
         'message': 'Points successfully added to participant!'
@@ -248,6 +252,17 @@ def change_user_active(request, active):
         'status': 200,
         'message': 'Badge has been ' + ('enabled' if active is True else 'disabled')
     })
+
+
+def volunteer_duty_change(request):
+    qr_code = request.POST.get('badgeQR', None)
+    response, hacker_user = get_user_from_qr(qr_code)
+    if response is not None:
+        return response
+    User.objects.filter(pk=hacker_user.id).update(on_duty=Case(
+        When(on_duty=True, then=Value(False)),
+        default=Value(True)
+    ))
 
 
 def get_user_from_qr(qr_code):

@@ -65,6 +65,8 @@ class Sponsor(models.Model):
 
     tier = models.CharField(max_length=255, choices=TIERS)
 
+    scanned_hackers = models.ManyToManyField('user.User')
+
     def get_tier_value(self):
         if self.tier == self.C_TIER_1:
             return self.C_TIER_1_POINTS

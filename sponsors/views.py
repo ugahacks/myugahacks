@@ -75,4 +75,24 @@ class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, ListView, Is
 
 class ApplicationDetailViewSponsor(ApplicationDetailView, IsSponsorMixin):
     def get_back_url(self):
-        return reverse('sponsor_home')
+        return reverse('sponsors:sponsor_home')
+
+
+class SponsorScannedList(SponsorHomePage):
+
+    def get_context_data(self, **kwargs):
+        context = super(SponsorScannedList, self).get_context_data(**kwargs)
+        has_application = SponsorApplication.objects.filter(user=self.request.user)
+        context.update({
+            'has_application': has_application,
+        })
+        return context
+
+    def get_queryset(self):
+        domain = self.request.user.email.split('@')[1]
+        sponsor = Sponsor.objects.filter(email_domain=domain).first()
+        scanned = sponsor.scanned_hackers.all()
+        users = []
+        for user in scanned:
+            users.append(user)
+        return Application.objects.all().filter(user__in=users)

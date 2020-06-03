@@ -4,11 +4,12 @@ from django.db.models import Q
 
 from applications.models import Application
 from sponsors.models import Sponsor
+from user.models import User
 
 
 class ApplicationsListSponsor(tables.Table):
     detail = tables.TemplateColumn(
-        "<a href='{% url 'app_detail_sponsor' record.uuid %}'>Detail</a> ",
+        "<a href='{% url 'sponsors:app_detail_sponsor' record.uuid %}'>Detail</a> ",
         verbose_name='Actions', orderable=False)
     origin = tables.Column(accessor='origin', verbose_name='Origin')
 
@@ -19,7 +20,6 @@ class ApplicationsListSponsor(tables.Table):
         fields = ['user.name', 'user.email', 'university', 'degree', 'class_status', 'origin']
         empty_text = 'No applications available'
         order_by = '-user.name'
-
 
 class SponsorListTable(tables.Table):
     update = tables.TemplateColumn(
