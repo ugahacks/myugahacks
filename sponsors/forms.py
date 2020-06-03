@@ -1,5 +1,4 @@
 from django import forms
-
 from applications.models import Application
 from .models import SponsorApplication, Sponsor
 
