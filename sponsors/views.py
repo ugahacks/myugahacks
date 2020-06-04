@@ -91,8 +91,7 @@ class SponsorScannedList(SponsorHomePage):
     def get_queryset(self):
         domain = self.request.user.email.split('@')[1]
         sponsor = Sponsor.objects.filter(email_domain=domain).first()
+        if not sponsor:
+            return Application.objects.none()
         scanned = sponsor.scanned_hackers.all()
-        users = []
-        for user in scanned:
-            users.append(user)
-        return Application.objects.all().filter(user__in=users)
+        return Application.objects.all().filter(user__in=scanned)
