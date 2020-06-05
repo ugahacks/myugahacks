@@ -262,10 +262,16 @@ def volunteer_duty_change(request):
     response, hacker_user = get_user_from_qr(qr_code)
     if response is not None:
         return response
+        
     User.objects.filter(pk=hacker_user.id).update(on_duty=Case(
         When(on_duty=True, then=Value(False)),
         default=Value(True)
     ))
+
+    return JsonResponse({
+        'status': 200,
+        'message': 'volunteer has been checked ' + ('in' if hacker_user.on_duty else 'out')
+    })
 
 
 def get_user_from_qr(qr_code):
