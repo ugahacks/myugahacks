@@ -104,7 +104,7 @@
             {% if request.user.is_admin %}
               <li class="{% if request.resolver_match.url_name == "admin:index" %}active{% endif %}"><a
                       href="{% url 'admin:index' %}">Admin</a></li>
-            {% elif request.user.email_verified and not request.user.is_organizer and not request.user.is_volunteer %}
+            {% elif request.user.email_verified and not request.user.is_organizer and not request.user.is_volunteer and not request.user.is_sponsor%}
               <li class="{% if 'dashboard' in request.build_absolute_uri %}active{% endif %}">
                 <a href="{% url 'dashboard' %}">Dashboard</a></li>
             {% endif %}
@@ -124,7 +124,7 @@
               {% if h_hw_enabled %}
                 {% include 'include/hardware_tab.html' %}
               {% endif %}
-              {% if request.user.is_organizer or request.user.is_volunteer %}
+              {% if request.user.is_organizer or request.user.is_volunteer or request.user.is_sponsor %}
                 <li class="{% if 'scanning' in request.build_absolute_uri and 'reissue' not in request.build_absolute_uri %}active{% endif %}">
                   <a href="{% url 'scanning' %}">Scan</a></li>
               {% endif %}

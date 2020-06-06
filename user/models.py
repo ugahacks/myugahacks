@@ -73,6 +73,7 @@ class User(AbstractBaseUser):
     created_time = models.DateTimeField(default=timezone.now)
     mlh_id = models.IntegerField(blank=True, null=True, unique=True)
     on_duty = models.BooleanField(default=False)
+    duty_update_time = models.DateTimeField(null=True, verbose_name="Last Checked In")
 
     objects = UserManager()
 

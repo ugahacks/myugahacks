@@ -21,6 +21,7 @@ class ApplicationsListSponsor(tables.Table):
         empty_text = 'No applications available'
         order_by = '-user.name'
 
+
 class SponsorListTable(tables.Table):
     update = tables.TemplateColumn(
         "<a href='{% url 'sponsors:sponsor_update' record.id %}'>Modify</a> ",
@@ -49,3 +50,14 @@ class SponsorListFilter(django_filters.FilterSet):
     class Meta:
         model = Sponsor
         fields = ['search', 'tier']
+
+
+class HackerListFilter(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='search_filter', label='Search')
+
+    def search_filter(self, queryset, name, value):
+        return queryset.filter((Q(user__name__icontains=value) | Q(user__email__icontains=value)))
+
+    class Meta:
+        model = Application
+        fields = ['search']

@@ -3,24 +3,33 @@
 {% load django_tables2 %}
 {% load bootstrap3 %}
 {% load static %}
-  {% if filter %}
-    <style>
-      #id_status > div {
-        display: inline-block;
-        padding-right: 20px;
-        margin-bottom: 0;
-        margin-top: 0;
-        font-weight: 400;
-        vertical-align: middle;
-        cursor: pointer;
-      }
-    </style>
-    <form action="" method="get" class="form text-left filter">
-      {% bootstrap_form filter.form %}
-      <button type="submit" class="btn btn-info">Filter</button>
-    </form>
-  {% endif %}
+
+{% block extra_head %}
+  <title>{% if is_home %} All Hacker Applications{% else %}Scanned Hackers{% endif %}</title>
+{% endblock extra_head %}
+  
+  {% block panel %} 
+    {% if filter %}
+      <style>
+        #id_status > div {
+          display: inline-block;
+          padding-right: 20px;
+          margin-bottom: 0;
+          margin-top: 0;
+          font-weight: 400;
+          vertical-align: middle;
+          cursor: pointer;
+        }
+      </style>
+      <form action="" method="get" class="form text-left filter">
+        {% bootstrap_form filter.form %}
+        <button type="submit" class="btn btn-info">Filter</button>
+      </form>
+    {% endif %}
+  {% endblock panel %}
+
   {% block out_panel %}
+  <h3 class="text-center">{% if is_home %} All Hacker Applications{% else %}Scanned Hackers{% endif %}</h3>
     {% if not has_application %}
     <div class="mb-5 jumbotron">
       <h3 class="text-center">You have not submitted an attendence form yet! We would greatly appreciate it if you filled
@@ -39,10 +48,20 @@
       {% render_table table 'django_tables2/bootstrap-responsive.html' %}
     </form>
     <div class="panel-footer">
-      <a href="{% url 'sponsors:sponsor_scanned_list' %}" class="btn btn-success btn-block">View Scanned Hackers</a>
+      
+      {% if is_home %}
+        <a href="{% url 'sponsors:sponsor_scanned_list' %}" class="btn btn-success btn-block">View Scanned Hackers</a>
+      {% else %} 
+        <a href="{% url 'sponsors:sponsor_home' %}" class="btn btn-success btn-block">View All Hackers</a>
+      {% endif %}
+      
       {% if user.is_organizer %}
         <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
       {% endif %}
+      <a href="{% querystring '_export'='csv' %}" class="btn-block btn btn-info">Export
+        CSV</a>
+      <a href="{% url 'export_resume' %}" class="btn-block btn btn-info">Export
+      Resumes</a>
     </div>
     {% endif %}
   {% endblock %}

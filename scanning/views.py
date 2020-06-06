@@ -258,15 +258,25 @@ def change_user_active(request, active):
 
 
 def volunteer_duty_change(request):
+    from django.utils import timezone
+
     qr_code = request.POST.get('badgeQR', None)
     response, hacker_user = get_user_from_qr(qr_code)
     if response is not None:
         return response
+    if not hacker_user.is_volunteer:
+        return JsonResponse({
+            'status': 403,
+            'message': 'User is not a volunteer.'
+        }, status=403)
 
     User.objects.filter(pk=hacker_user.id).update(on_duty=Case(
         When(on_duty=True, then=Value(False)),
         default=Value(True)
     ))
+
+    if hacker_user.on_duty:
+        hacker_user.duty_update_time = timezone.now()
 
     return JsonResponse({
         'status': 200,
