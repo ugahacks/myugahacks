@@ -4,11 +4,11 @@
 {% load bootstrap3 %}
 {% load static %}
 
-{% block extra_head %}
-  <title>{% if is_home %} All Hacker Applications{% else %}Scanned Hackers{% endif %}</title>
-{% endblock extra_head %}
-  
-  {% block panel %} 
+{% block head_title %}
+  {% if is_home %} All Hacker Applications{% else %}Scanned Hackers{% endif %}
+{% endblock head_title %}
+
+  {% block panel %}
     {% if filter %}
       <style>
         #id_status > div {
