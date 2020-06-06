@@ -277,6 +277,7 @@ def volunteer_duty_change(request):
 
     if hacker_user.on_duty:
         hacker_user.duty_update_time = timezone.now()
+    hacker_user.save()
 
     return JsonResponse({
         'status': 200,
