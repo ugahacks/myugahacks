@@ -1,5 +1,5 @@
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import FormView, UpdateView
 from django_filters.views import FilterView
 from django_tables2 import SingleTableMixin
@@ -7,12 +7,31 @@ from django_tables2.export import ExportMixin
 
 from app.mixins import TabsViewMixin
 from applications.models import Application
-from organizers.views import ApplicationDetailView
 from user.mixins import IsOrganizerMixin, IsSponsorMixin
 from .forms import SponsorForm, SponsorAddForm
 from .models import Sponsor, SponsorApplication
-from .tables import ApplicationsListSponsor, SponsorListTable, SponsorListFilter
+from .tables import ApplicationsListSponsor, SponsorListTable, SponsorListFilter, HackerListFilter
 
+class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, IsSponsorMixin, FilterView):
+    template_name = 'sponsor_home.html'
+    table_class = ApplicationsListSponsor
+    filterset_class = HackerListFilter
+    table_pagination = {'per_page': 50}
+    exclude_columns = ('detail', 'status', 'vote_avg')
+    export_name = 'applications'
+
+    def get_context_data(self, **kwargs):
+        context = super(SponsorHomePage, self).get_context_data(**kwargs)
+        has_application = SponsorApplication.objects.filter(user=self.request.user)
+        is_home = True
+        context.update({
+            'has_application': has_application,
+            'is_home' : is_home
+        })
+        return context
+
+    def get_queryset(self):
+        return Application.objects.all().filter(participant='Hacker')
 
 class SponsorApplicationView(FormView, IsSponsorMixin):
     template_name = 'sponsor_application.html'
@@ -54,25 +73,45 @@ class SponsorList(TabsViewMixin, SingleTableMixin, FilterView, IsOrganizerMixin)
     table_pagination = {'per_page': 100}
 
 
-class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, ListView, IsSponsorMixin):
-    template_name = 'sponsor_home.html'
-    table_class = ApplicationsListSponsor
-    table_pagination = {'per_page': 50}
-    exclude_columns = ('detail', 'status', 'vote_avg')
-    export_name = 'applications'
+class ApplicationDetailViewSponsor(TabsViewMixin, TemplateView, IsSponsorMixin):
+    template_name = 'application_detail.html'
+
+    def get_back_url(self):
+        return reverse('sponsors:sponsor_home')
 
     def get_context_data(self, **kwargs):
-        context = super(SponsorHomePage, self).get_context_data(**kwargs)
+        context = super(ApplicationDetailViewSponsor, self).get_context_data(**kwargs)
+        application = self.get_application(kwargs)
+        context['app'] = application
+        context['vote'] = False
+        return context
+
+    def get_application(self, kwargs):
+        application_id = kwargs.get('id', None)
+        if not application_id:
+            raise Http404
+        application = Application.objects.filter(uuid=application_id).first()
+        if not application:
+            raise Http404
+        return application
+
+
+class SponsorScannedList(SponsorHomePage):
+
+    def get_context_data(self, **kwargs):
+        context = super(SponsorScannedList, self).get_context_data(**kwargs)
         has_application = SponsorApplication.objects.filter(user=self.request.user)
+        is_home = False
         context.update({
             'has_application': has_application,
+            'is_home' : is_home
         })
         return context
 
     def get_queryset(self):
-        return Application.objects.all().filter(participant='Hacker')
-
-
-class ApplicationDetailViewSponsor(ApplicationDetailView, IsSponsorMixin):
-    def get_back_url(self):
-        return reverse('sponsor_home')
+        domain = self.request.user.email.split('@')[1]
+        sponsor = Sponsor.objects.filter(email_domain=domain).first()
+        if not sponsor:
+            return Application.objects.none()
+        scanned = sponsor.scanned_hackers.all()
+        return Application.objects.all().filter(user__in=scanned)

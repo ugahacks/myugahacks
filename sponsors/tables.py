@@ -4,11 +4,12 @@ from django.db.models import Q
 
 from applications.models import Application
 from sponsors.models import Sponsor
+from user.models import User
 
 
 class ApplicationsListSponsor(tables.Table):
     detail = tables.TemplateColumn(
-        "<a href='{% url 'app_detail_sponsor' record.uuid %}'>Detail</a> ",
+        "<a href='{% url 'sponsors:app_detail_sponsor' record.uuid %}'>Detail</a> ",
         verbose_name='Actions', orderable=False)
     origin = tables.Column(accessor='origin', verbose_name='Origin')
 
@@ -49,3 +50,14 @@ class SponsorListFilter(django_filters.FilterSet):
     class Meta:
         model = Sponsor
         fields = ['search', 'tier']
+
+
+class HackerListFilter(django_filters.FilterSet):
+    search = django_filters.CharFilter(method='search_filter', label='Search')
+
+    def search_filter(self, queryset, name, value):
+        return queryset.filter((Q(user__name__icontains=value) | Q(user__email__icontains=value)))
+
+    class Meta:
+        model = Application
+        fields = ['search']

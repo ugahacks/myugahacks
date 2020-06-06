@@ -19,7 +19,5 @@ urlpatterns = [
     url(r'^reset/done/$', views.password_reset_complete, name='password_reset_complete'),
     url(r'^verify/$', views.verify_email_required, name='verify_email_required'),
     url(r'^verify/send$', views.send_email_verification, name='send_email_verification'),
-    path('duty_status/', views.duty_status, name='duty_status'),
-    path('duty_status/change', views.change_duty_status, name='change_duty_status'),
     path('duty_status/list', views.OnDutyListView.as_view(), name='duty_status_list'),
 ]
