@@ -8,7 +8,7 @@
 body, html {
     font-family: "Poppins";
     font-weight: 400;
-    background-color: #f0ebe6;
+    background-color: #21232c;
     /* background: linear-gradient(#17182f,#0d0f12); */
 }
 
@@ -193,12 +193,8 @@ a {
   width: 1200px;
   height: 250px;
   margin-top: 70px;
-  margin-bottom: 90px;
+  margin-bottom: 70px;
 
-}
-
-.alternate-margin {
-  margin-left: 400px;
 }
 
 .blog-thumbnail {
@@ -247,6 +243,11 @@ a {
   font-size: 15px;
 }
 
+.tag-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .tag {
   background: #fff;
   border-radius: 3px 0 0 3px;
@@ -264,7 +265,7 @@ a {
 }
 
 .tag::before {
-  background: #f0ebe6;
+  background: #21232c;
   border-radius: 10px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
   content: '';
@@ -276,7 +277,7 @@ a {
 }
 
 .tag::after {
-  background: #f0ebe6;
+  background: #21232c;
   border-bottom: 13px solid transparent;
   border-left: 10px solid #fff;
   border-top: 13px solid transparent;

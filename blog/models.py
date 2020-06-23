@@ -8,7 +8,7 @@ class Blog(models.Model):
     thumbnail = models.ImageField(upload_to='blog_thumbnails')
     publication_date = models.DateTimeField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.CharField(max_length=2048)
+    content = models.CharField(max_length=16384)
     tags = TaggableManager()
 
     def __lt__(self, other):

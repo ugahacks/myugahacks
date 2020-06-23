@@ -1,0 +1,82 @@
+@media only screen and (max-width: 1200px) {
+
+  .page-container {
+    display: flex;
+    margin-top: 50px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .blog-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 200px;
+    margin-bottom: 160px;
+
+  }
+
+  .blog-container a {
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .blog-thumbnail {
+    width: 400px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+
+  .blog-details{
+    width: 100%;
+    margin-left: 0;
+    margin-top: 35px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .blog-details a{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .blog-details h1 {
+    color: #383e3a;
+  }
+
+  .blog-details p {
+    margin: 0;
+    color: #768079;
+  }
+
+  .blog-link {
+    color: black;
+    text-decoration: none;
+  }
+
+  .blog-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+  }
+
+  .blog-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+  }
+
+  .blog-date {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+  }
+
+  .tag-container {
+    display: flex;
+    justify-content: center;
+  }
+}

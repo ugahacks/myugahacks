@@ -13,6 +13,7 @@ from django.views.generic import TemplateView
 from app import mixins
 from applications.models import Application
 from blog.models import Blog
+from sponsors.models import SponsorApplication
 from reimbursement.models import Reimbursement
 
 
@@ -73,6 +74,10 @@ def protectedMedia(request, file_):
         bag = get_object_or_404(Bag, image=file_)
         if request.user.is_authenticated and (request.user.is_organizer or request.user.is_volunteer):
             downloadable_path = bag.image.path
+    elif path == "sponsor_logos":
+        sponsor_logo = get_object_or_404(SponsorApplication, company_logo=file_)
+        if request.user.is_authenticated and (request.user.is_organizer or request.user.is_volunteer):
+            downloadable_path = sponsor_logo.company_logo.path
     if downloadable_path:
         response = StreamingHttpResponse(open(downloadable_path, 'rb'))
         response['Content-Type'] = ''
