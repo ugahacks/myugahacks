@@ -33,7 +33,7 @@ class UserAdmin(admin.ModelAdmin):
         ('Personal info', {'fields': ('name',)}),
         ('Permissions', {'fields': permission_fields}),
         ('Important dates', {'fields': ('last_login',)}),
-        ('Other', {'fields': ('on_duty',)}),
+        ('Other', {'fields': ('on_duty', 'duty_update_time')}),
     )
     add_fieldsets = (
         (None, {

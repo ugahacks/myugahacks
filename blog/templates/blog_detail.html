@@ -8,7 +8,12 @@
 <div class="post-image" style="background-image: radial-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url('{{ blog.thumbnail.url }}');">
   <div class="post-title">
     <p> {{ blog.format_publication_date }} </p>
-    <h1>{{ blog.title }}</h1>
+    <h1>
+      {% if not blog.approved %}
+        [Pending Approval]
+      {% endif %}
+      {{ blog.title }}
+    </h1>
     <div class="post-subtitle">
       <p>By {{ blog.author.name }} </p>
     </div>

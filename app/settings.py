@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'rest_framework',
     'form_utils',
     'bootstrap3',
@@ -89,6 +90,7 @@ INSTALLED_APPS = [
     'django_hosts',
     'blog',
     'taggit',
+    'blogadmin',
 ]
 
 
@@ -105,6 +107,8 @@ if HARDWARE_ENABLED:
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2'
 )
 
 MIDDLEWARE = [
@@ -117,8 +121,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'django_hosts.middleware.HostsResponseMiddleware'  # This MUST be last
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware' #This MUST be last
 ]
 
 PARENT_HOST = 'ugahacks.com'
@@ -140,7 +144,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
-                'app.utils.hackathon_vars_processor'
+                'app.utils.hackathon_vars_processor',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
 
             ],
         },
@@ -229,6 +235,7 @@ LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+TIME_ZONE = "America/New_York"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
@@ -264,6 +271,7 @@ JET_INDEX_DASHBOARD = 'app.jet_dashboard.CustomIndexDashboard'
 # Set up custom auth
 AUTH_USER_MODEL = 'user.User'
 LOGIN_URL = 'account_login'
+LOGIN_REDIRECT_URL = 'set_password'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 BOOTSTRAP3 = {
@@ -292,12 +300,19 @@ OAUTH_PROVIDERS = {
         'token_url': 'https://my.mlh.io/oauth/token',
         'id': os.environ.get('MLH_CLIENT_SECRET', '').split('@')[0],
         'secret': os.environ.get('MLH_CLIENT_SECRET', '@').split('@')[1],
-        'scope': 'email+event+education+phone_number',
+        'scope': 'email+event+education+phone_number+demographics',
         'user_url': 'https://my.mlh.io/api/v2/user.json'
 
     }
 }
 
+SOCIAL_AUTH_USER_FIELDS = ['email', 'first_name', 'last_name']
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('GOOGLE_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('GOOGLE_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile']
+SOCIAL_AUTH_GITHUB_KEY = env('GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = env('GITHUB_SECRET')
+SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']
 # Add domain to allowed hosts
 ALLOWED_HOSTS.append(HACKATHON_DOMAIN)
 

@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load bootstrap3 %}
+{% load static %}
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
@@ -14,18 +15,18 @@
 
     <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
 
-    <button class="btn btn-primary btn-block" type="submit">{% trans "Log In" %}</button>
-    {% if h_oauth_providers.mlh and h_oauth_providers.mlh.id and h_oauth_providers.mlh.auth_url %}
-
-      <a class="btn btn-warning btn-block"
-         href="{{ h_oauth_providers.mlh.auth_url }}?client_id={{ h_oauth_providers.mlh.id }}&redirect_uri={{ request.scheme }}://
-                 {{ request.get_host }}{% url 'callback' 'mlh' %}&response_type=code&scope={{ h_oauth_providers.mlh.scope }}">
-        Sign in with MyMLH
-      </a>
-    {% endif %}
-
-    <a class="btn btn-block"
-       href="{% url 'account_signup' %}">{% trans "Sign up" %}</a>
+        <button class="btn btn-primary btn-block" type="submit">{% trans "Log In" %}</button>
+        <hr>
+        {% if h_oauth_providers.mlh and h_oauth_providers.mlh.id and h_oauth_providers.mlh.auth_url %}
+            <a class="btn social-btn"
+               href="{{ h_oauth_providers.mlh.auth_url }}?client_id={{ h_oauth_providers.mlh.id }}&redirect_uri={{ request.scheme }}://{{ request.get_host }}{% url 'callback' 'mlh' %}&response_type=code&scope={{ h_oauth_providers.mlh.scope }}">
+                Sign in with MyMLH
+            </a>
+        {% endif %}
+        <div class="row text-center">
+          <a href="{% url 'social:begin' 'google-oauth2' %}"><img src="{% static 'images/icons/google_login_normal.png' %}" id="google-btn"></a>
+        </div>
+        <a class="btn social-btn" id="github-btn" href="{% url 'social:begin' 'github' %}"><i aria-hidden="true" class="fa fa-github fa-lg"></i>Sign in with GitHub</a>
 
   </form>
 

@@ -8,7 +8,7 @@
 body {
     font-family: "Poppins";
     font-weight: 400;
-    background-color: #f0ebe6;
+    background-color: #21232c;
 }
 
 .post-image {
@@ -51,6 +51,7 @@ body {
 }
 
 .post-content {
+  color: #aaa;
   overflow-wrap: break-word;
   padding-top: 100px;
   max-width: 35%;

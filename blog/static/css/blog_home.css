@@ -1,33 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap');
-* {
-    padding: 0;
-    margin: 0;
-    border: 0;
+html,
+body {
+	  font-family: 'Raleway', sans-serif;
+	  font-size: 18px;
+	  background: #21232c;
+	  color: #aaa;
+    overflow-x: hidden;
 }
-
-body, html {
-    font-family: "Poppins";
-    font-weight: 400;
-    background-color: #21232c;
-    /* background: linear-gradient(#17182f,#0d0f12); */
-}
-
-
 
 a {
   outline: 0;
-}
-
-#posts {
-  max-width: 1500px;
-  margin: 25px auto;
-}
-#pub_date, .card-text {
-  color: #989993;
-}
-
-.card-body{
-    box-shadow: 0px 10px 1px #ddd, 0 10px 20px #ccc;
 }
 
 .editbtn {
@@ -35,12 +16,11 @@ a {
   padding: 10px 10px;
   border-radius: 0%;
   font-size: 1em;
-  margin-left: 10px;
   border: 1px solid #eb4f49;
   font-family: "Poppins";
   transition: ease 0.6s;
   text-decoration: none !important;
-  color: black;
+  color: white;
 }
 
 .editbtn i {
@@ -52,25 +32,6 @@ a {
   background: #eb4f49;
 }
 
-
-.readbtn {
-  background: none;
-  font-size: 1em;
-  border: 2px solid #3474a9;
-  font-family: "Poppins";
-  transition: ease 0.6s;
-  text-decoration: none !important;
-  color: black;
-}
-
-.readbtn i {
-  vertical-align: bottom;
-}
-
-.readbtn:hover {
-  color: white;
-  background: #3474a9;
-}
 
 .creatediv {
   text-align: center;
@@ -86,7 +47,7 @@ a {
   font-family: "Poppins";
   transition: ease 0.6s;
   text-decoration: none !important;
-  color: black;
+  color: white;
 }
 
 .addbtn:hover {
@@ -148,13 +109,9 @@ a {
   color: black;
 }
 
-#blogtags {
-  margin-top: 25px;
-}
-
 .main-banner {
   /*place holder image. please change accordingly*/
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/wallpaper.jpeg");
+  background-image: url("../images/blog_splash.svg");
   padding: 0;
   margin: 0;
   border: 0;
@@ -165,19 +122,6 @@ a {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-}
-
-.banner-header {
-  text-align: center;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-}
-
-.banner-text {
-  font-size: 200px;
 }
 
 .page-container {
@@ -203,6 +147,7 @@ a {
   min-height: 250px;
   max-width: 400px;
   max-height: 250px;
+  box-shadow: 10px 10px 20px -9px rgba(0,0,0,0.75);
 }
 
 .blog-details {
@@ -215,12 +160,12 @@ a {
 }
 
 .blog-details h1 {
-  color: #383e3a;
+  color: white;
 }
 
 .blog-details p {
   margin: 0;
-  color: #768079;
+  color: #aaa;
 }
 
 .blog-link {
@@ -244,12 +189,25 @@ a {
 }
 
 .tag-container {
+  margin-top: 16px;
+  margin-bottom: 16px;
   display: flex;
   flex-direction: row;
 }
 
+.tags {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.tags li {
+  float: left;
+}
+
 .tag {
-  background: #fff;
+  background: #eee;
   border-radius: 3px 0 0 3px;
   color: #999;
   display: inline-block;
@@ -258,8 +216,6 @@ a {
   padding: 0 20px 0 23px;
   position: relative;
   margin: 0 10px 10px 0;
-  margin-top: 18px;
-  margin-bottom: 25px;
   text-decoration: none;
   -webkit-transition: color 0.2s;
 }
@@ -279,34 +235,35 @@ a {
 .tag::after {
   background: #21232c;
   border-bottom: 13px solid transparent;
-  border-left: 10px solid #fff;
+  border-left: 10px solid #eee;
   border-top: 13px solid transparent;
   content: '';
   position: absolute;
   right: 0;
   top: 0;
+  text-decoration: none;
 }
 
 .tag:hover {
-  background-color: #eb4f49;
-  color: white !important;
+  background-color: #fe3d40;
+  color: white;
 }
 
 .tag:hover::after {
-   border-left-color: #eb4f49;
+   border-left-color: #fe3d40;
 }
 
 .search-bar {
-  width: 20%;
+  min-width: 20%;
   padding: 12px 24px;
   background-color: transparent;
   transition: transform 250ms ease-in-out;
   font-size: 14px;
   line-height: 18px;
-  color: #575756;
+  color: white;
   background-color: transparent;
   border-radius: 50px;
-  border: 1px solid #575756;
+  border: 1px solid white;
   transition: all 250ms ease-in-out;
   backface-visibility: hidden;
   transform-style: preserve-3d;
@@ -330,39 +287,5 @@ a {
 .divider {
   height: 1px;
   width: 60%;
-  background-color: #a6a6a6;
-}
-
-
-/**Copied from Neal's frontend**/
-
-
-/* Create a Parallax Effect */
-.bgimg-1, .bgimg-2 {
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.bgimg-1 {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/wallpaper.jpeg");
-  /**background-color: #21232c;**/
-  min-height: 100%;
-}
-
-.bgimg-2 {
-  background-color: #BA0C2F;
-  min-height: 400px;
-}
-
-.w3-wide {letter-spacing: 10px;}
-.w3-hover-opacity {cursor: pointer;}
-
-/* Turn off parallax scrolling for tablets and phones */
-@media only screen and (max-device-width: 1600px) {
-  .bgimg-1, .bgimg-2 {
-    background-attachment: scroll;
-    min-height: 400px;
-  }
+  border-color: #5c5c5c;
 }

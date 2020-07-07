@@ -8,10 +8,7 @@
     <!-- also copied pasted from Neal. For the life of me i cant get this to work when i put it in blog_home.css. Take a look later -->
 {% block content %}
     <!-- First Parallax Image with Logo Text -->
-    <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
-      <div class="w3-display-middle" style="white-space:nowrap;">
-        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">BLOG <span class="w3-hide-small"></span></span>
-      </div>
+    <div class="main-banner">
     </div>
 
     <div class="text-center mt-5">
@@ -34,19 +31,26 @@
             <a class='' href="{% url 'blog_detail' blog.id %}">
               <img src="{{ blog.thumbnail.url }}" class="blog-thumbnail">
               <div class="blog-details">
-
                   <p class="blog-date">{{ blog.format_publication_date }}</p>
-                  <h1 class="blog-title">{{ blog.title }}</h1>
+                  <h1 class="blog-title">
+                    {{ blog.title }}
+                  </h1>
                   <p class="blog-description"> {{ blog.description }}</p>
-                  {% if request.user.is_organizer %}
-                  <a href="{% url 'blog_edit' blog.id %}" class="editbtn">Edit Post</a>
-                  {% endif %}
                   <div class="tag-container">
-                    {% for tag in blog.tags.all %}
-                      <a class="tag"> {{ tag }}</a>
-                    {% endfor %}
+                    <ul class="tags">
+                      {% if not blog.approved %}
+                        <li><a class="tag">Pending Approval</a></li>
+                      {% endif %}
+                      {% for tag in blog.tags.all %}
+                        <li><a class="tag"> {{ tag }}</a></li>
+                      {% endfor %}
+                    </ul>
                   </div>
-
+                  <div>
+                    {% if request.user.is_organizer %}
+                      <a href="{% url 'blog_edit' blog.id %}" class="editbtn">Edit Post</a>
+                    {% endif %}
+                  </div>
               </div>
             </a>
           </div>

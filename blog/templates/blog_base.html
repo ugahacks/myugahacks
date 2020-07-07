@@ -9,32 +9,38 @@
     <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
     <link rel="stylesheet" href="{% static 'css/blog_base.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;900&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Raleway:200,100,400" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="{% static 'js/blog_nav.js' %}"></script>
     {% block extra_head %}
 
     {% endblock extra_head %}
   </head>
   <body>
-    <!-- Copy pasted and modified from MyUGAHacks-Frontend. -->
-    <!-- Navbar (sit on top) -->
-    <div class="w3-top">
-      <div class="w3-bar" id="myNavbar">
-        <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
-          <i class="fa fa-bars"></i>
-        </a>
-        <a href="/" class="w3-bar-item w3-button" style="color: #fff;">UGAHACKS</a>
-        <a href="timeline.html" class="w3-bar-item w3-button w3-hide-small" style="color: #fff;"><i class="fa fa-th"></i> EVENTS</a>
-        <a href="{% host_url 'blog_home' host 'blog' %}" class="w3-bar-item w3-button w3-hide-small" style="color: #fff;"><i class="fa fa-newspaper-o"></i> BLOG</a>
-        <a href="contact.html" class="w3-bar-item w3-button w3-hide-small" style="color: #fff;"><i class="fa fa-envelope"></i> CONTACT</a>
-      </div>
-
-      <!-- Navbar on small screens -->
-      <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-        <a href="timeline.html" class="w3-bar-item w3-button" onclick="toggleFunction()">EVENTS</a>
-        <a href="contact.html" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
-      </div>
-    </div>
+    <nav>
+			<ul class='menu'>
+				<li class='logo'><a data-link="">UGAHacks</a></li>
+				<li><a data-link="about">About US</a></li>
+				<li><a data-link="timeline">Events</a></li>
+				<li><a data-link="team">Team</a></li>
+				<li><a data-link="blog">Blog</a></li>
+				<li><a href="mailto:hello@ugahacks.com">Contact Us</a></li>
+			</ul>
+			<div class='social'>
+				<button class="hamburger hamburger--collapse mobile-only menu-toggle" type="button">
+				  <span class="hamburger-box">
+				    <span class="hamburger-inner"></span>
+				  </span>
+				</button>
+				<a href="https://www.facebook.com/ugahacks" target="_BLANK"><div class='icon icon-facebook'></div></a>
+				<a href="https://www.instagram.com/ugahacks/" target="_BLANK"><div class='icon icon-instagram'></div></a>
+				<a href="https://github.com/ugahacks" target="_BLANK"><div class='icon icon-github'></div></a>
+				<a href="https://twitter.com/ugahacks" target="_BLANK"><div class='icon icon-twitter'></div></a>
+			</div>
+			<div style="clear:both"></div>
+		</nav>
     {% block content %}
     {% endblock content %}
   </body>

@@ -36,7 +36,7 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+
   }
 
   .blog-details a{
@@ -47,12 +47,12 @@
   }
 
   .blog-details h1 {
-    color: #383e3a;
+
   }
 
   .blog-details p {
     margin: 0;
-    color: #768079;
+
   }
 
   .blog-link {

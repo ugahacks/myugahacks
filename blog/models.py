@@ -10,6 +10,10 @@ class Blog(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.CharField(max_length=16384)
     tags = TaggableManager()
+    approved = models.BooleanField(default=False)
+
+    def tags_as_str(self):
+        return ', '.join([str(t) for t in list(self.tags.all())])
 
     def __lt__(self, other):
         return self.publication_date > other.publication_date

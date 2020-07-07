@@ -9,6 +9,7 @@ from user.mixins import IsOrganizerMixin
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 import queue
 from collections import OrderedDict
+from django.db.models import Q
 
 
 class BlogAdd(IsOrganizerMixin, FormView):
@@ -50,7 +51,10 @@ class BlogHome(ListView):
     context_object_name = 'blogs'
 
     def get_queryset(self):
-        blog_query = Blog.objects.all().order_by('-publication_date')
+        if self.request.user.is_authenticated:
+            blog_query = Blog.objects.filter(Q(approved=True) | Q(author=self.request.user)).order_by('-publication_date')
+        else:
+            blog_query = Blog.objects.filter(Q(approved=True)).order_by('-publication_date')
         keywords = self.request.GET.get('blog-search')
         if keywords:
             search_queue = queue.PriorityQueue()
@@ -69,7 +73,6 @@ class BlogHome(ListView):
             blog_query = list(OrderedDict.fromkeys(blog_query))
             return blog_query
         return blog_query
-
 
 class BlogDetail(DetailView):
     model = Blog

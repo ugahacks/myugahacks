@@ -20,6 +20,19 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def create_user(self, email, first_name, last_name):
+        if not email:
+            raise ValueError('Users must have a email')
+
+        user = self.model(
+            email=email,
+            name=str(first_name + ' ' + last_name)
+        )
+
+        user.set_unusable_password()
+        user.save(using=self._db)
+        return user
+
     def create_mlhuser(self, email, name, mlh_id):
         if not email:
             raise ValueError('Users must have a email')
@@ -32,6 +45,7 @@ class UserManager(BaseUserManager):
             mlh_id=mlh_id
         )
         user.set_unusable_password()
+        user.email_verified = True
         user.save(using=self._db)
         return user
 
@@ -73,6 +87,7 @@ class User(AbstractBaseUser):
     created_time = models.DateTimeField(default=timezone.now)
     mlh_id = models.IntegerField(blank=True, null=True, unique=True)
     on_duty = models.BooleanField(default=False)
+    duty_update_time = models.DateTimeField(null=True, verbose_name="Last Checked In")
 
     objects = UserManager()
 
