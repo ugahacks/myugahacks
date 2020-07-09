@@ -193,6 +193,7 @@ a {
   margin-bottom: 16px;
   display: flex;
   flex-direction: row;
+	color: #21232c;
 }
 
 .tags {
