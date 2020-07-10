@@ -3,6 +3,7 @@ from django.urls import path
 
 from user import views
 
+
 urlpatterns = [
     url(r'^login/$', views.login, name='account_login'),
     path('oauth/', include('social_django.urls', namespace="social")),
