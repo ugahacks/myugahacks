@@ -4,7 +4,7 @@ body {
 	  font-size: 18px;
 	  background: #21232c;
 	  color: #aaa;
-    overflow-x: hidden;
+
 }
 
 a {
@@ -121,7 +121,6 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed;
 }
 
 .page-container {
@@ -135,25 +134,28 @@ a {
   overflow-wrap: break-word;
   display: flex;
   width: 1200px;
-  height: 250px;
   margin-top: 70px;
   margin-bottom: 70px;
 
 }
 
+.thumbnail-container{}
+
 .blog-thumbnail {
-  justify-content: left;
+	display: flex;
+	flex-direction: row;
+  justify-content: center;
   min-width: 400px;
   min-height: 250px;
   max-width: 400px;
   max-height: 250px;
   box-shadow: 10px 10px 20px -9px rgba(0,0,0,0.75);
+	margin: auto;
 }
 
 .blog-details {
   margin-left: 60px;
   width: 800px;
-  height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -176,6 +178,10 @@ a {
 .blog-title {
   font-family: 'Poppins', sans-serif;
   font-size: 40px;
+}
+
+.blog-title a{
+	color: inherit;
 }
 
 .blog-description {

@@ -1,70 +1,53 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:200,400,600&display=swap');
-* {
-    padding: 0;
-    margin: 0;
-    border: 0;
-}
 
 body {
     font-family: "Poppins";
-    font-weight: 400;
     background-color: #21232c;
 }
 
-.post-image {
-  padding: 0;
-  margin: 0;
-  border: 0;
-  height: 70%;
-  width: 100%;
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+.post-container {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 0 auto;
+  margin-top: 100px;
 }
 
-.post-title {
-  line-height: 1;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 40px;
-  max-width: 40%;
+.author-container {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: row;
 }
 
-.post-title p{
-  font-size: 25px;
-  margin-bottom: 15px;
+.author-container p{
+  margin-left: 15px;
 }
 
-.post-title h1{
-  font-size: 75px;
+.profile-picture{
+  border-radius: 50%;
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
 }
 
-.post-subtitle {
-  margin-top: 25px;
-  font-size: 0.9em;
-  font-weight: 200;
+.post-image{
+  height: auto;
+  width: calc(100%);
+}
+
+.post-title{
+  font-size: 50px;
+  color: #aaa;
 }
 
 .post-content {
   color: #aaa;
   overflow-wrap: break-word;
   padding-top: 100px;
-  max-width: 35%;
   margin: auto;
   font-size: 18px;
   margin-bottom: 100px;
-}
-
-#post-tags {
-  text-align: center;
-  margin-top: 20px;
-  word-spacing: 25px;
-  color: #b2b3ad;
+  width: 100%;
 }
 
 .editbtn {

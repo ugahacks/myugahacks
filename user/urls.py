@@ -1,7 +1,9 @@
 from django.conf.urls import url, include
 from django.urls import path
-
+from django.conf import settings
 from user import views
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     url(r'^login/$', views.login, name='account_login'),
@@ -21,3 +23,5 @@ urlpatterns = [
     url(r'^verify/send$', views.send_email_verification, name='send_email_verification'),
     path('duty_status/list', views.OnDutyListView.as_view(), name='duty_status_list'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

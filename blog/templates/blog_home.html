@@ -28,12 +28,14 @@
       {% for blog in blogs %}
         <hr class="divider">
           <div class="blog-container">
-            <a class='' href="{% url 'blog_detail' blog.id %}">
-              <img src="{{ blog.thumbnail.url }}" class="blog-thumbnail">
+            <img src="{{ blog.thumbnail.url }}" class="blog-thumbnail"></img>
+
               <div class="blog-details">
                   <p class="blog-date">{{ blog.format_publication_date }}</p>
                   <h1 class="blog-title">
-                    {{ blog.title }}
+                    <a href="{% url 'blog_detail' blog.id %}">
+                      {{ blog.title }}
+                    </a>
                   </h1>
                   <p class="blog-description"> {{ blog.description }}</p>
                   <div class="tag-container">
@@ -52,7 +54,7 @@
                     {% endif %}
                   </div>
               </div>
-            </a>
+
           </div>
       {% endfor %}
     </div>

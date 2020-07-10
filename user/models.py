@@ -76,6 +76,9 @@ class User(AbstractBaseUser):
         max_length=255,
     )
     email_verified = models.BooleanField(default=False)
+
+    profile_picture = models.ImageField(upload_to='user/profile_pictures', default='user/profile_pictures/default_profile_picture.jpg')
+
     is_active = models.BooleanField(default=True)
     is_volunteer = models.BooleanField(default=False)
     is_organizer = models.BooleanField(default=False)

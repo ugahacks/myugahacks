@@ -1,4 +1,3 @@
-/** MENU */
 nav {
     background-color: #21232c;
     padding: 5px;
@@ -31,11 +30,13 @@ nav .social {
 }
 
 nav ul {
+  margin-top: 10px;
 	font-family: 'Poppins', sans-serif;
 	text-transform: uppercase;
 }
 
 nav li {
+
 	display: inline-block;
 	font-size: 20px;
 	font-weight: 200;
@@ -97,6 +98,14 @@ nav .icon {
 	background-image: url(../images/twitter.png);
 }
 
+.icon-linkedin {
+	background-image: url(../images/linkedin.png);
+}
+
+.icon-website {
+	background-image: url(../images/website.png);
+}
+
 .icon-facebook {
 	background-image: url(../images/facebook.png);
 }
@@ -111,4 +120,8 @@ nav .icon {
 
 .icon-down-arrow {
   background-image: url(../images/down-arrow.png);
+}
+
+.mobile-only {
+	display: none;
 }

@@ -6,7 +6,6 @@
  * @link https://github.com/jonsuh/hamburgers
  */
 .hamburger {
-  display: inline-block;
   cursor: pointer;
   transition-property: opacity, filter;
   transition-duration: 0.15s;
