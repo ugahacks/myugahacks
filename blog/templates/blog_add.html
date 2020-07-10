@@ -1,0 +1,32 @@
+{% extends "blog_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/blog_add.css' %}">
+  <link rel="stylesheet" href="{% static 'css/blog_home.css' %}">
+  <script src="https://cdn.tiny.cloud/1/c1od3gfttxgd9izhlb2nkxe56wxlnslf8l4s8juhfwozvbes/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+      tinymce.init({
+        selector: 'textarea',
+        plugins: 'advcode advlist table advtable anchor autolink link autosave charmap lists checklist code codesample emoticons media mediaembed fullscreen hr image imagetools pageembed powerpaste preview searchandreplace spellchecker wordcount',
+        menubar: 'file edit view insert format table',
+        toolbar_mode: 'floating',
+      });
+  </script>
+{% endblock %}
+{% block content %}
+<div id="noScroll" class="mt-5">
+  <div class="add-form">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input type="submit" value="Publish Post" class="addbtn">
+    </form>
+  </div>
+</div>
+<!-- Submit does not work without this. Do no remove. -->
+<script>
+  var elem = document.getElementById("id_content");
+  elem.removeAttribute("required");
+</script>
+{% endblock %}

@@ -1,0 +1,16 @@
+.blog-admin-thumbnail{
+  width: 500px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.blog-admin-info a, p{
+  display: block;
+  text-align: center;
+}
+
+.bottom-push {
+  height: 25px;
+}

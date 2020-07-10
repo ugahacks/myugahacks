@@ -12,12 +12,14 @@ from django.views.generic import TemplateView
 
 from app import mixins
 from applications.models import Application
+from blog.models import Blog
+from sponsors.models import SponsorApplication
 from reimbursement.models import Reimbursement
 
 
 def root_view(request):
     if not request.user.is_authenticated:
-        return render(request, 'ugahacks6/UGAHacks6-teaser.html')
+        return render(request, 'ugahacks6/mainpage.html')
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('account_login'))
     if not request.user.has_usable_password():
@@ -60,6 +62,9 @@ def protectedMedia(request, file_):
         if request.user.is_authenticated and (request.user.is_organizer or
                                               (app and (app.user_id == request.user.id))):
             downloadable_path = app.resume.path
+    elif path == "blog_thumbnails":
+        blog = get_object_or_404(Blog, thumbnail=file_)
+        downloadable_path = blog.thumbnail.path
     elif path == "receipt":
         app = get_object_or_404(Reimbursement, receipt=file_)
         if request.user.is_authenticated and (request.user.is_organizer or
@@ -69,6 +74,10 @@ def protectedMedia(request, file_):
         bag = get_object_or_404(Bag, image=file_)
         if request.user.is_authenticated and (request.user.is_organizer or request.user.is_volunteer):
             downloadable_path = bag.image.path
+    elif path == "sponsor_logos":
+        sponsor_logo = get_object_or_404(SponsorApplication, company_logo=file_)
+        if request.user.is_authenticated and (request.user.is_organizer or request.user.is_volunteer):
+            downloadable_path = sponsor_logo.company_logo.path
     if downloadable_path:
         response = StreamingHttpResponse(open(downloadable_path, 'rb'))
         response['Content-Type'] = ''

@@ -37,15 +37,24 @@ ALLOWED_HOSTS = [
     'my.ugahacks.com',
     'ugahacks.com',
     '5.ugahacks.com',
-    'localhost',
+    '6.ugahacks.com',
+    'blog.ugahacks.com',
     '5.localhost',
+    '6.localhost',
+    'blog.localhost',
+    '5.kanedutesting.com',
+    '6.kanedutesting.com',
+    'blog.kanedutesting.com',
     '127.0.0.1',
     '0.0.0.0',
     '165.227.125.129',
     '192.168.0.12',
     '192.168.1.18',  # kane
+    'blog.192.168.1.18',  # kane
     'acc3e81f.ngrok.io'
 ]
+
+SESSION_COOKIE_DOMAIN=".kanedutesting.com"
 
 # Application definition
 INSTALLED_APPS = [
@@ -79,7 +88,11 @@ INSTALLED_APPS = [
     'points',
     'scanning',
     'django_hosts',
+    'blog',
+    'taggit',
+    'blogadmin',
 ]
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -112,8 +125,10 @@ MIDDLEWARE = [
     'django_hosts.middleware.HostsResponseMiddleware' #This MUST be last
 ]
 
+PARENT_HOST = 'ugahacks.com'
+
 ROOT_HOSTCONF = 'app.hosts'
-DEFAULT_HOST = 'my'
+DEFAULT_HOST = '6'
 
 ROOT_URLCONF = 'app.urls'
 
@@ -142,7 +157,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
 
 if DEBUG == True:
     DATABASES = {

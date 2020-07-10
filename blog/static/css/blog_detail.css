@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,400,600&display=swap');
+
+body {
+    font-family: "Poppins";
+    background-color: #21232c;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.author-container {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.author-container p{
+  margin-left: 15px;
+}
+
+.profile-picture{
+  border-radius: 50%;
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+}
+
+.post-image{
+  height: auto;
+  width: calc(100%);
+}
+
+.post-title{
+  font-size: 50px;
+  color: #aaa;
+}
+
+.post-content {
+  color: #aaa;
+  overflow-wrap: break-word;
+  padding-top: 100px;
+  margin: auto;
+  font-size: 18px;
+  margin-bottom: 100px;
+  width: 100%;
+}
+
+.editbtn {
+  background: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border: 2px solid #eb4f49;
+  color: white;
+  font-weight: 200;
+  font-family: "Poppins";
+  transition: ease 0.6s;
+  text-decoration: none;
+}
+
+.editbtn:hover {
+  background: #eb4f49;
+}
+
+@media (max-width:900px)
+{
+  .post-content {
+    max-width: 80%;
+  }
+}

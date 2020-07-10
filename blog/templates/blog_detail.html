@@ -1,0 +1,32 @@
+{% extends "blog_base.html" %}
+{% load static %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
+    <title>{{ blog.title }} | UGAHacks </title>
+{% endblock %}
+{% block content %}
+<div class="post-container">
+  <h1 class="post-title">
+    {% if not blog.approved %}
+      [Pending Approval]
+    {% endif %}
+    {{ blog.title }}
+  </h1>
+  <div class="author-container">
+    <img src="{{ blog.author.profile_picture.url }}" class="profile-picture"></img>
+    <p>
+      {{ blog.author.name }}
+      <br>
+      {{ blog.format_publication_date }}
+    </p>
+
+  </div>
+
+  <img src="{{ blog.thumbnail.url }}" class="post-image"></img>
+  <div class="post-content">
+    {{ blog.content|safe }}
+  </div>
+</div>
+
+
+{% endblock %}
