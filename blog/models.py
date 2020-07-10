@@ -3,13 +3,21 @@ from user.models import User
 from taggit.managers import TaggableManager
 
 class Blog(models.Model):
+
     title = models.CharField(max_length=256, unique=True)
+
     description = models.CharField(max_length=256)
+
     thumbnail = models.ImageField(upload_to='blog/blog_thumbnails')
+
     publication_date = models.DateTimeField()
+
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+
     content = models.CharField(max_length=16384)
+
     tags = TaggableManager()
+    
     approved = models.BooleanField(default=False)
 
     def tags_as_str(self):

@@ -7,6 +7,110 @@
     color: #777;
     line-height: 1.8;
   }
+
+  /** FOOTER */
+footer {
+    width: 100%;
+    background-color: white;
+    margin-top: 50px;
+}
+
+footer > div {
+	padding: 20px 100px;
+  color: #dcdfe4;
+}
+
+footer .container {
+	background: #1b1a1a;
+    font-size: 16px;
+    line-height: 50px;
+    width: auto;
+    max-width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+		text-align: center;
+}
+
+.container a {
+  text-decoration: none;
+  opacity: 0.5;
+  color: white;
+  margin: 0px 55px;
+  transition: 0.2s opacity;
+}
+
+.container a:hover {
+  opacity: 1;
+}
+
+footer .bottom {
+	background: #1b1a1a;
+  font-size: 12px;
+}
+
+footer .bottom .slogan {
+  text-align: right;
+}
+
+/* Privacy Section */
+.privacy-container {
+  margin: 75px auto;
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
+}
+
+.privacy-image {
+  align-self: center;
+  width: 40%;
+  height: 100%;
+}
+
+.privacy-image img {
+  width: 100%;
+}
+
+.privacy-text {
+  font-size: 20px;
+  text-align: justify;
+	max-width: 600px;
+}
+
+.privacy-text h1 {
+  font-size: 3rem;
+  color: white;
+}
+
+.privacy-text h2 {
+  color: #fe3d40;
+}
+
+.privacy-container a {
+  color: #fe3d40;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.privacy-container a:hover {
+  opacity: 0.8;
+}
+
+    /* Scrollbar Styling (Only on Chrome but something cool) */
+  ::-webkit-scrollbar {
+      width: 15px;
+  }
+  ::-webkit-scrollbar-track {
+    width: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #1b1a1a;
+  }
+  ::-webkit-scrollbar-thumb {
+    width: 10px;
+    border-radius: 10px;
+    background-color: #D62929;
+  }
+
+
   @media only screen and (max-width: 480px) {
   	/** HEADER */
   	.header {
@@ -158,6 +262,7 @@
 
   	nav.responsive-open {
   		height: 325px;
+      line-height: 1.15;
   	}
 
   	nav.responsive-open .menu li:not(:first-child), nav.responsive-open .social a {

@@ -64,6 +64,15 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+class Role(models.Model):
+
+    title = models.CharField(max_length=63, null=False)
+
+    description = models.CharField(max_length=255, null=False)
+
+    def __str__(self):
+        return self.title
+
 
 class User(AbstractBaseUser):
     email = models.EmailField(
@@ -78,6 +87,8 @@ class User(AbstractBaseUser):
     email_verified = models.BooleanField(default=False)
 
     profile_picture = models.ImageField(upload_to='user/profile_pictures', default='user/profile_pictures/default_profile_picture.jpg')
+
+    role = models.ForeignKey(Role, on_delete=models.SET_DEFAULT, default=None, null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
     is_volunteer = models.BooleanField(default=False)
