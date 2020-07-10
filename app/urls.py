@@ -32,6 +32,7 @@ urlpatterns = [
     path('points/', include('points.urls')),
     path('scan/', include('scanning.urls')),
     path('sponsorship-packet/', views.SponsorshipPacketView.as_view(), name='sponsorship-packet'),
+    path('blog-admin/', include('blogadmin.urls')),
 ]
 
 if settings.BAGGAGE_ENABLED:

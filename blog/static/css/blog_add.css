@@ -1,0 +1,18 @@
+body, html {
+    background-color: #f0ebe6;
+    /* background: linear-gradient(#17182f,#0d0f12); */
+}
+
+
+label {
+font-size: 18px;      /* up to you, I matched the <input> style */
+font-family: 'Poppins', sans-serif;
+}
+
+.add-form {
+  font-family: "Poppins";
+  display: flex;
+  margin-top: 100px;
+  flex-direction: column;
+  align-items: center;
+}

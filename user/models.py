@@ -64,6 +64,15 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+class Role(models.Model):
+
+    title = models.CharField(max_length=63, null=False)
+
+    description = models.CharField(max_length=255, null=False)
+
+    def __str__(self):
+        return self.title
+
 
 class User(AbstractBaseUser):
     email = models.EmailField(
@@ -76,6 +85,11 @@ class User(AbstractBaseUser):
         max_length=255,
     )
     email_verified = models.BooleanField(default=False)
+
+    profile_picture = models.ImageField(upload_to='user/profile_pictures', default='user/profile_pictures/default_profile_picture.jpg')
+
+    role = models.ForeignKey(Role, on_delete=models.SET_DEFAULT, default=None, null=True, blank=True)
+
     is_active = models.BooleanField(default=True)
     is_volunteer = models.BooleanField(default=False)
     is_organizer = models.BooleanField(default=False)
@@ -87,6 +101,7 @@ class User(AbstractBaseUser):
     created_time = models.DateTimeField(default=timezone.now)
     mlh_id = models.IntegerField(blank=True, null=True, unique=True)
     on_duty = models.BooleanField(default=False)
+    duty_update_time = models.DateTimeField(null=True, verbose_name="Last Checked In")
 
     objects = UserManager()
 

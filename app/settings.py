@@ -35,17 +35,25 @@ SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS = [
     'my.ugahacks.com',
-    'ugahacks.com',
-    '5.ugahacks.com',
-    'localhost',
-    '5.localhost',
+    'blog.ugahacks.com',
+    'blog.localhost',
+    'blog.kanedutesting.com',
+    'my.kanedutesting.com',
     '127.0.0.1',
     '0.0.0.0',
     '165.227.125.129',
     '192.168.0.12',
     '192.168.1.18',  # kane
+    'blog.192.168.1.18',  # kane
     'acc3e81f.ngrok.io'
 ]
+
+
+if DEBUG == True:
+    SESSION_COOKIE_DOMAIN=".kanedutesting.com"
+else:
+    SESSION_COOKIE_DOMAIN='.ugahacks.com'
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -73,13 +81,16 @@ INSTALLED_APPS = [
     'meals',
     # 'judging',
     'workshops',
-    'archives',
     'crispy_forms',
     'sponsors',
     'points',
     'scanning',
     'django_hosts',
+    'blog',
+    'taggit',
+    'blogadmin',
 ]
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -112,6 +123,8 @@ MIDDLEWARE = [
     'django_hosts.middleware.HostsResponseMiddleware' #This MUST be last
 ]
 
+PARENT_HOST = 'ugahacks.com'
+
 ROOT_HOSTCONF = 'app.hosts'
 DEFAULT_HOST = 'my'
 
@@ -142,7 +155,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
 
 if DEBUG == True:
     DATABASES = {
@@ -221,6 +233,7 @@ LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+TIME_ZONE = "America/New_York"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/

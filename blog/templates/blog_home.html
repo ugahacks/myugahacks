@@ -1,0 +1,80 @@
+{% extends "blog_base.html" %}
+{% load static %}
+{% load hosts %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/blog_home.css' %}">
+  <link rel="stylesheet" href="{% static 'css/blog_home.mobile.css' %}">
+{% endblock %}
+    <!-- also copied pasted from Neal. For the life of me i cant get this to work when i put it in blog_home.css. Take a look later -->
+{% block content %}
+    <!-- First Parallax Image with Logo Text -->
+    <div class="main-banner">
+    </div>
+
+    <div class="text-center mt-5">
+      <div class="container">
+        <form class="" action="{% url 'blog_home' %}" method="get">
+          {% csrf_token %}
+          <input id="blog-search" class="search-bar" type="text" placeholder="Search" name="blog-search">
+        </form>
+      </div>
+    </div>
+    <div class="creatediv mt-5">
+      {% if request.user.is_organizer %}
+      <a href="{% url 'blog_add' %}" class="addbtn">Create new post +</a>
+      {% endif %}
+    </div>
+    <div class="page-container">
+      {% for blog in blogs %}
+        <hr class="divider">
+          <div class="blog-container">
+            <img src="{{ blog.thumbnail.url }}" class="blog-thumbnail"></img>
+
+              <div class="blog-details">
+                  <p class="blog-date">{{ blog.format_publication_date }}</p>
+                  <h1 class="blog-title">
+                    <a href="{% url 'blog_detail' blog.id %}">
+                      {{ blog.title }}
+                    </a>
+                  </h1>
+                  <p class="blog-description"> {{ blog.description }}</p>
+                  <div class="tag-container">
+                    <ul class="tags">
+                      {% if not blog.approved %}
+                        <li><a class="tag">Pending Approval</a></li>
+                      {% endif %}
+                      {% for tag in blog.tags.all %}
+                        <li><a class="tag"> {{ tag }}</a></li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  <div>
+                    {% if request.user.is_organizer %}
+                      <a href="{% url 'blog_edit' blog.id %}" class="editbtn">Edit Post</a>
+                    {% endif %}
+                  </div>
+              </div>
+
+          </div>
+      {% endfor %}
+    </div>
+
+    <!-- pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="jumpbtn"><i class="material-icons">first_page</i></a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagebtn">{{ page_obj.previous_page_number }}</a>
+            {% endif %}
+
+            <span class="currentpagebtn">{{ page_obj.number }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="pagebtn">{{ page_obj.next_page_number }}</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="jumpbtn"><i class="material-icons">last_page</i></a>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+    {% endblock %}

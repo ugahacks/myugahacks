@@ -1,0 +1,31 @@
+{% extends "base_tabs.html" %}
+{% load static %}
+{% block head_title %}Blog Admin Detail{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/blog_admin_detail.css' %}">
+  <link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
+{% endblock %}
+{% block out_panel %}
+<div class="blog-admin-info">
+  <a href="{% url 'blogadmin:blog_admin_approve' blog.id %}">
+    {% if blog.approved %}
+      Retract Approval
+    {% else %}
+      Approve
+    {% endif %}
+  </a>
+  <p>Title: {{ blog.title }}</p>
+  <p>Publication Date: {{ blog.format_publication_date }} </p>
+  <p>Author: {{ blog.author.name }} </p>
+  <p>Thumbnail/Image: </p>
+  <img class="blog-admin-thumbnail" src="{{ blog.thumbnail.url }}" alt="">
+  <p>Content:</p>
+</div>
+
+<div class="post-content">
+  <p>{{ blog.content | safe }}</p>
+</div>
+<div class="bottom-push">
+
+</div>
+{% endblock %}

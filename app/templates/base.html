@@ -1,5 +1,6 @@
 {% load static %}
 {% load bootstrap3 %}
+{% load hosts %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,12 +105,18 @@
             {% if request.user.is_admin %}
               <li class="{% if request.resolver_match.url_name == "admin:index" %}active{% endif %}"><a
                       href="{% url 'admin:index' %}">Admin</a></li>
-            {% elif request.user.email_verified and not request.user.is_organizer and not request.user.is_volunteer %}
+            {% elif request.user.email_verified and not request.user.is_organizer and not request.user.is_volunteer and not request.user.is_sponsor%}
               <li class="{% if 'dashboard' in request.build_absolute_uri %}active{% endif %}">
                 <a href="{% url 'dashboard' %}">Dashboard</a></li>
             {% endif %}
             {% if request.user.email_verified and request.user.has_usable_password %}
+              {% if request.user.is_director %}
+              <li class="{% if 'blog-admin' in request.build_absolute_uri %}active{% endif %}"><a
+                      href="{% url 'blogadmin:blog_admin_home' %}">Blog Admin</a></li>
+              {% endif %}
               {% if request.user.is_organizer %}
+                <li class="{% if 'blog' in request.build_absolute_uri and '-admin' not in request.build.absolute_uri %}active{% endif %}"><a
+                        href="{% host_url 'blog_home' host 'blog' %}">Blog</a></li>
                 <li class="{% if 'stats' in request.build_absolute_uri %}active{% endif %}"><a
                         href="{% url 'app_stats' %}">Stats</a></li>
                 <li class="{% if 'applications' in request.build_absolute_uri %}active{% endif %}"><a
@@ -124,7 +131,7 @@
               {% if h_hw_enabled %}
                 {% include 'include/hardware_tab.html' %}
               {% endif %}
-              {% if request.user.is_organizer or request.user.is_volunteer %}
+              {% if request.user.is_organizer or request.user.is_volunteer or request.user.is_sponsor %}
                 <li class="{% if 'scanning' in request.build_absolute_uri and 'reissue' not in request.build_absolute_uri %}active{% endif %}">
                   <a href="{% url 'scanning' %}">Scan</a></li>
               {% endif %}
@@ -137,9 +144,9 @@
                 <li class="{% if 'sponsors' in request.build_absolute_uri and 'stats' not in request.build_absolute_uri %}active{% endif %}">
                   <a href="{% url 'sponsors:sponsor_home' %}">Sponsors</a></li>
               {% endif %}
-              {% if request.user.is_organizer or request.user.is_volunteer %}
+              {% if request.user.is_organizer%}
                 <li class="{% if 'user' in request.build_absolute_uri and 'duty_status' not in request.build_absolute_uri %}active{% endif %}">
-                  <a href="{% url 'duty_status' %}">Duty</a></li>
+                  <a href="{% url 'duty_status_list' %}">Duty List</a></li>
               {% endif %}
             {% endif %}
             <li><a href="{% url 'account_logout' %}">Logout</a></li>

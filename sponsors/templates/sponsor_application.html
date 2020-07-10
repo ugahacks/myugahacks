@@ -22,7 +22,7 @@
     <h4>In order to best accomodate you and rest of your team, we ask that you please fill out the following form and
       <b>ask the rest of the attending team to do so as well.</b></h4>
   </div>
-  <form id="sponsor-application-form" action="" method="post">
+  <form id="sponsor-application-form" method="post" enctype='multipart/form-data'>>
     {% csrf_token %}
     {{ form|crispy }}
     <input class="btn btn-success" type="submit" value="Submit Form">

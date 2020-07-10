@@ -12,8 +12,8 @@ class UserAdmin(admin.ModelAdmin):
     form = UserChangeForm
     change_password_form = AdminPasswordChangeForm
 
-    display_fields = ['email', 'name', 'is_organizer', 'is_volunteer', 'is_director', 'is_sponsor', 'on_duty']
-    filter_fields = ['is_sponsor', 'is_volunteer', 'is_director', 'is_organizer', 'is_admin', 'email_verified']
+    display_fields = ['email', 'name', 'is_organizer', 'is_volunteer', 'is_director', 'is_sponsor', 'on_duty', ]
+    filter_fields = ['is_sponsor', 'is_volunteer', 'is_director', 'is_organizer', 'is_admin', 'email_verified', 'role']
     permission_fields = ['is_volunteer', 'is_director', 'is_organizer', 'is_admin', 'is_sponsor', 'email_verified']
 
     if settings.HARDWARE_ENABLED:
@@ -30,10 +30,10 @@ class UserAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('name',)}),
+        ('Personal info', {'fields': ('name', 'profile_picture', 'role')}),
         ('Permissions', {'fields': permission_fields}),
         ('Important dates', {'fields': ('last_login',)}),
-        ('Other', {'fields': ('on_duty',)}),
+        ('Other', {'fields': ('on_duty', 'duty_update_time')}),
     )
     add_fieldsets = (
         (None, {
@@ -53,4 +53,6 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.User, admin_class=UserAdmin)
+admin.site.register(models.Role)
+
 admin.site.unregister(Group)

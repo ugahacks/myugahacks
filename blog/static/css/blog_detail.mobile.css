@@ -1,0 +1,15 @@
+@media only screen and (max-width: 1200px) {
+  .post-container{
+    width: 100%;
+  }
+
+  .post-title{
+    text-align: center;
+  }
+
+  .author-container {
+    margin: 10px auto;
+    display: flex;
+    flex-direction: row;
+  }
+}
