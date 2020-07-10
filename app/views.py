@@ -13,13 +13,12 @@ from django.views.generic import TemplateView
 from app import mixins
 from applications.models import Application
 from blog.models import Blog
+from user.models import User
 from sponsors.models import SponsorApplication
 from reimbursement.models import Reimbursement
 
 
 def root_view(request):
-    if not request.user.is_authenticated:
-        return render(request, 'ugahacks6/mainpage.html')
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('account_login'))
     if not request.user.has_usable_password():
@@ -62,9 +61,12 @@ def protectedMedia(request, file_):
         if request.user.is_authenticated and (request.user.is_organizer or
                                               (app and (app.user_id == request.user.id))):
             downloadable_path = app.resume.path
-    elif path == "blog_thumbnails":
+    elif path == "blog/blog_thumbnails":
         blog = get_object_or_404(Blog, thumbnail=file_)
         downloadable_path = blog.thumbnail.path
+    elif path == "user/profile_pictures":
+        user = get_object_or_404(User, thumbnail=file_)
+        downloadable_path = user.profile_picture.path
     elif path == "receipt":
         app = get_object_or_404(Reimbursement, receipt=file_)
         if request.user.is_authenticated and (request.user.is_organizer or

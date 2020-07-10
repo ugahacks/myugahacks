@@ -115,7 +115,7 @@
                       href="{% url 'blogadmin:blog_admin_home' %}">Blog Admin</a></li>
               {% endif %}
               {% if request.user.is_organizer %}
-                <li class="{% if 'blog' in request.build_absolute_uri %}active{% endif %}"><a
+                <li class="{% if 'blog' in request.build_absolute_uri and '-admin' not in request.build.absolute_uri %}active{% endif %}"><a
                         href="{% host_url 'blog_home' host 'blog' %}">Blog</a></li>
                 <li class="{% if 'stats' in request.build_absolute_uri %}active{% endif %}"><a
                         href="{% url 'app_stats' %}">Stats</a></li>

@@ -35,16 +35,10 @@ SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS = [
     'my.ugahacks.com',
-    'ugahacks.com',
-    '5.ugahacks.com',
-    '6.ugahacks.com',
     'blog.ugahacks.com',
-    '5.localhost',
-    '6.localhost',
     'blog.localhost',
-    '5.kanedutesting.com',
-    '6.kanedutesting.com',
     'blog.kanedutesting.com',
+    'my.kanedutesting.com',
     '127.0.0.1',
     '0.0.0.0',
     '165.227.125.129',
@@ -54,7 +48,12 @@ ALLOWED_HOSTS = [
     'acc3e81f.ngrok.io'
 ]
 
-SESSION_COOKIE_DOMAIN=".kanedutesting.com"
+
+if DEBUG == True:
+    SESSION_COOKIE_DOMAIN=".kanedutesting.com"
+else:
+    SESSION_COOKIE_DOMAIN='.ugahacks.com'
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -82,7 +81,6 @@ INSTALLED_APPS = [
     'meals',
     # 'judging',
     'workshops',
-    'archives',
     'crispy_forms',
     'sponsors',
     'points',
@@ -128,7 +126,7 @@ MIDDLEWARE = [
 PARENT_HOST = 'ugahacks.com'
 
 ROOT_HOSTCONF = 'app.hosts'
-DEFAULT_HOST = '6'
+DEFAULT_HOST = 'my'
 
 ROOT_URLCONF = 'app.urls'
 

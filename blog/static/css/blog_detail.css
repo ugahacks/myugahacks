@@ -5,6 +5,10 @@ body {
     background-color: #21232c;
 }
 
+hr {
+  border-color: #aaa;
+}
+
 .post-container {
   display: flex;
   flex-direction: column;
@@ -20,14 +24,23 @@ body {
 }
 
 .author-container p{
+  margin: auto 0;
   margin-left: 15px;
 }
 
-.profile-picture{
+
+.profile-picture-s{
   border-radius: 50%;
   vertical-align: middle;
   width: 50px;
   height: 50px;
+}
+
+.profile-picture-m{
+  border-radius: 50%;
+  vertical-align: middle;
+  width: 100px;
+  height: 100px;
 }
 
 .post-image{
