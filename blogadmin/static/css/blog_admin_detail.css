@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,400,600&display=swap');
 .blog-admin-thumbnail{
   width: 500px;
   height: auto;
@@ -6,10 +7,25 @@
   margin-right: auto;
 }
 
-.blog-admin-info a, p{
+.blog-admin-info a, .post-content p, h2, h4{
   width: 80%;
-  margin: 0 auto;
+  margin: 15px auto;
   display: block;
+  text-align: center;
+  font-family: "Poppins";
+}
+
+.post-content {
+  color: #aaa;
+  overflow-wrap: break-word;
+  padding-top: 30px;
+  margin: auto;
+  font-size: 18px;
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+.submit-approval {
   text-align: center;
 }
 
