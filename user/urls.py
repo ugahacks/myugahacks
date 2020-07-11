@@ -5,6 +5,7 @@ from user import views
 from django.conf.urls.static import static
 
 
+
 urlpatterns = [
     url(r'^login/$', views.login, name='account_login'),
     path('oauth/', include('social_django.urls', namespace="social")),

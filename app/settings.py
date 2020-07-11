@@ -170,7 +170,7 @@ if DEBUG == True:
     }
 
 else:
-
+    SOCIAL_AUTH_POSTGRES_JSONFIELD = True
     if os.environ.get('DATABASE_URL', None):
         DATABASES['default'] = dj_database_url.config(
             conn_max_age=600,
@@ -303,7 +303,7 @@ OAUTH_PROVIDERS = {
 
     }
 }
-
+SOCIAL_AUTH_URL_NAMESPACE = "social"
 SOCIAL_AUTH_USER_FIELDS = ['email', 'first_name', 'last_name']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('GOOGLE_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('GOOGLE_SECRET')
