@@ -39,10 +39,7 @@ ALLOWED_HOSTS = [
 ]
 
 
-if DEBUG == True:
-    SESSION_COOKIE_DOMAIN=".kanedutesting.com"
-else:
-    SESSION_COOKIE_DOMAIN='.ugahacks.com'
+SESSION_COOKIE_DOMAIN='.ugahacks.com'
 
 
 # Application definition
