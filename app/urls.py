@@ -31,7 +31,6 @@ urlpatterns = [
     path('sponsors/', include('sponsors.urls')),
     path('points/', include('points.urls')),
     path('scan/', include('scanning.urls')),
-    path('sponsorship-packet/', views.SponsorshipPacketView.as_view(), name='sponsorship-packet'),
     path('blog-admin/', include('blogadmin.urls')),
 ]
 
