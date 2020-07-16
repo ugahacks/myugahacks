@@ -1,29 +1,32 @@
 {% extends "base_tabs.html" %}
 {% load static %}
-{% block head_title %}Blog Admin Detail{% endblock %}
+{% block head_title %}Blog Admin Detail {{ app.user.name }}{% endblock %}
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'css/blog_admin_detail.css' %}">
-  <link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog_admin_detail.css' %}">
 {% endblock %}
 {% block out_panel %}
 <div class="blog-admin-info">
-  <a href="{% url 'blogadmin:blog_admin_approve' blog.id %}">
-    {% if blog.approved %}
-      Retract Approval
-    {% else %}
-      Approve
-    {% endif %}
-  </a>
-  <p>Title: {{ blog.title }}</p>
-  <p>Publication Date: {{ blog.format_publication_date }} </p>
-  <p>Author: {{ blog.author.name }} </p>
-  <p>Thumbnail/Image: </p>
+  <h2>{{ blog.title }} - {% if blog.approved %}Approved{% else %}Not Approved{% endif %}</h2>
+  <h4>Publication Date: {{ blog.format_publication_date }} </h4>
+  <h4>Author: {{ blog.author.name }} </h4>
+  <h4>Thumbnail/Image: </h4>
   <img class="blog-admin-thumbnail" src="{{ blog.thumbnail.url }}" alt="">
-  <p>Content:</p>
+  <h4>Content:</h4>
 </div>
 
 <div class="post-content">
   <p>{{ blog.content | safe }}</p>
+</div>
+<div class="submit-approval">
+  <a href="{% url 'blogadmin:blog_admin_approve' blog.id %}">
+    <button class="btn btn-success">
+      {% if blog.approved %}
+      Retract Approval
+      {% else %}
+      Approve
+      {% endif %}
+    </button>
+  </a>
 </div>
 <div class="bottom-push">
 

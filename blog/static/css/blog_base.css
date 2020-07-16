@@ -6,6 +6,7 @@
     height: 100%;
     color: #777;
     line-height: 1.8;
+    scroll-behavior: smooth;
   }
 
   /** FOOTER */
@@ -37,6 +38,7 @@ footer .container {
   color: white;
   margin: 0px 55px;
   transition: 0.2s opacity;
+  font-family: 'Raleway', sans-serif;
 }
 
 .container a:hover {

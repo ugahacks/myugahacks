@@ -14,10 +14,10 @@ class Blog(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    content = models.CharField(max_length=16384)
+    content = models.TextField()
 
     tags = TaggableManager()
-    
+
     approved = models.BooleanField(default=False)
 
     def tags_as_str(self):
