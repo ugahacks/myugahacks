@@ -3,7 +3,7 @@
 {% block extra_head %}
     <link rel="stylesheet" href="{% static 'css/blog_detail.css' %}">
     <link rel="stylesheet" href="{% static 'css/blog_detail.mobile.css' %}">
-    <title>{{ blog.title }} | UGAHacks </title>
+{% block head_title %}<title>{{ blog.title }} | UGAHacks </title>{% endblock %}
 {% endblock %}
 {% block content %}
 <div class="post-container">

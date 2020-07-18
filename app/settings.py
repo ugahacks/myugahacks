@@ -33,13 +33,20 @@ environ.Env.read_env()
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
+PARENT_HOST = env('HOST_NAME')
+
+ROOT_HOSTCONF = 'app.hosts'
+DEFAULT_HOST = 'my'
+
+ROOT_URLCONF = 'app.urls'
+
 ALLOWED_HOSTS = [
-    'my.ugahacks.com',
-    'blog.ugahacks.com',
+    'my.' + PARENT_HOST,
+    'blog.' + PARENT_HOST,
 ]
 
 
-SESSION_COOKIE_DOMAIN='.ugahacks.com'
+SESSION_COOKIE_DOMAIN='.' + PARENT_HOST
 
 
 # Application definition
@@ -109,13 +116,6 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'django_hosts.middleware.HostsResponseMiddleware' #This MUST be last
 ]
-
-PARENT_HOST = 'ugahacks.com'
-
-ROOT_HOSTCONF = 'app.hosts'
-DEFAULT_HOST = 'my'
-
-ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
     {

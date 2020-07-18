@@ -2,12 +2,11 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block extra_head %}
-  <title>Create Blog Post | UGAHacks</title>
   <link rel="stylesheet" href="{% static 'css/blog_add.css' %}">
   <link rel="stylesheet" href="{% static 'css/blog_home.css' %}">
   <script src="https://cdn.tiny.cloud/1/c1od3gfttxgd9izhlb2nkxe56wxlnslf8l4s8juhfwozvbes/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script type="text/javascript" src="{% static 'js/tinymce.js' %}"></script>
-
+{% block head_title %}<title>Create Blog Post | UGAHacks</title>{% endblock %}
 {% endblock %}
 {% block content %}
 <div class="add-form">
