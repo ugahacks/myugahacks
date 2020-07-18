@@ -24,7 +24,7 @@
   }
 
   .blog-thumbnail {
-    width: 400px;
+    min-width: 90%;
     justify-content: center;
     align-items: center;
     align-content: center;
