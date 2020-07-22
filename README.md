@@ -10,7 +10,7 @@
 
 Needs: Python 3, virtualenv
 
-- `git clone https://github.com/ugahacks/ugahacks5 && cd ugahacks5`
+- `git clone https://github.com/ugahacks/myugahacks && cd myugahacks`
 - `python3 -m venv venv`
 - `source ./venv/bin/activate`
 - `pip install -r requirements.txt`
