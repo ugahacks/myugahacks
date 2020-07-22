@@ -31,6 +31,7 @@ share/
 ./#.env#
 pyvenv.cfg
 app/.env
+app/.env~
 *.db
 
 .vscode/
