@@ -7,29 +7,27 @@ from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, name, password=None):
+
+    def create_user(self, email, **kwargs):
         if not email:
             raise ValueError('Users must have a email')
+        name = kwargs.pop('name', '')
+        if name:
+            user = self.model(
+                email=email,
+                name=name
+            )
+            password = kwargs.pop('password', '')
+            user.set_password(password)
+        else:
+            first_name = kwargs.pop('first_name','')
+            last_name = kwargs.pop('last_name','')
+            user = self.model(
+                email=email,
+                name=str(first_name + ' ' + last_name)
+            )
+            user.set_unusable_password()
 
-        user = self.model(
-            email=email,
-            name=name
-        )
-
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_user(self, email, first_name, last_name):
-        if not email:
-            raise ValueError('Users must have a email')
-
-        user = self.model(
-            email=email,
-            name=str(first_name + ' ' + last_name)
-        )
-
-        user.set_unusable_password()
         user.save(using=self._db)
         return user
 
@@ -64,6 +62,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class Role(models.Model):
 
     title = models.CharField(max_length=63, null=False)
@@ -86,7 +85,8 @@ class User(AbstractBaseUser):
     )
     email_verified = models.BooleanField(default=False)
 
-    profile_picture = models.ImageField(upload_to='user/profile_pictures', default='user/profile_pictures/default_profile_picture.jpg')
+    profile_picture = models.ImageField(upload_to='user/profile_pictures',
+                                        default='user/profile_pictures/default_profile_picture.jpg')
 
     role = models.ForeignKey(Role, on_delete=models.SET_DEFAULT, default=None, null=True, blank=True)
 
