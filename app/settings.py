@@ -38,6 +38,11 @@ PARENT_HOST = env('HOST_NAME')
 ROOT_HOSTCONF = 'app.hosts'
 DEFAULT_HOST = 'my'
 
+#Used for verification emails. in user.tokens
+HACKATHON_DOMAIN = DEFAULT_HOST + '.' + PARENT_HOST
+if DEBUG:
+     HACKATHON_DOMAIN += ':8000'
+
 ROOT_URLCONF = 'app.urls'
 
 ALLOWED_HOSTS = [
