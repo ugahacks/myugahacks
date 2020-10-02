@@ -145,12 +145,11 @@ a {
 	display: flex;
 	flex-direction: row;
   justify-content: center;
-  min-width: 400px;
-  min-height: 250px;
-  max-width: 400px;
-  max-height: 250px;
+  width: 400px;
+  height: 250px;
   box-shadow: 10px 10px 20px -9px rgba(0,0,0,0.75);
 	margin: auto;
+	object-fit: cover;
 }
 
 .blog-details {
