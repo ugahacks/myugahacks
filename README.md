@@ -2,15 +2,25 @@
   <img alt="UGAHacks 6" src="app/static/img/github-logo.png" width="80%"/>
 </p>
 
-
-
+## Features
+- Account Sign-up and Login w/ Email Verification
+- Social Authentication integration w/ Google, MLH, and GitHub
+- Event registration form for hackers, mentors, volunteers
+- Application review and status system for organizers
+- QR code attendance system and scanner
+- Statistics page for pre- and post-event data-crunching
+- Blog w/ approval system
+- Volunteer duty management system
+- Meal and Workshop management systems
+- Sponsor application view w/ export functionality
+- Various user roles: organizer, sponsor, hacker, volunteer, director
 
 
 ## Setup
 
 Needs: Python 3, virtualenv
 
-- `git clone https://github.com/ugahacks/ugahacks5 && cd ugahacks5`
+- `git clone https://github.com/ugahacks/myugahacks && cd myugahacks`
 - `python3 -m venv venv`
 - `source ./venv/bin/activate`
 - `pip install -r requirements.txt`
@@ -142,8 +152,9 @@ server {
 ### User Roles
 
 - **is_volunteer**: Allows user to check-in hackers with QR and list view
-- **is_organizer**: Allows user to vote, see voting ranking and check-in hackers.
-- **is_director**: Allows user to send invites to hackers as well as send reimbursement.
+- **is_organizer**: Allows user to vote on applications, scan hackers, create meals, and workshops.
+- **is_director**: Allows user to send invites to hackers, and approve blog posts.
+- **is_sponsor**: Allows user to view applications from hackers that came to the event ,and export resumes.
 - **is_admin**: Allows user to enter Django Admin interface
 
 ### Important SQL Queries
@@ -183,7 +194,7 @@ AND u.id NOT IN
 #### Updating Email Templates:
 
 You can update emails related to
-- Applications (application invite, event ticket, last reminder) at [applications/templates/mails/](applications/templates/mails/)
+- Applications (application invite, event ticket, last reminder, waitlist) at [applications/templates/mails/](applications/templates/mails/)
 - Reimbursements (reimbursement email, reject receipt) at [reimbursement/templates/mails/](reimbursement/templates/mails/)
 - User registration (email verification, password reset) at [user/templates/mails/](user/templates/mails/)
 
