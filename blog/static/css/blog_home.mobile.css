@@ -12,9 +12,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 200px;
-    margin-bottom: 160px;
-
   }
 
   .blog-container a {
@@ -24,7 +21,6 @@
   }
 
   .blog-thumbnail {
-    min-width: 90%;
     justify-content: center;
     align-items: center;
     align-content: center;
@@ -79,5 +75,12 @@
   .tag-container {
     display: flex;
     justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .blog-thumbnail{
+    width: 90%;
+    min-width: 90%;
   }
 }

@@ -36,13 +36,17 @@ footer .container {
   text-decoration: none;
   opacity: 0.5;
   color: white;
-  margin: 0px 55px;
+  margin: 0px 35px;
   transition: 0.2s opacity;
   font-family: 'Raleway', sans-serif;
 }
 
 .container a:hover {
   opacity: 1;
+}
+
+.pure-g [class*=pure-u] {
+  font-family: 'Raleway' !important;
 }
 
 footer .bottom {
