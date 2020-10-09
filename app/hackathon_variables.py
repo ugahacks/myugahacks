@@ -32,7 +32,7 @@ HACKATHON_INSTAGRAM_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Medium user
 HACKATHON_MEDIUM_ACCOUNT = ''
 # (OPTIONAL) Github Repo for this project (so meta)
-HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/ugahacks5/'
+HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/myugahacks/'
 
 # (OPTIONAL) Applications deadline
 HACKATHON_APP_DEADLINE = timezone.datetime(2020, 2, 9, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
@@ -64,6 +64,8 @@ REIMBURSEMENT_EXPIRY_DAYS = 5
 REIMBURSEMENT_REQUIREMENTS = 'You have to submit a project and demo it during the event in order to get reimbursed'
 REIMBURSEMENT_DEADLINE = timezone.datetime(2020, 1, 28, 23, 59,
                                            tzinfo=timezone.pytz.timezone(TIME_ZONE))  # Need to confirm time
+# Adds Shipping Address to Application for Prizes
+DIGITAL_HACKATHON = True
 
 # (OPTIONAL) Max team members. Defaults to 4
 TEAMS_ENABLED = True
