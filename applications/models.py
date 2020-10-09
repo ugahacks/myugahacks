@@ -197,6 +197,7 @@ class Application(models.Model):
     cvs_edition = models.BooleanField(default=False)
     code_of_conduct = models.BooleanField(default=False)
     terms_and_conditions = models.BooleanField(default=False)
+    hacks_newsletter = models.BooleanField(default=False)
 
     # University
     graduation_year = models.IntegerField(choices=YEARS, default=DEFAULT_YEAR)
@@ -217,6 +218,12 @@ class Application(models.Model):
 
     # Info for hardware
     hardware = models.CharField(max_length=300, null=True, blank=True)
+
+    # Shipping Address for Prizes
+    address = models.CharField(max_length=300, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    state =  models.CharField(max_length=2, null=True, blank=True)
+    zip_code = models.CharField(max_length=5, null=True, blank=True)
 
     @classmethod
     def annotate_vote(cls, qs):
