@@ -28,6 +28,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='application',
             name='zip_code',
-            field=models.CharField(blank=True, max_length=5, null=True),
+            field=models.CharField(blank=True, max_length=6, null=True),
         ),
     ]

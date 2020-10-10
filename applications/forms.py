@@ -310,7 +310,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                            'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
                            'will be processing your information with the aim of giving you and others the best possible experience. '
                            'By submitting an application, your data will be used according to the following <a href="https://www.ugahacks.com/privacy" target="_blank">Privacy Policy</a>, which includes sharing information such as resumes with our Sponsors. '
-                           'You are also agreeing to the terms in the <a href="url legal_notice" target="_blank">"Liability Release, Covenant Not to Sue, and Ownership Agreement"</a> in order to participate in the event. '
+                           'You are also agreeing to the terms in the <a href="url legal_notice" target="_blank">Liability Release, Covenant Not to Sue, and Ownership Agreement</a> in order to participate in the event. '
                            'Finally, you are also authorizing us to the use of any images and videos of yourself during the event.</p>'
         }))
         return super(ApplicationForm, self).fieldsets
@@ -358,6 +358,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'description': 'Why are you excited about %s?' % settings.HACKATHON_NAME,
             'projects': 'What projects have you worked on? How do you see yourself building the future?',
             'resume': 'Upload your resume',
+            'state': 'State/Province'
         }
 
         exclude = ['user', 'uuid', 'invited_by', 'submission_date', 'status_update_date', 'status', ]
