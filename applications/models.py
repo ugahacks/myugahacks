@@ -223,7 +223,7 @@ class Application(models.Model):
     address = models.CharField(max_length=300, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
     state =  models.CharField(max_length=2, null=True, blank=True)
-    zip_code = models.CharField(max_length=5, null=True, blank=True)
+    zip_code = models.CharField(max_length=6, null=True, blank=True)
 
     @classmethod
     def annotate_vote(cls, qs):
