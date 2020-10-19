@@ -84,7 +84,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     # UGAHacks Newsletter
     hacks_newsletter = forms.BooleanField(
         required=False,
-        label='I authorize UGAHacks to send me updates about the organization and promotional material about future events as a digital newsletter to the email associated with this account.'
+        label='I authorize UGAHacks to send me a digital newsletter to the email associated with this account.'
     )
 
     # MLH Code of Conduct
@@ -297,7 +297,11 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         self._fieldsets.append(('MLH Policies', {
                     'fields': ('terms_and_conditions', 'code_of_conduct'),}))
         self._fieldsets.append(('UGAHacks Newsletter', {
-                    'fields': ('hacks_newsletter',),}))
+                    'fields': ('hacks_newsletter',),
+                    'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
+                                   'margin-bottom: 1em;line-height: 1.25em;"> UGAHacks has a monthly newsletter that will give updates about our '
+                                   'organization, behind-the-scenes looks at planning the next UGAHacks, and promotional material about future events.</p>'
+                                   }))
         return super(ApplicationForm, self).fieldsets
 
     class Meta:
