@@ -74,6 +74,14 @@ class Application(models.Model):
         (P_MENTOR, 'Mentor'),
     ]
 
+    A_VIRTUAL = 'Virtual'
+    A_PHYSICAL = 'In-person'
+
+    ATTENDANCE = [
+        (A_VIRTUAL, 'Virtual'),
+        (A_PHYSICAL, 'In-person'),
+    ]
+
     T_XXS = 'XXS'
     T_XS = 'XS'
     T_S = 'S'
@@ -93,8 +101,8 @@ class Application(models.Model):
     ]
     DEFAULT_TSHIRT_SIZE = T_M
 
-    YEARS = [(int(size), size) for size in ('2018 2019 2020 2021 2022 2023 2024'.split(' '))]
-    DEFAULT_YEAR = 2019
+    YEARS = [(int(size), size) for size in ('2020 2021 2022 2023 2024'.split(' '))]
+    DEFAULT_YEAR = 2020
 
     C_FRESHMAN = 'Freshman'
     C_SOPHOMORE = 'Sophomore'
@@ -187,6 +195,7 @@ class Application(models.Model):
         MinValueValidator(0, "Negative? Really? Please put a positive value")])
 
     # Participant
+    attendance_type = models.CharField(max_length=300, choices=ATTENDANCE, default=A_PHYSICAL)
     participant = models.CharField(max_length=300, choices=PARTICIPANTS, default=P_HACKER)
     volunteer_time = models.CharField(max_length=600, blank=True, null=True)
     mentor_topic = models.CharField(max_length=600, blank=True, null=True)
@@ -220,10 +229,11 @@ class Application(models.Model):
     hardware = models.CharField(max_length=300, null=True, blank=True)
 
     # Shipping Address for Prizes
-    address = models.CharField(max_length=300, null=True, blank=True)
+    address_line = models.CharField(max_length=300, null=True, blank=True)
+    address_line_2 = models.CharField(max_length=300, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
     state =  models.CharField(max_length=2, null=True, blank=True)
-    zip_code = models.CharField(max_length=6, null=True, blank=True)
+    zip_code = models.CharField(max_length=15, null=True, blank=True)
 
     @classmethod
     def annotate_vote(cls, qs):

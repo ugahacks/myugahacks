@@ -100,6 +100,12 @@
             });
             mentor_workshop.parent().addClass('required');
 
+            var attendance_type = $('#id_attendance_type');
+            conditional_field(attendance_type, participant, () => {
+              return (participant.val() === 'Hacker' || participant.val() === "Mentor");
+            });
+            attendance_type.parent().addClass('required');
+
             var hacker_or_volunteer_reimb = $('#id_reimb');
             conditional_field(hacker_or_volunteer_reimb, participant, () => {
 
@@ -136,10 +142,6 @@
               console.log(diet.val());
               return diet.val() === 'Others';
             }, 1);
-            var diet_notice = $('#id_diet_notice');
-            conditional_field(diet_notice, diet, function () {
-              return diet.val() !== 'None';
-            }, 2);
 
             var has_team = $('input[name="team"][value="True"]');
             var no_team = $('input[name="team"][value="False"]');
