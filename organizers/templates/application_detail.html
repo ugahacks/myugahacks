@@ -47,6 +47,7 @@
                 </dt>
                 <dd></dd>
                 {% include 'include/field.html' with desc='Type' value=app.participant|safe|urlize %}
+                {% include 'include/field.html' with desc='Attending?' value=app.attendance_type|safe|urlize %}
                 {% if app.volunteer_time %}
                   {% include 'include/field.html' with desc='Volunteer Time Slot(s)' value=app.volunteer_time|safe|urlize %}
                 {% endif %}
