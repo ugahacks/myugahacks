@@ -49,18 +49,26 @@ class Application(models.Model):
     ]
 
     D_NONE = 'None'
-    D_VEGETERIAN = 'Vegeterian'
+    D_VEGETARIAN = 'Vegetarian'
     D_VEGAN = 'Vegan'
-    D_NO_PORK = 'No pork'
+    D_HALAL = 'Halal'
+    D_KOSHER = 'Kosher'
     D_GLUTEN_FREE = 'Gluten-free'
+    D_NO_PORK = 'No pork'
+    D_NO_PEANUTS = 'No peanuts/nuts'
+    D_NO_DAIRY = 'No dairy'
     D_OTHER = 'Others'
 
     DIETS = [
-        (D_NONE, 'No requirements'),
-        (D_VEGETERIAN, 'Vegeterian'),
+        (D_NONE, 'None'),
+        (D_VEGETARIAN, 'Vegetarian'),
         (D_VEGAN, 'Vegan'),
-        (D_NO_PORK, 'No pork'),
+        (D_HALAL, 'Halal'),
+        (D_KOSHER, 'Kosher'),
         (D_GLUTEN_FREE, 'Gluten-free'),
+        (D_NO_PORK, 'No pork'),
+        (D_NO_PEANUTS, 'No peanuts/nuts'),
+        (D_NO_DAIRY, 'No dairy'),
         (D_OTHER, 'Others')
     ]
 

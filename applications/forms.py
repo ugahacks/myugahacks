@@ -90,13 +90,13 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     # MLH Code of Conduct
     code_of_conduct = forms.BooleanField(
         required=True,
-        label='I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>, the <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md" target="_blank">MLH Contest Terms and Conditions</a>, and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
+        label='I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank" style="vertical-align: baseline;">MLH Code of Conduct</a>, the <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md" target="_blank" style="vertical-align: baseline;">MLH Contest Terms and Conditions</a>, and the <a href="https://mlh.io/privacy" target="_blank" style="vertical-align: baseline;">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
     # MLH Terms and Conditions
     terms_and_conditions = forms.BooleanField(
         required=True,
-        label='I authorize you to share my application/registration information for event administration, ranking, MLH administration, and for MLH to send pre- and post-event informational e-mails/occasional messages about hackathons all in accordance with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
+        label='I authorize you to share my application/registration information for event administration, ranking, MLH administration, and for MLH to send pre- and post-event informational e-mails/occasional messages about hackathons all in accordance with the <a href="https://mlh.io/privacy" target="_blank" style="vertical-align: baseline;">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
     cvs_edition = forms.BooleanField(
@@ -290,8 +290,8 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
                            'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
                            'will be processing your information with the aim of giving you and others the best possible experience. '
-                           'By submitting an application, your data will be used according to the following <a href="https://www.ugahacks.com/privacy" target="_blank">Privacy Policy</a>, which includes sharing information such as resumes with our Sponsors. '
-                           'You are also agreeing to the terms in the <a href="url legal_notice" target="_blank">Liability Release, Covenant Not to Sue, and Ownership Agreement</a> in order to participate in the event. '
+                           'By submitting an application, your data will be used according to the following <a href="https://www.ugahacks.com/privacy" target="_blank" style="vertical-align: baseline;">Privacy Policy</a>, which includes sharing information such as resumes with our Sponsors. '
+                           'You are also agreeing to the terms in the <a href="url legal_notice" target="_blank" style="vertical-align: baseline;">Liability Release, Covenant Not to Sue, and Ownership Agreement</a> in order to participate in the event. '
                            'Finally, you are also authorizing us to the use of any images and videos of yourself during the event.</p>'
         }))
         self._fieldsets.append(('MLH Policies', {
@@ -312,12 +312,13 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'mentor_topic': 'What topics are you confortable mentoring in?',
             'mentor_workshop': 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',
             'attendance_type': 'Due to Covid-19 situation, we are planning on having a hybrid model (both in-person and virtual options) for %s, so everyone can hack safely. You will be able to change your selection until registration closes. \
-            Note: If you select Virtual, you will not be allowed at the event in-person but cermonies and workshops will be streamed online so you will not miss out on the fun :).' % settings.HACKATHON_NAME,
+            Note: If you select Virtual, you will not be allowed at the event in-person but cermonies and workshops will be streamed online so rest assured you will not miss out on the fun :).' % settings.HACKATHON_NAME,
             'gender': 'This is for demographic purposes. You can skip this question if you want.',
             'hearabout': "This is for marketing purposes. You can skip this question if you want.",
             'class_status': 'Base your response on the number of years of college you have completed not credit hours.',
             'uniemail': 'This will be used to verify that you are a student.',
             'degree': 'What\'s your major/degree?',
+            'diet': 'The information submitted will only be used for catering purposes.',
             'other_diet': 'Please fill here in your dietary requirements. We want to make sure we have food for you!',
             'hardware': 'Any hardware that you would like us to have. We can\'t promise anything, '
                         'but at least we\'ll try!',
