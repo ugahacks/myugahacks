@@ -49,18 +49,26 @@ class Application(models.Model):
     ]
 
     D_NONE = 'None'
-    D_VEGETERIAN = 'Vegeterian'
+    D_VEGETARIAN = 'Vegetarian'
     D_VEGAN = 'Vegan'
-    D_NO_PORK = 'No pork'
+    D_HALAL = 'Halal'
+    D_KOSHER = 'Kosher'
     D_GLUTEN_FREE = 'Gluten-free'
+    D_NO_PORK = 'No pork'
+    D_NO_PEANUTS = 'No peanuts/nuts'
+    D_NO_DAIRY = 'No dairy'
     D_OTHER = 'Others'
 
     DIETS = [
-        (D_NONE, 'No requirements'),
-        (D_VEGETERIAN, 'Vegeterian'),
+        (D_NONE, 'None'),
+        (D_VEGETARIAN, 'Vegetarian'),
         (D_VEGAN, 'Vegan'),
-        (D_NO_PORK, 'No pork'),
+        (D_HALAL, 'Halal'),
+        (D_KOSHER, 'Kosher'),
         (D_GLUTEN_FREE, 'Gluten-free'),
+        (D_NO_PORK, 'No pork'),
+        (D_NO_PEANUTS, 'No peanuts/nuts'),
+        (D_NO_DAIRY, 'No dairy'),
         (D_OTHER, 'Others')
     ]
 
@@ -72,6 +80,14 @@ class Application(models.Model):
         (P_HACKER, 'Hacker'),
         (P_VOLUNTEER, 'Volunteer'),
         (P_MENTOR, 'Mentor'),
+    ]
+
+    A_VIRTUAL = 'Virtual'
+    A_PHYSICAL = 'In-person'
+
+    ATTENDANCE = [
+        (A_VIRTUAL, 'Virtual'),
+        (A_PHYSICAL, 'In-person'),
     ]
 
     T_XXS = 'XXS'
@@ -93,8 +109,8 @@ class Application(models.Model):
     ]
     DEFAULT_TSHIRT_SIZE = T_M
 
-    YEARS = [(int(size), size) for size in ('2018 2019 2020 2021 2022 2023 2024'.split(' '))]
-    DEFAULT_YEAR = 2019
+    YEARS = [(int(size), size) for size in ('2020 2021 2022 2023 2024'.split(' '))]
+    DEFAULT_YEAR = 2020
 
     C_FRESHMAN = 'Freshman'
     C_SOPHOMORE = 'Sophomore'
@@ -187,6 +203,7 @@ class Application(models.Model):
         MinValueValidator(0, "Negative? Really? Please put a positive value")])
 
     # Participant
+    attendance_type = models.CharField(max_length=300, choices=ATTENDANCE, default=A_PHYSICAL)
     participant = models.CharField(max_length=300, choices=PARTICIPANTS, default=P_HACKER)
     volunteer_time = models.CharField(max_length=600, blank=True, null=True)
     mentor_topic = models.CharField(max_length=600, blank=True, null=True)
@@ -220,10 +237,11 @@ class Application(models.Model):
     hardware = models.CharField(max_length=300, null=True, blank=True)
 
     # Shipping Address for Prizes
-    address = models.CharField(max_length=300, null=True, blank=True)
+    address_line = models.CharField(max_length=300, null=True, blank=True)
+    address_line_2 = models.CharField(max_length=300, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
     state =  models.CharField(max_length=2, null=True, blank=True)
-    zip_code = models.CharField(max_length=6, null=True, blank=True)
+    zip_code = models.CharField(max_length=15, null=True, blank=True)
 
     @classmethod
     def annotate_vote(cls, qs):

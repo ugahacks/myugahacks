@@ -29,12 +29,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 a {
-    color: #cf4c4c;
+    color: #fe3d40;
     text-decoration: none;
     -webkit-transition: all .1s linear;
     -moz-transition: all .1s linear;
     -o-transition: all .1s linear;
     transition: all .1s linear;
+    vertical-align: middle;
 }
 
 a:hover, a:active, a:focus {

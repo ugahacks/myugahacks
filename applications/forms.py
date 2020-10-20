@@ -14,15 +14,15 @@ YEARS = [x for x in range(1930, 2021)]
 class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     github = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control',
-               'placeholder': 'https://github.com/byte'}))
+               'placeholder': 'https://www.github.com/byte'}))
     devpost = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control',
-               'placeholder': 'https://devpost.com/byte'}))
+               'placeholder': 'https://www.devpost.com/byte'}))
     linkedin = forms.CharField(required=False, widget=forms.TextInput(
         attrs={'class': 'form-control',
                'placeholder': 'https://www.linkedin.com/in/byte'}))
     site = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'https://byte.build'}))
+        attrs={'class': 'form-control', 'placeholder': 'https://www.ugahacks.com'}))
     phone_number = forms.CharField(required=True, label='What phone number should we contact in case of an emergency?',
                                    help_text='We will use this number solely for emergency purposes.',
                                    widget=forms.TextInput(
@@ -84,30 +84,24 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     # UGAHacks Newsletter
     hacks_newsletter = forms.BooleanField(
         required=False,
-        label='I authorize UGAHacks to send me updates about the organization and promotional material about future events as a digital newsletter to the email associated with this account.'
+        label='I authorize UGAHacks to send me a digital newsletter to the email associated with this account.'
     )
 
     # MLH Code of Conduct
     code_of_conduct = forms.BooleanField(
         required=True,
-        label='I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>, the <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md" target="_blank">MLH Contest Terms and Conditions</a>, and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
+        label='I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank" style="vertical-align: baseline;">MLH Code of Conduct</a>, the <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md" target="_blank" style="vertical-align: baseline;">MLH Contest Terms and Conditions</a>, and the <a href="https://mlh.io/privacy" target="_blank" style="vertical-align: baseline;">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
     # MLH Terms and Conditions
     terms_and_conditions = forms.BooleanField(
         required=True,
-        label='I authorize you to share my application/registration information for event administration, ranking, MLH administration, and for MLH to send pre- and post-event informational e-mails/occasional messages about hackathons all in accordance with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
+        label='I authorize you to share my application/registration information for event administration, ranking, MLH administration, and for MLH to send pre- and post-event informational e-mails/occasional messages about hackathons all in accordance with the <a href="https://mlh.io/privacy" target="_blank" style="vertical-align: baseline;">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
     cvs_edition = forms.BooleanField(
         required=True,
         label='I have read and agree to the above UGAHacks policies upon submitting my application.<span style="color: red; font-weight: bold;"> *</span>'
-    )
-
-    diet_notice = forms.BooleanField(
-        required=False,
-        label='I authorize "UGAHacks" to use my food allergies and intolerances information to '
-              'manage the catering service only.<span style="color: red; font-weight: bold;"> *</span>'
     )
 
     resume = forms.FileField(required=False)
@@ -140,19 +134,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     def clean_cvs_edition(self):
         cc = self.cleaned_data.get('cvs_edition', False)
         return cc
-
-    def clean_diet_notice(self):
-        diet = self.cleaned_data['diet']
-        diet_notice = self.cleaned_data.get('diet_notice', False)
-        # Check that if it's the first submission hackers checks terms and conditions checkbox
-        # self.instance.pk is None if there's no Application existing before
-        # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
-        if diet != 'None' and not diet_notice:
-            raise forms.ValidationError(
-                "In order to apply and attend you have to accept us to use your personal data related to your food "
-                "allergies and intolerances only in order to manage the catering service."
-            )
-        return diet_notice
 
     def clean_github(self):
         data = self.cleaned_data['github']
@@ -257,7 +238,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fieldsets ordered and with description
         self._fieldsets = [
             ('Personal Info',
-             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree',
+             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop','attendance_type', 'university', 'degree',
                          'class_status', 'graduation_year', 'uniemail', 'gender', 'other_gender', 'ethnicity',
                          'phone_number', 'tshirt_size', 'diet', 'other_diet'),
               'description': 'Hey there, thank you for your interest in attending UGAHacks. To begin, we would like to know a little more about you.', }),
@@ -294,10 +275,10 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         digital_hack_enabled = getattr(settings, 'DIGITAL_HACKATHON', False)
         if digital_hack_enabled:
             self._fieldsets.append(('Shipping Address', {
-                'fields': ('address','city','state','zip_code'),
+                'fields': ('address_line','address_line_2','city','state','zip_code'),
                 'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
-                               'margin-bottom: 1em;line-height: 1.25em;">Due to Covid-19, there is a likelihood that our upcoming event, UGAHacks 6, will be digital. '
-                               'If that ends up being the case, we would still want to be able to ship prizes and swag to as many of our participants as possible (as deemed reasonable given shipping costs). '
+                               'margin-bottom: 1em;line-height: 1.25em;">Due to Covid-19, our upcoming event, UGAHacks 6, will be hybrid (both physical and virtual). '
+                               'We would still want to be able to ship prizes and swag to as many of our participants as possible (as deemed reasonable given shipping costs). '
                                'Thus, we are asking applicants to voluntarily submit their shipping address to assist with logistics. The addresses submitted will solely be used to send prizes/swag and will be '
                                'deleted after the event or as per hacker request to hello@ugahacks.com.</p>'
             }))
@@ -305,14 +286,22 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # this if statement gave a bug when the user tried to update their application
         # if not self.instance.pk:
         self._fieldsets.append(('UGAHacks Policies', {
-            'fields': ('cvs_edition', 'hacks_newsletter', 'terms_and_conditions', 'code_of_conduct', 'diet_notice'),
+            'fields': ('cvs_edition',),
             'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
                            'margin-bottom: 1em;line-height: 1.25em;">We, UGAHacks, '
                            'will be processing your information with the aim of giving you and others the best possible experience. '
-                           'By submitting an application, your data will be used according to the following <a href="https://www.ugahacks.com/privacy" target="_blank">Privacy Policy</a>, which includes sharing information such as resumes with our Sponsors. '
-                           'You are also agreeing to the terms in the <a href="url legal_notice" target="_blank">Liability Release, Covenant Not to Sue, and Ownership Agreement</a> in order to participate in the event. '
+                           'By submitting an application, your data will be used according to the following <a href="https://www.ugahacks.com/privacy" target="_blank" style="vertical-align: baseline;">Privacy Policy</a>, which includes sharing information such as resumes with our Sponsors. '
+                           'You are also agreeing to the terms in the <a href="url legal_notice" target="_blank" style="vertical-align: baseline;">Liability Release, Covenant Not to Sue, and Ownership Agreement</a> in order to participate in the event. '
                            'Finally, you are also authorizing us to the use of any images and videos of yourself during the event.</p>'
         }))
+        self._fieldsets.append(('MLH Policies', {
+                    'fields': ('terms_and_conditions', 'code_of_conduct'),}))
+        self._fieldsets.append(('UGAHacks Newsletter', {
+                    'fields': ('hacks_newsletter',),
+                    'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
+                                   'margin-bottom: 1em;line-height: 1.25em;"> UGAHacks has a monthly newsletter that will give updates about our '
+                                   'organization, behind-the-scenes looks at planning the next UGAHacks, and promotional material about future events.</p>'
+                                   }))
         return super(ApplicationForm, self).fieldsets
 
     class Meta:
@@ -322,12 +311,14 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'volunteer_time': 'What time(s) can you volunteer? (Please give date and time ranges if possible)',
             'mentor_topic': 'What topics are you confortable mentoring in?',
             'mentor_workshop': 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',
+            'attendance_type': 'Due to Covid-19 situation, we are planning on having a hybrid model (both in-person and virtual options) for %s, so everyone can hack safely. You will be able to change your selection until registration closes. \
+            Note: If you select Virtual, you will not be allowed at the event in-person but cermonies and workshops will be streamed online so rest assured you will not miss out on the fun :).' % settings.HACKATHON_NAME,
             'gender': 'This is for demographic purposes. You can skip this question if you want.',
             'hearabout': "This is for marketing purposes. You can skip this question if you want.",
             'class_status': 'Base your response on the number of years of college you have completed not credit hours.',
-            'graduation_year': 'What year have you graduated on or when will you graduate?',
             'uniemail': 'This will be used to verify that you are a student.',
             'degree': 'What\'s your major/degree?',
+            'diet': 'The information submitted will only be used for catering purposes.',
             'other_diet': 'Please fill here in your dietary requirements. We want to make sure we have food for you!',
             'hardware': 'Any hardware that you would like us to have. We can\'t promise anything, '
                         'but at least we\'ll try!',
@@ -345,6 +336,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
         labels = {
             'participant': 'What type of participant are you?',
+            'attendance_type': 'How are you planning on attending %s?' % settings.HACKATHON_NAME,
             'gender': 'What gender do you identify as?',
             'other_gender': 'Self-describe',
             'class_status': 'What is your class status?',
@@ -358,7 +350,8 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'description': 'Why are you excited about %s?' % settings.HACKATHON_NAME,
             'projects': 'What projects have you worked on? How do you see yourself building the future?',
             'resume': 'Upload your resume',
-            'state': 'State/Province'
+            'state': 'State/Province',
+            'zip_code': 'Zip/Postal code'
         }
 
         exclude = ['user', 'uuid', 'invited_by', 'submission_date', 'status_update_date', 'status', ]
