@@ -5,7 +5,8 @@
 
 body {
     background-image: url(../images/blueprint.svg);
-    background-position: center center;
+    background-size: cover;
+    /* background-position: center center; */
     background-attachment: fixed;
     /*background: linear-gradient(#26ADB5 0%, #1DA3AD 33%, #1597A3 67%, #0E8C99 100%) no-repeat center center fixed;*/
     background-repeat: repeat repeat;
