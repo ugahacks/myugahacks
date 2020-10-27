@@ -20,13 +20,16 @@ class UserManager(BaseUserManager):
             password = kwargs.pop('password', '')
             user.set_password(password)
         else:
-            first_name = kwargs.pop('first_name','')
-            last_name = kwargs.pop('last_name','')
-            user = self.model(
-                email=email,
-                name=str(first_name + ' ' + last_name)
-            )
-            user.set_unusable_password()
+            if len(User.objects.filter(email=email)) == 0:
+                first_name = kwargs.pop('first_name','')
+                last_name = kwargs.pop('last_name','')
+                user = self.model(
+                    email=email,
+                    name=str(first_name + ' ' + last_name)
+                )
+                user.set_unusable_password()
+            else:
+                return User.objects.get(email=email)
 
         user.save(using=self._db)
         return user
