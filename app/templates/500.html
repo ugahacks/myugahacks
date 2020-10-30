@@ -16,11 +16,13 @@
     <h1 class="text-center margin-top">500 Oops</h1>
     <h2 class="text-center">Server Error </h2>
     <p class="text-center">It seems like you found an error. Please reach us out
-      at {{ h_contact_email|urlize }} if the problem persists.</p>
+      at <a target="_blank" href="mailto:{{ h_contact_email }}">
+            {{ h_contact_email }}
+      </a> if the problem persists.</p>
     {% if h_repo %}
       <p class="text-center">
-        Or you can open an issue
-        <a target="_blank" href="{{ h_repo }}issues/new">here</a>.
+        Or you can open an issue on our repository
+        <a target="_blank" href="{{ h_repo }}/issues/new">here</a>.
       </p>
     {% endif %}
   </div>

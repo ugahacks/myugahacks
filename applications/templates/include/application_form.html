@@ -12,7 +12,16 @@
     vertical-align: middle;
     cursor: pointer;
   }
-
+  .address-fields {
+    display: inline-block;
+    min-width: 285px;
+    width: 33%;
+  }
+  @media only screen and (max-width: 480px) {
+    .address-fields {
+      width: 100%;
+    }
+  }
 </style>
 <form class="signup " enctype="multipart/form-data" id="signup_form" method="post" action="">
   {% csrf_token %}
@@ -26,12 +35,18 @@
         {% endif %}
       </h3>
       {% for field in fieldset %}
-        {% bootstrap_field field %}
+        {% if field.name in 'city' or field.name in 'state' or field.name in 'zip_code' %}
+          <div class="address-fields">
+            {% bootstrap_field field %}
+          </div>
+        {% else %}
+          {% bootstrap_field field %}
+        {% endif %}
       {% endfor %}
     </fieldset>
   {% endfor %}
 
-  <p class="team-info"><i class="fa fa-exclamation-triangle"></i> <strong>Remember!</strong> Your team members still
+  <p class="team-info text-center"><i class="fa fa-exclamation-triangle"></i> <strong>Remember!</strong> Your team members still
     have to apply separately.</p>
   <small><span style="color: red">*</span>Indicates required field.</small>
 
@@ -85,6 +100,12 @@
             });
             mentor_workshop.parent().addClass('required');
 
+            var attendance_type = $('#id_attendance_type');
+            conditional_field(attendance_type, participant, () => {
+              return (participant.val() === 'Hacker' || participant.val() === "Mentor");
+            });
+            attendance_type.parent().addClass('required');
+
             var hacker_or_volunteer_reimb = $('#id_reimb');
             conditional_field(hacker_or_volunteer_reimb, participant, () => {
 
@@ -121,10 +142,6 @@
               console.log(diet.val());
               return diet.val() === 'Others';
             }, 1);
-            var diet_notice = $('#id_diet_notice');
-            conditional_field(diet_notice, diet, function () {
-              return diet.val() !== 'None';
-            }, 2);
 
             var has_team = $('input[name="team"][value="True"]');
             var no_team = $('input[name="team"][value="False"]');

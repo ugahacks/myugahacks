@@ -32,10 +32,10 @@ HACKATHON_INSTAGRAM_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Medium user
 HACKATHON_MEDIUM_ACCOUNT = ''
 # (OPTIONAL) Github Repo for this project (so meta)
-HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/ugahacks5/'
+HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/myugahacks/'
 
 # (OPTIONAL) Applications deadline
-HACKATHON_APP_DEADLINE = timezone.datetime(2020, 2, 9, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
+HACKATHON_APP_DEADLINE = timezone.datetime(2021, 1, 8, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
 # (OPTIONAL) When to arrive at the hackathon
 HACKATHON_ARRIVE = 'Check-in opens at 5:00PM and the opening ceremony will be at 6:30PM on February 7th at the Zell B. Miller Center. ' \
                    'Further details about the schedule can be found at ugahacks.com. We hope to see you there!'
@@ -64,6 +64,8 @@ REIMBURSEMENT_EXPIRY_DAYS = 5
 REIMBURSEMENT_REQUIREMENTS = 'You have to submit a project and demo it during the event in order to get reimbursed'
 REIMBURSEMENT_DEADLINE = timezone.datetime(2020, 1, 28, 23, 59,
                                            tzinfo=timezone.pytz.timezone(TIME_ZONE))  # Need to confirm time
+# Adds Shipping Address to Application for Prizes
+DIGITAL_HACKATHON = True
 
 # (OPTIONAL) Max team members. Defaults to 4
 TEAMS_ENABLED = True
