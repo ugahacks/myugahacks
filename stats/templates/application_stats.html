@@ -17,7 +17,8 @@
     </div>
     <div class="col-md-6">
       <br>
-      <h3 style="text-align: center;"><b># of Applications:</b> <span id="app_count"></span></h3>
+      <h3 style="text-align: center;"><b># of Submitted Applications:</b> <span id="app_count"></span></h3>
+      <h3 style="text-align: center;"><b># of In-progress Applications:</b> <span id="draft_app_count"></span></h3>
     </div>
   </div>
   <h2>Gender</h2>
@@ -42,10 +43,14 @@
       <div id="first_timer_stats_attended"></div>
     </div>
   </div>
-  <h3>Heard about us</h3>
   <div class="row">
     <div class="col-md-6">
+      <h3>Heard about us</h3>
       <div id="hearabout_stats"></div>
+    </div>
+    <div class="col-md-6">
+      <h3>Attendance Type</h3>
+      <div id="attendance_type_stats"></div>
     </div>
   </div>
   <h2>Major</h2>
@@ -312,6 +317,27 @@
           }
         }
       });
+      var attendance_type_data = {};
+      var choices = [];
+      $(data['attendance_type_count']).each(function (c, e) {
+        choices.push(e.attendance_type);
+        attendance_type_data[e.attendance_type] = e.applications;
+      });
+      c3.generate({
+        bindto: '#attendance_type_stats',
+        data: {
+          json: attendance_type_data,
+          type: 'donut'
+
+        },
+        donut: {
+          label: {
+            format: function (value, ratio, id) {
+              return value;
+            }
+          }
+        }
+      });
       var class_data = {};
       var classes = [];
       $(data['class']).each(function (c, e) {
@@ -412,6 +438,7 @@
       $('#hardware').html(data['hardware']);
       $('#update_date').html(data['update_time']);
       $('#app_count').html(data['app_count']);
+      $('#draft_app_count').html(data['draft_app_count']);
     })
     ;
 

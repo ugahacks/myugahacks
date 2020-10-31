@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from app.views import TabsView
-from applications.models import Application
+from applications.models import Application, DraftApplication
 from reimbursement.models import Reimbursement
 from user.mixins import is_organizer, IsOrganizerMixin
 from workshops.models import Workshop, Attendance
@@ -15,6 +15,7 @@ STATUS_DICT = dict(Application.STATUS)
 GENDER_DICT = dict(Application.GENDERS)
 CLASSSTATUS_DICT = dict(Application.CLASSSTATUS)
 HEARABOUT_DICT = dict(Application.HEARABOUT)
+ATTENDANCE_TYPE_DICT = dict(Application.ATTENDANCE)
 RE_STATUS_DICT = dict(Reimbursement.STATUS)
 
 
@@ -86,6 +87,9 @@ def app_stats_api(request):
     hear_about_count = Application.objects.all().values('hearabout').annotate(applications=Count('hearabout'))
     hear_about_count = map(lambda x: dict(**x), hear_about_count)
 
+    attendance_type_count = Application.objects.all().values('attendance_type').annotate(applications=Count('attendance_type'))
+    attendance_type_count = map(lambda x: dict(**x), attendance_type_count)
+
     first_timer_count = Application.objects.all().values('first_timer').annotate(applications=Count('first_timer'))
     first_timer_count = map(lambda x: dict(**x), first_timer_count)
 
@@ -122,6 +126,7 @@ def app_stats_api(request):
         {
             'update_time': timezone.now(),
             'app_count': Application.objects.count(),
+            'draft_app_count': DraftApplication.objects.count(),
             'status': list(status_count),
             'shirt_count': list(shirt_count),
             'shirt_count_confirmed': list(shirt_count_confirmed),
@@ -133,6 +138,7 @@ def app_stats_api(request):
             'class': list(class_count),
             'class_attended': list(class_count_attended),
             'hearabout_count': list(hear_about_count),
+            'attendance_type_count': list(attendance_type_count),
             'firsttimer_count': list(first_timer_count),
             'firsttimer_count_attended': list(first_timer_count_attended),
             'diet': list(diet_count),
