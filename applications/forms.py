@@ -250,12 +250,16 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         ]
         deadline = getattr(settings, 'REIMBURSEMENT_DEADLINE', False)
         r_enabled = getattr(settings, 'REIMBURSEMENT_ENABLED', False)
+        digital_hack_enabled = getattr(settings, 'DIGITAL_HACKATHON', False)
         if r_enabled and deadline and deadline <= timezone.now() and not self.instance.pk:
             self._fieldsets.append(('Traveling',
                                     {'fields': ('origin',),
                                      'description': 'Reimbursement applications are now closed. '
                                                     'Sorry for the inconvenience.',
                                      }))
+        elif self.instance.pk and digital_hack_enabled:
+            self._fieldsets.append(('Traveling',
+                                    {'fields': ('origin',)}), )
         elif self.instance.pk and r_enabled:
             self._fieldsets.append(('Traveling',
                                     {'fields': ('origin',),
@@ -272,7 +276,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
         # Fields that we only need the first time the hacker fills the application
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
-        digital_hack_enabled = getattr(settings, 'DIGITAL_HACKATHON', False)
         if digital_hack_enabled:
             self._fieldsets.append(('Shipping Address', {
                 'fields': ('address_line','address_line_2','city','state','zip_code'),
