@@ -4,7 +4,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.password_validation import validate_password, password_validators_help_texts
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-
+import datetime
 from user.models import User
 
 
@@ -43,12 +43,13 @@ class RegisterForm(LoginForm):
     name = forms.CharField(label='Full name', max_length=25, help_text='What is your preferred full name?')
 
     terms_and_conditions = forms.BooleanField(
-        label='I\'ve read, understand and accept <a href="/privacy_and_cookies" target="_blank">UGAHacks '
-              'Privacy and Cookies Policy</a>.<span style="color: red; font-weight: bold;"> *</span>')
+        label='I\'ve read, understand and accept <a href="https://www.ugahacks.com/privacy" target="_blank">UGAHacks '
+              'Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>')
 
-    birth_year = forms.IntegerField(label="Birth Year", min_value=1920, max_value=2019)
+    birthday = forms.DateField(widget=forms.DateInput(format=('%m/%d/%Y'),
+            attrs={'class':'form-control', 'type': 'date'}))
 
-    field_order = ['name', 'email', 'password', 'password2', 'birth_year', 'terms_and_conditions']
+    field_order = ['name', 'email', 'password', 'password2', 'birthday', 'terms_and_conditions']
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -67,18 +68,18 @@ class RegisterForm(LoginForm):
         if not cc and not self.instance.pk:
             raise forms.ValidationError(
                 "In order to apply and attend you have to accept our Terms & Conditions and"
-                " our Privacy and Cookies Policy."
+                " our Privacy Policy."
             )
         return cc
 
-    def clean_birth_year(self):
-        birth_year = self.cleaned_data.get('birth_year')
-
-        if (2019 - birth_year) < 18:
+    def clean_birthday(self):
+        birthday = self.cleaned_data.get('birthday')
+        currdate = datetime.datetime.now()
+        if (birthday.month, birthday.day, birthday.year + 18) > (currdate.month, currdate.day, currdate.year):
             raise forms.ValidationError(
                 "In order to apply and attend you must be at least 18 years old."
             )
-        return birth_year
+        return birthday
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
