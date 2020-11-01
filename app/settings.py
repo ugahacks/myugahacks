@@ -295,6 +295,13 @@ OAUTH_PROVIDERS = {
 
     }
 }
+
+'''
+addresses edge case where user using reverse proxy (nginx) for auth loses session because
+of the shift from https -> http, losing essential headers in the process.  
+'''
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
 SOCIAL_AUTH_URL_NAMESPACE = "social"
 SOCIAL_AUTH_USER_FIELDS = ['email', 'first_name', 'last_name']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('GOOGLE_KEY')
