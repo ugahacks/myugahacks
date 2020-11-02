@@ -78,11 +78,13 @@ def app_stats_api(request):
     major_count = Application.objects.all().values('degree').annotate(applications=Count('degree'))
     major_count = map(lambda x: dict(**x), major_count)
     major_count = [major for major in major_count if major['applications'] > 5]
+    major_count.append({'major': 'Other', 'applications': Application.objects.count() - sum(major['applications'] for major in major_count)})
 
     major_count_attended = Application.objects.filter(status=Application.ATTENDED).values('degree').annotate(
         applications=Count('degree'))
     major_count_attended = map(lambda x: dict(**x), major_count_attended)
     major_count_attended = [major for major in major_count_attended if major['applications'] > 5]
+    major_count_attended.append({'major': 'Other', 'applications': Application.objects.filter(status=Application.ATTENDED).count() - sum(major['applications'] for major in major_count_attended)})
 
     hear_about_count = Application.objects.all().values('hearabout').annotate(applications=Count('hearabout'))
     hear_about_count = map(lambda x: dict(**x), hear_about_count)
