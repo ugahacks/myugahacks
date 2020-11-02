@@ -261,7 +261,7 @@ JET_INDEX_DASHBOARD = 'app.jet_dashboard.CustomIndexDashboard'
 # Set up custom auth
 AUTH_USER_MODEL = 'user.User'
 LOGIN_URL = 'account_login'
-LOGIN_REDIRECT_URL = 'set_password'
+LOGIN_REDIRECT_URL = 'root'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 BOOTSTRAP3 = {
