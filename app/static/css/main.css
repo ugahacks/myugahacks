@@ -36,7 +36,6 @@ a {
     -moz-transition: all .1s linear;
     -o-transition: all .1s linear;
     transition: all .1s linear;
-    vertical-align: middle;
 }
 
 a:hover, a:active, a:focus {
