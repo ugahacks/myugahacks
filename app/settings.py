@@ -261,7 +261,7 @@ JET_INDEX_DASHBOARD = 'app.jet_dashboard.CustomIndexDashboard'
 # Set up custom auth
 AUTH_USER_MODEL = 'user.User'
 LOGIN_URL = 'account_login'
-LOGIN_REDIRECT_URL = 'set_password'
+LOGIN_REDIRECT_URL = 'root'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 
 BOOTSTRAP3 = {
@@ -295,6 +295,13 @@ OAUTH_PROVIDERS = {
 
     }
 }
+
+'''
+addresses edge case where user using reverse proxy (nginx) for auth loses session because
+of the shift from https -> http, losing essential headers in the process.  
+'''
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
 SOCIAL_AUTH_URL_NAMESPACE = "social"
 SOCIAL_AUTH_USER_FIELDS = ['email', 'first_name', 'last_name']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('GOOGLE_KEY')

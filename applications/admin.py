@@ -10,9 +10,9 @@ EXPORT_CSV_FIELDS = ['name', 'lastname', 'participant', 'university', 'class_sta
 
 
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'participant', 'votes', 'reimb', 'status',
+    list_display = ('user', 'name', 'participant', 'attendance_type', 'reimb', 'status',
                     'status_last_updated', 'diet')
-    list_filter = ('status', 'first_timer', 'reimb', 'graduation_year',
+    list_filter = ('status', 'attendance_type', 'first_timer', 'reimb', 'graduation_year',
                    'university', 'origin', 'diet', 'participant')
     list_per_page = 200
     search_fields = ('user__name', 'user__email',
@@ -25,11 +25,6 @@ class ApplicationAdmin(admin.ModelAdmin):
 
     name.admin_order_field = 'user__name'  # Allows column order sorting
     name.short_description = 'Hacker info'  # Renames column head
-
-    def votes(self, app):
-        return app.vote_avg
-
-    votes.admin_order_field = 'vote_avg'
 
     def status_last_updated(self, app):
         if not app.status_update_date:
@@ -44,6 +39,7 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Application, admin_class=ApplicationAdmin)
+admin.site.register(models.DraftApplication)
 admin.site.site_header = '%s Admin' % settings.HACKATHON_NAME
 admin.site.site_title = '%s Admin' % settings.HACKATHON_NAME
 admin.site.index_title = 'Home'

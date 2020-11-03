@@ -241,28 +241,22 @@ def callback(request, provider=None):
         # Save extra info
         draft = DraftApplication()
         draft.user = user
-        mlhdiet = mlhuser.get('dietary_restrictions', '')
-        diet = mlhdiet if mlhdiet in dict(a_models.DIETS).keys() else 'Others'
         mlhgender = mlhuser.get('gender','')
-        if mlhgender == "I prefer not to say" or mlhgender not in dict(a_models.GENDERS).values():
+        if mlhgender == "I prefer not to say" or mlhgender not in dict(Application.GENDERS).values():
             mlhgender = "Prefer not to answer"
         mlhyear = mlhuser.get('level_of_study','')
-        print(mlhyear)
         if mlhyear == "Not Currently a Student":
-            mlhyear = a_models.C_GRADUATED
+            mlhyear = Application.C_GRADUATED
         elif mlhyear == "University (Master's / Doctoral)":
-            mlhyear = a_models.C_GRAD
+            mlhyear = Application.C_GRAD
         else:
-            mlhyear = a_models.C_FRESHMAN
+            mlhyear = Application.C_FRESHMAN
         draft.save_dict({
             'degree': mlhuser.get('major', ''),
             'university': mlhuser.get('school', {}).get('name', ''),
             'class_status': mlhyear,
             'phone_number': '(' + mlhuser.get('phone_number', '')[2:5] + ') ' + mlhuser.get('phone_number', '')[5:8] + '-' + mlhuser.get('phone_number', '')[8:],
-            'tshirt_size': [k for k, v in a_models.TSHIRT_SIZES if v == mlhuser.get('shirt_size', '')][0],
-            'gender': [k for k, v in a_models.GENDERS if v == mlhgender][0],
-            'diet': mlhdiet,
-            'other_diet': mlhdiet if diet == 'Others' else '',
+            'gender': [k for k, v in Application.GENDERS if v == mlhgender][0],
         })
         draft.save()
     return HttpResponseRedirect(reverse('root'))
