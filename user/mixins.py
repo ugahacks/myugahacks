@@ -11,8 +11,6 @@ class IsHackerMixin(UserPassesTestMixin):
             return False
         if not self.request.user.email_verified:
             return False
-        if not self.request.user.has_usable_password():
-            return False
         return self.request.user.is_authenticated
 
 
@@ -23,8 +21,6 @@ class IsOrganizerMixin(UserPassesTestMixin):
         if not self.request.user.is_authenticated:
             return False
         if not self.request.user.email_verified:
-            return False
-        if not self.request.user.has_usable_password():
             return False
         return self.request.user.is_authenticated and self.request.user.is_organizer
 
@@ -37,10 +33,7 @@ class IsVolunteerMixin(UserPassesTestMixin):
             return False
         if not self.request.user.email_verified:
             return False
-        if not self.request.user.has_usable_password():
-            return False
-        return \
-            self.request.user.is_authenticated and (self.request.user.is_volunteer or self.request.user.is_organizer)
+        return self.request.user.is_authenticated and (self.request.user.is_volunteer or self.request.user.is_organizer)
 
 
 class IsSponsorMixin(UserPassesTestMixin):
@@ -50,8 +43,6 @@ class IsSponsorMixin(UserPassesTestMixin):
         if not self.request.user.is_authenticated:
             return False
         if not self.request.user.email_verified:
-            return False
-        if not self.request.user.has_usable_password():
             return False
         return self.request.user.is_sponsor or self.request.user.is_organizer
 
@@ -64,10 +55,7 @@ class IsDirectorMixin(UserPassesTestMixin):
             return False
         if not self.request.user.email_verified:
             return False
-        if not self.request.user.has_usable_password():
-            return False
-        return \
-            self.request.user.is_authenticated and self.request.user.is_director
+        return self.request.user.is_authenticated and self.request.user.is_director
 
 
 class IsHardwareAdminMixin(UserPassesTestMixin):
@@ -78,8 +66,6 @@ class IsHardwareAdminMixin(UserPassesTestMixin):
             return False
         if not self.request.user.email_verified:
             return False
-        if not self.request.user.has_usable_password():
-            return False
         return self.request.user.is_hardware_admin or self.request.user.is_organizer
 
 
@@ -89,7 +75,7 @@ def is_organizer(f, raise_exception=True):
     """
 
     def check_perms(user):
-        if user.is_authenticated and user.email_verified and user.is_organizer and user.has_usable_password():
+        if user.is_authenticated and user.email_verified and user.is_organizer:
             return True
         # In case the 403 handler should be called raise the exception
         if raise_exception:
@@ -106,7 +92,7 @@ def is_hacker(f, raise_exception=True):
     """
 
     def check_perms(user):
-        if user.is_authenticated and user.email_verified and user.has_usable_password():
+        if user.is_authenticated and user.email_verified:
             return True
         # In case the 403 handler should be called raise the exception
         if raise_exception:
