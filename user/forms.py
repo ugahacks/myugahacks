@@ -75,7 +75,7 @@ class RegisterForm(LoginForm):
     def clean_birthday(self):
         birthday = self.cleaned_data.get('birthday')
         currdate = datetime.datetime.now()
-        if (birthday.month, birthday.day, birthday.year + 18) > (currdate.month, currdate.day, currdate.year):
+        if datetime.datetime(birthday.year + 18, birthday.month, birthday.day) > currdate:
             raise forms.ValidationError(
                 "In order to apply and attend you must be at least 18 years old."
             )
