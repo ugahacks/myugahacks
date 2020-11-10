@@ -18,25 +18,13 @@
             </a>
 
             <dl class="dl-horizontal">
-                <dt>
-                <h3>Personal</h3>
-                </dt>
                 <dd></dd>
                 {% include 'include/field.html' with desc='Name' value=app.user.name %}
-                {% include 'include/field.html' with desc='Country' value=app.origin_country %}
-                {% if not vote %}
-                    {% include 'include/field.html' with desc='Email' value=app.user.email %}
-                {% endif %}
+                {% include 'include/field.html' with desc='Email' value=app.user.email %}
                 
                 {% if not user.is_sponsor %}
                     {% include 'include/field.html' with desc='Submitted' value=app.submission_date|naturaltime %}
-                    {% if not vote %}
-                        {% include 'include/field.html' with desc='Status' value=app.get_status_display %}
-                        {% include 'include/field.html' with desc='Emergency Phone Num.' value=app.phone_number %}
-                        {% include 'include/field.html' with desc='Travel reimbursement?' value=app.reimb|yesno:'Yes,No,Maybe' %}
-                        {% include 'include/field.html' with desc='Traveling From' value=app.origin|safe|urlize %}
-                        {% include 'include/field.html' with desc='Money needed' value=app.reimb_amount %}
-                    {% endif %}
+                    {% include 'include/field.html' with desc='Status' value=app.get_status_display %}
                 {% endif %}
                 {% if app.resume %}
                     {% include 'include/field.html' with desc='Resume' value='<a href="'|add:app.resume.url|add:'" target="_blank">'|add:app.resume.name|add:"</a>"|safe %}
@@ -58,6 +46,27 @@
                   {% include 'include/field.html' with desc='Potential Workshop?' value=app.mentor_workshop|safe|urlize %}
                 {% endif %}
                 <hr>
+                {% if not user.is_sponsor %}
+                    <dt>
+                    <h3>Contact</h3>
+                    </dt>
+                    <dd></dd>
+                        {% include 'include/field.html' with desc='Emergency Phone Num.' value=app.phone_number %}
+                        {% include 'include/field.html' with desc='Shipping Address' value=app.address_line %}
+                        {% include 'include/field.html' with desc='Address Line 2' value=app.address_line_2 %}
+                        {% include 'include/field.html' with desc='City' value=app.city %}
+                        {% include 'include/field.html' with desc='State' value=app.state %}
+                        {% include 'include/field.html' with desc='Zip Code' value=app.zip_code %}
+                    <hr>
+                    <dt>
+                    <h3>Travel</h3>
+                    </dt>
+                    <dd></dd>
+                        {% include 'include/field.html' with desc='Travel reimbursement?' value=app.reimb|yesno:'Yes,No,Maybe' %}
+                        {% include 'include/field.html' with desc='Traveling From' value=app.origin|safe|urlize %}
+                        {% include 'include/field.html' with desc='Money needed' value=app.reimb_amount %}
+                    <hr>
+                {% endif %}
                 <dt>
                 <h3>Academic</h3>
                 </dt>
@@ -69,7 +78,7 @@
                 {% include 'include/field.html' with desc='Degree' value=app.degree %}
                 <hr>
                 <dt>
-                <h3>Background</h3>
+                <h3>Hackathons</h3>
                 </dt>
                 <dd></dd>
                 {% include 'include/field.html' with desc='First hackathon?' value=app.first_timer|yesno:'Yes,No,Maybe' %}

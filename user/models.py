@@ -28,6 +28,7 @@ class UserManager(BaseUserManager):
                     name=str(first_name + ' ' + last_name)
                 )
                 user.set_unusable_password()
+                user.email_verified = True
             else:
                 return User.objects.get(email=email)
 

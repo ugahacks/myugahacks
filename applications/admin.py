@@ -37,9 +37,11 @@ class ApplicationAdmin(admin.ModelAdmin):
         qs = super(ApplicationAdmin, self).get_queryset(request)
         return models.Application.annotate_vote(qs)
 
+class DraftApplicationAdmin(admin.ModelAdmin):
+    list_display = ('user',)
 
 admin.site.register(models.Application, admin_class=ApplicationAdmin)
-admin.site.register(models.DraftApplication)
+admin.site.register(models.DraftApplication, admin_class=DraftApplicationAdmin)
 admin.site.site_header = '%s Admin' % settings.HACKATHON_NAME
 admin.site.site_title = '%s Admin' % settings.HACKATHON_NAME
 admin.site.index_title = 'Home'
