@@ -215,15 +215,15 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
         volunteer_time = cleaned_data.get('volunteer_time')
         if participant == 'Volunteer' and not volunteer_time:
-            raise forms.ValidationError("Please tell us what time you want to volunteer")
+            raise forms.ValidationError("Please tell us what time you want to volunteer.")
 
         mentor_topic = cleaned_data.get('mentor_topic')
         if participant == 'Mentor' and not mentor_topic:
-            raise forms.ValidationError("Please tell us what topic you want to mentor for")
+            raise forms.ValidationError("Please tell us what topic you want to mentor for.")
 
         mentor_workshop = cleaned_data.get('mentor_workshop')
         if participant == 'Mentor' and not mentor_workshop:
-            raise forms.ValidationError("Please tell us if you would like to host a workshop")
+            raise forms.ValidationError("Please tell us if you would like to host a workshop.")
 
         form_entered_university = cleaned_data.get('university')
         if form_entered_university and not form_entered_university in ALLOWED_SCHOOLS:
@@ -239,7 +239,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             if participant == 'Mentor':
                 uniemail = 'byte@uga.edu'
             else:
-                raise forms.ValidationError("Please enter your school email")
+                raise forms.ValidationError("Please enter your school email.")
 
 
 
