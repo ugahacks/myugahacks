@@ -11,7 +11,7 @@ from applications import models
 import json
 from django.contrib.staticfiles.storage import staticfiles_storage
 
-with open(settings.APPLICATIONS_STATIC_URL + 'schools.json') as schools_dot_json: 
+with open(settings.APPLICATIONS_STATIC_URL + 'all_schools.json') as schools_dot_json: 
     ALLOWED_SCHOOLS = json.load(schools_dot_json)
 
 YEARS = [x for x in range(1930, 2021)]
