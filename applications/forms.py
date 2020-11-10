@@ -227,7 +227,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
         form_entered_university = cleaned_data.get('university')
         if form_entered_university and not form_entered_university in ALLOWED_SCHOOLS:
-            # print('bad school', flush=True)
             raise forms.ValidationError("Please enter a school from suggested.")
 
 
