@@ -8,6 +8,12 @@ from app.mixins import OverwriteOnlyModelFormMixin
 from app.utils import validate_url
 from applications import models
 
+import json
+from django.contrib.staticfiles.storage import staticfiles_storage
+
+with open(settings.APPLICATIONS_STATIC_URL + 'all_schools.json') as schools_dot_json: 
+    ALLOWED_SCHOOLS = json.load(schools_dot_json)
+
 YEARS = [x for x in range(1930, 2021)]
 
 
@@ -28,7 +34,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                                    widget=forms.TextInput(
                                        attrs={'class': 'form-control', 'placeholder': '(###) ###-####'}))
     university = forms.CharField(required=True,
-                                 label='What university do you study at?',
+                                 label='At which university do you study?',
                                  help_text='Current or most recent school you attended.',
                                  widget=forms.TextInput(
                                      attrs={'class': 'typeahead-schools', 'autocomplete': 'off'}))
@@ -209,15 +215,20 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
         volunteer_time = cleaned_data.get('volunteer_time')
         if participant == 'Volunteer' and not volunteer_time:
-            raise forms.ValidationError("Please tell us what time you want to volunteer")
+            raise forms.ValidationError("Please tell us what time you want to volunteer.")
 
         mentor_topic = cleaned_data.get('mentor_topic')
         if participant == 'Mentor' and not mentor_topic:
-            raise forms.ValidationError("Please tell us what topic you want to mentor for")
+            raise forms.ValidationError("Please tell us what topic you want to mentor for.")
 
         mentor_workshop = cleaned_data.get('mentor_workshop')
         if participant == 'Mentor' and not mentor_workshop:
-            raise forms.ValidationError("Please tell us if you would like to host a workshop")
+            raise forms.ValidationError("Please tell us if you would like to host a workshop.")
+
+        form_entered_university = cleaned_data.get('university')
+        if form_entered_university and not form_entered_university in ALLOWED_SCHOOLS:
+            raise forms.ValidationError("Please enter a school from suggested.")
+
 
         uniemail = cleaned_data.get('uniemail')
         if uniemail:
@@ -227,7 +238,9 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             if participant == 'Mentor':
                 uniemail = 'byte@uga.edu'
             else:
-                raise forms.ValidationError("Please enter your school email")
+                raise forms.ValidationError("Please enter your school email.")
+
+
 
     def __getitem__(self, name):
         item = super(ApplicationForm, self).__getitem__(name)
