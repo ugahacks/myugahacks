@@ -16,9 +16,9 @@ HACKATHON_DOMAIN = 'my.ugahacks.com'
 # Hackathon contact email: where should all hackers contact you. It will also be used as a sender for all emails
 HACKATHON_CONTACT_EMAIL = 'hello@ugahacks.com'
 # Hackathon logo url, will be used on all emails
-HACKATHON_LOGO_URL = 'https://cdn.discordapp.com/attachments/620787206621233185/691814435202793492/Hacks6emailbanner.png'
+HACKATHON_LOGO_URL = 'https://my.ugahacks.com/static/img/github-logo.png'
 
-HACKATHON_OG_IMAGE = 'https://cdn.discordapp.com/attachments/620787206621233185/691814435202793492/Hacks6emailbanner.png'
+HACKATHON_OG_IMAGE = 'https://my.ugahacks.com/static/img/logo.png'
 # (OPTIONAL) Track visits on your website
 HACKATHON_GOOGLE_ANALYTICS = ''
 # (OPTIONAL) Hackathon Twitter user
