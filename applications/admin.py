@@ -38,7 +38,11 @@ class ApplicationAdmin(admin.ModelAdmin):
         return models.Application.annotate_vote(qs)
 
 class DraftApplicationAdmin(admin.ModelAdmin):
-    list_display = ('user',)
+    list_display = ('user', 'name')
+    search_fields = ('user__name', 'user__email')
+
+    def name(self, obj):
+        return obj.user.get_full_name()
 
 admin.site.register(models.Application, admin_class=ApplicationAdmin)
 admin.site.register(models.DraftApplication, admin_class=DraftApplicationAdmin)
