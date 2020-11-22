@@ -20,13 +20,15 @@ HACKATHON_LOGO_URL = 'https://my.ugahacks.com/static/img/github-logo.png'
 
 HACKATHON_OG_IMAGE = 'https://my.ugahacks.com/static/img/logo.png'
 # (OPTIONAL) Track visits on your website
-HACKATHON_GOOGLE_ANALYTICS = ''
+HACKATHON_GOOGLE_ANALYTICS = 'UA-179127149-1'
+# Hotjar Tracking for heatmaps etc. (Integer)
+HACKATHON_HOTJAR_ID = 1566634
 # (OPTIONAL) Hackathon Twitter user
 HACKATHON_TWITTER_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Facebook page
 HACKATHON_FACEBOOK_PAGE = 'ugahacks/'
 # (OPTIONAL) Hackathon YouTube channel
-HACKATHON_YOUTUBE_PAGE = ''
+HACKATHON_YOUTUBE_PAGE = 'UCudlu7Tfg7VL7sR5NJzcCnw'
 # (OPTIONAL) Hackathon Instagram user
 HACKATHON_INSTAGRAM_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Medium user
