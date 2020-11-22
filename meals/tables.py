@@ -21,9 +21,6 @@ class MealsListTable(tables.Table):
     change = tables.TemplateColumn(
         "<a href='{% url 'meal_detail' record.id %}'>Modify</a> ",
         verbose_name='Actions', orderable=False)
-    checkin = tables.TemplateColumn(
-        "<a href='{% url 'meal_checkin' record.id %}'>Check-in hacker</a> ",
-        verbose_name='Check-in', orderable=False)
     starts = tables.DateColumn(accessor='starts', verbose_name='Starts', format='M j, Y g:i a')
     ends = tables.DateTimeColumn(accessor='ends', verbose_name='Ends', format='M j, Y g:i a')
     eaten = tables.Column(accessor='eaten', verbose_name='Total rations served')
