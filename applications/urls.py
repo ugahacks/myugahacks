@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^dashboard/$', views.HackerDashboard.as_view(), name='dashboard'),
     url(r'^applications/$', views.HackerApplication.as_view(), name='application'),
     url(r'^application/draft/$', views.save_draft, name='save_draft'),
-    url(r'^export/resume$', views.export_resume, name='export_resume')
+    url(r'^export/resume$', views.export_resume, name='export_resume'),
+    url(r'^export/newsletter$', views.export_newsletter_subs, name='export_newsletter')
 ]
