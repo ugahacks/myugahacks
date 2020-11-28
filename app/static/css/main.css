@@ -70,7 +70,7 @@ a:hover, a:active, a:focus {
 
 .btn {
     background: #b83737;
-    color: white;
+    /* color: white; */
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
