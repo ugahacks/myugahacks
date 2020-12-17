@@ -20,6 +20,8 @@ class Workshop(models.Model):
     # Amount of points awarded if user attends this workshop
     points = models.IntegerField(default=0)
 
+    in_person = models.BooleanField(null=False, default=True)
+
     def __str__(self):
         return str(self.title)
 

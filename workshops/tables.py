@@ -29,7 +29,7 @@ class WorkshopListTable(tables.Table):
         model = Workshop
         attrs = {'class': 'table table-hover'}
         template = 'templates/workshop_list.html'
-        fields = ['title', 'location', 'host', 'open']
+        fields = ['title', 'location', 'host', 'open', 'in_person']
         empty_text = 'No workshops available'
         # order_by = "-start"
 

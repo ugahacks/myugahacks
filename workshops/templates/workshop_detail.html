@@ -10,7 +10,7 @@
     <p><b>Time:</b> {{ start }} -- {{ end }}</p>
     <p><b>Attendance:</b> {{ attendance }}</p>
   </div>
-  {% if workshop.open %}
+  {% if workshop.open and workshop.in_person %}
     <div class="text-center mb-5">
       <a class="btn btn-success mb-5" href="{% url 'workshop_checkin' workshop.id %}">Scan</a>
     </div>

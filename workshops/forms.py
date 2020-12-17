@@ -15,6 +15,8 @@ class AddWorkshopForm(forms.ModelForm):
 
     host = forms.CharField(max_length=63, label='Organization name')
 
+    in_person = forms.BooleanField(label = 'In person?')
+
     # Change the __str__ method in the Timeslot model to change how the choices are displayed to users.
     # empty_label set to none because users should NOT be able to add empty timeslots.
     timeslot = forms.ModelChoiceField(
@@ -25,4 +27,4 @@ class AddWorkshopForm(forms.ModelForm):
 
     class Meta:
         model = Workshop
-        fields = ['title', 'description', 'location', 'host', 'points']
+        fields = ['title', 'description', 'location', 'host', 'points', 'in_person']

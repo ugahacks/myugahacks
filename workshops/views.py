@@ -55,7 +55,7 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
 class WorkshopUpdate(IsOrganizerMixin, UpdateView):
     model = Workshop
     success_url = '/workshops/list/'
-    fields = ['title', 'description', 'location', 'host', 'open', ]
+    fields = ['title', 'description', 'location', 'host', 'open', 'in_person']
     template_name = 'workshop_update_form.html'
 
     def get_context_data(self, **kwargs):
