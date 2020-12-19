@@ -100,12 +100,6 @@
             });
             mentor_workshop.parent().addClass('required');
 
-            var attendance_type = $('#id_attendance_type');
-            conditional_field(attendance_type, participant, () => {
-              return (participant.val() === 'Hacker' || participant.val() === "Mentor");
-            });
-            attendance_type.parent().addClass('required');
-
             var hacker_or_volunteer_reimb = $('#id_reimb');
             conditional_field(hacker_or_volunteer_reimb, participant, () => {
 

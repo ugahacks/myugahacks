@@ -238,7 +238,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # Fieldsets ordered and with description
         self._fieldsets = [
             ('Personal Info',
-             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop','attendance_type', 'university', 'degree',
+             {'fields': ('participant', 'volunteer_time', 'mentor_topic', 'mentor_workshop', 'university', 'degree',
                          'class_status', 'graduation_year', 'uniemail', 'gender', 'other_gender', 'ethnicity',
                          'phone_number', 'tshirt_size', 'diet', 'other_diet'),
               'description': 'Hey there, thank you for your interest in attending UGAHacks. To begin, we would like to know a little more about you.', }),
@@ -280,7 +280,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             self._fieldsets.append(('Shipping Address', {
                 'fields': ('address_line','address_line_2','city','state','zip_code'),
                 'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
-                               'margin-bottom: 1em;line-height: 1.25em;">Due to Covid-19, our upcoming event, UGAHacks 6, will be hybrid (both physical and virtual). '
+                               'margin-bottom: 1em;line-height: 1.25em;">Due to Covid-19, our upcoming event, UGAHacks 6, will be virtual. '
                                'We would still want to be able to ship prizes and swag to as many of our participants as possible (as deemed reasonable given shipping costs). '
                                'Thus, we are asking applicants to voluntarily submit their shipping address to assist with logistics. The addresses submitted will solely be used to send prizes/swag and will be '
                                'deleted after the event or as per hacker request to hello@ugahacks.com.</p>'
@@ -314,8 +314,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'volunteer_time': 'What time(s) can you volunteer? (Please give date and time ranges if possible)',
             'mentor_topic': 'What topics are you confortable mentoring in?',
             'mentor_workshop': 'Are you interested in hosting a workshop? If so, please describe what you would like to host.',
-            'attendance_type': 'Due to Covid-19 situation, we are planning on having a hybrid model (both in-person and virtual options) for %s, so everyone can hack safely. You will be able to change your selection until registration closes. \
-            Note: If you select Virtual, you will not be allowed at the event in-person but cermonies and workshops will be streamed online so rest assured you will not miss out on the fun :).' % settings.HACKATHON_NAME,
             'gender': 'This is for demographic purposes. You can skip this question if you want.',
             'hearabout': "This is for marketing purposes. You can skip this question if you want.",
             'class_status': 'Base your response on the number of years of college you have completed not credit hours.',
@@ -339,7 +337,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
         labels = {
             'participant': 'What type of participant are you?',
-            'attendance_type': 'How are you planning on attending %s?' % settings.HACKATHON_NAME,
             'gender': 'What gender do you identify as?',
             'other_gender': 'Self-describe',
             'class_status': 'What is your class status?',
