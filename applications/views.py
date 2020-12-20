@@ -205,3 +205,21 @@ def export_resume(request):
         return response
     except:
         raise Http404
+
+def export_newsletter_subs(request):
+    try:
+        response = HttpResponse(open("./files/newsletter_subs.csv", 'rb').read())
+        response['Content-Type'] = 'text/plain'
+        response['Content-Disposition'] = 'attachment; filename=newsletter_subs.csv'
+        return response
+    except:
+        raise Http404
+
+def export_in_person_apps(request):
+    try:
+        response = HttpResponse(open("./files/in_person_apps.csv", 'rb').read())
+        response['Content-Type'] = 'text/plain'
+        response['Content-Disposition'] = 'attachment; filename=in_person_apps.csv'
+        return response
+    except:
+        raise Http404

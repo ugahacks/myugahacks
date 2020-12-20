@@ -72,9 +72,11 @@
                 </dt>
                 <dd></dd>
                 {% include 'include/field.html' with desc='University' value=app.university %}
-                {% include 'include/field.html' with desc='University Email' value=app.uniemail %}
-                {% include 'include/field.html' with desc='Class Status' value=app.class_status %}
-                {% include 'include/field.html' with desc='Graduation' value=app.graduation_year %}
+                {% if app.participant != 'Mentor' %}
+                    {% include 'include/field.html' with desc='University Email' value=app.uniemail %}
+                    {% include 'include/field.html' with desc='Class Status' value=app.class_status %}
+                    {% include 'include/field.html' with desc='Graduation' value=app.graduation_year %}
+                {% endif %}
                 {% include 'include/field.html' with desc='Degree' value=app.degree %}
                 <hr>
                 <dt>

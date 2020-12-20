@@ -16,17 +16,19 @@ HACKATHON_DOMAIN = 'my.ugahacks.com'
 # Hackathon contact email: where should all hackers contact you. It will also be used as a sender for all emails
 HACKATHON_CONTACT_EMAIL = 'hello@ugahacks.com'
 # Hackathon logo url, will be used on all emails
-HACKATHON_LOGO_URL = 'https://cdn.discordapp.com/attachments/620787206621233185/691814435202793492/Hacks6emailbanner.png'
+HACKATHON_LOGO_URL = 'https://my.ugahacks.com/static/img/github-logo.png'
 
-HACKATHON_OG_IMAGE = 'https://cdn.discordapp.com/attachments/620787206621233185/691814435202793492/Hacks6emailbanner.png'
+HACKATHON_OG_IMAGE = 'https://my.ugahacks.com/static/img/logo.png'
 # (OPTIONAL) Track visits on your website
-HACKATHON_GOOGLE_ANALYTICS = ''
+HACKATHON_GOOGLE_ANALYTICS = 'UA-179127149-1'
+# Hotjar Tracking for heatmaps etc. (Integer)
+HACKATHON_HOTJAR_ID = 1566634
 # (OPTIONAL) Hackathon Twitter user
 HACKATHON_TWITTER_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Facebook page
 HACKATHON_FACEBOOK_PAGE = 'ugahacks/'
 # (OPTIONAL) Hackathon YouTube channel
-HACKATHON_YOUTUBE_PAGE = ''
+HACKATHON_YOUTUBE_PAGE = 'UCudlu7Tfg7VL7sR5NJzcCnw'
 # (OPTIONAL) Hackathon Instagram user
 HACKATHON_INSTAGRAM_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Medium user
