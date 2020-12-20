@@ -367,4 +367,4 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'zip_code': 'Zip/Postal code'
         }
 
-        exclude = ['user', 'uuid', 'invited_by', 'submission_date', 'status_update_date', 'status', ]
+        exclude = ['user', 'uuid', 'invited_by', 'submission_date', 'status_update_date', 'status', 'attendance_type' ]
