@@ -214,3 +214,12 @@ def export_newsletter_subs(request):
         return response
     except:
         raise Http404
+
+def export_in_person_apps(request):
+    try:
+        response = HttpResponse(open("./files/in_person_apps.csv", 'rb').read())
+        response['Content-Type'] = 'text/plain'
+        response['Content-Disposition'] = 'attachment; filename=in_person_apps.csv'
+        return response
+    except:
+        raise Http404

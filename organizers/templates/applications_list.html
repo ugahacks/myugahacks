@@ -8,8 +8,8 @@
             <a href="{% querystring '_export'='csv' %}" class="btn-block btn btn-info">Export
                 CSV</a>
             <a href="{%  url 'export_newsletter' %}" class="btn-block btn btn-info">Export Newsletter Subscriber List </a>
-            <a href="{% url 'export_resume' %}" class="btn-block btn btn-info">Export
-              Resumes</a>
+            <a href="{% url 'export_resume' %}" class="btn-block btn btn-info">Export Resumes</a>
+            <a href="{%  url 'export_in_person_apps' %}" class="btn-block btn btn-info">Export In-person applications List </a>
         </div>
     {% endif %}
 {% endblock %}
