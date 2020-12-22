@@ -241,6 +241,8 @@ APPLICATIONS_STATIC_URL = BASE_DIR + '/applications/static/'
 MEDIA_ROOT = 'files'
 MEDIA_URL = '/files/'
 
+EXPORT_FILES_URL = BASE_DIR + MEDIA_URL
+
 if os.environ.get('DROPBOX_OAUTH2_TOKEN', False):
     DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
     DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_OAUTH2_TOKEN', False)

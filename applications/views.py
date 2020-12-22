@@ -5,6 +5,7 @@ import logging
 from datetime import timedelta
 
 from django import http
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import ValidationError
@@ -199,7 +200,7 @@ def save_draft(request):
 
 def export_resume(request):
     try:
-        response = HttpResponse(open("./files/resumes/resume_export.tar.gz", 'rb').read())
+        response = HttpResponse(open(settings.EXPORT_FILES_URL + "resumes/resume_export.tar.gz", 'rb').read())
         response['Content-Type'] = 'text/plain'
         response['Content-Disposition'] = 'attachment; filename=resume_export.tar.gz'
         return response
@@ -208,7 +209,7 @@ def export_resume(request):
 
 def export_newsletter_subs(request):
     try:
-        response = HttpResponse(open("./files/newsletter_subs.csv", 'rb').read())
+        response = HttpResponse(open(settings.EXPORT_FILES_URL + "newsletter_subs.csv", 'rb').read())
         response['Content-Type'] = 'text/plain'
         response['Content-Disposition'] = 'attachment; filename=newsletter_subs.csv'
         return response
@@ -217,7 +218,7 @@ def export_newsletter_subs(request):
 
 def export_in_person_apps(request):
     try:
-        response = HttpResponse(open("./files/in_person_apps.csv", 'rb').read())
+        response = HttpResponse(open(settings.EXPORT_FILES_URL + "in_person_apps.csv", 'rb').read())
         response['Content-Type'] = 'text/plain'
         response['Content-Disposition'] = 'attachment; filename=in_person_apps.csv'
         return response
