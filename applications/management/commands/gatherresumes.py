@@ -1,6 +1,7 @@
 import tarfile
 
 from django.core.management.base import BaseCommand
+from django.conf import settings
 
 from applications.models import Application
 
@@ -12,7 +13,7 @@ class Command(BaseCommand):
         try:
             users = (Application.objects.filter(status="C") | Application.objects.filter(status="A"))
 
-            with tarfile.open(f"./files/resumes/resume_export.tar.gz", "w:gz") as tar_handle:
+            with tarfile.open(settings.EXPORT_FILES_URL + "resumes/resume_export.tar.gz", "w:gz") as tar_handle:
                 for resume in users:
                     if resume.resume:
                         try:

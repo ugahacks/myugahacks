@@ -4,7 +4,7 @@ from applications import models
 
 
 class Command(BaseCommand):
-    help = 'Prints applications filtered by state as CSV'
+    help = 'Prints applications filtered by state'
 
     def add_arguments(self, parser):
         parser.add_argument('-s',
