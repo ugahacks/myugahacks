@@ -136,7 +136,7 @@ class Application(models.Model):
     H_GITHUB = 'GitHub'
     H_EMAIL = "Promotional Emails"
     H_FRIENDS = "Friends"
-    H_PROF = "Professors/University-wide annoucement"
+    H_PROF = "Professors/University-wide announcement"
     H_MLH = "MLH Website"
 
     HEARABOUT = [
@@ -148,7 +148,7 @@ class Application(models.Model):
         (H_GITHUB, 'Github'),
         (H_EMAIL, 'Promotional Emails'),
         (H_FRIENDS, 'Friends'),
-        (H_PROF, 'Professors/University-wide annoucement'),
+        (H_PROF, 'Professors/University-wide announcement'),
         (H_MLH, 'MLH Website'),
     ]
 
@@ -203,7 +203,7 @@ class Application(models.Model):
         MinValueValidator(0, "Negative? Really? Please put a positive value")])
 
     # Participant
-    attendance_type = models.CharField(max_length=300, choices=ATTENDANCE, default=A_PHYSICAL)
+    attendance_type = models.CharField(max_length=300, choices=ATTENDANCE, default=A_VIRTUAL)
     participant = models.CharField(max_length=300, choices=PARTICIPANTS, default=P_HACKER)
     volunteer_time = models.CharField(max_length=600, blank=True, null=True)
     mentor_topic = models.CharField(max_length=600, blank=True, null=True)
