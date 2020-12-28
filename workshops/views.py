@@ -1,4 +1,4 @@
-from workshops.models import Workshop, Timeslot, Attendance
+from workshops.models import Workshop, Attendance
 from django.contrib import messages
 from django.http import Http404, HttpResponseRedirect
 from django.views.generic import DetailView, TemplateView
@@ -9,7 +9,6 @@ from django_tables2 import SingleTableMixin
 from app.mixins import TabsViewMixin
 from checkin.models import CheckIn
 from user.mixins import IsOrganizerMixin, IsVolunteerMixin
-from workshops.models import Workshop, Timeslot, Attendance
 from workshops.tables import WorkshopListTable, WorkshopListFilter
 from .forms import AddWorkshopForm
 
@@ -21,69 +20,32 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
     success_url = '/workshops/list/'
     form_class = AddWorkshopForm
 
-    # use {% if is_available %} in html template to check if there are any timeslots available. If not, do not display the form.
-    # This method is used to check whether or not there are timeslots available.
     def get_context_data(self, **kwargs):
         context = super(WorkshopAdd, self).get_context_data(**kwargs)
-        if (Timeslot.objects.filter(workshop_one__isnull=True).count() + Timeslot.objects.filter(
-            workshop_two__isnull=True).count()) > 0:
-            context.update({
-                'is_available': True,
-            })
-        else:
-            context.update({
-                'is_available': False,
-            })
         return context
 
     def form_valid(self, form):
         workshop = form.save(commit=False)
-        # form.cleaned_data['timeslot'] returns the unique id of the timeslot. this
-        # id is then used to get the timeslow object.
-        # timeslot = Timeslot.objects.get(pk=form.cleaned_data['timeslot'])
-        timeslot = form.cleaned_data['timeslot']
-        # Checks if workshop_one is filled first.
+        #valid_time = Workshop.objects.filter()
         workshop.save()
-        if not timeslot.workshop_one:
-            timeslot.workshop_one = workshop
-        else:
-            timeslot.workshop_two = workshop
-        timeslot.save()
         return super().form_valid(form)
 
 
 class WorkshopUpdate(IsOrganizerMixin, UpdateView):
     model = Workshop
     success_url = '/workshops/list/'
-    fields = ['title', 'description', 'location', 'host', 'open', 'in_person']
+    fields = ['title', 'description', 'location', 'host', 'open', 'in_person', 'start', 'end']
     template_name = 'workshop_update_form.html'
 
     def get_context_data(self, **kwargs):
         context = super(WorkshopUpdate, self).get_context_data(**kwargs)
-        timeslot_list = Timeslot.objects.filter(workshop_one__isnull=True) | Timeslot.objects.filter(
-            workshop_two__isnull=True)
-        context.update({
-            'timeslot_list': timeslot_list,
-        })
         return context
 
     def form_valid(self, form):
         workshop = form.save(commit=False)
-        # clearing the workshop from the previous timeslot so there are no duplicate workshops
-        old_timeslot = Timeslot.objects.filter(workshop_one=workshop).first()
-        if old_timeslot:
-            old_timeslot.workshop_one = None
-        else:
-            old_timeslot = Timeslot.objects.filter(workshop_two=workshop).first()
-            old_timeslot.workshop_two = None
-        old_timeslot.save()
-        # adding workshop to new timeslot.
-        timeslot = Timeslot.objects.filter(id=self.request.POST['workshop_timeslot']).first()
-        if not timeslot.workshop_one:
-            timeslot.workshop_one = workshop
-        else:
-            timeslot.workshop_two = workshop
-        timeslot.save()
+        start = form.data['start']
+        valid_time = Workshop.objects.filter(start=start)
+        print(list(valid_time))
         workshop.save()
         return super(WorkshopUpdate, self).form_valid(form)
 
@@ -105,22 +67,17 @@ class WorkshopDetail(IsVolunteerMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(WorkshopDetail, self).get_context_data(**kwargs)
         workshop = kwargs['object']
-        # Since workshop is a ForeignKey in timeslot, the start and end attributes are retrieved from
-        # the timeslot model.
-        # There should only be two workshops per timeslot. Gets the timeslot related to the given workshop.
-        timeslot = workshop.workshop_one_set.first() or workshop.workshop_two_set.first()
-        # Recieves the total amount of people that attended this workshop
         attendance = workshop.attendance_set.count()
         # TODO: Make this statement more descriptive.
-        if not workshop or not timeslot:
+        if not workshop:
             raise Http404
         context.update({
             'title': workshop.title,
             'description': workshop.description,
             'location': workshop.location,
             'host': workshop.host,
-            'start': timeslot.start,
-            'end': timeslot.end,
+            'start': workshop.start,
+            'end': workshop.end,
             'attendance': attendance,  # This is an int
         })
         return context

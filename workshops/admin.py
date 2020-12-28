@@ -15,5 +15,3 @@ class AttendanceAdmin(admin.ModelAdmin):
 admin.site.register(models.Attendance, admin_class=AttendanceAdmin)
 
 admin.site.register(models.Workshop)
-
-admin.site.register(models.Timeslot)

@@ -7,18 +7,6 @@
   <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
-    <div class="form-group">
-      <label class="control-label" for="workshop_timeslot">Timeslot</label>
-      <select class="form-control" name="workshop_timeslot">
-        <option value="{{ workshop.get_time_slot.id }}" selected>{{ workshop.get_time_slot }}</option>
-        {% for timeslot in timeslot_list %}
-          {% if workshop.get_time_slot.id == timeslot.id %}
-          {% else %}
-            <option value="{{ timeslot.id }}">{{ timeslot }}</option>
-          {% endif %}
-        {% endfor %}
-      </select>
-    </div>
     <input class="btn btn-success" type="submit" value="Update Workshop">
   </form>
   <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -26,7 +14,7 @@
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
   <script>
     $(document).ready(function () {
-              var exp_time = $('input[name="workshop_starts"]');
+              var exp_time = $('input[name="start"]');
               exp_time.daterangepicker({
                 timePicker: true,
                 singleDatePicker: true,
@@ -38,7 +26,7 @@
                   format: 'YYYY-MM-DD H:mm:ss'
                 }
               });
-              var exp_time2 = $('input[name="workshop_ends"]');
+              var exp_time2 = $('input[name="end"]');
               exp_time2.daterangepicker({
                 timePicker: true,
                 singleDatePicker: true,

@@ -9,14 +9,7 @@ class WorkshopListTable(tables.Table):
     title = tables.TemplateColumn(
         "<a href='{% url 'workshop_detail' record.id %}'>{{ record.title }}</a> ")
     # starts = tables.DateTimeColumn(accessor='get_time_slot', verbose_name='Starts', format='d/m G:i')
-    start = tables.TemplateColumn(
-        "{{ record.get_time_slot.start }}",
-        orderable=False
-    )
-    end = tables.TemplateColumn(
-        "{{ record.get_time_slot.end }}",
-        orderable=False,
-    )
+
     update = tables.TemplateColumn(
         "<a href='{% url 'workshop_update' record.id %}'>Modify</a> ",
         verbose_name='Actions', orderable=False)
@@ -29,7 +22,7 @@ class WorkshopListTable(tables.Table):
         model = Workshop
         attrs = {'class': 'table table-hover'}
         template = 'templates/workshop_list.html'
-        fields = ['title', 'location', 'host', 'open', 'in_person']
+        fields = ['title', 'location', 'host', 'open', 'in_person', 'start', 'end']
         empty_text = 'No workshops available'
         # order_by = "-start"
 
