@@ -12,7 +12,7 @@ from applications.models import Application
 from checkin.models import CheckIn
 from checkin.tables import ApplicationsCheckInTable, ApplicationCheckinFilter, RankingListTable, \
     ApplicationsReIssueTable
-from user.mixins import IsVolunteerMixin, IsOrganizerMixin
+from user.mixins import IsVolunteerMixin, IsOrganizerMixin, IsHackerMixin
 from user.models import User
 
 
@@ -32,6 +32,47 @@ class CheckInList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView)
 
     def get_queryset(self):
         return Application.objects.exclude(status=Application.ATTENDED)
+
+
+class OnlineCheckInHackerView(IsHackerMixin, TabsView):
+    template_name = 'checkin/online_hacker_checkin.html'
+
+    def get_back_url(self):
+        return 'javascript:history.back()'
+
+    def get_context_data(self, **kwargs):
+        context = super(OnlineCheckInHackerView, self).get_context_data(**kwargs)
+        application_id = kwargs['id']
+        application_obj = Application.objects.filter(uuid=application_id).first()
+        if not application_obj:
+            raise Http404
+        context.update({
+            'app': application_obj,
+            'checkedin': application_obj.status == Application.ATTENDED
+        })
+        try:
+            context.update({'checkin': CheckIn.objects.filter(application=application_obj).first()})
+        except:
+            pass
+        return context
+
+    def post(self, request, *args, **kwargs):
+        appid = request.POST.get('app_id')
+        # qrcode = request.POST.get('qr_code')
+        # if qrcode is None or qrcode == '':
+        #     messages.success(self.request, 'The QR code is mandatory!')
+        #     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        app = Application.objects.filter(uuid=appid).first()
+        app.check_in()
+        ci = CheckIn()
+        ci.user = request.user
+        ci.application = app
+        # ci.qr_identifier = qrcode
+        ci.save()
+        messages.success(self.request, 'Hacker checked-in! Good job! '
+                                       'Nothing else to see here, '
+                                       'you can move on :D')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class CheckInHackerView(IsVolunteerMixin, TabsView):
