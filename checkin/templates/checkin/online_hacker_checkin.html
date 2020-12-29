@@ -5,29 +5,9 @@
 
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'css/checkin.css' %}">
-  <script src="{% static 'lib/instascan.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/checkin.js' %}"></script>
 {% endblock %}
 
 {% block head_title %}Self Check-In {{ app.user.name }}{% endblock %}
-
-{% block panel %}
-  <dl class="dl-horizontal">
-    {% include 'include/field.html' with desc='Name' value=app.user.name %}
-    {% include 'include/field.html' with desc='Role' value=app.participant|safe|urlize %}
-    {% if app.volunteer_time %}
-      {% include 'include/field.html' with desc='Volunteer Time Slot(s)' value=app.volunteer_time|safe|urlize %}
-    {% endif %}
-    {% if app.mentor_topic %}
-      {% include 'include/field.html' with desc='Mentoring In' value=app.mentor_topic|safe|urlize %}
-    {% endif %}
-    {% include 'include/field.html' with desc='Email' value=app.user.email %}
-    {% include 'include/field.html' with desc='Shirt Size' value=app.tshirt_size %}
-    {% include 'include/field.html' with desc='Diet' value=app.diet %}
-    {% include 'include/field.html' with desc='Other' value=app.other_diet %}
-    {% include 'include/field.html' with desc='Status' value=app.get_status_display %}
-  </dl>
-{% endblock %}
 
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 
@@ -35,8 +15,7 @@
   <div class="panel-footer">
     {% if checkedin %}
       <div style="padding: 1em 1.5em 1.5em 1.5em;">
-        <h4 style="margin-bottom: 15px;">Let's keep this up!</h4>
-        <a class="btn btn-default btn-block" href="{% url 'check_in_list' %}">Check-in more hackers!</a>
+        <h4 style="margin-bottom: 15px;">You're already checked in!</h4>
       </div>
     {% else %}
       <form action="" method="post" style="padding-top: 1.5em;">
