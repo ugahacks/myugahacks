@@ -33,7 +33,13 @@ class CheckInList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView)
     def get_queryset(self):
         return Application.objects.exclude(status=Application.ATTENDED)
 
-
+'''
+OnlineCheckInHackerView is a class-based view that is specifically tailored towards completely 
+online events, such as the case of a pandemic e.g. COVID-19.
+    - Back Button will function for both hackers and organizers alike (as it did in the legacy check-in).
+    - QR codes are not required for online events, and as a result, are not required for check-in, food,
+        workshops, etc.
+'''
 class OnlineCheckInHackerView(IsHackerMixin, TabsView):
     template_name = 'checkin/online_hacker_checkin.html'
 
