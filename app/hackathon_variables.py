@@ -37,7 +37,7 @@ HACKATHON_MEDIUM_ACCOUNT = ''
 HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/myugahacks/'
 
 # (OPTIONAL) Applications deadline
-HACKATHON_APP_DEADLINE = timezone.datetime(2021, 1, 8, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
+HACKATHON_APP_DEADLINE = timezone.datetime(2021, 1, 23, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
 # (OPTIONAL) When to arrive at the hackathon
 HACKATHON_ARRIVE = 'Check-in opens at 5:00 PM and the opening ceremony will be at 6:30 PM on February 5th at the Zell B. Miller Center. ' \
                    'Further details about the schedule can be found at 6.ugahacks.com. We hope to see you there!'
