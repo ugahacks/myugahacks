@@ -1,0 +1,29 @@
+{% extends "base_tabs.html" %}
+
+{% load static %}
+{% load bootstrap3 %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkin.css' %}">
+{% endblock %}
+
+{% block head_title %}Self Check-In {{ app.user.name }}{% endblock %}
+
+{% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
+
+{% block out_panel %}
+  <div class="panel-footer">
+    {% if checkedin %}
+      <div style="padding: 1em 1.5em 1.5em 1.5em;">
+        <h4 style="text-align: center; margin-bottom: 15px;">You are already checked in!</h4>
+      </div>
+    {% else %}
+      <h3 style="text-align: center; margin-bottom: -5px;">Check-in with one click:</h3>
+      <form action="" method="post" style="padding-top: 1.5em;">
+        {% csrf_token %}
+        <input type="hidden" name="app_id" value="{{ app.uuid }}"/>
+        <button class="btn btn-success btn-block" name="checkin">Check In</button>
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}
