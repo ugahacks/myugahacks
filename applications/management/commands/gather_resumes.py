@@ -9,7 +9,7 @@ from applications.models import Application
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        print("Gathering Resumes: This may take a few minutes...")
+        self.stdout.write("Gathering Resumes: This may take a few minutes...")
         try:
             users = (Application.objects.filter(status="C") | Application.objects.filter(status="A"))
 
@@ -20,6 +20,6 @@ class Command(BaseCommand):
                             tar_handle.add(f".{resume.resume.url}", resume.resume.name)
                         except Exception as f:
                             print(f"Error adding a file:{f}")
-            print("Finished gathering resumes.")
+            self.stdout.write(self.style.SUCCESS("Finished gathering resumes."))
         except Exception as e:
             print(f"Error: {e}")
