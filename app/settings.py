@@ -137,6 +137,7 @@ TEMPLATES = [
                 'app.utils.hackathon_vars_processor',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'applications.context_processors.is_online_hackathon',
 
             ],
         },
@@ -241,6 +242,8 @@ APPLICATIONS_STATIC_URL = BASE_DIR + '/applications/static/'
 MEDIA_ROOT = 'files'
 MEDIA_URL = '/files/'
 
+EXPORT_FILES_URL = BASE_DIR + MEDIA_URL
+
 if os.environ.get('DROPBOX_OAUTH2_TOKEN', False):
     DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
     DROPBOX_OAUTH2_TOKEN = os.environ.get('DROPBOX_OAUTH2_TOKEN', False)
@@ -323,3 +326,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 MAX_UPLOAD_SIZE = 5242880
 
 MEALS_TOKEN = os.environ.get('MEALS_TOKEN', None)
+
+# For COVID-19 affected hackathons
+IS_ONLINE_HACKATHON = True

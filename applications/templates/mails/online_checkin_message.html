@@ -1,0 +1,15 @@
+{% extends 'base_email.html' %}
+{% block preheader %} Online Check-In For {{ h_name }}{% endblock %}
+
+{% block content %}
+  <p>
+    Hello {{ name }},
+  </p>
+  <p>
+    {{ h_name }} will be underway shortly! This year, we are offering self check-in for all hackers. Simply check-in with one click below, and you will be granted access to the event.
+
+    <b>You have until the opening ceremonies to check-in!</b>
+  </p>
+  {% include 'mails/include/email_button.html' with text='Check-In Now!' url=checkin_url %}
+  {% include 'mails/include/closing.html' %}
+{% endblock %}

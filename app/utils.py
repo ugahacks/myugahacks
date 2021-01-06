@@ -70,6 +70,7 @@ def get_substitutions_templates():
             'h_domain': getattr(settings, 'HACKATHON_DOMAIN', None),
             'h_description': getattr(settings, 'HACKATHON_DESCRIPTION', None),
             'h_ga': getattr(settings, 'HACKATHON_GOOGLE_ANALYTICS', None),
+            'h_hj': getattr(settings, 'HACKATHON_HOTJAR_ID', None),
             'h_tw': getattr(settings, 'HACKATHON_TWITTER_ACCOUNT', None),
             'h_repo': getattr(settings, 'HACKATHON_GITHUB_REPO', None),
             'h_app_closed': is_app_closed(),

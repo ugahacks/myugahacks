@@ -1,9 +1,12 @@
+import typing as t
+
 from django.conf import settings
 from django.core import mail
 
 from app import emails
 from app.utils import reverse
 
+from applications.models import Application
 
 def create_invite_email(application, request):
     c = {
@@ -52,3 +55,11 @@ def create_lastreminder_email(application):
 def send_batch_emails(emails):
     connection = mail.get_connection()
     connection.send_messages(emails)
+
+
+def create_online_checkin_email(application: Application) -> t.Any:
+    context = {
+        'name': application.user.get_full_name,
+        'checkin_url': f'http://{settings.HACKATHON_DOMAIN}/checkin/me/{application.uuid}',
+    }
+    return emails.render_mail('mails/online_checkin', application.user.email, context, action_required=True)

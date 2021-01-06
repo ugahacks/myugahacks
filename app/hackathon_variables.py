@@ -16,17 +16,19 @@ HACKATHON_DOMAIN = 'my.ugahacks.com'
 # Hackathon contact email: where should all hackers contact you. It will also be used as a sender for all emails
 HACKATHON_CONTACT_EMAIL = 'hello@ugahacks.com'
 # Hackathon logo url, will be used on all emails
-HACKATHON_LOGO_URL = 'https://cdn.discordapp.com/attachments/620787206621233185/691814435202793492/Hacks6emailbanner.png'
+HACKATHON_LOGO_URL = 'https://my.ugahacks.com/static/img/github-logo.png'
 
-HACKATHON_OG_IMAGE = 'https://cdn.discordapp.com/attachments/620787206621233185/691814435202793492/Hacks6emailbanner.png'
+HACKATHON_OG_IMAGE = 'https://my.ugahacks.com/static/img/logo.png'
 # (OPTIONAL) Track visits on your website
-HACKATHON_GOOGLE_ANALYTICS = ''
+HACKATHON_GOOGLE_ANALYTICS = 'UA-179127149-1'
+# Hotjar Tracking for heatmaps etc. (Integer)
+HACKATHON_HOTJAR_ID = 1566634
 # (OPTIONAL) Hackathon Twitter user
 HACKATHON_TWITTER_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Facebook page
 HACKATHON_FACEBOOK_PAGE = 'ugahacks/'
 # (OPTIONAL) Hackathon YouTube channel
-HACKATHON_YOUTUBE_PAGE = ''
+HACKATHON_YOUTUBE_PAGE = 'UCudlu7Tfg7VL7sR5NJzcCnw'
 # (OPTIONAL) Hackathon Instagram user
 HACKATHON_INSTAGRAM_ACCOUNT = 'ugahacks/'
 # (OPTIONAL) Hackathon Medium user
@@ -35,7 +37,7 @@ HACKATHON_MEDIUM_ACCOUNT = ''
 HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/myugahacks/'
 
 # (OPTIONAL) Applications deadline
-HACKATHON_APP_DEADLINE = timezone.datetime(2021, 1, 8, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
+HACKATHON_APP_DEADLINE = timezone.datetime(2021, 1, 23, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
 # (OPTIONAL) When to arrive at the hackathon
 HACKATHON_ARRIVE = 'Check-in opens at 5:00 PM and the opening ceremony will be at 6:30 PM on February 5th at the Zell B. Miller Center. ' \
                    'Further details about the schedule can be found at 6.ugahacks.com. We hope to see you there!'
