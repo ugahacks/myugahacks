@@ -121,13 +121,18 @@
           cannot add/change your team members later on or at the event as long as they have also been invited at the
           event.</b>
         </p>
-        {% if h_arrive %}
-          <h3>When to arrive</h3>
-          <p>{{ h_arrive }}</p>
-        {% endif %}
-        {% if h_leave %}
-          <h3>When to leave</h3>
-          <p>{{ h_leave }}</p>
+
+        {% if not IS_ONLINE_HACKATHON %}
+          {% if h_arrive %}
+            <h3>When to arrive</h3>
+            <p>{{ h_arrive }}</p>
+          {% endif %}
+          {% if h_leave %}
+            <h3>When to leave</h3>
+            <p>{{ h_leave }}</p>
+          {% endif %}
+        {% else %}
+          {% include 'mails/include/online_hackathon_info.html' %}
         {% endif %}
 
         <div class="col-md-5  no-padding"><a href="{% url 'confirm_app' application.uuid_str %}"
