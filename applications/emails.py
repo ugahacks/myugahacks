@@ -35,6 +35,7 @@ def create_confirmation_email(application, request):
         'qr_url': 'http://chart.googleapis.com/chart?cht=qr&chs=350x350&chl=%s'
                   % application.uuid_str,
         'cancel_url': str(reverse('cancel_app', request=request, kwargs={'id': application.uuid_str})),
+        'IS_ONLINE_HACKATHON': settings.IS_ONLINE_HACKATHON,
     }
     return emails.render_mail('mails/confirmation',
                               application.user.email, c)
@@ -48,7 +49,6 @@ def create_lastreminder_email(application):
                                         reverse('confirm_app', kwargs={'id': application.uuid_str})),
         'cancel_url': 'http://%s%s' % (settings.HACKATHON_DOMAIN,
                                        reverse('cancel_app', kwargs={'id': application.uuid_str})),
-        'IS_ONLINE_HACKATHON': settings.IS_ONLINE_HACKATHON,
     }
     return emails.render_mail('mails/last_reminder',
                               application.user.email, c, action_required=True)
