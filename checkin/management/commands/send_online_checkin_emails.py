@@ -50,8 +50,8 @@ class Command(BaseCommand):
                 messages = []
                 
                 for email_addr in options['test']:
-                    messages.append(render_mail('mails/online_checkin', 
-                        email_addr, {'name': 'NON_FUNC_TEST', 'IS_ONLINE_HACKATHON': True}, 
+                    messages.append(render_mail('mails/online_checkin', email_addr, 
+                        {'name': 'NON_FUNC_TEST'},
                         action_required=True))
 
                 mail.get_connection().send_messages(messages)
