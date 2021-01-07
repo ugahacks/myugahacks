@@ -93,6 +93,10 @@ a:hover, a:active, a:focus {
     color: white;
 }
 
+.previous a, .next a {
+    color:#080808;
+}
+
 .btn-reverse {
     background: #5F723F;
     color: white;
