@@ -25,15 +25,12 @@ class Command(BaseCommand):
 
         connection = mail.get_connection()
         connection.send_messages(msgs)
-        self.stdout.write(self.style.SUCCESS(
-            'Sending reminders... Successfully sent %s reminders' % len(msgs)))
+        self.stdout.write(self.style.SUCCESS('Sending reminders... Successfully sent %s reminders' % len(msgs)))
 
         onedayago = timezone.now() - timedelta(days=1)
         self.stdout.write('Checking expired...')
-        expired = Application.objects.filter(
-            status_update_date__lte=onedayago, status=Application.LAST_REMINDER)
+        expired = Application.objects.filter(status_update_date__lte=onedayago, status=Application.LAST_REMINDER)
         self.stdout.write('Checking expired...%s found' % expired.count())
         self.stdout.write('Setting expired...')
         count = len([app.expire() for app in expired])
-        self.stdout.write(self.style.SUCCESS(
-            'Setting expired... Successfully expired %s applications' % count))
+        self.stdout.write(self.style.SUCCESS('Setting expired... Successfully expired %s applications' % count))
