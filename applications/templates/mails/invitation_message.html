@@ -20,6 +20,13 @@
       update.
     </p>
   {% endif %}
-  {% include 'mails/include/arrival_departure_info.html' %}
+
+  {% if not IS_ONLINE_HACKATHON %}
+    {% include 'mails/include/arrival_departure_info.html' %}
+  {% else %}
+    {% include 'mails/include/online_hackathon_info.html' %}
+  {% endif %}
+  
   {% include 'mails/include/closing.html' %}
+  
 {% endblock %}

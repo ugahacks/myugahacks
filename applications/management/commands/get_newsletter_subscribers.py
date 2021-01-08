@@ -11,7 +11,7 @@ class Command(BaseCommand):
         parser.add_argument('-d', '--date', action='store_true', help='sort by submission date')
 
     def handle(self, *args, **options):
-        print('Gathering Newsletter Subscribers...')
+        self.stdout.write('Gathering Newsletter Subscribers...')
         applications = models.Application.objects.filter(hacks_newsletter=True)
 
         if options['date']:
@@ -23,4 +23,4 @@ class Command(BaseCommand):
             for app in applications:
                 res = [app.user.name, app.user.email, app.submission_date.strftime('%m/%d/%Y %H:%M:%S')]
                 csv_writer.writerow(res)
-        print('Finished gathering Newsletter Subscribers! Check out the csv file called newsletter_subs under /files!')
+        self.stdout.write(self.style.SUCCESS('Finished gathering Newsletter Subscribers! Check out the csv file called newsletter_subs under /files!'))
