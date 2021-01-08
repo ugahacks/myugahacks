@@ -1,6 +1,8 @@
 from workshops.models import Workshop, Attendance
 from django.contrib import messages
+from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
+from django.views import View
 from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import FormView, UpdateView
 from django_filters.views import FilterView
@@ -11,6 +13,7 @@ from checkin.models import CheckIn
 from user.mixins import IsOrganizerMixin, IsVolunteerMixin
 from workshops.tables import WorkshopListTable, WorkshopListFilter
 from .forms import AddWorkshopForm
+from django.utils.timezone import make_aware
 
 
 ## TODO:
@@ -26,9 +29,9 @@ class WorkshopAdd(IsOrganizerMixin, FormView):
 
     def form_valid(self, form):
         workshop = form.save(commit=False)
-        #valid_time = Workshop.objects.filter()
         workshop.save()
-        return super().form_valid(form)
+        return super(WorkshopAdd, self).form_valid(form)
+
 
 
 class WorkshopUpdate(IsOrganizerMixin, UpdateView):
@@ -43,7 +46,8 @@ class WorkshopUpdate(IsOrganizerMixin, UpdateView):
 
     def form_valid(self, form):
         workshop = form.save(commit=False)
-        start = form.data['start']
+        start = form.cleaned_data['start']
+        print(start)
         valid_time = Workshop.objects.filter(start=start)
         print(list(valid_time))
         workshop.save()
@@ -57,9 +61,13 @@ class WorkshopList(IsVolunteerMixin, TabsViewMixin, SingleTableMixin, FilterView
     table_pagination = {'per_page': 100}
 
 
-## TODO:
-# Make a better message for users when workshop/timeslot is not found.
-# Better frontend...
+def workshop_attend(request, workshop_id):
+    workshop = Workshop.objects.get(pk=workshop_id)
+    attendance = Attendance(user=request.user, workshop=workshop)
+    attendance.save()
+    return HttpResponseRedirect(reverse('workshop_detail', args=(workshop_id,)))
+
+
 class WorkshopDetail(IsVolunteerMixin, DetailView):
     model = Workshop
     template_name = 'workshop_detail.html'
@@ -68,7 +76,8 @@ class WorkshopDetail(IsVolunteerMixin, DetailView):
         context = super(WorkshopDetail, self).get_context_data(**kwargs)
         workshop = kwargs['object']
         attendance = workshop.attendance_set.count()
-        # TODO: Make this statement more descriptive.
+        user = self.request.user
+        has_attended = bool(Attendance.objects.filter(user=user, workshop=workshop))
         if not workshop:
             raise Http404
         context.update({
@@ -79,6 +88,7 @@ class WorkshopDetail(IsVolunteerMixin, DetailView):
             'start': workshop.start,
             'end': workshop.end,
             'attendance': attendance,  # This is an int
+            'has_attended': has_attended
         })
         return context
 
