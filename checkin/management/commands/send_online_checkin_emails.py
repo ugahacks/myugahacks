@@ -78,17 +78,25 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(success_message))
 
         elif options['all']:
-            self.stdout.write('Gathering confirmed applications...')
-            confirmed_applications = Application.objects.filter(status=Application.CONFIRMED)
-            self.stdout.write(f'Found: {confirmed_applications.count()} confirmed applications.')
-            self.stdout.write('Sending self check-in emails...')
-            
-            messages = []
-            for application in confirmed_applications:
-                messages.append(emails.create_online_checkin_email(application))
-            connection = mail.get_connection()
-            connection.send_messages(messages)
+            confirm_msg = f'Are you sure you want to send check-in emails ' \
+                            + 'to ALL confirmed applications? [y/N] '
+            confirmed = input(confirm_msg)
 
-            self.stdout.write(self.style.SUCCESS(f'Successfully sent {len(messages)} check-in emails.'))
+            if confirmed.lower() == 'y':
+                self.stdout.write('Gathering confirmed applications...')
+                confirmed_applications = Application.objects.filter(status=Application.CONFIRMED)
+                self.stdout.write(f'Found: {confirmed_applications.count()} confirmed applications.')
+                self.stdout.write('Sending self check-in emails...')
+                
+                messages = []
+                for application in confirmed_applications:
+                    messages.append(emails.create_online_checkin_email(application))
+                connection = mail.get_connection()
+                connection.send_messages(messages)
+
+                self.stdout.write(self.style.SUCCESS(f'Successfully sent {len(messages)} check-in emails.'))
+            else:
+                self.stdout.write(f'Sent 0 check-in emails.')
+
         else:
             self.stdout.write(self.style.ERROR(f'Must specify: --all or --test. See --help.'))
