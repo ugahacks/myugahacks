@@ -313,6 +313,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.ema
                                    'https://www.googleapis.com/auth/userinfo.profile']
 SOCIAL_AUTH_GITHUB_KEY = env('GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = env('GITHUB_SECRET')
+EASYPOST_KEY = env('EASYPOST_KEY')
 SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']
 # Add domain to allowed hosts
 ALLOWED_HOSTS.append(HACKATHON_DOMAIN)

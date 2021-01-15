@@ -6,13 +6,14 @@ from form_utils.forms import BetterModelForm
 
 from app.mixins import OverwriteOnlyModelFormMixin
 from app.utils import validate_url
+from app import settings as app_settings
 from applications import models
 
 import json
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 import easypost
-easypost.api_key = "EZTK5ff1febff9ca4c7fb9c01dc0f4da6619cMTEKqQmB4fDT0R8eAFyaA"
+easypost.api_key = app_settings.EASYPOST_KEY
 
 with open(settings.APPLICATIONS_STATIC_URL + 'all_schools.json') as schools_dot_json:
     ALLOWED_SCHOOLS = json.load(schools_dot_json)

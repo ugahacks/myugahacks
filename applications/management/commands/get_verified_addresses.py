@@ -3,8 +3,9 @@ from applications import models
 import csv
 import easypost
 from django.conf import settings
+from app import settings as app_settings
 
-easypost.api_key = "EZTK5ff1febff9ca4c7fb9c01dc0f4da6619cMTEKqQmB4fDT0R8eAFyaA"
+easypost.api_key = app_settings.EASYPOST_KEY
 
 
 class Command(BaseCommand):

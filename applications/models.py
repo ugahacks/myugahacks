@@ -10,13 +10,14 @@ from django.db.models import Avg
 from django.utils import timezone
 
 from app import utils
+from app import settings as app_settings
 from user.models import User
 
 import easypost
 
 
 class AddressVerificationManager(models.Manager):
-    easypost.api_key = "EZTK5ff1febff9ca4c7fb9c01dc0f4da6619cMTEKqQmB4fDT0R8eAFyaA"
+    easypost.api_key = app_settings.EASYPOST_KEY
 
     def get_verified(self):
         confirmed_applicants = Application.objects.filter(status='C')
