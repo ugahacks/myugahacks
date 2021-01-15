@@ -11,7 +11,10 @@ from applications import models
 import json
 from django.contrib.staticfiles.storage import staticfiles_storage
 
-with open(settings.APPLICATIONS_STATIC_URL + 'all_schools.json') as schools_dot_json: 
+import easypost
+easypost.api_key = "EZTK5ff1febff9ca4c7fb9c01dc0f4da6619cMTEKqQmB4fDT0R8eAFyaA"
+
+with open(settings.APPLICATIONS_STATIC_URL + 'all_schools.json') as schools_dot_json:
     ALLOWED_SCHOOLS = json.load(schools_dot_json)
 
 YEARS = [x for x in range(1930, 2021)]
@@ -229,7 +232,6 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         if form_entered_university and not form_entered_university in ALLOWED_SCHOOLS:
             raise forms.ValidationError("Please enter a school from suggested.")
 
-
         uniemail = cleaned_data.get('uniemail')
         if uniemail:
             if (participant == 'Hacker' or participant == 'Volunteer') and '.edu' not in uniemail:
@@ -240,7 +242,25 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             else:
                 raise forms.ValidationError("Please enter your school email.")
 
+        digital_hack_enabled = getattr(settings, 'DIGITAL_HACKATHON', False)
+        if digital_hack_enabled:
+            street1 = cleaned_data.get('address_line')
+            street2 = cleaned_data.get('address_line_2')
+            city = cleaned_data.get('city')
+            state = cleaned_data.get('state')
+            zip_code = cleaned_data.get('zip_code')
 
+            address = easypost.Address.create(
+                verify=["delivery"],
+                street1=street1,
+                street2=street2,
+                city=city,
+                state=state,
+                zip=zip_code,
+                country="US"
+            )
+            if not address.verifications.delivery.success:
+                raise forms.ValidationError("Please enter a valid shipping address")
 
     def __getitem__(self, name):
         item = super(ApplicationForm, self).__getitem__(name)
@@ -255,7 +275,8 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                          'class_status', 'graduation_year', 'uniemail', 'gender', 'other_gender', 'ethnicity',
                          'phone_number', 'tshirt_size', 'diet', 'other_diet'),
               'description': 'Hey there, thank you for your interest in attending UGAHacks. To begin, we would like to know a little more about you.', }),
-            ('Hackathons?', {'fields': ('description', 'first_timer', 'first_ugahacks', 'hearabout', 'projects', 'hardware'), }),
+            ('Hackathons?', {'fields': ('description', 'first_timer',
+                                        'first_ugahacks', 'hearabout', 'projects', 'hardware'), }),
             ('Show us what you\'ve built',
              {'fields': ('github', 'devpost', 'linkedin', 'site', 'resume'),
               'description': 'Some of our sponsors may use this information for recruitment purposes,'
@@ -291,7 +312,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
         # https://stackoverflow.com/questions/9704067/test-if-django-modelform-has-instance
         if digital_hack_enabled:
             self._fieldsets.append(('Shipping Address', {
-                'fields': ('address_line','address_line_2','city','state','zip_code'),
+                'fields': ('address_line', 'address_line_2', 'city', 'state', 'zip_code'),
                 'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
                                'margin-bottom: 1em;line-height: 1.25em;">Due to Covid-19, our upcoming event, UGAHacks 6, will be virtual. '
                                'We would still want to be able to ship prizes and swag to as many of our participants as possible (as deemed reasonable given shipping costs). '
@@ -311,13 +332,13 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                            'Finally, you are also authorizing us to the use of any images and videos of yourself during the event.</p>'
         }))
         self._fieldsets.append(('MLH Policies', {
-                    'fields': ('terms_and_conditions', 'code_of_conduct'),}))
+            'fields': ('terms_and_conditions', 'code_of_conduct'), }))
         self._fieldsets.append(('UGAHacks Newsletter', {
-                    'fields': ('hacks_newsletter',),
-                    'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
-                                   'margin-bottom: 1em;line-height: 1.25em;"> UGAHacks has a monthly newsletter that will give updates about our '
-                                   'organization, behind-the-scenes looks at planning the next UGAHacks, and promotional material about future events.</p>'
-                                   }))
+            'fields': ('hacks_newsletter',),
+            'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'
+            'margin-bottom: 1em;line-height: 1.25em;"> UGAHacks has a monthly newsletter that will give updates about our '
+            'organization, behind-the-scenes looks at planning the next UGAHacks, and promotional material about future events.</p>'
+        }))
         return super(ApplicationForm, self).fieldsets
 
     class Meta:
@@ -367,4 +388,4 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             'zip_code': 'Zip/Postal code'
         }
 
-        exclude = ['user', 'uuid', 'invited_by', 'submission_date', 'status_update_date', 'status', 'attendance_type' ]
+        exclude = ['user', 'uuid', 'invited_by', 'submission_date', 'status_update_date', 'status', 'attendance_type']

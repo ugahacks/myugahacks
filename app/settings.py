@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
+import environ
 import os
 
 import dj_database_url
@@ -21,7 +22,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-import environ
 
 env = environ.Env(
     # set casting, default value
@@ -38,10 +38,10 @@ PARENT_HOST = env('HOST_NAME')
 ROOT_HOSTCONF = 'app.hosts'
 DEFAULT_HOST = 'my'
 
-#Used for verification emails. in user.tokens
+# Used for verification emails. in user.tokens
 HACKATHON_DOMAIN = DEFAULT_HOST + '.' + PARENT_HOST
 if DEBUG:
-     HACKATHON_DOMAIN += ':8000'
+    HACKATHON_DOMAIN += ':8000'
 
 ROOT_URLCONF = 'app.urls'
 
@@ -51,7 +51,7 @@ ALLOWED_HOSTS = [
 ]
 
 
-SESSION_COOKIE_DOMAIN='.' + PARENT_HOST
+SESSION_COOKIE_DOMAIN = '.' + PARENT_HOST
 
 
 # Application definition
@@ -119,7 +119,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-    'django_hosts.middleware.HostsResponseMiddleware' #This MUST be last
+    'django_hosts.middleware.HostsResponseMiddleware'  # This MUST be last
 ]
 
 TEMPLATES = [
@@ -309,7 +309,8 @@ SOCIAL_AUTH_URL_NAMESPACE = "social"
 SOCIAL_AUTH_USER_FIELDS = ['email', 'first_name', 'last_name']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('GOOGLE_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('GOOGLE_SECRET')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile']
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email',
+                                   'https://www.googleapis.com/auth/userinfo.profile']
 SOCIAL_AUTH_GITHUB_KEY = env('GITHUB_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = env('GITHUB_SECRET')
 SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']

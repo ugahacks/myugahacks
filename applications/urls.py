@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^application/draft/$', views.save_draft, name='save_draft'),
     url(r'^export/resume$', views.export_resume, name='export_resume'),
     url(r'^export/newsletter$', views.export_newsletter_subs, name='export_newsletter'),
-    url(r'^export/inperson$', views.export_in_person_apps, name='export_in_person_apps')
+    url(r'^export/inperson$', views.export_in_person_apps, name='export_in_person_apps'),
+    url(r'^export/addresses$', views.export_verified_addresses, name='export_verified_addresses')
 ]

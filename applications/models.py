@@ -12,6 +12,32 @@ from django.utils import timezone
 from app import utils
 from user.models import User
 
+import easypost
+
+
+class AddressVerificationManager(models.Manager):
+    easypost.api_key = "EZTK5ff1febff9ca4c7fb9c01dc0f4da6619cMTEKqQmB4fDT0R8eAFyaA"
+
+    def get_verified(self):
+        confirmed_applicants = Application.objects.filter(status='C')
+
+        verified = []
+
+        for applicant in confirmed_applicants:
+            address = easypost.Address.create(
+                verify=["delivery"],
+                street1=applicant.address_line,
+                street2=applicant.address_line_2,
+                city=applicant.city,
+                state=applicant.state,
+                zip=applicant.zip_code,
+                country="US"
+            )
+            if address.verifications.delivery.success:
+                verified.append(applicant)
+
+        return verified
+
 
 class Application(models.Model):
     PENDING = 'P'
@@ -169,6 +195,10 @@ class Application(models.Model):
     status = models.CharField(choices=STATUS, default=PENDING,
                               max_length=2)
 
+    # managers
+    objects = models.Manager()
+    address_verifier = AddressVerificationManager()
+
     # ABOUT YOU
     # Population analysis, optional
     gender = models.CharField(max_length=23, choices=GENDERS, default=NO_ANSWER)
@@ -240,7 +270,7 @@ class Application(models.Model):
     address_line = models.CharField(max_length=300, null=True, blank=True)
     address_line_2 = models.CharField(max_length=300, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
-    state =  models.CharField(max_length=2, null=True, blank=True)
+    state = models.CharField(max_length=2, null=True, blank=True)
     zip_code = models.CharField(max_length=15, null=True, blank=True)
 
     @classmethod

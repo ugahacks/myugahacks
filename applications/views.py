@@ -207,6 +207,7 @@ def export_resume(request):
     except:
         raise Http404
 
+
 def export_newsletter_subs(request):
     try:
         response = HttpResponse(open(settings.EXPORT_FILES_URL + "newsletter_subs.csv", 'rb').read())
@@ -216,11 +217,22 @@ def export_newsletter_subs(request):
     except:
         raise Http404
 
+
 def export_in_person_apps(request):
     try:
         response = HttpResponse(open(settings.EXPORT_FILES_URL + "in_person_apps.csv", 'rb').read())
         response['Content-Type'] = 'text/plain'
         response['Content-Disposition'] = 'attachment; filename=in_person_apps.csv'
+        return response
+    except:
+        raise Http404
+
+
+def export_verified_addresses(request):
+    try:
+        response = HttpResponse(open(settings.EXPORT_FILES_URL + "verified_apps.csv", 'rb').read())
+        response['Content-Type'] = 'text/plain'
+        response['Content-Disposition'] = 'attachment; filename=verified_apps.csv'
         return response
     except:
         raise Http404
