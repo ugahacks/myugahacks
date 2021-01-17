@@ -35,6 +35,8 @@ HACKATHON_INSTAGRAM_ACCOUNT = 'ugahacks/'
 HACKATHON_MEDIUM_ACCOUNT = ''
 # (OPTIONAL) Github Repo for this project (so meta)
 HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/myugahacks/'
+# (OPTIONAL) Slack Workspace for the event 
+HACKATHON_SLACK = 'https://slack.ugahacks.com/'
 
 # (OPTIONAL) Applications deadline
 HACKATHON_APP_DEADLINE = timezone.datetime(2021, 1, 23, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
@@ -44,8 +46,10 @@ HACKATHON_APP_DEADLINE = timezone.datetime(2021, 1, 23, 23, 59, tzinfo=timezone.
 # (OPTIONAL) When to arrive at the hackathon
 # HACKATHON_LEAVE = 'Closing ceremony will be held on Sunday, February 7th at 1:00 PM. ' \
 #                   'However the projects expo fair will be held in the morning from 10:00 AM to 1:00 PM.'
-# (OPTIONAL) Hackathon live page
-HACKATHON_LIVE_PAGE = 'https://6.ugahacks.com/'
+# (OPTIONAL) Hackathon event page
+HACKATHON_EVENT_PAGE = 'https://6.ugahacks.com/'
+# (OPTIONAL) Pre-event packet link
+HACKATHON_PRE_EVENT = ''
 
 # (OPTIONAL) Regex to automatically match organizers emails and set them as organizers when signing up
 REGEX_HACKATHON_ORGANIZER_EMAIL = '^.*@ugahacks\.com$'

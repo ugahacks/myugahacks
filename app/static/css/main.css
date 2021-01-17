@@ -298,6 +298,10 @@ img {
     .text-center-xs {
         text-align: center;
     }
+    
+    .dashboard-resource {
+        margin-top: 10px;
+    }
 
     footer {
         text-align: center;

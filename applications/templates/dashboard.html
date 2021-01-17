@@ -50,12 +50,25 @@
       </div>
     {% elif application.is_attended %}
       <div class="col-md-12">
-        <p class="lead">Welcome to {{ h_name }}. Let us know if you need any help!</p>
-        {% if h_live %}
-          <p>Follow our live page for more information during the event</p>
-          <a href="{{ h_live }}" target="_blank" class="btn btn-block btn-success">Go to live page</a>
-
-        {% endif %}
+        <p class="lead text-center">Welcome to {{ h_name }}. Here are useful resources to have handy throughout the event: </p>
+        <div class="col-md-4 dashboard-resource">
+          {% if h_event %}
+            <p class="text-center">Follow our event page for the latest schedule, and answers to frequently asked questions</p>
+            <a href="{{ h_event }}" target="_blank" class="btn btn-block btn-success">{{ h_name }} Event Page</a>
+          {% endif %}
+        </div>
+        <div class="col-md-4 dashboard-resource">
+          {% if h_pre_event %}
+            <p class="text-center">Look at our pre-event packet for all the details to prepare for the event</p>
+            <a href="{{ h_pre_event }}" target="_blank" class="btn btn-block btn-success">{{ h_name }} Pre-event Packet</a>
+          {% endif %}
+        </div>
+        <div class="col-md-4 dashboard-resource">
+          {% if h_slack %}
+            <p class="text-center ">Join our Slack workspace for the latest communications from our team during the event</p>
+            <a href="{{ h_slack }}" target="_blank" class="btn btn-block btn-success">Slack</a>
+          {% endif %}
+        </div>
       </div>
     {% elif application.answered_invite %}
 
