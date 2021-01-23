@@ -53,6 +53,12 @@ def application_timeleft():
     else:
         return None
 
+def checkin_timeleft():
+    deadline = getattr(settings, 'CHECKIN_DEADLINE', None)
+    if deadline:
+        return deadline - timezone.now()
+    else:
+        return None
 
 def is_app_closed():
     timeleft = application_timeleft()
@@ -75,6 +81,7 @@ def get_substitutions_templates():
             'h_repo': getattr(settings, 'HACKATHON_GITHUB_REPO', None),
             'h_app_closed': is_app_closed(),
             'h_app_timeleft': application_timeleft(),
+            'h_checkin_timeleft': checkin_timeleft(),
             'h_arrive': getattr(settings, 'HACKATHON_ARRIVE', None),
             'h_leave': getattr(settings, 'HACKATHON_LEAVE', None),
             'h_logo': getattr(settings, 'HACKATHON_LOGO_URL', None),

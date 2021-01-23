@@ -40,6 +40,8 @@ HACKATHON_SLACK = 'https://slack.ugahacks.com/'
 
 # (OPTIONAL) Applications deadline
 HACKATHON_APP_DEADLINE = timezone.datetime(2021, 1, 23, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
+# (OPTIONAL) Online Check-in deadline
+CHECKIN_DEADLINE = timezone.datetime(2021, 2, 5, 7, 00, tzinfo=timezone.pytz.timezone(TIME_ZONE))
 # (OPTIONAL) When to arrive at the hackathon
 # HACKATHON_ARRIVE = 'Check-in opens at 5:00 PM and the opening ceremony will be at 6:30 PM on February 5th at the Zell B. Miller Center. ' \
 #                    'Further details about the schedule can be found at 6.ugahacks.com. We hope to see you there!'

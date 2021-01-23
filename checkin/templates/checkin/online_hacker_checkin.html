@@ -13,17 +13,26 @@
 
 {% block out_panel %}
   <div class="panel-footer">
-    {% if checkedin %}
-      <div style="padding: 1em 1.5em 1.5em 1.5em;">
-        <h4 style="text-align: center; margin-bottom: 15px;">You are already checked in!</h4>
-      </div>
+    {% if not h_checkin_timeleft %}
+    <div style="padding: 1em 1.5em 1.5em 1.5em;">
+      <h4 style="text-align: center; margin-bottom: 15px;">Online Check-in is Closed!</h4>
+      <p>Contact us at <a target="_blank" href="mailto:{{ h_contact_email }}">{{ h_contact_email }}</a>
+         if you think this is an error.</p>
+    </div>
+    {% endif %}
     {% else %}
-      <h3 style="text-align: center; margin-bottom: -5px;">Check-in with one click:</h3>
-      <form action="" method="post" style="padding-top: 1.5em;">
-        {% csrf_token %}
-        <input type="hidden" name="app_id" value="{{ app.uuid }}"/>
-        <button class="btn btn-success btn-block" name="checkin">Check In</button>
-      </form>
+      {% if checkedin %}
+        <div style="padding: 1em 1.5em 1.5em 1.5em;">
+          <h4 style="text-align: center; margin-bottom: 15px;">You are already checked in!</h4>
+        </div>
+      {% else %}
+        <h3 style="text-align: center; margin-bottom: -5px;">Check-in with one click:</h3>
+        <form action="" method="post" style="padding-top: 1.5em;">
+          {% csrf_token %}
+          <input type="hidden" name="app_id" value="{{ app.uuid }}"/>
+          <button class="btn btn-success btn-block" name="checkin">Check In</button>
+        </form>
+      {% endif %}
     {% endif %}
   </div>
 {% endblock %}
