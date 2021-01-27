@@ -46,22 +46,18 @@ class Round4(Func):
     template = '%(function)s(%(expressions)s, 4)'
 
 
-def application_timeleft():
+def application_time_left():
     deadline = getattr(settings, 'HACKATHON_APP_DEADLINE', None)
-    if deadline:
-        return deadline - timezone.now()
-    else:
-        return None
+    return deadline - timezone.now() if deadline else None
 
-def checkin_timeleft():
+
+def checkin_time_left():
     deadline = getattr(settings, 'CHECKIN_DEADLINE', None)
-    if deadline:
-        return deadline - timezone.now()
-    else:
-        return None
+    return deadline < timezone.now() if deadline else None
+
 
 def is_app_closed():
-    timeleft = application_timeleft()
+    timeleft = application_time_left()
     if timeleft and timeleft != timezone.timedelta():
         return timeleft < timezone.timedelta()
     return False
@@ -80,8 +76,8 @@ def get_substitutions_templates():
             'h_tw': getattr(settings, 'HACKATHON_TWITTER_ACCOUNT', None),
             'h_repo': getattr(settings, 'HACKATHON_GITHUB_REPO', None),
             'h_app_closed': is_app_closed(),
-            'h_app_timeleft': application_timeleft(),
-            'h_checkin_timeleft': checkin_timeleft(),
+            'h_app_time_left': application_time_left(),
+            'h_checkin_time_left': checkin_time_left(),
             'h_arrive': getattr(settings, 'HACKATHON_ARRIVE', None),
             'h_leave': getattr(settings, 'HACKATHON_LEAVE', None),
             'h_logo': getattr(settings, 'HACKATHON_LOGO_URL', None),
@@ -145,6 +141,8 @@ def hacker_tabs(user):
           'Invited' if application and user.application.needs_action() else False), ]
     if user.email_verified and application and getattr(settings, 'TEAMS_ENABLED', False):
         l.append(('Team', reverse('teams'), False))
+    if settings.IS_ONLINE_HACKATHON and application.is_attended():
+        l.append(('Workshops', reverse('workshop_list'), False))
     if application:
         l.append(('Application', reverse('application'), False))
 

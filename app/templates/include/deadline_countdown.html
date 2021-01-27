@@ -1,4 +1,4 @@
-{% with dl=timeleft|default:h_app_timeleft in_id=id|default:'secondsLeftDeadline' %}
+{% with dl=timeleft|default:h_app_time_left in_id=id|default:'secondsLeftDeadline' %}
   {% if dl %}
 
     <span id="{{ in_id }}"></span>

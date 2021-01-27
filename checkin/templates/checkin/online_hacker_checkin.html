@@ -13,13 +13,12 @@
 
 {% block out_panel %}
   <div class="panel-footer">
-    {% if not h_checkin_timeleft %}
+    {% if h_checkin_time_left %}
     <div style="padding: 1em 1.5em 1.5em 1.5em;">
-      <h4 style="text-align: center; margin-bottom: 15px;">Online Check-in is Closed!</h4>
-      <p>Contact us at <a target="_blank" href="mailto:{{ h_contact_email }}">{{ h_contact_email }}</a>
+      <h4 class="text-center" style="margin-bottom: 15px;">Online Check-in is Closed!</h4>
+      <p class="text-center">Contact us at <a target="_blank" href="mailto:{{ h_contact_email }}">{{ h_contact_email }}</a>
          if you think this is an error.</p>
     </div>
-    {% endif %}
     {% else %}
       {% if checkedin %}
         <div style="padding: 1em 1.5em 1.5em 1.5em;">
