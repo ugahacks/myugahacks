@@ -21,9 +21,10 @@
     </p>
   {% endif %}
 
-  {% if not IS_ONLINE_HACKATHON %}
+  {% if not h_is_online %}
     {% include 'mails/include/arrival_departure_info.html' %}
   {% else %}
+    {% include 'mails/include/rolling_admissions.html' %}
     {% include 'mails/include/online_hackathon_info.html' %}
   {% endif %}
   
