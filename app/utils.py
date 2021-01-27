@@ -98,6 +98,7 @@ def get_substitutions_templates():
             'h_b_picture': getattr(settings, 'BAGGAGE_PICTURE', False),
             'h_oauth_providers': getattr(settings, 'OAUTH_PROVIDERS', {}),
             'h_hw_hacker_request': getattr(settings, 'HACKERS_CAN_REQUEST', True),
+            'h_is_online': getattr(settings, 'IS_ONLINE_HACKATHON', None),
             }
 
 
