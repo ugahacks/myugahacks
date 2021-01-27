@@ -1,0 +1,48 @@
+{% extends 'base_tabs.html' %}
+
+{% load bootstrap3 %}
+{% block head_title %}Sponsor Resources{% endblock %}
+
+{% block panel %}
+    <div class="col-md-12">
+        <h4 class="text-center">Welcome to {{ h_name }}. Here are useful resources to have handy throughout the event: </h4>
+        <div class="col-md-4 dashboard-resource">
+          {% if h_event %}
+            <p class="text-center">Follow our event page for the latest schedule, and answers to frequently asked questions</p>
+            <a href="{{ h_event }}" target="_blank" class="btn btn-block btn-success">{{ h_name }} Event Page</a>
+          {% endif %}
+        </div>
+        <div class="col-md-4 dashboard-resource">
+          {% if h_pre_event %}
+            <p class="text-center">Look at our pre-event packet for all the details to prepare for the event</p>
+            <a href="{{ h_pre_event }}" target="_blank" class="btn btn-block btn-success">{{ h_name }} Pre-event Packet</a>
+          {% endif %}
+        </div>
+        <div class="col-md-4 dashboard-resource">
+          {% if h_slack %}
+            <p class="text-center ">Join our Slack workspace for the latest communications from our team during the event</p>
+            <a href="{{ h_slack }}" target="_blank" class="btn btn-block btn-success">Slack</a>
+          {% endif %}
+        </div>
+        {% if h_fb or h_yt %}
+        <div class="col-md-12 stream-links">
+          <h4 class="text-center">Watch our opening ceremony on </h4>
+          <div class="col-md-6 dashboard-resource">
+            {% if h_fb %}
+              <a href="https://www.facebook.com/{{ h_fb }}" target="_blank" class="btn btn-block btn-success">Facebook</a>
+            {% endif %}
+          </div>
+          <div class="col-md-6 dashboard-resource">
+            {% if h_yt %}
+              <a href="https://www.youtube.com/channel/{{ h_yt }}" target="_blank" class="btn btn-block btn-success">YouTube</a>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block out_panel %}
+    <div class="panel-footer">
+        <a href="{% url 'sponsors:sponsor_home' %}" class="btn btn-success btn-block">Back to Sponsor Home</a>   
+    </div> 
+{% endblock %}

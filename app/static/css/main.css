@@ -10,7 +10,7 @@ body {
     background-attachment: fixed;
     /*background: linear-gradient(#26ADB5 0%, #1DA3AD 33%, #1597A3 67%, #0E8C99 100%) no-repeat center center fixed;*/
     background-repeat: repeat repeat;
-    font-family: ProximaNovaRegular, 'Roboto', sans-serif;
+    font-family: ProximaNovaRegular, "Roboto", sans-serif;
     font-size: 15px;
     color: #262424;
 }
@@ -25,20 +25,33 @@ body {
     margin-bottom: 105px;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
     margin-top: 0;
 }
 
 a {
     color: #fe3d40;
     text-decoration: none;
-    -webkit-transition: all .1s linear;
-    -moz-transition: all .1s linear;
-    -o-transition: all .1s linear;
-    transition: all .1s linear;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    -o-transition: all 0.1s linear;
+    transition: all 0.1s linear;
 }
 
-a:hover, a:active, a:focus {
+a:hover,
+a:active,
+a:focus {
     color: #e67a7a;
     text-decoration: none;
 }
@@ -80,63 +93,70 @@ a:hover, a:active, a:focus {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
     overflow-y: hidden;
     font-size: 17px;*/
-    -webkit-transition: all .1s linear;
-    -moz-transition: all .1s linear;
-    -o-transition: all .1s linear;
-    transition: all .1s linear;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    -o-transition: all 0.1s linear;
+    transition: all 0.1s linear;
     /*padding-left: 20px;
     padding-right: 20px;*/
 }
 
-.btn:hover, .btn:active, .btn:focus {
+.btn:hover,
+.btn:active,
+.btn:focus {
     background: #db4848 !important;
     color: white;
 }
 
-.previous a, .next a {
-    color:#080808;
+.previous a,
+.next a {
+    color: #080808;
 }
 
 .btn-reverse {
-    background: #5F723F;
+    background: #5f723f;
     color: white;
 }
 
-.btn-reverse:hover, .btn-reverse:active, .btn-reverse:focus {
-    background: #5F723F !important;
+.btn-reverse:hover,
+.btn-reverse:active,
+.btn-reverse:focus {
+    background: #5f723f !important;
     color: white;
-
 }
 
 .social-btn {
-  display: block;
-  width: 185px;
-  padding: 10px;
-  margin: auto;
+    display: block;
+    width: 185px;
+    padding: 10px;
+    margin: auto;
 }
 
-.social-btn i{
-  margin-right: 10px;
+.social-btn i {
+    margin-right: 10px;
 }
 
 #github-btn {
-  background-color: #24292e;
+    background-color: #24292e;
 }
 
-#github-btn:hover, #github-btn:focus {
-  background-color: #4b5661 !important;
+#github-btn:hover,
+#github-btn:focus {
+    background-color: #4b5661 !important;
 }
 
 #google-btn {
-  opacity: 1;
-  transition: opacity 0.2s ease-in-out;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
 }
 
-#google-btn:hover, #google-btn:focus {
-  opacity: 0.7;
+#google-btn:hover,
+#google-btn:focus {
+    opacity: 0.7;
 }
 
-footer p, footer small {
+footer p,
+footer small {
     color: #b4b4b4;
 }
 
@@ -153,10 +173,10 @@ footer .row {
     text-decoration: none;
     padding-left: 0.5em;
     font-size: 100%;
-    -webkit-transition: all .1s linear;
-    -moz-transition: all .1s linear;
-    -o-transition: all .1s linear;
-    transition: all .1s linear;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    -o-transition: all 0.1s linear;
+    transition: all 0.1s linear;
 }
 
 nav.navbar {
@@ -189,9 +209,12 @@ div.panel form {
 }
 
 .confirm-content {
-    margin-top: 70px
+    margin-top: 70px;
 }
 
+.stream-links {
+    margin-top: 30px;
+}
 .content {
     margin-top: 6em;
     margin-bottom: 12.5em;
@@ -243,7 +266,6 @@ img.icon {
 .orderable > a {
     color: #333;
     text-decoration: none;
-
 }
 
 .orderable.desc {
@@ -260,7 +282,7 @@ img.icon {
 }
 
 .required > label::after {
-    content: ' *';
+    content: " *";
     color: red;
 }
 
@@ -271,22 +293,21 @@ img.icon {
     border: 0;
     text-align: center;
     font-size: 18px;
-
 }
 
 .alert-danger {
     background: #c93a2b;
-    color: #FBFBFB;
+    color: #fbfbfb;
 }
 
 .alert-success {
     background: #1e8e3c;
-    color: #FBFBFB;
+    color: #fbfbfb;
 }
 
 .alert-warning {
     background: #cdbe02;
-    color: #FBFBFB;
+    color: #fbfbfb;
 }
 
 img {
@@ -298,14 +319,13 @@ img {
     .text-center-xs {
         text-align: center;
     }
-    
+
     .dashboard-resource {
         margin-top: 10px;
     }
 
     footer {
         text-align: center;
-
     }
 
     body {
@@ -338,11 +358,10 @@ img {
     margin: 0.5em auto;
     background-color: #202326;
     cursor: pointer;
-
 }
 
 #cookies-a {
-    color: #FFF;
+    color: #fff;
     text-decoration: underline !important;
 }
 

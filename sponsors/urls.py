@@ -12,4 +12,5 @@ urlpatterns = [
     path('manage/list', views.SponsorList.as_view(), name='sponsor_list'),
     path('manage/update/<int:pk>/', views.SponsorUpdate.as_view(), name='sponsor_update'),
     path('scanned_list/', views.SponsorScannedList.as_view(), name='sponsor_scanned_list'),
+    path('resources/', views.SponsorResources.as_view(), name='sponsor_resources'),
 ]

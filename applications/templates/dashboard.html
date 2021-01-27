@@ -20,7 +20,7 @@
       </div>
     {% elif not application %}
       <div class="col-md-12">
-        {% if h_app_timeleft %}
+        {% if h_app_time_left %}
           <div class="alert alert-info">
             <p> Time until applications close: <strong
                     class="text-info">{% include 'include/deadline_countdown.html' %}</strong></p>
@@ -50,7 +50,7 @@
       </div>
     {% elif application.is_attended %}
       <div class="col-md-12">
-        <p class="lead text-center">Welcome to {{ h_name }}. Here are useful resources to have handy throughout the event: </p>
+        <h4 class="text-center">Welcome to {{ h_name }}. Here are useful resources to have handy throughout the event: </h4>
         <div class="col-md-4 dashboard-resource">
           {% if h_event %}
             <p class="text-center">Follow our event page for the latest schedule, and answers to frequently asked questions</p>
@@ -69,7 +69,23 @@
             <a href="{{ h_slack }}" target="_blank" class="btn btn-block btn-success">Slack</a>
           {% endif %}
         </div>
+        {% if h_fb or h_yt %}
+        <div class="col-md-12 stream-links">
+          <h4 class="text-center">Watch our opening ceremony on </h4>
+          <div class="col-md-6 dashboard-resource">
+            {% if h_fb %}
+              <a href="https://www.facebook.com/{{ h_fb }}" target="_blank" class="btn btn-block btn-success">Facebook</a>
+            {% endif %}
+          </div>
+          <div class="col-md-6 dashboard-resource">
+            {% if h_yt %}
+              <a href="https://www.youtube.com/channel/{{ h_yt }}" target="_blank" class="btn btn-block btn-success">YouTube</a>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
       </div>
+
     {% elif application.answered_invite %}
 
       {% if not IS_ONLINE_HACKATHON %}
