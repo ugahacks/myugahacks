@@ -51,7 +51,7 @@ CHECKIN_DEADLINE = timezone.datetime(2021, 2, 5, 7, 00, tzinfo=timezone.pytz.tim
 # (OPTIONAL) Hackathon event page
 HACKATHON_EVENT_PAGE = 'https://6.ugahacks.com/'
 # (OPTIONAL) Pre-event packet link
-HACKATHON_PRE_EVENT = ''
+HACKATHON_PRE_EVENT = 'https://6.ugahacks.com/static/media/pre_event_packet.091f31bd.pdf'
 
 # (OPTIONAL) Regex to automatically match organizers emails and set them as organizers when signing up
 REGEX_HACKATHON_ORGANIZER_EMAIL = '^.*@ugahacks\.com$'
