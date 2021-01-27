@@ -39,7 +39,7 @@ HACKATHON_GITHUB_REPO = 'https://github.com/ugahacks/myugahacks/'
 HACKATHON_SLACK = 'https://slack.ugahacks.com/'
 
 # (OPTIONAL) Applications deadline
-HACKATHON_APP_DEADLINE = timezone.datetime(2021, 1, 23, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
+HACKATHON_APP_DEADLINE = timezone.datetime(2021, 2, 4, 23, 59, tzinfo=timezone.pytz.timezone(TIME_ZONE))
 # (OPTIONAL) Online Check-in deadline
 CHECKIN_DEADLINE = timezone.datetime(2021, 2, 5, 7, 00, tzinfo=timezone.pytz.timezone(TIME_ZONE))
 # (OPTIONAL) When to arrive at the hackathon
