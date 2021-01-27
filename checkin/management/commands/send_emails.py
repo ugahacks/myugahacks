@@ -113,7 +113,7 @@ class Command(BaseCommand):
                     else:
                         self.stdout.write(f'Sent 0 check-in emails.')
                 else:
-                    self.stdout.write(self.style.ERROR(f'Cannot send {options["template"]} to all.'))
+                    self.stdout.write(self.style.ERROR(f'Cannot send <{options["template"]}> to all.'))
             
             else:
                 self.stdout.write(self.style.ERROR(f'Must specify recipients. See --help.'))
