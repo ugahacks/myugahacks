@@ -13,7 +13,8 @@ def create_invite_email(application, request):
         'name': application.user.get_full_name,
         'reimb': getattr(application.user, 'reimbursement', None),
         'confirm_url': str(reverse('confirm_app', request=request, kwargs={'id': application.uuid_str})),
-        'cancel_url': str(reverse('cancel_app', request=request, kwargs={'id': application.uuid_str}))
+        'cancel_url': str(reverse('cancel_app', request=request, kwargs={'id': application.uuid_str})),
+        'IS_ONLINE_HACKATHON': settings.IS_ONLINE_HACKATHON,
     }
     return emails.render_mail('mails/invitation',
                               application.user.email, c)
@@ -34,6 +35,7 @@ def create_confirmation_email(application, request):
         'qr_url': 'http://chart.googleapis.com/chart?cht=qr&chs=350x350&chl=%s'
                   % application.uuid_str,
         'cancel_url': str(reverse('cancel_app', request=request, kwargs={'id': application.uuid_str})),
+        'IS_ONLINE_HACKATHON': settings.IS_ONLINE_HACKATHON,
     }
     return emails.render_mail('mails/confirmation',
                               application.user.email, c)
@@ -61,5 +63,6 @@ def create_online_checkin_email(application: Application) -> t.Any:
     context = {
         'name': application.user.get_full_name,
         'checkin_url': f'http://{settings.HACKATHON_DOMAIN}/checkin/me/{application.uuid}',
+        'IS_ONLINE_HACKATHON': settings.IS_ONLINE_HACKATHON,
     }
     return emails.render_mail('mails/online_checkin', application.user.email, context, action_required=True)
