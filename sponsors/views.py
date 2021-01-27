@@ -12,6 +12,7 @@ from .forms import SponsorForm, SponsorAddForm
 from .models import Sponsor, SponsorApplication
 from .tables import ApplicationsListSponsor, SponsorListTable, SponsorListFilter, HackerListFilter
 
+
 class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, IsSponsorMixin, FilterView):
     template_name = 'sponsor_home.html'
     table_class = ApplicationsListSponsor
@@ -26,12 +27,13 @@ class SponsorHomePage(TabsViewMixin, ExportMixin, SingleTableMixin, IsSponsorMix
         is_home = True
         context.update({
             'has_application': has_application,
-            'is_home' : is_home
+            'is_home': is_home
         })
         return context
 
     def get_queryset(self):
         return Application.objects.all().filter(participant='Hacker')
+
 
 class SponsorApplicationView(FormView, IsSponsorMixin):
     template_name = 'sponsor_application.html'
@@ -73,6 +75,10 @@ class SponsorList(TabsViewMixin, SingleTableMixin, FilterView, IsOrganizerMixin)
     table_pagination = {'per_page': 100}
 
 
+class SponsorResources(TemplateView, IsOrganizerMixin):
+    template_name = 'sponsor_resources.html'
+
+
 class ApplicationDetailViewSponsor(TabsViewMixin, TemplateView, IsSponsorMixin):
     template_name = 'application_detail.html'
 
@@ -104,7 +110,7 @@ class SponsorScannedList(SponsorHomePage):
         is_home = False
         context.update({
             'has_application': has_application,
-            'is_home' : is_home
+            'is_home': is_home
         })
         return context
 

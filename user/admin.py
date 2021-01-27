@@ -51,8 +51,11 @@ class UserAdmin(admin.ModelAdmin):
             return self.add_fieldsets
         return super(UserAdmin, self).get_fieldsets(request, obj)
 
+class RoleAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description')
+    search_fields = ('title',)
 
 admin.site.register(models.User, admin_class=UserAdmin)
-admin.site.register(models.Role)
+admin.site.register(models.Role, admin_class=RoleAdmin)
 
 admin.site.unregister(Group)

@@ -85,7 +85,7 @@ class CheckInHackerView(IsVolunteerMixin, TabsView):
     template_name = 'checkin/hacker.html'
 
     def get_back_url(self):
-        return 'javascript:history.back()'
+        return HttpResponseRedirect(reverse('dashboard'))
 
     def get_context_data(self, **kwargs):
         context = super(CheckInHackerView, self).get_context_data(**kwargs)
