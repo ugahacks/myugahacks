@@ -215,6 +215,7 @@ class Application(models.Model):
     code_of_conduct = models.BooleanField(default=False)
     terms_and_conditions = models.BooleanField(default=False)
     hacks_newsletter = models.BooleanField(default=False)
+    MLH_promotional = models.BooleanField(default=False)
 
     # University
     graduation_year = models.IntegerField(choices=YEARS, default=DEFAULT_YEAR)
@@ -240,7 +241,7 @@ class Application(models.Model):
     address_line = models.CharField(max_length=300, null=True, blank=True)
     address_line_2 = models.CharField(max_length=300, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)
-    state =  models.CharField(max_length=2, null=True, blank=True)
+    state = models.CharField(max_length=2, null=True, blank=True)
     zip_code = models.CharField(max_length=15, null=True, blank=True)
 
     @classmethod

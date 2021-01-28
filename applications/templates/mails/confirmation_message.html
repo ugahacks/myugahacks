@@ -5,7 +5,7 @@
   <p>Thank you {{ name }} for confirming your attendance to {{ h_name }}!</p>
   <p>We are really excited to host this event and have you with us.</p>
 
-  {% if not IS_ONLINE_HACKATHON %}
+  {% if not h_is_online %}
     <p>
       In order to make registration go smoother, please show us this QR code during the process so we can easily find you:
     </p>
@@ -14,9 +14,18 @@
 
   {% include 'mails/include/cancel.html' %}
 
-  {% if not IS_ONLINE_HACKATHON %}
+  {% if h_pre_event %}
+    {% include 'mails/include/event_packet.html' %}
+  {% endif %}
+
+  {% if h_slack %}
+    {% include 'mails/include/slack.html' %}
+  {% endif %}
+
+  {% if not h_is_online %}
     {% include 'mails/include/arrival_departure_info.html' %}
   {% else %}
+    {% include 'mails/include/rolling_admissions.html' %}
     {% include 'mails/include/online_hackathon_info.html' %}
   {% endif %}
 

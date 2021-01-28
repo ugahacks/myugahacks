@@ -37,6 +37,7 @@
     </div>
       <div class="panel-footer">
       <a href="{% url 'sponsors:sponsor_application' %}" class="btn btn-success btn-block">Attendance Form</a>
+      <a href="{% url 'sponsors:sponsor_resources' %}" class="btn btn-success btn-block">Useful {{h_name}} Sponsor Resources</a>
       {% if user.is_organizer %}
           <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
       {% endif %}
@@ -54,6 +55,7 @@
       {% else %} 
         <a href="{% url 'sponsors:sponsor_home' %}" class="btn btn-success btn-block">View All Hackers</a>
       {% endif %}
+      <a href="{% url 'sponsors:sponsor_resources' %}" class="btn btn-success btn-block">Useful {{h_name}} Sponsor Resources</a>
       
       {% if user.is_organizer %}
         <a href="{% url 'sponsors:sponsor_list' %}" class="btn btn-success btn-block">Manage Sponsors</a>
