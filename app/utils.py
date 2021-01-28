@@ -142,8 +142,6 @@ def hacker_tabs(user):
           'Invited' if application and user.application.needs_action() else False), ]
     if user.email_verified and application and getattr(settings, 'TEAMS_ENABLED', False):
         l.append(('Team', reverse('teams'), False))
-    if settings.IS_ONLINE_HACKATHON and application and application.is_attended():
-        l.append(('Workshops', reverse('workshop_list'), False))
     if application:
         l.append(('Application', reverse('application'), False))
 
