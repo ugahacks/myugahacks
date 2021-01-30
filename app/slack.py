@@ -1,6 +1,6 @@
 import requests
 from django.conf import settings
-from slackclient import SlackClient
+import slack
 
 
 class SlackInvitationException(BaseException):
@@ -39,7 +39,7 @@ def send_slack_message(user_email, content_message):
     if not token:
         print('[ERROR] Slack bot not configured.')
     else:
-        sc = SlackClient(token)
+        sc = slack.WebClient(token)
         user = sc.api_call('users.lookupByEmail', email=user_email)
         if user['ok']:
             user_id = user['user']['id']

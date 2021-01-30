@@ -47,13 +47,12 @@
       <button class="btn btn-danger btn-block" name="leave" value="leave" type="submit">Leave team
       </button>
     </form>
-  {% elif application.answered_invite or application.is_invited %}
 
 
-  {% elif not h_app_closed and not team %}
+  {% elif not team %}
     <p>Do you have a team already? Join it below. Otherwise you can create a new team. </p>
     <i class="fa fa-exclamation-triangle"></i>
-    <b>Note:</b> Team management is <b>solely</b> to help our organizer team manage your applications and leave no one
+    <b>Note:</b> Team management is <b>mainly</b> to help our organizer team manage your applications and leave no one
     from the team behind when inviting you to
     the event. Hence, we highly recommend finalizing as soon as possible for the highest chance that everyone on your
     team will be invited to the event.

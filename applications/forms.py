@@ -12,9 +12,6 @@ from applications import models
 import json
 from django.contrib.staticfiles.storage import staticfiles_storage
 
-import easypost
-easypost.api_key = app_settings.EASYPOST_KEY
-
 with open(settings.APPLICATIONS_STATIC_URL + 'all_schools.json') as schools_dot_json:
     ALLOWED_SCHOOLS = json.load(schools_dot_json)
 
@@ -100,13 +97,19 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
     # MLH Code of Conduct
     code_of_conduct = forms.BooleanField(
         required=True,
-        label='I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank" style="vertical-align: baseline;">MLH Code of Conduct</a>, the <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md" target="_blank" style="vertical-align: baseline;">MLH Contest Terms and Conditions</a>, and the <a href="https://mlh.io/privacy" target="_blank" style="vertical-align: baseline;">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
+        label='I have read and agree to the <a href="http://hackp.ac/coc" target="_blank" style="vertical-align: baseline;">MLH Code of Conduct</a>. <span style="color: red; font-weight: bold;"> *</span>'
     )
 
     # MLH Terms and Conditions
     terms_and_conditions = forms.BooleanField(
         required=True,
-        label='I authorize you to share my application/registration information for event administration, ranking, MLH administration, and for MLH to send pre- and post-event informational e-mails/occasional messages about hackathons all in accordance with the <a href="https://mlh.io/privacy" target="_blank" style="vertical-align: baseline;">MLH Privacy Policy</a>.<span style="color: red; font-weight: bold;"> *</span>'
+        label='I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and  MLH administration in-line with the <a href="https://mlh.io/privacy" target="_blank" style="vertical-align: baseline;">MLH Privacy Policy</a>. \
+            I further agree to the terms of both the <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md" target="_blank" style="vertical-align: baseline;"> MLH Contest Terms and Conditions</a> and the <a href="https://mlh.io/privacy" target="_blank" style="vertical-align: baseline;"> MLH Privacy Policy </a>. <span style="color: red; font-weight: bold;"> *</span>'
+    )
+
+    MLH_promotional = forms.BooleanField(
+        required=False,
+        label='I authorize MLH to send me pre- and post-event informational emails, which contain free credit and opportunities from their partners.'
     )
 
     cvs_edition = forms.BooleanField(
@@ -235,33 +238,13 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
 
         uniemail = cleaned_data.get('uniemail')
         if uniemail:
-            if (participant == 'Hacker' or participant == 'Volunteer') and '.edu' not in uniemail:
+            if (participant == 'Hacker' or participant == 'Volunteer') and '.edu' not in uniemail and '.ca' not in uniemail:
                 raise forms.ValidationError("Please enter your school email")
         else:
             if participant == 'Mentor':
                 uniemail = 'byte@uga.edu'
             else:
                 raise forms.ValidationError("Please enter your school email.")
-
-        digital_hack_enabled = getattr(settings, 'DIGITAL_HACKATHON', False)
-        if digital_hack_enabled:
-            street1 = cleaned_data.get('address_line')
-            street2 = cleaned_data.get('address_line_2')
-            city = cleaned_data.get('city')
-            state = cleaned_data.get('state')
-            zip_code = cleaned_data.get('zip_code')
-
-            address = easypost.Address.create(
-                verify=["delivery"],
-                street1=street1,
-                street2=street2,
-                city=city,
-                state=state,
-                zip=zip_code,
-                country="US"
-            )
-            if not address.verifications.delivery.success:
-                raise forms.ValidationError("Please enter a valid shipping address")
 
     def __getitem__(self, name):
         item = super(ApplicationForm, self).__getitem__(name)
@@ -333,7 +316,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
                            'Finally, you are also authorizing us to the use of any images and videos of yourself during the event.</p>'
         }))
         self._fieldsets.append(('MLH Policies', {
-            'fields': ('terms_and_conditions', 'code_of_conduct'), }))
+            'fields': ('terms_and_conditions', 'code_of_conduct', 'MLH_promotional'), }))
         self._fieldsets.append(('UGAHacks Newsletter', {
             'fields': ('hacks_newsletter',),
             'description': '<p style="color: #202326cc;margin-top: 1em;display: block;'

@@ -246,6 +246,7 @@ class Application(models.Model):
     code_of_conduct = models.BooleanField(default=False)
     terms_and_conditions = models.BooleanField(default=False)
     hacks_newsletter = models.BooleanField(default=False)
+    MLH_promotional = models.BooleanField(default=False)
 
     # University
     graduation_year = models.IntegerField(choices=YEARS, default=DEFAULT_YEAR)

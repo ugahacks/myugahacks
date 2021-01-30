@@ -46,16 +46,18 @@ class Round4(Func):
     template = '%(function)s(%(expressions)s, 4)'
 
 
-def application_timeleft():
+def application_time_left():
     deadline = getattr(settings, 'HACKATHON_APP_DEADLINE', None)
-    if deadline:
-        return deadline - timezone.now()
-    else:
-        return None
+    return deadline - timezone.now() if deadline else None
+
+
+def checkin_time_left():
+    deadline = getattr(settings, 'CHECKIN_DEADLINE', None)
+    return deadline < timezone.now() if deadline else None
 
 
 def is_app_closed():
-    timeleft = application_timeleft()
+    timeleft = application_time_left()
     if timeleft and timeleft != timezone.timedelta():
         return timeleft < timezone.timedelta()
     return False
@@ -74,7 +76,8 @@ def get_substitutions_templates():
             'h_tw': getattr(settings, 'HACKATHON_TWITTER_ACCOUNT', None),
             'h_repo': getattr(settings, 'HACKATHON_GITHUB_REPO', None),
             'h_app_closed': is_app_closed(),
-            'h_app_timeleft': application_timeleft(),
+            'h_app_time_left': application_time_left(),
+            'h_checkin_time_left': checkin_time_left(),
             'h_arrive': getattr(settings, 'HACKATHON_ARRIVE', None),
             'h_leave': getattr(settings, 'HACKATHON_LEAVE', None),
             'h_logo': getattr(settings, 'HACKATHON_LOGO_URL', None),
@@ -82,7 +85,9 @@ def get_substitutions_templates():
             'h_ig': getattr(settings, 'HACKATHON_INSTAGRAM_ACCOUNT', None),
             'h_yt': getattr(settings, 'HACKATHON_YOUTUBE_PAGE', None),
             'h_me': getattr(settings, 'HACKATHON_MEDIUM_ACCOUNT', None),
-            'h_live': getattr(settings, 'HACKATHON_LIVE_PAGE', None),
+            'h_slack': getattr(settings, 'HACKATHON_SLACK', None),
+            'h_event': getattr(settings, 'HACKATHON_EVENT_PAGE', None),
+            'h_pre_event': getattr(settings, 'HACKATHON_PRE_EVENT', None),
             'h_theme_color': getattr(settings, 'HACKATHON_THEME_COLOR', None),
             'h_og_image': getattr(settings, 'HACKATHON_OG_IMAGE', None),
             'h_currency': getattr(settings, 'CURRENCY', '$'),
@@ -93,6 +98,7 @@ def get_substitutions_templates():
             'h_b_picture': getattr(settings, 'BAGGAGE_PICTURE', False),
             'h_oauth_providers': getattr(settings, 'OAUTH_PROVIDERS', {}),
             'h_hw_hacker_request': getattr(settings, 'HACKERS_CAN_REQUEST', True),
+            'h_is_online': getattr(settings, 'IS_ONLINE_HACKATHON', None),
             }
 
 
@@ -134,8 +140,7 @@ def hacker_tabs(user):
     application = getattr(user, 'application', None)
     l = [('Home', reverse('dashboard'),
           'Invited' if application and user.application.needs_action() else False), ]
-    if user.email_verified and application and getattr(settings, 'TEAMS_ENABLED', False) \
-        and not application.answered_invite():
+    if user.email_verified and application and getattr(settings, 'TEAMS_ENABLED', False):
         l.append(('Team', reverse('teams'), False))
     if application:
         l.append(('Application', reverse('application'), False))
