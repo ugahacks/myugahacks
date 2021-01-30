@@ -21,9 +21,7 @@ class Command(BaseCommand):
             csv_writer.writerow(['Name', 'Email', 'Street', 'City', 'State', 'Zip', 'Country'])
 
             for app in confirmed_applicants:
-                country = 'US'
-                if app.uniemail and '.ca' in app.uniemail:
-                    country = 'CA'
+                country = 'CA' if app.uniemail and '.ca' in app.uniemail else 'US'
                 try:
                     address = easypost.Address.create(
                         verify=['delivery'],
@@ -36,7 +34,7 @@ class Command(BaseCommand):
                     )
                     if address.verifications.delivery.success:
                         street = app.address_line + (" " + app.address_line_2 if app.address_line_2 else '')
-                        res = [app.user.name, app.user.email, street, app.city, app.state, app.zip_code, "US"]
+                        res = [app.user.name, app.user.email, street, app.city, app.state, app.zip_code, country]
                         csv_writer.writerow(res)
                 except easypost.Error as e:
                     e_json = e.json_body
