@@ -6,7 +6,6 @@ from form_utils.forms import BetterModelForm
 
 from app.mixins import OverwriteOnlyModelFormMixin
 from app.utils import validate_url
-from app import settings as app_settings
 from applications import models
 
 import json

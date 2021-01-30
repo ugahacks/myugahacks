@@ -10,7 +10,6 @@ from django.db.models import Avg
 from django.utils import timezone
 
 from app import utils
-from app import settings as app_settings
 from user.models import User
 
 
