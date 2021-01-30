@@ -13,32 +13,6 @@ from app import utils
 from app import settings as app_settings
 from user.models import User
 
-import easypost
-
-
-class AddressVerificationManager(models.Manager):
-    easypost.api_key = app_settings.EASYPOST_KEY
-
-    def get_verified(self):
-        confirmed_applicants = Application.objects.filter(status='C')
-
-        verified = []
-
-        for applicant in confirmed_applicants:
-            address = easypost.Address.create(
-                verify=["delivery"],
-                street1=applicant.address_line,
-                street2=applicant.address_line_2,
-                city=applicant.city,
-                state=applicant.state,
-                zip=applicant.zip_code,
-                country="US"
-            )
-            if address.verifications.delivery.success:
-                verified.append(applicant)
-
-        return verified
-
 
 class Application(models.Model):
     PENDING = 'P'
@@ -198,7 +172,6 @@ class Application(models.Model):
 
     # managers
     objects = models.Manager()
-    address_verifier = AddressVerificationManager()
 
     # ABOUT YOU
     # Population analysis, optional
