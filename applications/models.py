@@ -169,6 +169,9 @@ class Application(models.Model):
     status = models.CharField(choices=STATUS, default=PENDING,
                               max_length=2)
 
+    # managers
+    objects = models.Manager()
+
     # ABOUT YOU
     # Population analysis, optional
     gender = models.CharField(max_length=23, choices=GENDERS, default=NO_ANSWER)
