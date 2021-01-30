@@ -21,15 +21,18 @@ class Command(BaseCommand):
             csv_writer.writerow(['Name', 'Email', 'Street', 'City', 'State', 'Zip', 'Country'])
 
             for app in confirmed_applicants:
+                country = 'US'
+                if app.uniemail and '.ca' in app.uniemail:
+                    country = 'CA'
                 try:
                     address = easypost.Address.create(
-                        verify=["delivery"],
+                        verify=['delivery'],
                         street1=app.address_line,
                         street2=app.address_line_2,
                         city=app.city,
                         state=app.state,
                         zip=app.zip_code,
-                        country="US"
+                        country=country
                     )
                     if address.verifications.delivery.success:
                         street = app.address_line + (" " + app.address_line_2 if app.address_line_2 else '')
