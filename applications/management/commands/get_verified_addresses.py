@@ -12,7 +12,7 @@ class Command(BaseCommand):
     help = 'Prints verified addresses for users'
 
     def handle(self, *args, **options):
-        print('Gathering verified addresses...')
+        self.stdout.write('Gathering verified addresses...')
 
         confirmed_applicants = models.Application.objects.filter(status='C')
 
@@ -41,9 +41,10 @@ class Command(BaseCommand):
                     if 'error' in e_json:
                         code = e_json['error']['code'] if 'code' in e_json['error'] else e_json
                         if code == 'RATE_LIMITED':
-                            print('rate limited, sleeping...')
+                            self.stdout.write(self.style.WARNING('Rate limited, sleeping...'))
                             sleep(60)
                         else:
-                            print(code)
+                            self.stdout.write(self.style.ERROR(code))
 
-        print('Finished gathering verified addresses! Check out the csv file called verified_apps under /files!')
+        self.stdout.write(self.style.SUCCESS(
+            'Finished gathering verified addresses! Check out the csv file called verified_apps under /files!'))
