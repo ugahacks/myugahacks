@@ -236,7 +236,7 @@ class ApplicationForm(OverwriteOnlyModelFormMixin, BetterModelForm):
             raise forms.ValidationError("Please enter a school from suggested.")
 
         uniemail = cleaned_data.get('uniemail')
-        edu_verifier = '.edu' not in uniemail #and '.ca' not in uniemail
+        edu_verifier = '.edu' not in uniemail and '.ca' not in uniemail
         use_email_validator = not settings.IS_ONLINE_HACKATHON
         email_validator = use_email_validator and edu_verifier # false and -> short circuits
         if uniemail:
