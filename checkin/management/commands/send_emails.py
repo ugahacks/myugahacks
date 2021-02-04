@@ -5,6 +5,7 @@ from applications import emails
 from app.emails import render_mail
 from applications.models import Application
 
+import time
 
 class Command(BaseCommand):
     help = f'Command utility for sending out online check-in emails. \
@@ -109,11 +110,12 @@ class Command(BaseCommand):
                         self.stdout.write(f'Found: {confirmed_applications.count()} confirmed applications.')
                         self.stdout.write('Sending self check-in emails...')
 
-                        # gmail has a throttle @ 100 for emails
+                        # gmail has a throttle @ 100 for emails; also doesn't like being spammed.
                         count = 0
                         conf_apps_count = confirmed_applications.count()
-                        N_CHUNK_NO_THROTTLE = 75
-                        if conf_apps_count >= 100:
+                        N_CHUNK_NO_THROTTLE = 50
+                        THROTTLE_TIMEOUT = 120
+                        if conf_apps_count >= N_CHUNK_NO_THROTTLE:
                             self.stdout.write(f'Due to gmail throttling, emails will be sent in batches.')
 
                         messages = []
@@ -136,6 +138,8 @@ class Command(BaseCommand):
                                 count += 1
                                 connection = mail.get_connection()
                                 connection.send_messages(chunk)
+                                self.stdout.write(f'Sleeping for {THROTTLE_TIMEOUT}s...')
+                                time.sleep(THROTTLE_TIMEOUT) # don't hurt gmail :(
 
                             self.stdout.write(self.style.SUCCESS(f'Successfully sent {len(messages)} check-in emails.'))
                     else:
