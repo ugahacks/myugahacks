@@ -98,18 +98,46 @@ class Command(BaseCommand):
                     confirmed = input(confirm_msg)
 
                     if confirmed.lower() == 'y':
+
+                        def chunk(mlist, n):
+                            """Yield successive n-sized chunks from lst."""
+                            for i in range(0, len(mlist), n):
+                                yield mlist[i:i + n]
+
                         self.stdout.write('Gathering confirmed applications...')
                         confirmed_applications = Application.objects.filter(status=Application.CONFIRMED)
                         self.stdout.write(f'Found: {confirmed_applications.count()} confirmed applications.')
                         self.stdout.write('Sending self check-in emails...')
-                        
+
+                        # gmail has a throttle @ 100 for emails
+                        count = 0
+                        conf_apps_count = confirmed_applications.count()
+                        N_CHUNK_NO_THROTTLE = 75
+                        if conf_apps_count >= 100:
+                            self.stdout.write(f'Due to gmail throttling, emails will be sent in batches.')
+
                         messages = []
                         for application in confirmed_applications:
                             messages.append(emails.create_online_checkin_email(application))
-                        connection = mail.get_connection()
-                        connection.send_messages(messages)
+                        
+                        chunked_messages = list(chunk(messages, N_CHUNK_NO_THROTTLE))
 
-                        self.stdout.write(self.style.SUCCESS(f'Successfully sent {len(messages)} check-in emails.'))
+                        see_chunked = input('Would you like to see the generated chunks? [y/N] ')
+                        if see_chunked.lower() == 'y':
+                            for chunk in chunked_messages:
+                                self.stdout.write(f'{"-" * 12}CHUNK{"-" * 12}')
+                                self.stdout.write('\n'.join(map(lambda m: f'<{m.to}>', chunk)))
+                                self.stdout.write(f'{"-" * 12}CHUNK{"-" * 12}')
+
+                        proceed_with_emails = input('Would you like to proceed? [y/N] ')
+                        if proceed_with_emails.lower() == 'y':
+                            for chunk in chunked_messages:
+                                self.stdout.write(f'Sending chunk{count + 1}...')
+                                count += 1
+                                connection = mail.get_connection()
+                                connection.send_messages(chunk)
+
+                            self.stdout.write(self.style.SUCCESS(f'Successfully sent {len(messages)} check-in emails.'))
                     else:
                         self.stdout.write(f'Sent 0 check-in emails.')
                 else:
