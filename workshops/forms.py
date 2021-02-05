@@ -1,6 +1,8 @@
 from django import forms
 
-from .models import Workshop, Timeslot
+from .models import Workshop
+
+import datetime
 
 
 class AddWorkshopForm(forms.ModelForm):
@@ -15,14 +17,14 @@ class AddWorkshopForm(forms.ModelForm):
 
     host = forms.CharField(max_length=63, label='Organization name')
 
-    # Change the __str__ method in the Timeslot model to change how the choices are displayed to users.
-    # empty_label set to none because users should NOT be able to add empty timeslots.
-    timeslot = forms.ModelChoiceField(
-        queryset=Timeslot.objects.filter(workshop_one__isnull=True) | Timeslot.objects.filter(
-            workshop_two__isnull=True), empty_label=None)
+    in_person = forms.BooleanField(label = 'In person?', required=False)
 
     points = forms.IntegerField(initial=0)
 
+    start = forms.DateTimeField(initial=datetime.date.today)
+
+    end = forms.DateTimeField(initial=datetime.date.today)
+
     class Meta:
         model = Workshop
-        fields = ['title', 'description', 'location', 'host', 'points']
+        fields = ['title', 'description', 'location', 'host', 'points', 'in_person', 'start', 'end']
