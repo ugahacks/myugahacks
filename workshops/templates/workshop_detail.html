@@ -2,25 +2,17 @@
 {% block head_title %}Workshop Details{% endblock %}
 {% block cols-panel %}col-md-6 col-md-offset-3{% endblock %}
 {% block out_panel %}
-  <h1 class="text-center">{{ title }}</h1>
-  <div class="p-5">
+  <h1 class='text-center'>{{ title }}</h1>
+  <div class="container m-5">
     <p><b>Description:</b> {{ description }}</p>
-    {% if not workshop.in_person and not has_attended %}
-      <p><b>Location:</b> This is a virtual workshop. You must first attend the workshop to view the location.</p>
-    {% else %}
-      <p><b>Location:</b> {{ location }}</p>
-    {% endif %}
+    <p><b>Location:</b> {{ location }}</p>
     <p><b>Host:</b> {{ host }}</p>
     <p><b>Time:</b> {{ start }} -- {{ end }}</p>
     <p><b>Attendance:</b> {{ attendance }}</p>
   </div>
-  {% if workshop.open and workshop.in_person %}
+  {% if workshop.open %}
     <div class="text-center mb-5">
       <a class="btn btn-success mb-5" href="{% url 'workshop_checkin' workshop.id %}">Scan</a>
-    </div>
-  {% elif workshop.open and not workshop.in_person and not has_attended %}
-    <div class="text-center mb-5">
-      <a class="btn btn-success mb-5" href="{% url 'workshop_attend' workshop.id %}">Attend</a>
     </div>
   {% endif %}
   <br>
