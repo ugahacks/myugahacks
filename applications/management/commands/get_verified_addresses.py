@@ -14,7 +14,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('Gathering verified addresses...')
 
-        confirmed_applicants = models.Application.objects.filter(status='C')
+        confirmed_applicants = (models.Application.objects.filter(status='C') | models.Application.objects.filter(
+            status='A') | models.Application.objects.filter(status='I'))
 
         with open(settings.EXPORT_FILES_URL + 'verified_apps.csv', 'w') as verified_csv:
             csv_writer = csv.writer(verified_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
