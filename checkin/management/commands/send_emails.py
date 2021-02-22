@@ -77,20 +77,36 @@ class Command(BaseCommand):
                     else: # if you attempt to send a functional email that isn't a check-in email
                         self.stdout.write(self.style.ERROR(f'Cannot send functional {options["template"]}.'))
                 else: # no functional emails
-                    self.stdout.write(f'Sending out {len(options["to"])} non-functional emails...')
-                
-                    messages = []
+                    if options['template'] == 'online_checkin':
+                        self.stdout.write(f'Sending out {len(options["to"])} non-functional emails...')
                     
-                    for email_addr in options['to']:
-                        messages.append(render_mail(f'mails/{options["template"]}', email_addr, 
-                            {'name': 'NON_FUNC_TEST'},
-                            action_required=True))
+                        messages = []
+                        
+                        for email_addr in options['to']:
+                            messages.append(render_mail(f'mails/{options["template"]}', email_addr, 
+                                {'name': 'NON_FUNC_TEST'},
+                                action_required=True))
 
-                    mail.get_connection().send_messages(messages)
-                    success_message = f'Successfully sent {len(messages)} ' \
-                                        + 'non-functional checkin emails.'
+                        mail.get_connection().send_messages(messages)
+                        success_message = f'Successfully sent {len(messages)} ' \
+                                            + 'non-functional checkin emails.'
 
-                    self.stdout.write(self.style.SUCCESS(success_message))
+                        self.stdout.write(self.style.SUCCESS(success_message))
+                    elif options['template'] == 'post_event':
+                        self.stdout.write(f'Sending out {len(options["to"])} post_event (nonfunc) emails...')
+
+                        messages = []
+
+                        for email_addr in options['to']:
+                            messages.append(render_mail(f'mails/{options["template"]}', email_addr, 
+                                {'name': 'NON_FUNC_TEST'},
+                                action_required=True))
+
+                        mail.get_connection().send_messages(messages)
+                        success_message = f'Successfully sent {len(messages)} ' \
+                                            + 'non-functional checkin emails.'
+
+                        self.stdout.write(self.style.SUCCESS(success_message))
 
             elif options['all']:
                 if options['template'] == 'online_checkin':
