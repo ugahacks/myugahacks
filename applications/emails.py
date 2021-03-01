@@ -75,4 +75,4 @@ def create_post_event_email(application: Application) -> t.Any:
         'cert_url': 'https://my.ugahacks.com/static/docs/proof_of_attendance.pdf',
         'photos_url': 'https://photos.google.com/share/AF1QipPftVrQsQ2hrI0biMNr5qdGpRBx1rn89GHhJR87u4NaelK61_m7DYCnnoc2QkOQOg?key=NDRWeGk4cFRnNzJWdGxvOWJNeGlGY1NEVnd4eVVB'
     }
-    return emails.render_mail('mails/online_checkin', application.user.email, context)
+    return emails.render_mail('mails/post_event', application.user.email, context)
