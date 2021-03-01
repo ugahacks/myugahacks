@@ -133,6 +133,8 @@ class Command(BaseCommand):
                 'name': '<HackerName>',
                 'recruit_url': 'https://ugeorgia.ca1.qualtrics.com/jfe/form/SV_5orFOdgzddQwY74',
                 'cert_url': 'https://my.ugahacks.com/static/docs/proof_of_attendance.pdf',
+                'desktop_wp_url': 'https://my.ugahacks.com/static/images/ugahacks_6_desktop_wallpaper.png',
+                'mobile_wp_url': 'https://my.ugahacks.com/static/images/ugahacks_6_mobile_wallpaper.png',
                 'photos_url': 'https://photos.google.com/share/AF1QipPftVrQsQ2hrI0biMNr5qdGpRBx1rn89GHhJR87u4NaelK61_m7DYCnnoc2QkOQOg?key=NDRWeGk4cFRnNzJWdGxvOWJNeGlGY1NEVnd4eVVB'                            
             }
 
