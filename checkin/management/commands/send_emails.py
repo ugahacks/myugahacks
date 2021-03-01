@@ -116,12 +116,56 @@ class Command(BaseCommand):
 
 
     def send_post_event_emails_to_all(self):
-        # get all people with status=X and send them this email
-        # confirm their attendance, and send
-        # follow similar flow to the online_checkin with batch emails
-        # and requiring user confirmation.
-        # also will need to add this template function to the emails.py module.
-        pass
+        confirm_msg = f'Are you sure you want to send post_event emails ' \
+                            + 'to ALL confirmed applications? [y/N] '
+        confirmed = input(confirm_msg)
+
+        if confirmed.lower() == 'y':
+
+            def chunk(mlist, n):
+                """Yield successive n-sized chunks from lst."""
+                for i in range(0, len(mlist), n):
+                    yield mlist[i:i + n]
+
+            self.stdout.write('Gathering confirmed applications...')
+            attended_applications = Application.objects.filter(status=Application.ATTENDED)
+            self.stdout.write(f'Found: {attended_applications.count()} ATTENDED applications.')
+            self.stdout.write('Sending self post_event emails...')
+
+            # gmail has a throttle @ 100 for emails; also doesn't like being spammed.
+            count = 0
+            conf_apps_count = attended_applications.count()
+            
+            if conf_apps_count >= self.N_CHUNK_NO_THROTTLE:
+                self.stdout.write(f'Due to gmail throttling, emails will be sent in batches.')
+
+            messages = []
+            for application in attended_applications:
+                messages.append(emails.create_post_event_email(application))
+            
+            chunked_messages = list(chunk(messages, self.N_CHUNK_NO_THROTTLE))
+
+            see_chunked = input('Would you like to see the generated chunks? [y/N] ')
+            if see_chunked.lower() == 'y':
+                for chunk in chunked_messages:
+                    self.stdout.write(f'{"-" * 12}CHUNK{"-" * 12}')
+                    self.stdout.write('\n'.join(map(lambda m: f'<{m.to}>', chunk)))
+                    self.stdout.write(f'{"-" * 12}CHUNK{"-" * 12}')
+
+            proceed_with_emails = input('Would you like to proceed? [y/N] ')
+            if proceed_with_emails.lower() == 'y':
+                for chunk in chunked_messages:
+                    self.stdout.write(f'Sending chunk{count + 1}...')
+                    count += 1
+                    connection = mail.get_connection()
+                    connection.send_messages(chunk)
+                    self.stdout.write(f'Sleeping for {self.THROTTLE_TIMEOUT}s...')
+                    time.sleep(self.THROTTLE_TIMEOUT) # don't hurt gmail :(
+
+                self.stdout.write(self.style.SUCCESS(f'Successfully sent {len(messages)} post_event emails.'))
+
+            else:
+                self.stdout.write(f'Sent 0 check-in emails.')
 
 
     def send_template_test(self, template_name, recipients, action_required = False, context = {}):
