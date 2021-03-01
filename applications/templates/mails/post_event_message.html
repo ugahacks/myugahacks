@@ -1,0 +1,60 @@
+{% extends 'base_email.html' %}
+{% block preheader %} {{ h_name }} Post-Event Follow-Up {% endblock %}
+
+{% block content %}
+  <p>
+    Hello {{ name }},
+  </p>
+  <p>
+    Thank you for participating in <b>{{ h_name }}</b>. We hope you enjoyed the event!
+  </p>
+  <p>
+    Kindly <b><a target="_blank" href="https://ugeorgia.ca1.qualtrics.com/jfe/form/SV_eVzZfvmViNbbuhU">share your feedback about UGAHacks 6 here</a></b> and help us improve our event in the future. Your feedback is precious to us.
+  </p>
+  <br>
+  <h2>Hacker Swag</h2>
+  <p>
+    Stay on the lookout for your swag as we will be shipping it out soon! Make sure to tag us <a target="_blank" href="https://ugahacks.com">@ugahacks</a> in your posts when you receive it so we can repost and share. Our socials are linked below so be sure to follow us to stay updated on UGAHacks.
+  </p>
+  <h2>Event Momentos</h2>
+  <p>
+    Below we have our UGAHacks desktop and mobile wallpaper for you guys to use. So, don't forget to check those out!
+  </p>
+  <p>
+    <a target="_blank" href={{desktop_wp_url}}>Download the Desktop Wallpaper!</a>
+  </p>
+  <p>
+    <a target="_blank" href={{mobile_wp_url}}>Download the Mobile Wallpaper!</a>
+  </p>
+  <!-- <p>
+    Take a look at our <a target="_blank" href="https://mcusercontent.com/69a3e83ed9e60b403160ee5a8/files/67947fde-a105-4dc6-892c-8080ece0e8d0/UGAHacks_6_Event_Recap.pdf">Event Recap packet here!</a>
+  </p> -->
+  <h2>Joining UGAHacks 7</h2>
+  <p>
+    Work on anything from building the web application that empowers over 600 hackers annually to
+    securing funding that ensures that hackers can boot up their dreams! Maybe organizing people and events is your thing? Put in an application for our logistics team! We hope to see you soon.
+  </p>
+  <p>
+    <b><a href="{{recruit_url}}">Put in an application to join UGAHacks 7 here!</a></b>
+  </p>
+  <br><br>
+  <p>
+    Thank you again for your attendance. We hope the best for you and success in your future.   
+  </p>
+  <p>
+    Have any other questions? Email us at <a target="_blank" href="mailto:hello@ugahacks.com">hello@ugahacks.com</a>
+  </p>
+  <p>
+    Best, 
+  </p>
+  <p>
+    <b>{{ h_name }} Team</b> 
+  </p>
+
+  {% include 'mails/include/email_button.html' with text='Certificate of Attendance' url=cert_url %}
+  <!-- {% include 'mails/include/email_button.html' with text='UGAHacks 6 Recap Video' url=recap_url %} NOT AVAILABLE YET. OK TO SEND WITHOUT. -->
+  {% include 'mails/include/email_button.html' with text='UGAHacks 6 Event Photos' url=photos_url %}
+  <p align="center">
+    <img width="500" height="281" src={{desktop_wp_url}}>
+  </p>
+{% endblock %}
