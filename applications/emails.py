@@ -66,3 +66,13 @@ def create_online_checkin_email(application: Application) -> t.Any:
         'IS_ONLINE_HACKATHON': settings.IS_ONLINE_HACKATHON,
     }
     return emails.render_mail('mails/online_checkin', application.user.email, context, action_required=True)
+
+
+def create_post_event_email(application: Application) -> t.Any:
+    context = {
+        'name': application.user.get_full_name,
+        'recruit_url': 'https://ugeorgia.ca1.qualtrics.com/jfe/form/SV_5orFOdgzddQwY74',
+        'cert_url': 'https://my.ugahacks.com/static/docs/proof_of_attendance.pdf',
+        'photos_url': 'https://photos.google.com/share/AF1QipPftVrQsQ2hrI0biMNr5qdGpRBx1rn89GHhJR87u4NaelK61_m7DYCnnoc2QkOQOg?key=NDRWeGk4cFRnNzJWdGxvOWJNeGlGY1NEVnd4eVVB'
+    }
+    return emails.render_mail('mails/post_event', application.user.email, context)
