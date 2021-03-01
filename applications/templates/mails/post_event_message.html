@@ -1,9 +1,6 @@
 {% extends 'base_email.html' %}
 {% block preheader %} {{ h_name }} Post-Event Follow-Up {% endblock %}
 
-{% load static %}
-{% static '/app/static/docs/proof_of_attendance.pdf' as cert_url %}
-
 {% block content %}
   <p>
     Hello {{ name }},
@@ -24,15 +21,14 @@
     Below we have our UGAHacks desktop and mobile wallpaper for you guys to use. So, don't forget to check those out!
   </p>
   <p>
-    <a target="_blank" href="https://mcusercontent.com/69a3e83ed9e60b403160ee5a8/images/8ba9d8f0-d9a9-41f0-a60b-41eed4a62b57.png">Download the Desktop Wallpaper!</a>
+    <a target="_blank" href={{desktop_wp_url}}>Download the Desktop Wallpaper!</a>
   </p>
   <p>
-    <a target="_blank" href="https://mcusercontent.com/69a3e83ed9e60b403160ee5a8/images/028ff5cb-4afb-42d1-acd2-573354554762.png">Download the Mobile Wallpaper!</a>
+    <a target="_blank" href={{mobile_wp_url}}>Download the Mobile Wallpaper!</a>
   </p>
   <!-- <p>
     Take a look at our <a target="_blank" href="https://mcusercontent.com/69a3e83ed9e60b403160ee5a8/files/67947fde-a105-4dc6-892c-8080ece0e8d0/UGAHacks_6_Event_Recap.pdf">Event Recap packet here!</a>
   </p> -->
-
   <h2>Joining UGAHacks 7</h2>
   <p>
     Work on anything from building the web application that empowers over 600 hackers annually to
@@ -56,10 +52,9 @@
   </p>
 
   {% include 'mails/include/email_button.html' with text='Certificate of Attendance' url=cert_url %}
-  <!-- {% include 'mails/include/email_button.html' with text='UGAHacks 6 Recap Video' url=recap_url %} -->
+  <!-- {% include 'mails/include/email_button.html' with text='UGAHacks 6 Recap Video' url=recap_url %} NOT AVAILABLE YET. OK TO SEND WITHOUT. -->
   {% include 'mails/include/email_button.html' with text='UGAHacks 6 Event Photos' url=photos_url %}
-  <!-- {% include 'mails/include/closing.html' %} -->
   <p align="center">
-    <img width="500" height="281" src="https://mcusercontent.com/69a3e83ed9e60b403160ee5a8/images/8ba9d8f0-d9a9-41f0-a60b-41eed4a62b57.png">
+    <img width="500" height="281" src={{desktop_wp_url}}>
   </p>
 {% endblock %}
