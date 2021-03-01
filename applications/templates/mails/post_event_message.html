@@ -1,6 +1,9 @@
 {% extends 'base_email.html' %}
 {% block preheader %} {{ h_name }} Post-Event Follow-Up {% endblock %}
 
+{% load static %}
+{% static '/app/static/docs/proof_of_attendance.pdf' as cert_url %}
+
 {% block content %}
   <p>
     Hello {{ name }},
@@ -30,6 +33,16 @@
     Thank you again for your attendance. We hope the best for you and success in your future.   
   </p>
   <p>
+    <b>Interested in joining the ANY of the UGAHacks Teams?</b>
+  </p>
+  <p>
+    Work on anything from building the web application that empowers over 600 hackers annually to
+    securing funding to ensure that hackers can boot up their dreams! Maybe organizing people and events is your thing? Put in an application for our logistics team! We hope to see you soon.
+  </p>
+  <p>
+    <b><a href="{{recruit_url}}">Put in an application to joing UGAHacks 7 here!</a></b>
+  </p>
+  <p>
     Have any other questions? Email us at <a target="_blank" href="mailto:hello@ugahacks.com">hello@ugahacks.com</a>
   </p>
   <p>
@@ -40,7 +53,7 @@
   </p>
 
   {% include 'mails/include/email_button.html' with text='Certificate of Attendance' url=cert_url %}
-  {% include 'mails/include/email_button.html' with text='UGAHacks 6 Recap Video' url=recap_url %}
+  <!-- {% include 'mails/include/email_button.html' with text='UGAHacks 6 Recap Video' url=recap_url %} -->
   {% include 'mails/include/email_button.html' with text='UGAHacks 6 Event Photos' url=photos_url %}
   <!-- {% include 'mails/include/closing.html' %} -->
   <p align="center">
