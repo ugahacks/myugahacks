@@ -82,15 +82,37 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.ERROR(f'Cannot send <{options["template"]}> to all.'))
         elif options['func']: # test, functional emails
             attempt_message = f'Attempting to send out {num_recipients} ' \
-                                + 'functional {template_name} emails...'
+                                + f'functional {template_name} emails...'
             self.stdout.write(attempt_message)
             
-            if options['template'] == 'online_checkin':
+            if template_name == 'online_checkin':
                 self.send_test_online_checkin_emails(recipients, template_name)
+            elif template_name == 'post_event':
+                self.stdout.write(f'Functionality for --func<{template_name}> testing is not complete.')
+                # self.send_test_post_event_emails(recipients, template_name)
             else:
                 self.stdout.write(self.style.ERROR(f'Cannot send functional {options["template"]}.'))
         else: # test, non-functional emails
             self.send_template_test(template_name, recipients)
+
+
+    
+    def send_test_post_event_emails(self, recipients, template_name):
+        messages = []
+        reminder_message = f'Remember: functional emails can only be sent to ' \
+                            + f'applications with ATTENDED status.'
+        self.stdout.write(reminder_message)
+        confirmed_applications = Application.objects.filter(status=Application.CONFIRMED)
+                        
+        for email_addr in recipients:
+            application = confirmed_applications.get(user__email=email_addr)
+            messages.append(emails.create_online_checkin_email(application))
+
+        mail.get_connection().send_messages(messages)
+        success_message = f'Successfully sent {len(messages)} functional {template_name} emails.'
+        self.stdout.write(self.style.SUCCESS(success_message))
+
+
 
 
     def send_post_event_emails_to_all(self):
@@ -109,7 +131,9 @@ class Command(BaseCommand):
         elif template_name == 'post_event':
             context = {
                 'name': '<HackerName>',
-                'cert_url': 'https://google.com/',                            
+                'recruit_url': 'https://ugeorgia.ca1.qualtrics.com/jfe/form/SV_5orFOdgzddQwY74',
+                'cert_url': 'https://my.ugahacks.com/static/docs/proof_of_attendance.pdf',
+                'photos_url': 'https://photos.google.com/share/AF1QipPftVrQsQ2hrI0biMNr5qdGpRBx1rn89GHhJR87u4NaelK61_m7DYCnnoc2QkOQOg?key=NDRWeGk4cFRnNzJWdGxvOWJNeGlGY1NEVnd4eVVB'                            
             }
 
         for email_addr in recipients:
