@@ -69,9 +69,9 @@ class Command(BaseCommand):
             return
         
         # RUN
-        recipients = options['to']
+        recipients = options['to'] or []
         template_name = options['template']
-        num_recipients = len(options['to']) or 'ALL'
+        num_recipients = len(recipients) or 'ALL'
 
         if options['all']: # non-test, functional emails
             if options['template'] == 'online_checkin':
