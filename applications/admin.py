@@ -11,9 +11,9 @@ EXPORT_CSV_FIELDS = ['name', 'lastname', 'participant', 'university', 'class_sta
 
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = ('user', 'name', 'participant', 'attendance_type', 'reimb', 'status',
-                    'status_last_updated', 'diet')
+                    'status_last_updated', 'tshirt_size', 'diet')
     list_filter = ('status', 'attendance_type', 'first_timer', 'reimb', 'graduation_year',
-                   'university', 'origin', 'diet', 'participant')
+                   'university', 'origin', 'tshirt_size', 'diet', 'participant')
     list_per_page = 200
     search_fields = ('user__name', 'user__email',
                      'description',)
@@ -37,12 +37,14 @@ class ApplicationAdmin(admin.ModelAdmin):
         qs = super(ApplicationAdmin, self).get_queryset(request)
         return models.Application.annotate_vote(qs)
 
+
 class DraftApplicationAdmin(admin.ModelAdmin):
     list_display = ('user', 'name')
     search_fields = ('user__name', 'user__email')
 
     def name(self, obj):
         return obj.user.get_full_name()
+
 
 admin.site.register(models.Application, admin_class=ApplicationAdmin)
 admin.site.register(models.DraftApplication, admin_class=DraftApplicationAdmin)
