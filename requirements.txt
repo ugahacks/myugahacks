@@ -53,7 +53,7 @@ pytz==2017.2
 PyYAML==5.3
 requests==2.20.0
 requests-oauthlib==0.8.0
-rsa==3.4.2
+rsa==4.7
 sendgrid==3.6.3
 sendgrid-django==4.0.4
 six==1.10.0
