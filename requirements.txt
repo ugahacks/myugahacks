@@ -44,7 +44,7 @@ pyasn1-modules==0.0.8
 pycodestyle==2.6.0
 pycparser==2.20
 pyflakes==1.5.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 pyparsing==2.1.10
 python-http-client==2.2.1
 python-openid==2.2.5
